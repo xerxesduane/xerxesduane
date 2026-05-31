@@ -19,9 +19,14 @@ export default function Founder() {
           <Reveal>
             <div className="glass border-glow rounded-3xl p-8">
               <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-gold to-gold-deep font-display text-2xl font-semibold text-ink-deep">
-                  XM
-                </div>
+                <img
+                  src="/brand/founder-xerxes.jpg"
+                  alt="Xerxes Magdaluyo, founder of Threshold Works"
+                  width={64}
+                  height={64}
+                  loading="lazy"
+                  className="h-16 w-16 shrink-0 rounded-2xl object-cover ring-1 ring-gold/30"
+                />
                 <div>
                   <h3 className="font-display text-xl text-cream">
                     Xerxes Magdaluyo

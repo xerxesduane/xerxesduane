@@ -20,12 +20,8 @@
       gtag("config", "G-N8FX3F1CZ1");
     </script>
 
-    <!-- Primary SEO -->
-    <title>Threshold Works | Web, Apps, Odoo/ERP &amp; AI Studio in Dubai</title>
-    <meta
-      name="description"
-      content="Dubai tech studio for small businesses: websites, web &amp; mobile apps, Odoo/ERP &amp; CRM, automation, AI, SEO and Google/Meta ads. Book a free 60-minute systems audit."
-    />
+    <!-- Primary SEO — per-route title/description/canonical injected at build time -->
+    <!--app-head-->
     <meta
       name="keywords"
       content="web development Dubai, Odoo ERP Dubai, ERP implementation, CRM setup, AI automation Dubai, SEO Dubai, Google Ads, Meta Ads, small business tech studio, web design Dubai"
@@ -33,35 +29,23 @@
     <meta name="author" content="Xerxes Magdaluyo" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow" />
-    <link rel="canonical" href="https://www.xerxesduane.com/" />
 
     <!-- Geo targeting (Dubai, UAE) -->
     <meta name="geo.region" content="AE-DU" />
     <meta name="geo.placename" content="Dubai" />
     <meta name="ICBM" content="25.2048, 55.2708" />
 
-    <!-- Open Graph -->
+    <!-- Open Graph (site-level; per-route og:title/description/url injected above) -->
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Threshold Works" />
     <meta property="og:locale" content="en_US" />
-    <meta property="og:title" content="Threshold Works | Web, Apps, Odoo/ERP &amp; AI Studio in Dubai" />
-    <meta
-      property="og:description"
-      content="Websites, web &amp; mobile apps, Odoo/ERP, CRM, automation and AI, built honestly for small businesses in Dubai. Book a free systems audit."
-    />
-    <meta property="og:url" content="https://www.xerxesduane.com/" />
     <meta property="og:image" content="https://www.xerxesduane.com/brand/og-image.png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Threshold Works — smart systems, honest work, real results." />
+    <meta property="og:image:alt" content="Threshold Works, smart systems, honest work, real results." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Threshold Works | Web, Apps, Odoo/ERP &amp; AI Studio in Dubai" />
-    <meta
-      name="twitter:description"
-      content="Websites, web &amp; mobile apps, Odoo/ERP, CRM, automation and AI for small businesses in Dubai. Book a free systems audit."
-    />
     <meta name="twitter:image" content="https://www.xerxesduane.com/brand/og-image.png" />
 
     <!-- Fonts -->
@@ -184,18 +168,18 @@
     </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app-html--></div>
 
     <!-- Crawler / no-JavaScript fallback -->
     <noscript>
       <main style="max-width: 720px; margin: 0 auto; padding: 24px; font-family: Georgia, serif; color: #1a1a1a;">
-        <h1>Threshold Works — Web, Apps, Odoo/ERP &amp; AI Studio in Dubai</h1>
+        <p style="font-size: 1.6em; font-weight: bold; margin: 0 0 0.6em;">Big-company systems for small businesses that can't afford a tech team</p>
         <p>
-          Threshold Works is the all-in-one tech studio for small businesses in
-          Dubai that can't afford a full tech team. We build websites, web and
-          mobile apps, Odoo/ERP and CRM systems, marketing automation, AI
-          workflows, e-commerce, SEO and Google/Meta ad campaigns — built
-          honestly, by one trusted partner.
+          Most small businesses in Dubai are duct-taping together a website,
+          spreadsheets, and apps that don't talk to each other. Threshold Works
+          builds the websites, apps, Odoo/ERP, CRM, automation, and AI that
+          actually work together, honestly, under one roof, so you can stop
+          managing tools and get back to growing.
         </p>
         <h2>What we build</h2>
         <ul>
@@ -209,6 +193,13 @@
           <li>Videography &amp; Photography</li>
           <li>Graphic Design &amp; Branding</li>
         </ul>
+        <h2>Services in Dubai</h2>
+        <ul>
+          <li><a href="/odoo-erp-dubai">Odoo ERP implementation in Dubai</a></li>
+          <li><a href="/web-development-dubai">Web development in Dubai</a></li>
+          <li><a href="/ai-automation-dubai">AI automation in Dubai</a></li>
+          <li><a href="/seo-dubai">SEO services in Dubai</a></li>
+        </ul>
         <h2>Contact</h2>
         <p>
           WhatsApp: +971 54 328 1995 · Email: hi@xerxesduane.com · Dubai, UAE.
@@ -217,6 +208,6 @@
       </main>
     </noscript>
 
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="/src/entry-client.tsx"></script>
   </body>
 </html>

@@ -30,7 +30,8 @@ export default {
         },
         muted: {
           DEFAULT: "#9AA39A",
-          dark: "#6E776C",
+          // Nudged lighter to clear WCAG AA (~5.9:1 on #0B0F0D) for small/secondary text.
+          dark: "#828B7E",
         },
       },
       fontFamily: {

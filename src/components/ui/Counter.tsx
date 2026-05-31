@@ -18,8 +18,8 @@ export default function Counter({ value, suffix = "", duration = 1600 }: Counter
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
-      setDisplay(value);
-      return;
+      const id = requestAnimationFrame(() => setDisplay(value));
+      return () => cancelAnimationFrame(id);
     }
 
     let raf = 0;

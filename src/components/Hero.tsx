@@ -27,19 +27,20 @@ export default function Hero() {
             variants={fadeUp}
             className="mt-7 text-4xl leading-[1.04] sm:text-6xl md:text-7xl"
           >
-            Your business is paying for
-            <br className="hidden sm:block" />{" "}
-            <span className="text-gradient-gold italic">tech you don't use.</span>
-            <br className="hidden sm:block" /> Let's find out how much.
+            Big-company systems for{" "}
+            <span className="text-gradient-gold italic">small businesses</span>
+            <br className="hidden sm:block" /> that can't afford a tech team.
           </motion.h1>
 
           <motion.p
             variants={fadeUp}
             className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl"
           >
-            Threshold Works is the all-in-one tech studio for small businesses in Dubai
-            that can't afford a full tech team. Websites, marketing, automation,
-            and AI, built honestly, by one trusted partner.
+            Most small businesses in Dubai are duct-taping together a website,
+            spreadsheets, and five apps that don't talk to each other. Threshold
+            Works builds the websites, apps, ERP, automation, and AI that actually
+            work together, honestly, under one roof, so you can stop managing tools
+            and get back to growing.
           </motion.p>
 
           <motion.div

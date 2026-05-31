@@ -1,5 +1,6 @@
 import Wordmark from "./ui/Wordmark";
 import { CONTACT, NAV_LINKS } from "../data/content";
+import { SERVICE_PAGES } from "../data/servicePages";
 
 function LinkedinIcon() {
   return (
@@ -21,7 +22,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-cream/8 bg-ink-deep/60 py-14">
       <div className="container-bl">
-        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Wordmark />
             <p className="mt-4 max-w-xs font-display text-lg italic text-cream-dim">
@@ -61,6 +62,24 @@ export default function Footer() {
                     className="text-cream-dim transition-colors hover:text-gold"
                   >
                     {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
+              Services in Dubai
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              {SERVICE_PAGES.map((p) => (
+                <li key={p.slug}>
+                  <a
+                    href={`/${p.slug}`}
+                    className="text-cream-dim transition-colors hover:text-gold"
+                  >
+                    {p.navLabel}
                   </a>
                 </li>
               ))}

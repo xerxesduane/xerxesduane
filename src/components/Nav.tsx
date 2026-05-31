@@ -31,7 +31,7 @@ export default function Nav() {
             scrolled ? "glass" : "border border-transparent"
           }`}
         >
-          <a href="#top" aria-label="Threshold Works, home" className="py-1">
+          <a href="/" aria-label="Threshold Works, home" className="py-1">
             <Wordmark />
           </a>
 

@@ -28,11 +28,11 @@ export const CONTACT = {
 };
 
 export const NAV_LINKS = [
-  { label: "Services", href: "#services" },
-  { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
-  { label: "About", href: "#about" },
-  { label: "FAQ", href: "#faq" },
+  { label: "Services", href: "/#services" },
+  { label: "Work", href: "/#work" },
+  { label: "Process", href: "/#process" },
+  { label: "About", href: "/#about" },
+  { label: "FAQ", href: "/#faq" },
 ];
 
 export interface Service {
