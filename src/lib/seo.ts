@@ -1,4 +1,5 @@
 import { SERVICE_PAGES, getServicePage } from "../data/servicePages";
+import { FAQS } from "../data/content";
 
 export const SITE_ORIGIN = "https://www.xerxesduane.com";
 
@@ -7,9 +8,20 @@ export interface PageMeta {
   description: string;
   canonical: string;
   ogTitle: string;
-  /** Optional extra JSON-LD (e.g. a Service node) serialized into the head. */
-  jsonLd?: Record<string, unknown>;
+  /** Extra JSON-LD nodes serialized into the head (e.g. Service, FAQPage). */
+  jsonLd?: Record<string, unknown>[];
 }
+
+/** FAQPage schema, derived from the FAQ content actually rendered on the home page. */
+const FAQ_SCHEMA = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: FAQS.map((f) => ({
+    "@type": "Question",
+    name: f.q,
+    acceptedAnswer: { "@type": "Answer", text: f.a },
+  })),
+};
 
 const HOME_META: PageMeta = {
   title: "Threshold Works | Web, Apps, Odoo/ERP & AI Studio in Dubai",
@@ -17,6 +29,7 @@ const HOME_META: PageMeta = {
     "Dubai tech studio for small businesses: websites, web & mobile apps, Odoo/ERP & CRM, automation, AI, SEO and Google/Meta ads. Book a free 60-minute systems audit.",
   canonical: `${SITE_ORIGIN}/`,
   ogTitle: "Threshold Works | Web, Apps, Odoo/ERP & AI Studio in Dubai",
+  jsonLd: [FAQ_SCHEMA],
 };
 
 /** Normalise a pathname to a bare slug (no leading/trailing slashes). */
@@ -42,16 +55,18 @@ export function getPageMeta(path: string): PageMeta {
     description: page.metaDescription,
     canonical,
     ogTitle: page.ogTitle,
-    jsonLd: {
-      "@context": "https://schema.org",
-      "@type": "Service",
-      name: page.jsonLdName,
-      serviceType: page.jsonLdName,
-      provider: { "@id": `${SITE_ORIGIN}/#org` },
-      areaServed: { "@type": "City", name: "Dubai" },
-      url: canonical,
-      description: page.metaDescription,
-    },
+    jsonLd: [
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        name: page.jsonLdName,
+        serviceType: page.jsonLdName,
+        provider: { "@id": `${SITE_ORIGIN}/#org` },
+        areaServed: { "@type": "City", name: "Dubai" },
+        url: canonical,
+        description: page.metaDescription,
+      },
+    ],
   };
 }
 
@@ -76,9 +91,9 @@ export function buildHeadTags(path: string): string {
     `<meta name="twitter:title" content="${esc(m.ogTitle)}" />`,
     `<meta name="twitter:description" content="${esc(m.description)}" />`,
   ];
-  if (m.jsonLd) {
+  for (const node of m.jsonLd ?? []) {
     tags.push(
-      `<script type="application/ld+json">${JSON.stringify(m.jsonLd)}</script>`,
+      `<script type="application/ld+json">${JSON.stringify(node)}</script>`,
     );
   }
   return tags.join("\n    ");
