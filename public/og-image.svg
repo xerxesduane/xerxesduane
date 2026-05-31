@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07090A"/>
+      <stop offset="0.5" stop-color="#0B0F0D"/>
+      <stop offset="1" stop-color="#07090A"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="22%" r="55%">
+      <stop offset="0" stop-color="#D9A441" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#D9A441" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F4EFE6"/>
+      <stop offset="0.5" stop-color="#E8C173"/>
+      <stop offset="1" stop-color="#D9A441"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <g transform="translate(100,72)">
+    <g transform="scale(1.5)" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M7 31 V16 Q7 5.5 18 5.5 Q29 5.5 29 16 V31" stroke="#F4EFE6" stroke-width="2.3" fill="none"/>
+      <path d="M12.5 31 V17.5 Q12.5 11 18 11 Q23.5 11 23.5 17.5 V31" stroke="#D9A441" stroke-width="2.1" fill="none"/>
+      <circle cx="18" cy="6.2" r="1.9" fill="#D9A441"/>
+      <path d="M3.5 31 H32.5" stroke="#D9A441" stroke-width="2.6"/>
+    </g>
+    <text x="74" y="40" font-family="Georgia, serif" font-size="32" font-weight="600" fill="#F4EFE6">Threshold <tspan fill="#D9A441">Works</tspan></text>
+  </g>
+
+  <text x="100" y="300" font-family="Georgia, serif" font-size="76" font-weight="600" fill="#F4EFE6">Your business is paying for</text>
+  <text x="100" y="390" font-family="Georgia, serif" font-size="76" font-weight="600" font-style="italic" fill="url(#gold)">tech you don't use.</text>
+
+  <text x="100" y="470" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#9AA39A">Websites · Marketing · Automation · AI, built honestly, in Dubai.</text>
+
+  <text x="100" y="560" font-family="monospace" font-size="22" letter-spacing="3" fill="#D9A441">SMART SYSTEMS.  HONEST WORK.  REAL RESULTS.</text>
+</svg>

@@ -1,0 +1,380 @@
+import {
+  Code2,
+  Boxes,
+  LayoutDashboard,
+  Smartphone,
+  ShoppingBag,
+  Target,
+  Bot,
+  Video,
+  Palette,
+  Languages,
+  Accessibility,
+  GraduationCap,
+  Car,
+  Sparkles,
+  PartyPopper,
+  Church,
+  HeartHandshake,
+  Store,
+  type LucideIcon,
+} from "lucide-react";
+
+export const CONTACT = {
+  whatsapp: "971543281995",
+  whatsappDisplay: "+971 54 328 1995",
+  email: "hi@xerxesduane.com",
+  location: "Dubai, UAE",
+};
+
+export const NAV_LINKS = [
+  { label: "Services", href: "#services" },
+  { label: "Work", href: "#work" },
+  { label: "Process", href: "#process" },
+  { label: "About", href: "#about" },
+  { label: "FAQ", href: "#faq" },
+];
+
+export interface Service {
+  icon: LucideIcon;
+  title: string;
+  tagline: string;
+  description: string;
+  featured?: boolean;
+}
+
+export const SERVICES: Service[] = [
+  {
+    icon: Bot,
+    title: "AI Automation & Solutions",
+    tagline: "The new advantage.",
+    description:
+      "AI workflows, chatbots, and custom assistants that quietly run your business in the background, answering questions, qualifying leads, and giving you back the hours you've been losing.",
+    featured: true,
+  },
+  {
+    icon: Code2,
+    title: "Custom System Development",
+    tagline: "The foundation, built for you.",
+    description:
+      "Software tailored to how your business actually works, client portals, internal tools, and systems built around the way you run. No templates, no limitations.",
+  },
+  {
+    icon: Boxes,
+    title: "ERP & Odoo",
+    tagline: "One system to run on.",
+    description:
+      "Odoo ERP setup, administration, and support, wiring inventory, sales, purchasing, and accounting into a single source of truth. Configured and run for real businesses in the UAE and the Philippines.",
+  },
+  {
+    icon: LayoutDashboard,
+    title: "Dashboards & CRM",
+    tagline: "See your business clearly.",
+    description:
+      "Real-time dashboards, customer databases, and integrations that finally talk: HubSpot, QuickBooks, Zoho, all in one place.",
+  },
+  {
+    icon: Smartphone,
+    title: "Mobile & Web Apps",
+    tagline: "Sleek, scalable, built to grow.",
+    description:
+      "Custom iOS, Android, and web apps, booking platforms, member portals, internal tools, fast and ready for what's next.",
+  },
+  {
+    icon: ShoppingBag,
+    title: "E-Commerce & Stores",
+    tagline: "Sell online without the headaches.",
+    description:
+      "Secure checkout, payment gateways, order tracking, and upsell flows, tailored to your products and your customers.",
+  },
+  {
+    icon: Target,
+    title: "Landing Pages & Funnels",
+    tagline: "Turn clicks into customers.",
+    description:
+      "Conversion-optimized pages and complete sales funnels, integrated with analytics, lead capture, and your CRM.",
+  },
+  {
+    icon: Video,
+    title: "Videography & Photography",
+    tagline: "Stories that sell.",
+    description:
+      "Professional video, product photography, reels, and brand films, created with the storytelling instincts of someone who's run real ad campaigns.",
+  },
+  {
+    icon: Palette,
+    title: "Graphic Design & Branding",
+    tagline: "Look like the brand you are.",
+    description:
+      "Logos, brand identity, social graphics, and marketing collateral, designed to match the quality of the work behind it.",
+  },
+];
+
+export interface Layer {
+  no: string;
+  name: string;
+  items: string;
+  blurb: string;
+}
+
+export const LAYERS: Layer[] = [
+  {
+    no: "01",
+    name: "Foundation",
+    items: "Websites · branding · hosting · email",
+    blurb: "The base your business runs on, built to convert, built to last.",
+  },
+  {
+    no: "02",
+    name: "Engine",
+    items: "ERP / Odoo · CRM · invoicing · automation",
+    blurb: "The plumbing behind the scenes, so your tools finally talk to each other.",
+  },
+  {
+    no: "03",
+    name: "Growth",
+    items: "SEO · Google & Meta Ads · content · email",
+    blurb: "The marketing that brings customers in, and the data that proves it works.",
+  },
+  {
+    no: "04",
+    name: "Edge",
+    items: "AI workflows · chatbots · custom assistants",
+    blurb: "The advantage most small businesses don't have yet, and your edge over bigger competitors.",
+  },
+];
+
+export interface Industry {
+  icon: LucideIcon;
+  name: string;
+  blurb: string;
+  worked?: string;
+  mission?: boolean;
+}
+
+export const INDUSTRIES: Industry[] = [
+  {
+    icon: Languages,
+    name: "Translation & Language",
+    blurb: "Client portals, multilingual sites, and the admin systems that let your team stay focused on the work.",
+    worked: "Dubai translation firm · 5+ yr partnership",
+  },
+  {
+    icon: Accessibility,
+    name: "Healthcare Mobility",
+    blurb: "E-commerce for assistive products, CRM for patient relationships, and integrations built for real-world care.",
+    worked: "Gilani Mobility",
+  },
+  {
+    icon: GraduationCap,
+    name: "Education & Training",
+    blurb: "Custom e-learning platforms, automated registration, and QuickBooks-integrated invoicing, end to end.",
+    worked: "We Aspire",
+  },
+  {
+    icon: Car,
+    name: "Automotive",
+    blurb: "SEO that ranks for keywords that convert and Google Ads architectures that don't waste budget.",
+    worked: "Caronic · Wellington Cash for Cars",
+  },
+  {
+    icon: Sparkles,
+    name: "Wellness, Spa & Beauty",
+    blurb: "Meta Ads that drive real conversations, booking systems that reduce no-shows, and brand visuals that match the experience.",
+    worked: "AYA Home Spa",
+  },
+  {
+    icon: PartyPopper,
+    name: "Events & Hospitality",
+    blurb: "Event-ready websites, social media, and professional video that turn attendees into repeat clients.",
+    worked: "Keystone Events Dubai",
+  },
+  {
+    icon: Store,
+    name: "E-Commerce & Retail",
+    blurb: "Conversion-optimized stores, automated invoicing, and upsell flows that actually work.",
+    worked: "Multiple clients",
+  },
+  {
+    icon: Church,
+    name: "Churches & Faith-Based",
+    blurb: "Member management, donations, event registration, and communication platforms built with care.",
+    mission: true,
+  },
+  {
+    icon: HeartHandshake,
+    name: "Non-Profits & PoD",
+    blurb: "Enterprise-grade systems at thoughtful rates, because mission-driven work deserves mission-grade tools.",
+    mission: true,
+  },
+];
+
+export interface CaseStudy {
+  client: string;
+  location: string;
+  category: string;
+  challenge: string;
+  stats: { value: string; label: string }[];
+  takeaway: string;
+}
+
+export const CASE_STUDIES: CaseStudy[] = [
+  {
+    client: "AYA Home Spa",
+    location: "Dubai · Wellness",
+    category: "Meta Ads",
+    challenge:
+      "A growing Dubai wellness brand needed real digital visibility in a crowded market.",
+    stats: [
+      { value: "54K", label: "People reached" },
+      { value: "98K", label: "Video plays" },
+      { value: "791", label: "Conversations" },
+      { value: "117K", label: "Ad views" },
+    ],
+    takeaway: "Real visibility. Real conversations. Real growth.",
+  },
+  {
+    client: "Wellington Cash for Cars",
+    location: "New Zealand · Automotive",
+    category: "Google Ads",
+    challenge:
+      "A vehicle-removal service needed to dominate a competitive search market while keeping cost-per-acquisition low.",
+    stats: [
+      { value: "1,530+", label: "Clicks" },
+      { value: "610", label: "Conversions" },
+      { value: "8.28%", label: "Top-ad CTR" },
+      { value: "$6.89", label: "Avg. CPC" },
+    ],
+    takeaway: "Real ad spend, real ROI, managed internationally from Dubai.",
+  },
+];
+
+export interface Step {
+  no: string;
+  title: string;
+  body: string;
+}
+
+export const PROCESS: Step[] = [
+  {
+    no: "01",
+    title: "Discover",
+    body: "We sit down and listen. What's working? What's broken? What's quietly costing you money? No pitching, just questions and clarity.",
+  },
+  {
+    no: "02",
+    title: "Plan",
+    body: "We turn your goals into a real roadmap: what we'll build, in what order, with clear timelines and transparent pricing. No jargon.",
+  },
+  {
+    no: "03",
+    title: "Build",
+    body: "We design, develop, and integrate, with regular updates, working previews, and zero surprises. We move fast because we plan well.",
+  },
+  {
+    no: "04",
+    title: "Test & Refine",
+    body: "We test everything, speed, security, mobile, integrations. Nothing ships until it's solid and you're the final word on 'ready'.",
+  },
+  {
+    no: "05",
+    title: "Launch & Support",
+    body: "We deploy, train your team, and stick around. Launching is the start, not the end, we're one message away for years.",
+  },
+];
+
+export const COMPARISON: { agency: string; bayt: string }[] = [
+  { agency: "Sells you tools", bayt: "Sells you clarity" },
+  { agency: "Long-term lock-in contracts", bayt: "Month-to-month, cancel anytime" },
+  { agency: "Disappears after launch", bayt: "Picks up the phone five years later" },
+  { agency: "Upsells everything", bayt: "Tells you when you don't need us" },
+  { agency: "One service, one expert", bayt: "One studio, the whole stack" },
+  { agency: "Hides pricing", bayt: 'Transparent "from AED X" pricing' },
+];
+
+export const STATS: { value: number; suffix: string; label: string }[] = [
+  { value: 6, suffix: "+", label: "Years building for Dubai businesses" },
+  { value: 20, suffix: "+", label: "Businesses helped across industries" },
+  { value: 117, suffix: "K+", label: "Ad impressions delivered" },
+  { value: 100, suffix: "%", label: "Growth from referrals & word of mouth" },
+];
+
+export const PROMISE = {
+  never: [
+    "Upsells you don't need",
+    "Pressure to sign long contracts",
+    "Tools you're paying for and don't use",
+    "Freelancers who disappear after the invoice",
+  ],
+  always: [
+    "Honest answers, even when they cost us money",
+    "One trusted person who picks up the phone",
+    "A real audit before any recommendation",
+    "We'll tell you when you don't need us, and we mean it",
+  ],
+};
+
+export const PACKAGES = [
+  {
+    name: "The Audit",
+    price: "Free",
+    note: "for a limited time",
+    pitch: "Start here",
+    body: "A 60-minute deep-dive into your tech stack, website, software, marketing, automation. You walk away with a plain-English roadmap of what to fix first.",
+    cta: "Book your audit",
+    featured: true,
+  },
+  {
+    name: "The Build",
+    price: "from AED 5,000",
+    note: "project-based",
+    pitch: "Fix what's broken",
+    body: "A defined-scope project. Website rebuild, CRM setup, automation, SEO overhaul, or a tech-stack consolidation. We scope it, build it, ship it.",
+    cta: "See if we're a fit",
+    featured: false,
+  },
+  {
+    name: "The Partner",
+    price: "from AED 2,500",
+    note: "per month",
+    pitch: "Your long-term tech partner",
+    body: "We become your outsourced tech team. Ongoing IT, maintenance, SEO, ads, and automation, one trusted number to call for everything.",
+    cta: "Talk to us",
+    featured: false,
+  },
+];
+
+export const FAQS: { q: string; a: string }[] = [
+  {
+    q: "Is the audit really free?",
+    a: "Yes, for now. We're keeping it free while we onboard our founding clients. Eventually it'll be AED 750–1,500, but you're early.",
+  },
+  {
+    q: "Do you sign long contracts?",
+    a: "No. The Partner retainer is month-to-month. Cancel anytime, no penalties. We earn your business every month, not just the first one.",
+  },
+  {
+    q: "What if I just need IT support, not a whole rebuild?",
+    a: "Perfectly fine. Many clients start with simple IT support and grow into the full Partner retainer over time. We meet you where you are.",
+  },
+  {
+    q: "Do you work with very small businesses?",
+    a: "Yes. Most of our clients are 2–10 person teams. That's literally who we built Threshold Works for.",
+  },
+  {
+    q: "Do you support Arabic-speaking clients or bilingual sites?",
+    a: "Yes. We work in English and deliver bilingual websites and content as needed.",
+  },
+  {
+    q: "What if I'm in a different country?",
+    a: "We've delivered for clients in Dubai, the wider GCC, New Zealand, and the Philippines. WhatsApp, Zoom, and the right tools make distance irrelevant.",
+  },
+  {
+    q: "Will you try to upsell me?",
+    a: "No. The audit is the audit. If you don't need us, we'll tell you, and we mean that.",
+  },
+  {
+    q: "How quickly can you start?",
+    a: "Audit calls usually happen within 3–5 days of booking. Builds typically start 1–2 weeks after the audit. The Partner retainer can begin immediately.",
+  },
+];
