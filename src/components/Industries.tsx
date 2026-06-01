@@ -1,4 +1,5 @@
 import { m } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { INDUSTRIES } from "../data/content";
 import { scaleIn, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
@@ -47,11 +48,22 @@ export default function Industries() {
                 </div>
                 <h3 className="mt-4 text-lg text-cream">{ind.name}</h3>
                 <p className="mt-2 flex-1 text-sm text-muted">{ind.blurb}</p>
-                {ind.worked && (
-                  <p className="mt-4 inline-flex w-fit rounded-md bg-gold/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-gold/90">
-                    {ind.worked}
-                  </p>
-                )}
+                {ind.worked &&
+                  (ind.workedUrl ? (
+                    <a
+                      href={ind.workedUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex w-fit items-center gap-1.5 rounded-md bg-gold/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-gold/90 transition-colors hover:bg-gold/20 hover:text-gold"
+                    >
+                      {ind.worked}
+                      <ArrowUpRight size={11} strokeWidth={2.5} aria-hidden />
+                    </a>
+                  ) : (
+                    <p className="mt-4 inline-flex w-fit rounded-md bg-gold/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-gold/90">
+                      {ind.worked}
+                    </p>
+                  ))}
               </m.article>
             );
           })}

@@ -1,5 +1,5 @@
 import { m } from "framer-motion";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Check, ExternalLink } from "lucide-react";
 import { fadeUp } from "../lib/motion";
 import type { CaseStudy } from "../data/content";
 
@@ -16,9 +16,25 @@ export default function CaseStudyCard({ c }: { c: CaseStudy }) {
         <span className="font-mono text-xs text-muted-dark">{c.location}</span>
       </div>
 
-      <h3 className="mt-5 font-display text-2xl text-cream sm:text-3xl">
-        {c.client}
-      </h3>
+      {c.url ? (
+        <a
+          href={c.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group/link mt-5 inline-flex items-center gap-2 font-display text-2xl text-cream transition-colors hover:text-gold sm:text-3xl"
+        >
+          {c.client}
+          <ExternalLink
+            size={16}
+            className="text-muted-dark transition-colors group-hover/link:text-gold"
+            aria-hidden
+          />
+        </a>
+      ) : (
+        <h3 className="mt-5 font-display text-2xl text-cream sm:text-3xl">
+          {c.client}
+        </h3>
+      )}
       <p className="mt-3 text-sm text-muted">{c.challenge}</p>
 
       {c.stats && (

@@ -150,6 +150,8 @@ export interface Industry {
   name: string;
   blurb: string;
   worked?: string;
+  /** Public client site for the `worked` reference, if any. */
+  workedUrl?: string;
   mission?: boolean;
 }
 
@@ -158,31 +160,36 @@ export const INDUSTRIES: Industry[] = [
     icon: Languages,
     name: "Translation & Language",
     blurb: "Client portals, multilingual sites, and the admin systems that let your team stay focused on the work.",
-    worked: "Dubai translation firm · 5+ yr partnership",
+    worked: "Lessan Translation · 5+ yr partnership",
+    workedUrl: "https://lessantranslation.com/",
   },
   {
     icon: Accessibility,
     name: "Healthcare Mobility",
     blurb: "E-commerce for assistive products, CRM for patient relationships, and integrations built for real-world care.",
     worked: "Gilani Mobility",
+    workedUrl: "https://www.gilanimobility.ae/",
   },
   {
     icon: GraduationCap,
     name: "Education & Training",
     blurb: "Custom e-learning platforms, automated registration, and QuickBooks-integrated invoicing, end to end.",
     worked: "We Aspire",
+    workedUrl: "https://www.weaspire.ae/",
   },
   {
     icon: Car,
     name: "Automotive",
     blurb: "SEO that ranks for keywords that convert and Google Ads architectures that don't waste budget.",
-    worked: "Caronic · Wellington Cash for Cars",
+    worked: "Wellington Cash for Cars",
+    workedUrl: "https://wellingtoncashforcars.co.nz/",
   },
   {
     icon: Sparkles,
     name: "Wellness, Spa & Beauty",
     blurb: "Meta Ads that drive real conversations, booking systems that reduce no-shows, and brand visuals that match the experience.",
     worked: "AYA Home Spa",
+    workedUrl: "https://www.ayahomespa.ae/",
   },
   {
     icon: PartyPopper,
@@ -220,6 +227,8 @@ export interface CaseStudy {
   /** Scope-based proof (implementations) when there aren't vanity metrics. */
   scope?: string[];
   takeaway: string;
+  /** Public client site to link out to, if any. */
+  url?: string;
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -272,6 +281,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: "117K", label: "Ad views" },
     ],
     takeaway: "Real visibility. Real conversations. Real growth.",
+    url: "https://www.ayahomespa.ae/",
   },
   {
     client: "Wellington Cash for Cars",
@@ -286,6 +296,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: "$6.89", label: "Avg. CPC" },
     ],
     takeaway: "Real ad spend, real ROI, managed internationally from Dubai.",
+    url: "https://wellingtoncashforcars.co.nz/",
   },
 ];
 
@@ -412,6 +423,44 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "David L.",
     role: "Project Director",
     context: "Web Design & Creative Services",
+  },
+];
+
+export interface Client {
+  name: string;
+  sector: string;
+  url: string;
+  instagram?: string;
+}
+
+export const CLIENTS: Client[] = [
+  {
+    name: "AYA Home Spa",
+    sector: "Wellness & Spa · Dubai",
+    url: "https://www.ayahomespa.ae/",
+    instagram: "https://www.instagram.com/aya.homespa.uae/",
+  },
+  {
+    name: "Gilani Mobility",
+    sector: "Healthcare Mobility · Dubai",
+    url: "https://www.gilanimobility.ae/",
+    instagram: "https://www.instagram.com/gilanimobilitydubai/",
+  },
+  {
+    name: "We Aspire",
+    sector: "Education & Training · Dubai",
+    url: "https://www.weaspire.ae/",
+    instagram: "https://www.instagram.com/weaspiredubai/",
+  },
+  {
+    name: "Lessan Translation",
+    sector: "Translation & Language · Dubai",
+    url: "https://lessantranslation.com/",
+  },
+  {
+    name: "Wellington Cash for Cars",
+    sector: "Automotive · New Zealand",
+    url: "https://wellingtoncashforcars.co.nz/",
   },
 ];
 
