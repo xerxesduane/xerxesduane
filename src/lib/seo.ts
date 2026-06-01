@@ -1,5 +1,6 @@
 import { SERVICE_PAGES, getServicePage } from "../data/servicePages";
 import { FAQS } from "../data/content";
+import { INSIGHTS, getInsight } from "../data/insights";
 
 export const SITE_ORIGIN = "https://www.xerxesduane.com";
 
@@ -42,6 +43,8 @@ export function allRoutes(): string[] {
   return [
     "/",
     "/case-studies",
+    "/insights",
+    ...INSIGHTS.map((p) => `/insights/${p.slug}`),
     ...SERVICE_PAGES.map((p) => `/${p.slug}`),
   ];
 }
@@ -54,10 +57,46 @@ const CASE_STUDIES_META: PageMeta = {
   ogTitle: "Case Studies | Threshold Works",
 };
 
+const INSIGHTS_META: PageMeta = {
+  title: "Insights | Threshold Works",
+  description:
+    "Plain-English thinking on systems, Odoo, automation, and growth for small businesses in Dubai and beyond, from Threshold Works.",
+  canonical: `${SITE_ORIGIN}/insights`,
+  ogTitle: "Insights | Threshold Works",
+};
+
 export function getPageMeta(path: string): PageMeta {
   const slug = pathToSlug(path);
   if (slug === "") return HOME_META;
   if (slug === "case-studies") return CASE_STUDIES_META;
+  if (slug === "insights") return INSIGHTS_META;
+
+  if (slug.startsWith("insights/")) {
+    const post = getInsight(slug.slice("insights/".length));
+    if (post) {
+      const canonical = `${SITE_ORIGIN}/insights/${post.slug}`;
+      return {
+        title: `${post.title} | Threshold Works`,
+        description: post.description,
+        canonical,
+        ogTitle: post.title,
+        jsonLd: [
+          {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: post.title,
+            description: post.description,
+            datePublished: post.date,
+            dateModified: post.date,
+            author: { "@type": "Person", name: post.author, "@id": `${SITE_ORIGIN}/#xerxes` },
+            publisher: { "@id": `${SITE_ORIGIN}/#org` },
+            mainEntityOfPage: canonical,
+            image: `${SITE_ORIGIN}/brand/og-image.png`,
+          },
+        ],
+      };
+    }
+  }
 
   const page = getServicePage(slug);
   if (!page) return HOME_META;

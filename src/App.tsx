@@ -6,14 +6,23 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import Home from "./pages/Home";
 import ServicePage from "./pages/ServicePage";
 import CaseStudies from "./pages/CaseStudies";
+import Insights from "./pages/Insights";
+import InsightPost from "./pages/InsightPost";
 import NotFound from "./pages/NotFound";
 import { getServicePage } from "./data/servicePages";
+import { getInsight } from "./data/insights";
 import { pathToSlug } from "./lib/seo";
 
 function Route({ path }: { path: string }) {
   const slug = pathToSlug(path);
   if (slug === "") return <Home />;
   if (slug === "case-studies") return <CaseStudies />;
+  if (slug === "insights") return <Insights />;
+
+  if (slug.startsWith("insights/")) {
+    const post = getInsight(slug.slice("insights/".length));
+    if (post) return <InsightPost post={post} />;
+  }
 
   const page = getServicePage(slug);
   if (page) return <ServicePage page={page} />;
