@@ -162,7 +162,7 @@ export const INDUSTRIES: Industry[] = [
     icon: Languages,
     name: "Translation & Language",
     blurb: "Client portals, multilingual sites, and the admin systems that let your team stay focused on the work.",
-    worked: "Lessan Translation · 5+ yr partnership",
+    worked: "Lessan Translation",
     workedUrl: "https://lessantranslation.com/",
   },
   {

@@ -14,6 +14,7 @@ import Founder from "../components/Founder";
 import Promise from "../components/Promise";
 import Packages from "../components/Packages";
 import FAQ from "../components/FAQ";
+import LeadMagnet from "../components/LeadMagnet";
 import Contact from "../components/Contact";
 
 export default function Home() {
@@ -35,6 +36,7 @@ export default function Home() {
       <Promise />
       <Packages />
       <FAQ />
+      <LeadMagnet />
       <Contact />
     </>
   );
