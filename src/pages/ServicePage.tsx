@@ -2,6 +2,7 @@ import { m } from "framer-motion";
 import { ArrowUpRight, ArrowLeft, Check } from "lucide-react";
 import { SERVICE_PAGES, type ServicePageData } from "../data/servicePages";
 import { CASE_STUDIES } from "../data/content";
+import { INSIGHTS } from "../data/insights";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import Reveal from "../components/ui/Reveal";
 import Process from "../components/Process";
@@ -14,6 +15,9 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
   const proof = page.caseStudyClient
     ? CASE_STUDIES.find((c) => c.client === page.caseStudyClient)
     : undefined;
+  const relatedPosts = INSIGHTS.filter((p) =>
+    p.relatedServices?.includes(page.slug),
+  ).slice(0, 3);
 
   return (
     <>
@@ -193,6 +197,30 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
           </div>
         </div>
       </section>
+
+      {relatedPosts.length > 0 && (
+        <section className="pb-16 sm:pb-20" aria-label="Related reading">
+          <div className="container-bl">
+            <div className="mx-auto max-w-2xl">
+              <h2 className="font-mono text-xs uppercase tracking-wider text-gold">
+                From the blog
+              </h2>
+              <ul className="mt-4 space-y-3">
+                {relatedPosts.map((p) => (
+                  <li key={p.slug}>
+                    <a
+                      href={`/insights/${p.slug}`}
+                      className="text-cream-dim transition-colors hover:text-gold"
+                    >
+                      {p.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </section>
+      )}
 
       <Contact />
     </>

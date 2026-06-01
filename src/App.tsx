@@ -6,6 +6,7 @@ import WhatsAppButton from "./components/WhatsAppButton";
 import Home from "./pages/Home";
 import ServicePage from "./pages/ServicePage";
 import CaseStudies from "./pages/CaseStudies";
+import About from "./pages/About";
 import Insights from "./pages/Insights";
 import InsightPost from "./pages/InsightPost";
 import NotFound from "./pages/NotFound";
@@ -17,6 +18,7 @@ function Route({ path }: { path: string }) {
   const slug = pathToSlug(path);
   if (slug === "") return <Home />;
   if (slug === "case-studies") return <CaseStudies />;
+  if (slug === "about") return <About />;
   if (slug === "insights") return <Insights />;
 
   if (slug.startsWith("insights/")) {

@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import { type InsightPost as Post, formatDate } from "../data/insights";
 import { INSIGHTS } from "../data/insights";
+import { getServicePage } from "../data/servicePages";
 import Contact from "../components/Contact";
 
 function Body({ blocks }: { blocks: Post["body"] }) {
@@ -48,6 +49,9 @@ function Body({ blocks }: { blocks: Post["body"] }) {
 
 export default function InsightPost({ post }: { post: Post }) {
   const others = INSIGHTS.filter((p) => p.slug !== post.slug).slice(0, 2);
+  const related = (post.relatedServices ?? [])
+    .map((slug) => getServicePage(slug))
+    .filter((p): p is NonNullable<typeof p> => Boolean(p));
 
   return (
     <>
@@ -89,6 +93,26 @@ export default function InsightPost({ post }: { post: Post }) {
                 <ArrowUpRight size={17} strokeWidth={2.5} />
               </a>
             </div>
+
+            {related.length > 0 && (
+              <div className="mt-14">
+                <h2 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
+                  Related services
+                </h2>
+                <ul className="mt-4 space-y-3">
+                  {related.map((s) => (
+                    <li key={s.slug}>
+                      <a
+                        href={`/${s.slug}`}
+                        className="text-cream-dim transition-colors hover:text-gold"
+                      >
+                        {s.navLabel} in Dubai
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {others.length > 0 && (
               <div className="mt-14">
