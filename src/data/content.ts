@@ -25,6 +25,8 @@ export const CONTACT = {
   whatsappDisplay: "+971 54 328 1995",
   email: "hi@xerxesduane.com",
   location: "Dubai, UAE",
+  calendar: "https://zcal.co/xerxesduane/audit",
+  formspreeId: "xrednbek",
 };
 
 export const NAV_LINKS = [

@@ -58,6 +58,16 @@ export function pathToSlug(path: string): string {
   return path.replace(/^\/+|\/+$/g, "");
 }
 
+/** Sitemap lastmod for a route: a post's own date, else the build-date fallback. */
+export function routeLastmod(path: string, fallback: string): string {
+  const slug = pathToSlug(path);
+  if (slug.startsWith("insights/")) {
+    const post = getInsight(slug.slice("insights/".length));
+    if (post) return post.date;
+  }
+  return fallback;
+}
+
 /** All routes that should be prerendered, as absolute paths. */
 export function allRoutes(): string[] {
   return [
