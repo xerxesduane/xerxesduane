@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { PROCESS } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
@@ -18,7 +18,7 @@ export default function Process() {
           subtitle="From 'I think I need this' to 'I can't believe we ran the business without it.'"
         />
 
-        <motion.ol
+        <m.ol
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -31,7 +31,7 @@ export default function Process() {
             className="absolute left-0 right-0 top-[2.1rem] hidden h-px bg-gradient-to-r from-gold/0 via-gold/30 to-gold/0 md:block"
           />
           {PROCESS.map((step) => (
-            <motion.li
+            <m.li
               key={step.no}
               variants={fadeUp}
               className="glass relative rounded-2xl p-5"
@@ -41,9 +41,9 @@ export default function Process() {
               </span>
               <h3 className="mt-4 text-lg text-cream">{step.title}</h3>
               <p className="mt-2 text-sm text-muted">{step.body}</p>
-            </motion.li>
+            </m.li>
           ))}
-        </motion.ol>
+        </m.ol>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { COMPARISON } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -18,7 +18,7 @@ export default function WhyUs() {
           }
         />
 
-        <motion.div
+        <m.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -26,7 +26,7 @@ export default function WhyUs() {
           className="mx-auto mt-14 max-w-3xl overflow-hidden rounded-3xl"
         >
           {/* header row */}
-          <motion.div
+          <m.div
             variants={fadeUp}
             className="grid grid-cols-2 gap-px text-sm font-semibold"
           >
@@ -36,10 +36,10 @@ export default function WhyUs() {
             <div className="bg-gold/10 px-5 py-4 font-mono text-xs uppercase tracking-wider text-gold">
               Threshold Works
             </div>
-          </motion.div>
+          </m.div>
 
           {COMPARISON.map((row) => (
-            <motion.div
+            <m.div
               variants={fadeUp}
               key={row.bayt}
               className="grid grid-cols-2 gap-px border-t border-cream/5"
@@ -52,9 +52,9 @@ export default function WhyUs() {
                 <Check size={16} className="mt-0.5 shrink-0 text-gold" />
                 {row.bayt}
               </div>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

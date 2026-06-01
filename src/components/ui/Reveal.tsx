@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import type { ReactNode } from "react";
 import { fadeUp, VIEWPORT } from "../../lib/motion";
 
@@ -8,10 +8,10 @@ interface RevealProps {
   delay?: number;
 }
 
-/** Scroll-reveal wrapper. Respects reduced-motion automatically via framer-motion. */
+/** Scroll-reveal wrapper. Respects reduced-motion automatically via framer-m. */
 export default function Reveal({ children, className, delay = 0 }: RevealProps) {
   return (
-    <motion.div
+    <m.div
       className={className}
       variants={fadeUp}
       initial="hidden"
@@ -20,6 +20,6 @@ export default function Reveal({ children, className, delay = 0 }: RevealProps) 
       transition={{ delay }}
     >
       {children}
-    </motion.div>
+    </m.div>
   );
 }

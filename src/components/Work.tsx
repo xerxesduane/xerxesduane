@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowUpRight, Check } from "lucide-react";
 import { CASE_STUDIES } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -18,7 +18,7 @@ export default function Work() {
           subtitle="From full Odoo deployments to ad campaigns that pay for themselves, a sample of recent work across the UAE, the Philippines, and beyond."
         />
 
-        <motion.div
+        <m.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -26,7 +26,7 @@ export default function Work() {
           className="mt-14 grid gap-5 lg:grid-cols-2"
         >
           {CASE_STUDIES.map((c) => (
-            <motion.article
+            <m.article
               key={c.client}
               variants={fadeUp}
               className="glass glass-hover flex flex-col rounded-3xl p-7 sm:p-9"
@@ -81,9 +81,9 @@ export default function Work() {
                 <ArrowUpRight size={16} className="text-gold" />
                 {c.takeaway}
               </p>
-            </motion.article>
+            </m.article>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

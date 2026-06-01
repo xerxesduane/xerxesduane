@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { PROMISE } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -16,7 +16,7 @@ export default function Promise() {
         </Reveal>
 
         <div className="mx-auto mt-12 grid max-w-4xl gap-5 md:grid-cols-2">
-          <motion.div
+          <m.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
@@ -28,19 +28,19 @@ export default function Promise() {
             </h3>
             <ul className="mt-5 space-y-3">
               {PROMISE.never.map((item) => (
-                <motion.li
+                <m.li
                   key={item}
                   variants={fadeUp}
                   className="flex items-start gap-3 text-sm text-muted"
                 >
                   <X size={17} className="mt-0.5 shrink-0 text-muted-dark" />
                   {item}
-                </motion.li>
+                </m.li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
@@ -52,17 +52,17 @@ export default function Promise() {
             </h3>
             <ul className="mt-5 space-y-3">
               {PROMISE.always.map((item) => (
-                <motion.li
+                <m.li
                   key={item}
                   variants={fadeUp}
                   className="flex items-start gap-3 text-sm text-cream"
                 >
                   <Check size={17} className="mt-0.5 shrink-0 text-gold" />
                   {item}
-                </motion.li>
+                </m.li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
         </div>
       </div>
     </section>

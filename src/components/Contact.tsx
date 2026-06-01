@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowUpRight, Mail, MapPin, MessageCircle } from "lucide-react";
 import { CONTACT } from "../data/content";
 import { track } from "../lib/analytics";
@@ -95,7 +95,7 @@ export default function Contact() {
           </Reveal>
 
           {/* Right: form */}
-          <motion.form
+          <m.form
             onSubmit={onSubmit}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -166,7 +166,7 @@ export default function Contact() {
             <p className="text-center text-xs text-muted-dark">
               Opens WhatsApp with your details, review before sending.
             </p>
-          </motion.form>
+          </m.form>
         </div>
       </div>
     </section>

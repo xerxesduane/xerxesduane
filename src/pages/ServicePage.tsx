@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowUpRight, ArrowLeft, Check } from "lucide-react";
 import { SERVICE_PAGES, type ServicePageData } from "../data/servicePages";
 import { CASE_STUDIES } from "../data/content";
@@ -19,36 +19,36 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       {/* Header */}
       <section id="top" className="relative overflow-hidden pt-36 pb-16 sm:pt-44 sm:pb-20">
         <div className="container-bl">
-          <motion.div
+          <m.div
             variants={stagger}
             initial="hidden"
             animate="show"
             className="mx-auto max-w-3xl text-center"
           >
-            <motion.span
+            <m.span
               variants={fadeUp}
               className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold"
             >
               <Icon size={14} strokeWidth={1.8} />
               {page.eyebrow}
-            </motion.span>
+            </m.span>
 
-            <motion.h1
+            <m.h1
               variants={fadeUp}
               className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl"
             >
               {page.h1Lead}{" "}
               <span className="text-gradient-gold italic">{page.h1Accent}</span>
-            </motion.h1>
+            </m.h1>
 
-            <motion.p
+            <m.p
               variants={fadeUp}
               className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl"
             >
               {page.lede}
-            </motion.p>
+            </m.p>
 
-            <motion.div
+            <m.div
               variants={fadeUp}
               className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
             >
@@ -66,8 +66,8 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                 <ArrowLeft size={16} strokeWidth={2.2} />
                 Back to everything we do
               </a>
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </section>
 
@@ -78,7 +78,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             <h2 className="text-3xl sm:text-4xl">{page.bulletsHeading}</h2>
           </Reveal>
 
-          <motion.div
+          <m.div
             variants={stagger}
             initial="hidden"
             whileInView="show"
@@ -86,7 +86,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             className="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-2"
           >
             {page.bullets.map((b) => (
-              <motion.article
+              <m.article
                 key={b.title}
                 variants={fadeUp}
                 className="glass glass-hover rounded-2xl p-6"
@@ -96,9 +96,9 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                 </span>
                 <h3 className="mt-4 text-lg text-cream">{b.title}</h3>
                 <p className="mt-2 text-sm text-muted">{b.body}</p>
-              </motion.article>
+              </m.article>
             ))}
-          </motion.div>
+          </m.div>
 
           {/* Who it's for */}
           <Reveal delay={0.1} className="mx-auto mt-12 max-w-2xl">

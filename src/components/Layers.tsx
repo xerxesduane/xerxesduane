@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { LAYERS } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
@@ -17,7 +17,7 @@ export default function Layers() {
           subtitle="Most agencies sell you Layer 3. We build all four, because the marketing doesn't work if the foundation is broken."
         />
 
-        <motion.div
+        <m.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -25,7 +25,7 @@ export default function Layers() {
           className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-4"
         >
           {LAYERS.map((layer) => (
-            <motion.div
+            <m.div
               key={layer.no}
               variants={fadeUp}
               className="glass glass-hover relative overflow-hidden rounded-2xl p-6"
@@ -42,9 +42,9 @@ export default function Layers() {
                 aria-hidden
                 className="absolute bottom-0 left-0 h-px w-full bg-gradient-to-r from-gold/0 via-gold/40 to-gold/0"
               />
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

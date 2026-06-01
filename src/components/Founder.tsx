@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { MapPin } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -99,7 +99,7 @@ export default function Founder() {
               </h2>
             </Reveal>
 
-            <motion.div
+            <m.div
               variants={stagger}
               initial="hidden"
               whileInView="show"
@@ -107,7 +107,7 @@ export default function Founder() {
               className="mt-8 grid gap-4 sm:grid-cols-2"
             >
               {VALUES.map((v, i) => (
-                <motion.div
+                <m.div
                   key={v.title}
                   variants={fadeUp}
                   className="glass glass-hover rounded-2xl p-5"
@@ -117,9 +117,9 @@ export default function Founder() {
                   </span>
                   <h4 className="mt-2 text-lg text-cream">{v.title}</h4>
                   <p className="mt-2 text-sm text-muted">{v.body}</p>
-                </motion.div>
+                </m.div>
               ))}
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </div>

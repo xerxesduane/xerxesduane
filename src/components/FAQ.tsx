@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import { Plus } from "lucide-react";
 import { FAQS } from "../data/content";
 import { EASE } from "../lib/motion";
@@ -39,18 +39,18 @@ export default function FAQ() {
                     >
                       {faq.q}
                     </span>
-                    <motion.span
+                    <m.span
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ duration: 0.3, ease: EASE }}
                       className="shrink-0 text-gold"
                     >
                       <Plus size={20} />
-                    </motion.span>
+                    </m.span>
                   </button>
                 </h3>
                 <AnimatePresence initial={false}>
                   {isOpen && (
-                    <motion.div
+                    <m.div
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
@@ -58,7 +58,7 @@ export default function FAQ() {
                       className="overflow-hidden"
                     >
                       <p className="px-6 pb-5 text-[15px] text-muted">{faq.a}</p>
-                    </motion.div>
+                    </m.div>
                   )}
                 </AnimatePresence>
               </div>

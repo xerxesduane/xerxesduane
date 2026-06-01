@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Menu, X, ArrowUpRight } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, m } from "framer-motion";
 import Wordmark from "./ui/Wordmark";
 import { NAV_LINKS } from "../data/content";
 import { EASE } from "../lib/motion";
@@ -71,7 +71,7 @@ export default function Nav() {
 
       <AnimatePresence>
         {open && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
@@ -101,7 +101,7 @@ export default function Nav() {
                 <ArrowUpRight size={16} strokeWidth={2.5} />
               </a>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
     </header>

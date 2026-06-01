@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { SERVICES } from "../data/content";
 import { scaleIn, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
@@ -17,7 +17,7 @@ export default function Services() {
           subtitle="Most studios sell you one piece. We build the whole system, and the AI that ties it all together."
         />
 
-        <motion.div
+        <m.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -27,7 +27,7 @@ export default function Services() {
           {SERVICES.map((s) => {
             const Icon = s.icon;
             return (
-              <motion.article
+              <m.article
                 key={s.title}
                 variants={scaleIn}
                 className={`glass glass-hover group relative flex flex-col rounded-2xl p-6 ${
@@ -68,10 +68,10 @@ export default function Services() {
                     Featured capability
                   </span>
                 )}
-              </motion.article>
+              </m.article>
             );
           })}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

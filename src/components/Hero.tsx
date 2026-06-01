@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowUpRight, Star } from "lucide-react";
 import { fadeUp, stagger, EASE } from "../lib/motion";
 
@@ -6,13 +6,13 @@ export default function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28">
       <div className="container-bl">
-        <motion.div
+        <m.div
           variants={stagger}
           initial="hidden"
           animate="show"
           className="mx-auto max-w-4xl text-center"
         >
-          <motion.span
+          <m.span
             variants={fadeUp}
             className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-cream-dim/80"
           >
@@ -21,18 +21,18 @@ export default function Hero() {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
             </span>
             All-in-one tech studio · Dubai
-          </motion.span>
+          </m.span>
 
-          <motion.h1
+          <m.h1
             variants={fadeUp}
             className="mt-7 text-4xl leading-[1.04] sm:text-6xl md:text-7xl"
           >
             Big-company systems for{" "}
             <span className="text-gradient-gold italic">small businesses</span>
             <br className="hidden sm:block" /> that can't afford a tech team.
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             variants={fadeUp}
             className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl"
           >
@@ -41,9 +41,9 @@ export default function Hero() {
             Works builds the websites, apps, ERP, automation, and AI that actually
             work together, honestly, under one roof, so you can stop managing tools
             and get back to growing.
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             variants={fadeUp}
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
@@ -64,9 +64,9 @@ export default function Hero() {
             >
               See how we work
             </a>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             variants={fadeUp}
             className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-xs text-muted"
           >
@@ -80,12 +80,12 @@ export default function Hero() {
             <span>Dubai → New Zealand</span>
             <span className="text-muted-dark">·</span>
             <span>60-min audit, zero pressure</span>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </div>
 
       {/* scroll cue */}
-      <motion.div
+      <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.2, duration: 0.8, ease: EASE }}
@@ -95,7 +95,7 @@ export default function Hero() {
         <div className="flex h-9 w-5 items-start justify-center rounded-full border border-cream/20 p-1">
           <span className="h-2 w-1 animate-scroll-cue rounded-full bg-gold" />
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 }

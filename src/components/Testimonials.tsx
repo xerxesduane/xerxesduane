@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import { TESTIMONIALS } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -18,7 +18,7 @@ export default function Testimonials() {
           subtitle="No vanity metrics here, just what it's actually like to work together."
         />
 
-        <motion.div
+        <m.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -26,7 +26,7 @@ export default function Testimonials() {
           className="mt-14 grid gap-4 md:grid-cols-3"
         >
           {TESTIMONIALS.map((t) => (
-            <motion.figure
+            <m.figure
               key={t.name}
               variants={fadeUp}
               className="glass glass-hover flex flex-col rounded-2xl p-6"
@@ -47,9 +47,9 @@ export default function Testimonials() {
                   {t.context}
                 </div>
               </figcaption>
-            </motion.figure>
+            </m.figure>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { INDUSTRIES } from "../data/content";
 import { scaleIn, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
@@ -18,7 +18,7 @@ export default function Industries() {
           subtitle="We work best with small, owner-led businesses, where the founder still picks up the phone, and good tech can quietly change everything."
         />
 
-        <motion.div
+        <m.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -28,7 +28,7 @@ export default function Industries() {
           {INDUSTRIES.map((ind) => {
             const Icon = ind.icon;
             return (
-              <motion.article
+              <m.article
                 key={ind.name}
                 variants={scaleIn}
                 className={`glass glass-hover group flex flex-col rounded-2xl p-6 ${
@@ -52,10 +52,10 @@ export default function Industries() {
                     {ind.worked}
                   </p>
                 )}
-              </motion.article>
+              </m.article>
             );
           })}
-        </motion.div>
+        </m.div>
 
         <p className="mx-auto mt-10 max-w-2xl text-center text-sm text-muted-dark">
           Also serving legal services, clinics, consultancies, real estate,

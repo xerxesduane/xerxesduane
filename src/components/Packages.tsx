@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { m } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { PACKAGES } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -18,7 +18,7 @@ export default function Packages() {
           subtitle="No cold retainers. Start with an audit, become a project, grow into a partnership, naturally."
         />
 
-        <motion.div
+        <m.div
           variants={stagger}
           initial="hidden"
           whileInView="show"
@@ -26,7 +26,7 @@ export default function Packages() {
           className="mt-14 grid gap-5 md:grid-cols-3"
         >
           {PACKAGES.map((p) => (
-            <motion.div
+            <m.div
               key={p.name}
               variants={fadeUp}
               className={`glass glass-hover relative flex flex-col rounded-3xl p-7 ${
@@ -58,9 +58,9 @@ export default function Packages() {
                 {p.cta}
                 <ArrowUpRight size={15} strokeWidth={2.5} />
               </a>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
