@@ -31,8 +31,8 @@ export default function Nav() {
             scrolled ? "glass" : "border border-transparent"
           }`}
         >
-          <a href="/" aria-label="Threshold Works, home" className="py-1">
-            <Wordmark />
+          <a href="/" aria-label="Threshold Works by Xerxes Duane, home" className="py-1">
+            <Wordmark endorsed />
           </a>
 
           <ul className="hidden items-center gap-7 md:flex">

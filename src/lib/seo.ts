@@ -47,9 +47,10 @@ const FAQ_SCHEMA = {
 const HOME_META: PageMeta = {
   title: "Threshold Works | Web, Apps, Odoo/ERP & AI Studio in Dubai",
   description:
-    "Dubai tech studio for small businesses: websites, web & mobile apps, Odoo/ERP & CRM, automation, AI, SEO and Google/Meta ads. Book a free 60-minute systems audit.",
+    "Dubai tech studio for small businesses: websites, apps, Odoo/ERP & CRM, automation, AI and ads. Founded by Xerxes Duane. Book a free 60-minute systems audit.",
   canonical: `${SITE_ORIGIN}/`,
   ogTitle: "Threshold Works | Web, Apps, Odoo/ERP & AI Studio in Dubai",
+  // Note: the global #org + #website graph lives in index.html (applies to all routes).
   jsonLd: [FAQ_SCHEMA],
 };
 
@@ -81,11 +82,11 @@ export function allRoutes(): string[] {
 }
 
 const ABOUT_META: PageMeta = {
-  title: "About Xerxes Magdaluyo | Threshold Works",
+  title: "About Xerxes Duane | Threshold Works",
   description:
-    "Xerxes Magdaluyo, founder and lead consultant at Threshold Works: a hands-on Odoo consultant helping Dubai small businesses turn fragmented operations into one connected system.",
+    "Xerxes Duane, founder of Threshold Works: a hands-on Odoo consultant helping Dubai small businesses turn fragmented operations into one connected system. You work directly with him.",
   canonical: `${SITE_ORIGIN}/about`,
-  ogTitle: "About Xerxes Magdaluyo | Threshold Works",
+  ogTitle: "About Xerxes Duane | Threshold Works",
   jsonLd: [
     {
       "@context": "https://schema.org",
@@ -93,7 +94,7 @@ const ABOUT_META: PageMeta = {
       mainEntity: {
         "@type": "Person",
         "@id": `${SITE_ORIGIN}/#xerxes`,
-        name: "Xerxes Magdaluyo",
+        name: "Xerxes Duane",
         jobTitle: "Founder & Lead Consultant",
         worksFor: { "@id": `${SITE_ORIGIN}/#org` },
         image: `${SITE_ORIGIN}/brand/founder-xerxes.jpg`,

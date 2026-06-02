@@ -27,7 +27,7 @@ export const INSIGHTS: InsightPost[] = [
     description:
       "The CRM mistakes we see most often in Dubai small businesses, how each one quietly loses you leads, and what a CRM that actually works looks like.",
     date: "2026-06-01",
-    author: "Xerxes Magdaluyo",
+    author: "Xerxes Duane",
     readingMinutes: 6,
     body: [
       {
@@ -76,7 +76,7 @@ export const INSIGHTS: InsightPost[] = [
     description:
       "A no-spin guide to choosing between Odoo Community and Enterprise for a small business: what you get, what you give up, and how to decide without overpaying.",
     date: "2026-05-30",
-    author: "Xerxes Magdaluyo",
+    author: "Xerxes Duane",
     readingMinutes: 5,
     body: [
       {
@@ -125,7 +125,7 @@ export const INSIGHTS: InsightPost[] = [
     description:
       "The questions to ask, the red flags to avoid, and what good looks like when hiring a web developer in Dubai, so you own your site and it actually performs.",
     date: "2026-05-28",
-    author: "Xerxes Magdaluyo",
+    author: "Xerxes Duane",
     readingMinutes: 6,
     body: [
       {
@@ -174,7 +174,7 @@ export const INSIGHTS: InsightPost[] = [
     description:
       "A plain-English breakdown of what Odoo actually costs a Dubai small business, licenses, implementation, and the hidden costs, so you can budget without surprises.",
     date: "2026-06-01",
-    author: "Xerxes Magdaluyo",
+    author: "Xerxes Duane",
     readingMinutes: 6,
     body: [
       {
@@ -235,7 +235,7 @@ export const INSIGHTS: InsightPost[] = [
     description:
       "A practical comparison of Odoo and Zoho for small businesses in the UAE, where each one wins, where each one hurts, and how to choose without the sales spin.",
     date: "2026-05-26",
-    author: "Xerxes Magdaluyo",
+    author: "Xerxes Duane",
     readingMinutes: 7,
     body: [
       {
@@ -287,7 +287,7 @@ export const INSIGHTS: InsightPost[] = [
     description:
       "Spreadsheets quietly cost growing businesses hours and lost revenue. Five clear signs it's time to move to a proper system, and what to do about it.",
     date: "2026-05-19",
-    author: "Xerxes Magdaluyo",
+    author: "Xerxes Duane",
     readingMinutes: 5,
     body: [
       {
@@ -336,7 +336,7 @@ export const INSIGHTS: InsightPost[] = [
     description:
       "No jargon, no sales pitch: exactly what happens in a free 60-minute systems audit with Threshold Works, and the plain-English map you walk away with.",
     date: "2026-05-12",
-    author: "Xerxes Magdaluyo",
+    author: "Xerxes Duane",
     readingMinutes: 4,
     body: [
       {

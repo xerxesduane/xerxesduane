@@ -17,15 +17,15 @@ export default {
           light: "#5C6F52",
           dim: "#2A3327",
         },
-        // Dubai golden-hour accent
+        // Dubai golden-hour accent (brand spec exact)
         gold: {
-          DEFAULT: "#D9A441",
+          DEFAULT: "#DAA442",
           soft: "#E8C173",
           deep: "#B8842F",
         },
         sage: "#C7D0BC",
         cream: {
-          DEFAULT: "#F4EFE6",
+          DEFAULT: "#F3EFE6",
           dim: "#D8D2C4",
         },
         muted: {

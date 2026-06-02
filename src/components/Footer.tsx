@@ -24,16 +24,22 @@ export default function Footer() {
       <div className="container-bl">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Wordmark />
+            <Wordmark endorsed />
             <p className="mt-4 max-w-xs font-display text-lg italic text-cream-dim">
               Smart systems. Honest work. Real results.
+            </p>
+            <p className="mt-3 text-sm text-muted">
+              Threshold Works by Xerxes Duane · Dubai, UAE
+            </p>
+            <p className="mt-1 text-xs text-muted-dark">
+              Serving Dubai &amp; the wider UAE.
             </p>
             <div className="mt-5 flex gap-3">
               <a
                 href="https://www.linkedin.com/in/xerxesduane"
                 target="_blank"
                 rel="noopener"
-                aria-label="Xerxes Magdaluyo on LinkedIn"
+                aria-label="Xerxes Duane on LinkedIn"
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/10 text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
               >
                 <LinkedinIcon />

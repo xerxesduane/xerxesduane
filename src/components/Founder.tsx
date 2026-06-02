@@ -21,7 +21,7 @@ export default function Founder() {
               <div className="flex items-center gap-4">
                 <img
                   src="/brand/founder-xerxes.jpg"
-                  alt="Xerxes Magdaluyo, founder of Threshold Works"
+                  alt="Xerxes Duane, founder of Threshold Works"
                   width={64}
                   height={64}
                   loading="lazy"
@@ -29,10 +29,10 @@ export default function Founder() {
                 />
                 <div>
                   <h3 className="font-display text-xl text-cream">
-                    Xerxes Magdaluyo
+                    Xerxes Duane
                   </h3>
                   <p className="font-mono text-xs uppercase tracking-wider text-gold/80">
-                    Founder & Lead Consultant
+                    Founder · Threshold Works
                   </p>
                 </div>
               </div>
@@ -78,6 +78,12 @@ export default function Founder() {
                   I once saved a client real money just by suggesting they buy
                   Microsoft from Microsoft instead of through their reseller. That
                   wasn't in scope. They've referred me three times since.
+                </p>
+                <p>
+                  I'm a person of faith, and I run Threshold Works the way I'd want
+                  to be treated: honest counsel, plain language, and your interests
+                  ahead of my invoice. When you hire Threshold Works, you work
+                  directly with me, not a faceless team or an account manager.
                 </p>
                 <p className="font-display text-base italic text-gold">
                   A threshold is the doorstep you cross into something new. That's

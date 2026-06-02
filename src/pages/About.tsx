@@ -40,12 +40,12 @@ export default function About() {
               <div className="glass border-glow rounded-3xl p-7 text-center">
                 <img
                   src="/brand/founder-xerxes.jpg"
-                  alt="Xerxes Magdaluyo, founder and lead consultant of Threshold Works"
+                  alt="Xerxes Duane, founder and lead consultant of Threshold Works"
                   width={120}
                   height={120}
                   className="mx-auto h-28 w-28 rounded-2xl object-cover ring-1 ring-gold/30"
                 />
-                <h2 className="mt-5 font-display text-2xl text-cream">Xerxes Magdaluyo</h2>
+                <h2 className="mt-5 font-display text-2xl text-cream">Xerxes Duane</h2>
                 <p className="mt-1 font-mono text-xs uppercase tracking-wider text-gold/80">
                   Founder &amp; Lead Consultant
                 </p>
