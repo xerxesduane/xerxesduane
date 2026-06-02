@@ -9,8 +9,10 @@ import CaseStudies from "./pages/CaseStudies";
 import About from "./pages/About";
 import Insights from "./pages/Insights";
 import InsightPost from "./pages/InsightPost";
+import ServicePageAr from "./pages/ServicePageAr";
 import NotFound from "./pages/NotFound";
 import { getServicePage } from "./data/servicePages";
+import { getServicePageAr } from "./data/servicePagesAr";
 import { getInsight } from "./data/insights";
 import { pathToSlug } from "./lib/seo";
 
@@ -20,6 +22,12 @@ function Route({ path }: { path: string }) {
   if (slug === "case-studies") return <CaseStudies />;
   if (slug === "about") return <About />;
   if (slug === "insights") return <Insights />;
+
+  // Arabic service pages (draft, noindex): /ar/<service-slug>
+  if (slug.startsWith("ar/")) {
+    const arPage = getServicePageAr(slug.slice("ar/".length));
+    if (arPage) return <ServicePageAr page={arPage} />;
+  }
 
   if (slug.startsWith("insights/")) {
     const post = getInsight(slug.slice("insights/".length));
@@ -34,9 +42,10 @@ function Route({ path }: { path: string }) {
 }
 
 export default function App({ path = "/" }: { path?: string }) {
+  const isArabic = pathToSlug(path).startsWith("ar/");
   return (
     <LazyMotion features={domAnimation} strict>
-      <div className="grain relative min-h-dvh">
+      <div className="grain relative min-h-dvh" dir={isArabic ? "rtl" : "ltr"} lang={isArabic ? "ar" : "en"}>
         <a
           href="#top"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-deep"

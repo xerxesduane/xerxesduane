@@ -1,6 +1,7 @@
 import { SERVICE_PAGES, getServicePage } from "../data/servicePages";
 import { FAQS } from "../data/content";
 import { INSIGHTS, getInsight } from "../data/insights";
+import { SERVICE_PAGES_AR, getServicePageAr } from "../data/servicePagesAr";
 
 export const SITE_ORIGIN = "https://www.xerxesduane.com";
 
@@ -13,6 +14,8 @@ export interface PageMeta {
   ogImage?: string;
   /** Extra JSON-LD nodes serialized into the head (e.g. Service, FAQPage). */
   jsonLd?: Record<string, unknown>[];
+  /** When true, emits robots noindex (e.g. draft Arabic pages, 404). */
+  noindex?: boolean;
 }
 
 const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/brand/og-image.png`;
@@ -78,6 +81,7 @@ export function allRoutes(): string[] {
     "/insights",
     ...INSIGHTS.map((p) => `/insights/${p.slug}`),
     ...SERVICE_PAGES.map((p) => `/${p.slug}`),
+    ...SERVICE_PAGES_AR.map((p) => `/ar/${p.slug}`),
   ];
 }
 
@@ -141,6 +145,20 @@ export function getPageMeta(path: string): PageMeta {
   if (slug === "about") return ABOUT_META;
   if (slug === "case-studies") return CASE_STUDIES_META;
   if (slug === "insights") return INSIGHTS_META;
+
+  // Arabic service pages (draft): noindex until reviewed; no hreflang yet.
+  if (slug.startsWith("ar/")) {
+    const ar = getServicePageAr(slug.slice("ar/".length));
+    if (ar) {
+      return {
+        title: ar.metaTitle,
+        description: ar.metaDescription,
+        canonical: `${SITE_ORIGIN}/ar/${ar.slug}`,
+        ogTitle: ar.metaTitle,
+        noindex: true,
+      };
+    }
+  }
 
   if (slug.startsWith("insights/")) {
     const post = getInsight(slug.slice("insights/".length));
@@ -236,6 +254,9 @@ export function buildHeadTags(path: string): string {
     `<meta name="twitter:description" content="${esc(m.description)}" />`,
     `<meta name="twitter:image" content="${esc(m.ogImage ?? DEFAULT_OG_IMAGE)}" />`,
   ];
+  if (m.noindex) {
+    tags.push(`<meta name="robots" content="noindex, follow" />`);
+  }
   for (const node of m.jsonLd ?? []) {
     tags.push(
       `<script type="application/ld+json">${JSON.stringify(node)}</script>`,

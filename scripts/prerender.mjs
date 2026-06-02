@@ -24,9 +24,14 @@ if (!template.includes("<!--app-html-->")) {
 const routes = allRoutes();
 for (const route of routes) {
   const { html, head } = render(route);
-  const page = template
+  let page = template
     .replace("<!--app-head-->", head)
     .replace("<!--app-html-->", html);
+
+  // Arabic routes render right-to-left in Arabic.
+  if (route.startsWith("/ar/")) {
+    page = page.replace('<html lang="en">', '<html lang="ar" dir="rtl">');
+  }
 
   const outPath =
     route === "/"
@@ -49,9 +54,10 @@ const notFoundPage = template
 await writeFile(join(distDir, "404.html"), notFoundPage, "utf-8");
 console.log("  prerendered  404  ->  ./dist/404.html");
 
-// Sitemap, freshly dated each build.
+// Sitemap, freshly dated each build. Exclude noindex draft routes (/ar/*).
 const today = new Date().toISOString().slice(0, 10);
-const urls = routes
+const indexableRoutes = routes.filter((r) => !r.startsWith("/ar/"));
+const urls = indexableRoutes
   .map((route) => {
     const loc = route === "/" ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${route}`;
     const priority = route === "/" ? "1.0" : "0.8";
@@ -61,6 +67,6 @@ const urls = routes
   .join("\n");
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;
 await writeFile(join(distDir, "sitemap.xml"), sitemap, "utf-8");
-console.log(`  generated    sitemap.xml (${routes.length} urls, ${today})`);
+console.log(`  generated    sitemap.xml (${indexableRoutes.length} urls, ${today})`);
 
 console.log(`\nPrerendered ${routes.length} route(s) + 404.`);
