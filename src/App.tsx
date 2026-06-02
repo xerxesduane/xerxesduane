@@ -12,6 +12,8 @@ import InsightPost from "./pages/InsightPost";
 import ServicePageAr from "./pages/ServicePageAr";
 import HomeAr from "./pages/HomeAr";
 import NotFound from "./pages/NotFound";
+import { Privacy, Terms } from "./pages/Legal";
+import ConsentBanner from "./components/ConsentBanner";
 import { getServicePage } from "./data/servicePages";
 import { getServicePageAr } from "./data/servicePagesAr";
 import { getInsight } from "./data/insights";
@@ -32,6 +34,8 @@ function Route({ path }: { path: string }) {
   if (slug === "case-studies") return <CaseStudies />;
   if (slug === "about") return <About />;
   if (slug === "insights") return <Insights />;
+  if (slug === "privacy") return <Privacy />;
+  if (slug === "terms") return <Terms />;
   if (slug === "ar") return <HomeAr />;
 
   // Arabic service pages: /ar/<service-slug>
@@ -75,6 +79,7 @@ export default function App({ path = "/" }: { path?: string }) {
 
         <Footer locale={isArabic ? "ar" : "en"} />
         <WhatsAppButton locale={isArabic ? "ar" : "en"} />
+        <ConsentBanner />
       </div>
     </LazyMotion>
   );

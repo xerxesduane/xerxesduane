@@ -145,7 +145,17 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
           ) : (
             <>
               <span>© {new Date().getFullYear()} Threshold Works. Built with care in Dubai.</span>
-              <span>Quietly trusted since 2019.</span>
+              <span className="flex items-center gap-3">
+                <a href="/privacy" className="transition-colors hover:text-gold">
+                  Privacy
+                </a>
+                <span aria-hidden>·</span>
+                <a href="/terms" className="transition-colors hover:text-gold">
+                  Terms
+                </a>
+                <span aria-hidden>·</span>
+                <span>Quietly trusted since 2019.</span>
+              </span>
             </>
           )}
         </div>

@@ -95,6 +95,8 @@ export function allRoutes(): string[] {
     "/about",
     "/case-studies",
     "/insights",
+    "/privacy",
+    "/terms",
     ...INSIGHTS.map((p) => `/insights/${p.slug}`),
     ...SERVICE_PAGES.map((p) => `/${p.slug}`),
     "/ar",
@@ -171,12 +173,32 @@ const INSIGHTS_META: PageMeta = {
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Insights", url: `${SITE_ORIGIN}/insights` }])],
 };
 
+const PRIVACY_META: PageMeta = {
+  title: "Privacy Policy | Threshold Works",
+  description:
+    "How Threshold Works collects and uses information: contact enquiries, consent-based analytics, cookies, and your choices. Plain language, no data selling.",
+  canonical: `${SITE_ORIGIN}/privacy`,
+  ogTitle: "Privacy Policy | Threshold Works",
+  jsonLd: [breadcrumb([HOME_CRUMB, { name: "Privacy Policy", url: `${SITE_ORIGIN}/privacy` }])],
+};
+
+const TERMS_META: PageMeta = {
+  title: "Terms of Use | Threshold Works",
+  description:
+    "The terms for using the Threshold Works website: quotes, intellectual property, external links, liability, and governing law (UAE).",
+  canonical: `${SITE_ORIGIN}/terms`,
+  ogTitle: "Terms of Use | Threshold Works",
+  jsonLd: [breadcrumb([HOME_CRUMB, { name: "Terms of Use", url: `${SITE_ORIGIN}/terms` }])],
+};
+
 export function getPageMeta(path: string): PageMeta {
   const slug = pathToSlug(path);
   if (slug === "") return HOME_META;
   if (slug === "about") return ABOUT_META;
   if (slug === "case-studies") return CASE_STUDIES_META;
   if (slug === "insights") return INSIGHTS_META;
+  if (slug === "privacy") return PRIVACY_META;
+  if (slug === "terms") return TERMS_META;
   if (slug === "ar") return AR_HOME_META;
 
   // Arabic service pages.
