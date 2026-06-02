@@ -7,6 +7,7 @@ import {
   Target,
   Bot,
   Video,
+  Film,
   Palette,
   Languages,
   Accessibility,
@@ -130,6 +131,14 @@ export const SERVICES: Service[] = [
     description:
       "Professional video, product photography, reels, and brand films, created with the storytelling instincts of someone who's run real ad campaigns.",
     price: "from AED 1,500/day",
+  },
+  {
+    icon: Film,
+    title: "Video Editing",
+    tagline: "Footage into scroll-stoppers.",
+    description:
+      "Reels, social clips, brand films, and ad cuts edited to hold attention, with captions, motion graphics, and platform-tuned pacing. Fast turnaround and clean revisions.",
+    price: "from AED 750 per video",
   },
   {
     icon: Palette,
