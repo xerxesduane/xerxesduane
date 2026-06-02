@@ -94,6 +94,7 @@ export function allRoutes(): string[] {
     "/",
     "/about",
     "/case-studies",
+    "/showreel",
     "/insights",
     "/privacy",
     "/terms",
@@ -191,6 +192,15 @@ const TERMS_META: PageMeta = {
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Terms of Use", url: `${SITE_ORIGIN}/terms` }])],
 };
 
+const SHOWREEL_META: PageMeta = {
+  title: "Showreel — Video, Editing & Motion | Threshold Works",
+  description:
+    "Video production, editing, color grading, and animation by Threshold Works: events, documentaries, social reels, and brand work across the UAE and beyond.",
+  canonical: `${SITE_ORIGIN}/showreel`,
+  ogTitle: "Showreel — Video, Editing & Motion | Threshold Works",
+  jsonLd: [breadcrumb([HOME_CRUMB, { name: "Showreel", url: `${SITE_ORIGIN}/showreel` }])],
+};
+
 export function getPageMeta(path: string): PageMeta {
   const slug = pathToSlug(path);
   if (slug === "") return HOME_META;
@@ -199,6 +209,7 @@ export function getPageMeta(path: string): PageMeta {
   if (slug === "insights") return INSIGHTS_META;
   if (slug === "privacy") return PRIVACY_META;
   if (slug === "terms") return TERMS_META;
+  if (slug === "showreel") return SHOWREEL_META;
   if (slug === "ar") return AR_HOME_META;
 
   // Arabic service pages.
