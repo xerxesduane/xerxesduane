@@ -5,6 +5,7 @@ import Services from "../components/Services";
 import Layers from "../components/Layers";
 import Industries from "../components/Industries";
 import Work from "../components/Work";
+import SelectedWork from "../components/SelectedWork";
 import Testimonials from "../components/Testimonials";
 import Clients from "../components/Clients";
 import Stats from "../components/Stats";
@@ -27,6 +28,7 @@ export default function Home() {
       <Layers />
       <Stats />
       <Work />
+      <SelectedWork />
       <Testimonials />
       <Clients />
       <Industries />

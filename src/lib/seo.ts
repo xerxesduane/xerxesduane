@@ -94,6 +94,7 @@ export function allRoutes(): string[] {
     "/",
     "/about",
     "/case-studies",
+    "/portfolio",
     "/showreel",
     "/insights",
     "/privacy",
@@ -192,6 +193,15 @@ const TERMS_META: PageMeta = {
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Terms of Use", url: `${SITE_ORIGIN}/terms` }])],
 };
 
+const PORTFOLIO_META: PageMeta = {
+  title: "Portfolio — Web & Graphic Design | Threshold Works",
+  description:
+    "A portfolio of website and brand & graphic design work by Threshold Works for businesses across the UAE and beyond. See the craft, then book a free systems audit.",
+  canonical: `${SITE_ORIGIN}/portfolio`,
+  ogTitle: "Portfolio — Web & Graphic Design | Threshold Works",
+  jsonLd: [breadcrumb([HOME_CRUMB, { name: "Portfolio", url: `${SITE_ORIGIN}/portfolio` }])],
+};
+
 const SHOWREEL_META: PageMeta = {
   title: "Showreel — Video, Editing & Motion | Threshold Works",
   description:
@@ -209,6 +219,7 @@ export function getPageMeta(path: string): PageMeta {
   if (slug === "insights") return INSIGHTS_META;
   if (slug === "privacy") return PRIVACY_META;
   if (slug === "terms") return TERMS_META;
+  if (slug === "portfolio") return PORTFOLIO_META;
   if (slug === "showreel") return SHOWREEL_META;
   if (slug === "ar") return AR_HOME_META;
 

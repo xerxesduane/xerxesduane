@@ -14,6 +14,7 @@ import HomeAr from "./pages/HomeAr";
 import NotFound from "./pages/NotFound";
 import { Privacy, Terms } from "./pages/Legal";
 import Showreel from "./pages/Showreel";
+import Portfolio from "./pages/Portfolio";
 import ConsentBanner from "./components/ConsentBanner";
 import { getServicePage } from "./data/servicePages";
 import { getServicePageAr } from "./data/servicePagesAr";
@@ -38,6 +39,7 @@ function Route({ path }: { path: string }) {
   if (slug === "privacy") return <Privacy />;
   if (slug === "terms") return <Terms />;
   if (slug === "showreel") return <Showreel />;
+  if (slug === "portfolio") return <Portfolio />;
   if (slug === "ar") return <HomeAr />;
 
   // Arabic service pages: /ar/<service-slug>

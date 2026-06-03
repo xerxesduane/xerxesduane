@@ -27,3 +27,6 @@ dist-ssr
 .vercel
 .netlify
 .claude
+
+# Raw portfolio originals — optimized WebP outputs are committed instead
+public/work/_raw
