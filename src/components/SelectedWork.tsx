@@ -28,17 +28,17 @@ export default function SelectedWork() {
           viewport={VIEWPORT}
           className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4"
         >
-          {FEATURED_WORK.slice(0, 8).map((it, i) => (
+          {FEATURED_WORK.slice(0, 8).map((it) => (
             <m.a
               key={it.src}
               href="/portfolio"
               variants={scaleIn}
-              aria-label={`See ${it.label} work`}
+              aria-label={`See ${it.title}`}
               className="glass glass-hover group block aspect-[4/5] overflow-hidden rounded-xl"
             >
               <img
                 src={it.thumb}
-                alt={`${it.label} ${i + 1}`}
+                alt={it.title}
                 loading="lazy"
                 className="h-full w-full object-cover object-top transition-transform duration-500 ease-smooth group-hover:scale-105"
               />

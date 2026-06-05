@@ -2,6 +2,8 @@
 export interface WorkItem {
   category: "web" | "graphic";
   label: string;
+  title: string;
+  href?: string;
   src: string;
   thumb: string;
   w: number;
@@ -13,8 +15,42 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
+    "title": "We Aspire — E-learning platform, Dubai",
+    "href": "https://www.weaspire.ae/",
     "src": "/work/web/web-01.webp",
     "thumb": "/work/web/web-01-thumb.webp",
+    "w": 1600,
+    "h": 1000,
+    "featured": true
+  },
+  {
+    "category": "web",
+    "label": "Web Design",
+    "title": "Gilani Mobility — E-commerce, Dubai",
+    "href": "https://www.gilanimobility.ae/",
+    "src": "/work/web/web-02.webp",
+    "thumb": "/work/web/web-02-thumb.webp",
+    "w": 1600,
+    "h": 1000,
+    "featured": true
+  },
+  {
+    "category": "web",
+    "label": "Web Design",
+    "title": "AYA Home Spa — Dubai",
+    "href": "https://www.ayahomespa.ae/",
+    "src": "/work/web/web-03.webp",
+    "thumb": "/work/web/web-03-thumb.webp",
+    "w": 1600,
+    "h": 1000,
+    "featured": true
+  },
+  {
+    "category": "web",
+    "label": "Web Design",
+    "title": "Web Design 4",
+    "src": "/work/web/web-04.webp",
+    "thumb": "/work/web/web-04-thumb.webp",
     "w": 600,
     "h": 2419,
     "featured": true
@@ -22,42 +58,17 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-02.webp",
-    "thumb": "/work/web/web-02-thumb.webp",
-    "w": 1400,
-    "h": 1050,
-    "featured": true
-  },
-  {
-    "category": "web",
-    "label": "Web Design",
-    "src": "/work/web/web-03.webp",
-    "thumb": "/work/web/web-03-thumb.webp",
-    "w": 1400,
-    "h": 1050,
-    "featured": true
-  },
-  {
-    "category": "web",
-    "label": "Web Design",
-    "src": "/work/web/web-04.webp",
-    "thumb": "/work/web/web-04-thumb.webp",
-    "w": 400,
-    "h": 1856,
-    "featured": true
-  },
-  {
-    "category": "web",
-    "label": "Web Design",
+    "title": "Web Design 5",
     "src": "/work/web/web-05.webp",
     "thumb": "/work/web/web-05-thumb.webp",
-    "w": 500,
-    "h": 1622,
+    "w": 1400,
+    "h": 1050,
     "featured": false
   },
   {
     "category": "web",
     "label": "Web Design",
+    "title": "Web Design 6",
     "src": "/work/web/web-06.webp",
     "thumb": "/work/web/web-06-thumb.webp",
     "w": 1400,
@@ -67,8 +78,29 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
+    "title": "Web Design 7",
     "src": "/work/web/web-07.webp",
     "thumb": "/work/web/web-07-thumb.webp",
+    "w": 400,
+    "h": 1856,
+    "featured": false
+  },
+  {
+    "category": "web",
+    "label": "Web Design",
+    "title": "Web Design 8",
+    "src": "/work/web/web-08.webp",
+    "thumb": "/work/web/web-08-thumb.webp",
+    "w": 500,
+    "h": 1622,
+    "featured": false
+  },
+  {
+    "category": "web",
+    "label": "Web Design",
+    "title": "Web Design 9",
+    "src": "/work/web/web-09.webp",
+    "thumb": "/work/web/web-09-thumb.webp",
     "w": 1400,
     "h": 1050,
     "featured": false
@@ -76,8 +108,19 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-08.webp",
-    "thumb": "/work/web/web-08-thumb.webp",
+    "title": "Web Design 10",
+    "src": "/work/web/web-10.webp",
+    "thumb": "/work/web/web-10-thumb.webp",
+    "w": 1400,
+    "h": 1050,
+    "featured": false
+  },
+  {
+    "category": "web",
+    "label": "Web Design",
+    "title": "Web Design 11",
+    "src": "/work/web/web-11.webp",
+    "thumb": "/work/web/web-11-thumb.webp",
     "w": 1600,
     "h": 1067,
     "featured": false
@@ -85,8 +128,9 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-09.webp",
-    "thumb": "/work/web/web-09-thumb.webp",
+    "title": "Web Design 12",
+    "src": "/work/web/web-12.webp",
+    "thumb": "/work/web/web-12-thumb.webp",
     "w": 500,
     "h": 1516,
     "featured": false
@@ -94,8 +138,9 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-10.webp",
-    "thumb": "/work/web/web-10-thumb.webp",
+    "title": "Web Design 13",
+    "src": "/work/web/web-13.webp",
+    "thumb": "/work/web/web-13-thumb.webp",
     "w": 500,
     "h": 1558,
     "featured": false
@@ -103,8 +148,9 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-11.webp",
-    "thumb": "/work/web/web-11-thumb.webp",
+    "title": "Web Design 14",
+    "src": "/work/web/web-14.webp",
+    "thumb": "/work/web/web-14-thumb.webp",
     "w": 600,
     "h": 2044,
     "featured": false
@@ -112,8 +158,9 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-12.webp",
-    "thumb": "/work/web/web-12-thumb.webp",
+    "title": "Web Design 15",
+    "src": "/work/web/web-15.webp",
+    "thumb": "/work/web/web-15-thumb.webp",
     "w": 1400,
     "h": 800,
     "featured": false
@@ -121,8 +168,9 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-13.webp",
-    "thumb": "/work/web/web-13-thumb.webp",
+    "title": "Web Design 16",
+    "src": "/work/web/web-16.webp",
+    "thumb": "/work/web/web-16-thumb.webp",
     "w": 300,
     "h": 1843,
     "featured": false
@@ -130,8 +178,9 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-14.webp",
-    "thumb": "/work/web/web-14-thumb.webp",
+    "title": "Web Design 17",
+    "src": "/work/web/web-17.webp",
+    "thumb": "/work/web/web-17-thumb.webp",
     "w": 1600,
     "h": 1200,
     "featured": false
@@ -139,8 +188,9 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "src": "/work/web/web-15.webp",
-    "thumb": "/work/web/web-15-thumb.webp",
+    "title": "Web Design 18",
+    "src": "/work/web/web-18.webp",
+    "thumb": "/work/web/web-18-thumb.webp",
     "w": 1400,
     "h": 933,
     "featured": false
@@ -148,6 +198,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 1",
     "src": "/work/graphic/graphic-01.webp",
     "thumb": "/work/graphic/graphic-01-thumb.webp",
     "w": 1000,
@@ -157,6 +208,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 2",
     "src": "/work/graphic/graphic-02.webp",
     "thumb": "/work/graphic/graphic-02-thumb.webp",
     "w": 1200,
@@ -166,6 +218,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 3",
     "src": "/work/graphic/graphic-03.webp",
     "thumb": "/work/graphic/graphic-03-thumb.webp",
     "w": 1400,
@@ -175,6 +228,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 4",
     "src": "/work/graphic/graphic-04.webp",
     "thumb": "/work/graphic/graphic-04-thumb.webp",
     "w": 1400,
@@ -184,6 +238,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 5",
     "src": "/work/graphic/graphic-05.webp",
     "thumb": "/work/graphic/graphic-05-thumb.webp",
     "w": 1200,
@@ -193,6 +248,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 6",
     "src": "/work/graphic/graphic-06.webp",
     "thumb": "/work/graphic/graphic-06-thumb.webp",
     "w": 1400,
@@ -202,6 +258,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 7",
     "src": "/work/graphic/graphic-07.webp",
     "thumb": "/work/graphic/graphic-07-thumb.webp",
     "w": 1400,
@@ -211,6 +268,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 8",
     "src": "/work/graphic/graphic-08.webp",
     "thumb": "/work/graphic/graphic-08-thumb.webp",
     "w": 1400,
@@ -220,6 +278,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "graphic",
     "label": "Graphic Design",
+    "title": "Graphic Design 9",
     "src": "/work/graphic/graphic-09.webp",
     "thumb": "/work/graphic/graphic-09-thumb.webp",
     "w": 1200,
