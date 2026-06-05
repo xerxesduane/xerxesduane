@@ -29,10 +29,10 @@
     <text x="75" y="58" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="1.4" fill="#DAA442">by Xerxes Duane</text>
   </g>
 
-  <text x="100" y="300" font-family="Georgia, serif" font-size="76" font-weight="600" fill="#F3EFE6">Your business is paying for</text>
-  <text x="100" y="390" font-family="Georgia, serif" font-size="76" font-weight="600" font-style="italic" fill="url(#gold)">tech you don't use.</text>
+  <text x="100" y="300" font-family="Georgia, serif" font-size="76" font-weight="600" fill="#F3EFE6">A tech team,</text>
+  <text x="100" y="390" font-family="Georgia, serif" font-size="76" font-weight="600" font-style="italic" fill="url(#gold)">without hiring one.</text>
 
-  <text x="100" y="470" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#9AA39A">Websites · Marketing · Automation · AI, built honestly, in Dubai.</text>
+  <text x="100" y="470" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#9AA39A">Websites · Apps · Odoo/ERP · Automation · AI — Dubai.</text>
 
   <text x="100" y="560" font-family="monospace" font-size="22" letter-spacing="3" fill="#DAA442">SMART SYSTEMS.  HONEST WORK.  REAL RESULTS.</text>
 </svg>
