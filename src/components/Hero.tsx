@@ -1,6 +1,7 @@
 import { m } from "framer-motion";
 import { ArrowUpRight, Star } from "lucide-react";
 import { fadeUp, stagger, EASE } from "../lib/motion";
+import Button from "./ui/Button";
 
 export default function Hero() {
   return (
@@ -47,23 +48,17 @@ export default function Hero() {
             variants={fadeUp}
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
-            <a
-              href="#contact"
-              className="group relative inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-12px_rgba(217,164,65,0.8)] transition duration-300 hover:bg-gold-soft sm:w-auto"
-            >
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-0 -z-10 rounded-full bg-gold/40 blur-xl opacity-60 transition-opacity duration-300 group-hover:opacity-100"
-              />
+            <Button href="#contact" className="w-full px-7 py-3.5 sm:w-auto">
               Book your free audit
               <ArrowUpRight size={17} strokeWidth={2.5} />
-            </a>
-            <a
+            </Button>
+            <Button
+              variant="ghost"
               href="#services"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-cream/15 px-7 py-3.5 text-sm font-semibold text-cream transition duration-300 hover:border-gold/50 hover:text-gold sm:w-auto"
+              className="w-full px-7 py-3.5 sm:w-auto"
             >
               See how we work
-            </a>
+            </Button>
           </m.div>
 
           <m.div

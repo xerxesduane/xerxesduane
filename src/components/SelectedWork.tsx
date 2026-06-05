@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { FEATURED_WORK } from "../data/workItems";
 import { scaleIn, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
+import Button from "./ui/Button";
 
 /** Curated teaser of portfolio work on the home page. Links to /portfolio. */
 export default function SelectedWork() {
@@ -47,13 +48,10 @@ export default function SelectedWork() {
         </m.div>
 
         <div className="mt-10 flex justify-center">
-          <a
-            href="/portfolio"
-            className="group inline-flex items-center justify-center gap-2 rounded-full border border-cream/15 px-7 py-3.5 text-sm font-semibold text-cream transition duration-300 hover:border-gold/50 hover:text-gold"
-          >
+          <Button variant="ghost" href="/portfolio" className="px-7 py-3.5">
             See all work
             <ArrowUpRight size={16} strokeWidth={2.5} />
-          </a>
+          </Button>
         </div>
       </div>
     </section>

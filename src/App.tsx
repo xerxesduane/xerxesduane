@@ -1,4 +1,4 @@
-import { LazyMotion, domAnimation } from "framer-motion";
+import { LazyMotion, domAnimation, MotionConfig } from "framer-motion";
 import Background from "./components/Background";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
@@ -66,6 +66,7 @@ export default function App({ path = "/" }: { path?: string }) {
   const lang = altLanguage(path);
   return (
     <LazyMotion features={domAnimation} strict>
+      <MotionConfig reducedMotion="user">
       <div className="grain relative min-h-dvh" dir={isArabic ? "rtl" : "ltr"} lang={isArabic ? "ar" : "en"}>
         <a
           href="#top"
@@ -85,6 +86,7 @@ export default function App({ path = "/" }: { path?: string }) {
         <WhatsAppButton locale={isArabic ? "ar" : "en"} />
         <ConsentBanner />
       </div>
+      </MotionConfig>
     </LazyMotion>
   );
 }

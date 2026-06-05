@@ -9,7 +9,7 @@ export default function Work() {
     <section id="work" className="scroll-mt-24 py-20 sm:py-28">
       <div className="container-bl">
         <SectionHeading
-          eyebrow="Selected work"
+          eyebrow="Case studies"
           title={
             <>
               Real businesses. <span className="text-gradient-gold">Quiet wins.</span>

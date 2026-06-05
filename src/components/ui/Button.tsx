@@ -12,7 +12,7 @@ export default function Button({
   ...props
 }: ButtonProps) {
   const base =
-    "group relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-300 ease-smooth focus-visible:outline-none";
+    "group relative inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition duration-300 ease-smooth hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink";
 
   if (variant === "ghost") {
     return (

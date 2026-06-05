@@ -111,6 +111,18 @@
     -webkit-backdrop-filter: blur(14px);
   }
 
+  /* Edge-faded hairline divider for section rhythm */
+  .hairline {
+    height: 1px;
+    width: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(244, 239, 230, 0.12) 50%,
+      transparent 100%
+    );
+  }
+
   /* Solid navigation surface — opaque, premium, never see-through */
   .nav-surface {
     background:
