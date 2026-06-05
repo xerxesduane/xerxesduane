@@ -1,22 +1,32 @@
+import { lazy, Suspense } from "react";
 import { LazyMotion, domAnimation, MotionConfig } from "framer-motion";
 import Background from "./components/Background";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MobileCTA from "./components/MobileCTA";
-import Home from "./pages/Home";
-import ServicePage from "./pages/ServicePage";
-import CaseStudies from "./pages/CaseStudies";
-import About from "./pages/About";
-import Insights from "./pages/Insights";
-import InsightPost from "./pages/InsightPost";
-import ServicePageAr from "./pages/ServicePageAr";
-import HomeAr from "./pages/HomeAr";
-import NotFound from "./pages/NotFound";
-import { Privacy, Terms } from "./pages/Legal";
-import Showreel from "./pages/Showreel";
-import Portfolio from "./pages/Portfolio";
 import ConsentBanner from "./components/ConsentBanner";
+
+// Route-level code splitting: each page ships as its own chunk, so a visitor
+// only downloads the JS for the route they're on. The streaming prerender
+// (entry-server) resolves these before writing HTML, so SEO is unaffected.
+const Home = lazy(() => import("./pages/Home"));
+const ServicePage = lazy(() => import("./pages/ServicePage"));
+const CaseStudies = lazy(() => import("./pages/CaseStudies"));
+const About = lazy(() => import("./pages/About"));
+const Insights = lazy(() => import("./pages/Insights"));
+const InsightPost = lazy(() => import("./pages/InsightPost"));
+const ServicePageAr = lazy(() => import("./pages/ServicePageAr"));
+const HomeAr = lazy(() => import("./pages/HomeAr"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const Privacy = lazy(() =>
+  import("./pages/Legal").then((m) => ({ default: m.Privacy })),
+);
+const Terms = lazy(() =>
+  import("./pages/Legal").then((m) => ({ default: m.Terms })),
+);
+const Showreel = lazy(() => import("./pages/Showreel"));
+const Portfolio = lazy(() => import("./pages/Portfolio"));
 import { getServicePage } from "./data/servicePages";
 import { getServicePageAr } from "./data/servicePagesAr";
 import { getInsight } from "./data/insights";
@@ -80,7 +90,9 @@ export default function App({ path = "/" }: { path?: string }) {
         <Nav langHref={lang.href} langLabel={lang.label} locale={isArabic ? "ar" : "en"} />
 
         <main className="relative z-10">
-          <Route path={path} />
+          <Suspense fallback={null}>
+            <Route path={path} />
+          </Suspense>
         </main>
 
         <Footer locale={isArabic ? "ar" : "en"} />

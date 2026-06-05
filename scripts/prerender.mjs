@@ -23,7 +23,7 @@ if (!template.includes("<!--app-html-->")) {
 
 const routes = allRoutes();
 for (const route of routes) {
-  const { html, head } = render(route);
+  const { html, head } = await render(route);
   let page = template
     .replace("<!--app-head-->", head)
     .replace("<!--app-html-->", html);
@@ -44,7 +44,7 @@ for (const route of routes) {
 }
 
 // 404 page (Vercel serves /404.html for unmatched routes, with a 404 status).
-const notFound = render("/__not-found__");
+const notFound = await render("/__not-found__");
 const notFoundHead =
   "<title>Page not found | Threshold Works</title>\n" +
   '    <meta name="robots" content="noindex" />';
