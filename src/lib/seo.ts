@@ -139,6 +139,7 @@ const ABOUT_META: PageMeta = {
     "Xerxes Duane, founder of Threshold Works: a hands-on Odoo consultant helping Dubai small businesses turn fragmented operations into one connected system. You work directly with him.",
   canonical: `${SITE_ORIGIN}/about`,
   ogTitle: "About Xerxes Duane | Threshold Works",
+  ogImage: `${SITE_ORIGIN}/brand/og/about.png`,
   jsonLd: [
     {
       "@context": "https://schema.org",
@@ -211,6 +212,7 @@ const PORTFOLIO_META: PageMeta = {
     "A portfolio of website and brand & graphic design work by Threshold Works for businesses across the UAE and beyond. See the craft, then book a free systems audit.",
   canonical: `${SITE_ORIGIN}/portfolio`,
   ogTitle: "Portfolio — Web & Graphic Design | Threshold Works",
+  ogImage: `${SITE_ORIGIN}/brand/og/portfolio.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Portfolio", url: `${SITE_ORIGIN}/portfolio` }])],
 };
 
@@ -220,6 +222,7 @@ const SHOWREEL_META: PageMeta = {
     "Video production, editing, color grading, and animation by Threshold Works: events, documentaries, social reels, and brand work across the UAE and beyond.",
   canonical: `${SITE_ORIGIN}/showreel`,
   ogTitle: "Showreel — Video, Editing & Motion | Threshold Works",
+  ogImage: `${SITE_ORIGIN}/brand/og/showreel.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Showreel", url: `${SITE_ORIGIN}/showreel` }])],
 };
 
