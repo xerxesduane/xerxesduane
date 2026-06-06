@@ -25,25 +25,30 @@ export default function Marquee() {
         Quietly trusted from Dubai to New Zealand
       </p>
       <div className="mask-fade-x overflow-hidden">
-        <ul className="flex w-max animate-marquee items-center gap-12 pr-12">
-          {row.map((item, i) => (
-            <li
-              key={`${item.name}-${i}`}
-              className="flex shrink-0 items-center whitespace-nowrap font-display text-xl text-cream-dim/45 transition-colors hover:text-gold/80"
-            >
-              {useLogos ? (
+        <ul className={`flex w-max animate-marquee items-center ${useLogos ? "gap-4 pr-4 sm:gap-5 sm:pr-5" : "gap-12 pr-12"}`}>
+          {row.map((item, i) =>
+            useLogos ? (
+              <li
+                key={`${item.name}-${i}`}
+                className="flex h-16 shrink-0 items-center justify-center rounded-xl bg-cream px-6 opacity-90 transition-opacity hover:opacity-100"
+              >
                 <img
                   src={item.src}
                   alt={item.name}
                   height={36}
                   loading="lazy"
-                  className="h-9 w-auto opacity-60 grayscale transition hover:opacity-100 hover:grayscale-0"
+                  className="max-h-9 w-auto object-contain"
                 />
-              ) : (
-                item.name
-              )}
-            </li>
-          ))}
+              </li>
+            ) : (
+              <li
+                key={`${item.name}-${i}`}
+                className="shrink-0 whitespace-nowrap font-display text-xl text-cream-dim/45 transition-colors hover:text-gold/80"
+              >
+                {item.name}
+              </li>
+            ),
+          )}
         </ul>
       </div>
     </section>

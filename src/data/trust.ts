@@ -34,6 +34,14 @@ export const TRUST: TrustConfig = {
   since: 2019,
   google: null,
   logos: [
-    // { name: "AYA Home Spa", src: "/brand/clients/aya.svg" },
+    { name: "Gilani Mobility", src: "/brand/clients/gilani-mobility.png" },
+    { name: "We Aspire", src: "/brand/clients/we-aspire.png" },
+    { name: "AYA Home Spa", src: "/brand/clients/aya-home-spa.png" },
+    { name: "Caronic", src: "/brand/clients/caronic.png" },
+    { name: "Blocktec", src: "/brand/clients/blocktec.png" },
+    { name: "Keystone Events", src: "/brand/clients/keystone-events.png" },
+    { name: "Wellington Cash for Cars", src: "/brand/clients/wellington.png" },
+    { name: "Gilani Motors", src: "/brand/clients/gilani-motors.png" },
+    { name: "Al Mumtaz", src: "/brand/clients/al-mumtaz.png" },
   ],
 };
