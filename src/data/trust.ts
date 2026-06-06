@@ -39,7 +39,6 @@ export const TRUST: TrustConfig = {
     { name: "AYA Home Spa", src: "/brand/clients/aya-home-spa.png" },
     { name: "Caronic", src: "/brand/clients/caronic.png" },
     { name: "Blocktec", src: "/brand/clients/blocktec.png" },
-    { name: "Keystone Events", src: "/brand/clients/keystone-events.png" },
     { name: "Wellington Cash for Cars", src: "/brand/clients/wellington.png" },
     { name: "Gilani Motors", src: "/brand/clients/gilani-motors.png" },
     { name: "Al Mumtaz", src: "/brand/clients/al-mumtaz.png" },
