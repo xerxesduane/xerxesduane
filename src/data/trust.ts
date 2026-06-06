@@ -30,7 +30,7 @@ export interface TrustConfig {
 
 export const TRUST: TrustConfig = {
   enabled: false,
-  clientCount: null,
+  clientCount: 50,
   since: 2019,
   google: null,
   logos: [

@@ -386,7 +386,7 @@ export const COMPARISON: { agency: string; bayt: string }[] = [
 
 export const STATS: { value: number; suffix: string; label: string }[] = [
   { value: 6, suffix: "+", label: "Years building for Dubai businesses" },
-  { value: 20, suffix: "+", label: "Businesses helped across industries" },
+  { value: 50, suffix: "+", label: "Businesses helped across industries" },
   { value: 117, suffix: "K+", label: "Ad impressions delivered" },
   { value: 100, suffix: "%", label: "Growth from referrals & word of mouth" },
 ];
