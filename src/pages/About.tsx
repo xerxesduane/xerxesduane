@@ -3,18 +3,19 @@ import Reveal from "../components/ui/Reveal";
 import Contact from "../components/Contact";
 
 const FOCUS = [
-  "Understand how the business actually operates",
-  "Eliminate manual processes and duplicated work",
-  "Build scalable systems that teams can adopt",
-  "Customize Odoo around real operational needs",
+  "Start by understanding how your business actually operates",
+  "Replace manual, duplicated work with systems that run themselves",
+  "Build for scale, so the tools still fit as you grow",
+  "Shape everything around your real operations, not a generic template",
 ];
 
 const PROJECTS = [
   "Construction and manufacturing workflows",
-  "E-commerce and lead management systems",
-  "Inventory operations and purchasing",
-  "Website and CRM integrations",
-  "Marketing automation and customer management",
+  "E-commerce and lead-management systems",
+  "Inventory operations",
+  "Website builds and integrations",
+  "Marketing automation",
+  "Customer-management platforms",
 ];
 
 export default function About() {
@@ -59,18 +60,22 @@ export default function About() {
             <Reveal delay={0.1}>
               <div className="space-y-5 text-[17px] leading-relaxed text-muted">
                 <p>
-                  I help businesses streamline operations by building and
-                  customizing Odoo-based business systems that connect sales, CRM,
-                  inventory, purchasing, accounting, websites, and internal
-                  workflows into a single platform.
+                  I help growing businesses run on systems that actually work
+                  together. Instead of a website in one place, spreadsheets in
+                  another, and a handful of apps that don't talk to each other, I
+                  connect sales, CRM, inventory, purchasing, accounting, your
+                  website, and your day-to-day workflows into one platform your
+                  team will genuinely use.
                 </p>
                 <p>
-                  While not an official Odoo Partner, I specialize in Odoo
-                  implementation, customization, automation, and business process
-                  development for companies that need practical solutions rather
-                  than expensive enterprise consulting layers.
+                  My work sits in the gap between off-the-shelf tools that never
+                  quite fit and expensive enterprise consultants who bill for
+                  layers most businesses don't need. I build practical, scalable
+                  systems around how your business really operates, often on
+                  flexible platforms like Odoo, but the tool is always chosen to
+                  fit the problem rather than the other way around.
                 </p>
-                <p className="text-cream-dim">My focus is simple:</p>
+                <p className="text-cream-dim">My approach is simple:</p>
                 <ul className="space-y-2.5">
                   {FOCUS.map((f) => (
                     <li key={f} className="flex items-start gap-3 text-base text-cream-dim">
@@ -79,27 +84,6 @@ export default function About() {
                     </li>
                   ))}
                 </ul>
-                <p>
-                  Recent projects include construction and manufacturing-related
-                  workflows, e-commerce and lead management systems, inventory
-                  operations, website integrations, marketing automation, and
-                  customer management platforms.
-                </p>
-                <p>
-                  Alongside that, I currently lead digital for{" "}
-                  <a
-                    href="https://fellowshipdubai.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-cream-dim underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold"
-                  >
-                    Fellowship Dubai
-                  </a>
-                  , a multi-site church in Dubai, looking after their website
-                  (design and development), Google Business Profile and local
-                  search, and the digital marketing and content across Facebook
-                  and Instagram, working closely with their Communications Director.
-                </p>
               </div>
             </Reveal>
           </div>
@@ -119,10 +103,24 @@ export default function About() {
                 </li>
               ))}
             </ul>
-            <p className="mt-8 font-display text-xl italic text-gold">
-              Whether you need a new Odoo deployment, process optimization, or
-              custom development, I help turn fragmented operations into
-              structured, measurable systems.
+            <p className="mt-8 text-[17px] leading-relaxed text-muted">
+              Alongside client work, I lead digital for{" "}
+              <a
+                href="https://fellowshipdubai.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cream-dim underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold"
+              >
+                Fellowship Dubai
+              </a>
+              , a multi-site church in Dubai, looking after their website design
+              and development, their Google Business Profile and local search,
+              and the content and digital marketing across Facebook and Instagram.
+            </p>
+            <p className="mt-6 font-display text-xl italic text-gold">
+              Whatever the project, the standard stays the same: smart systems,
+              honest work, and results you can measure. I do this through my
+              Dubai studio, Threshold Works.
             </p>
             <div className="mt-8">
               <a
