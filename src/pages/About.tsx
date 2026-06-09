@@ -85,6 +85,21 @@ export default function About() {
                   operations, website integrations, marketing automation, and
                   customer management platforms.
                 </p>
+                <p>
+                  Alongside that, I currently lead digital for{" "}
+                  <a
+                    href="https://fellowshipdubai.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-cream-dim underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold"
+                  >
+                    Fellowship Dubai
+                  </a>
+                  , a multi-site church in Dubai, looking after their website
+                  (design and development), Google Business Profile and local
+                  search, and the digital marketing and content across Facebook
+                  and Instagram, working closely with their Communications Director.
+                </p>
               </div>
             </Reveal>
           </div>

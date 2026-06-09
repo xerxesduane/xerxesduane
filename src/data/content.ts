@@ -247,7 +247,9 @@ export const INDUSTRIES: Industry[] = [
   {
     icon: Church,
     name: "Churches & Faith-Based",
-    blurb: "Member management, donations, event registration, and communication platforms built with care.",
+    blurb: "Websites, Google Business Profile and local search, digital marketing, and social content, built with care for the mission.",
+    worked: "Fellowship Dubai",
+    workedUrl: "https://fellowshipdubai.com/",
     mission: true,
   },
   {
@@ -472,9 +474,17 @@ export interface Client {
   sector: string;
   url: string;
   instagram?: string;
+  facebook?: string;
 }
 
 export const CLIENTS: Client[] = [
+  {
+    name: "Fellowship Dubai",
+    sector: "Church & Non-Profit · Dubai",
+    url: "https://fellowshipdubai.com/",
+    facebook: "https://www.facebook.com/fellowshipdubai",
+    instagram: "https://www.instagram.com/fellowshipdubai",
+  },
   {
     name: "AYA Home Spa",
     sector: "Wellness & Spa · Dubai",
