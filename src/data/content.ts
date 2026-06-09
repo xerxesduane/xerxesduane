@@ -312,6 +312,21 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Centralized lead management and a clearer path from inquiry to demo to conversion across sales and engagement.",
   },
   {
+    client: "Fellowship Dubai",
+    location: "Dubai · Church & Non-Profit",
+    category: "Web · GMB · Social",
+    challenge:
+      "A multi-site church in Dubai needed to grow its reach and be easy to find, across a redesigned website, Google Business Profile and local search for both campuses, and a consistent content engine on Facebook and Instagram, working alongside their Communications Director.",
+    stats: [
+      { value: "16.8K", label: "Community followers" },
+      { value: "60K+", label: "Monthly content views" },
+      { value: "8.6K", label: "Google views / mo" },
+      { value: "452", label: "Directions to campuses / mo" },
+    ],
+    takeaway: "A growing, easy-to-find digital presence, run end to end across web, search, and social.",
+    url: "https://fellowshipdubai.com/",
+  },
+  {
     client: "AYA Home Spa",
     location: "Dubai · Wellness",
     category: "Meta Ads",
