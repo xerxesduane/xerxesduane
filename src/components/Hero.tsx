@@ -4,6 +4,7 @@ import { fadeUp, stagger, EASE } from "../lib/motion";
 import Button from "./ui/Button";
 import Magnetic from "./fx/Magnetic";
 import Kinetic from "./fx/Kinetic";
+import LogoDraw from "./fx/LogoDraw";
 
 export default function Hero() {
   return (
@@ -15,6 +16,8 @@ export default function Hero() {
           animate="show"
           className="mx-auto max-w-4xl text-center"
         >
+          <LogoDraw className="mx-auto mb-7 h-14 w-14" />
+
           <m.span
             variants={fadeUp}
             className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-cream-dim/80"
