@@ -30,3 +30,4 @@ dist-ssr
 
 # Raw portfolio originals — optimized WebP outputs are committed instead
 public/work/_raw
+public/hero/raw.mp4

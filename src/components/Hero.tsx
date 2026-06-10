@@ -5,10 +5,16 @@ import Button from "./ui/Button";
 import Magnetic from "./fx/Magnetic";
 import Kinetic from "./fx/Kinetic";
 import LogoDraw from "./fx/LogoDraw";
+import VideoHero from "./fx/VideoHero";
 
 export default function Hero() {
   return (
-    <section id="top" className="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28">
+    <section
+      id="top"
+      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden pt-32 pb-16 sm:pt-36 sm:pb-20"
+    >
+      {/* full-bleed footage layer (poster prerendered, video client-only) */}
+      <VideoHero />
       {/* depth: faint golden-hour glow behind the doorway + headline */}
       <div
         aria-hidden
