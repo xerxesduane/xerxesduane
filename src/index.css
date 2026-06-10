@@ -15,6 +15,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cross-document page transitions where supported (Chrome/Edge/Safari 18+);
+   PageTransition.tsx provides the JS fallback wipe elsewhere. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.28s;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
 @layer base {
   :root {
     color-scheme: dark;

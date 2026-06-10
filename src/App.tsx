@@ -9,6 +9,7 @@ import ConsentBanner from "./components/ConsentBanner";
 import SmoothScroll from "./components/fx/SmoothScroll";
 import Cursor from "./components/fx/Cursor";
 import Preloader from "./components/fx/Preloader";
+import PageTransition from "./components/fx/PageTransition";
 
 // Route-level code splitting: each page ships as its own chunk, so a visitor
 // only downloads the JS for the route they're on. The streaming prerender
@@ -93,6 +94,7 @@ export default function App({ path = "/" }: { path?: string }) {
         <SmoothScroll />
         <Cursor />
         <Preloader />
+        <PageTransition />
 
         <Background />
         <Nav langHref={lang.href} langLabel={lang.label} locale={isArabic ? "ar" : "en"} />
