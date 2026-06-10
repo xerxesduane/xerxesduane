@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import { m } from "framer-motion";
 import { X, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
+import { wipeReveal } from "../lib/motion";
 import type { WorkItem } from "../data/workItems";
 
 export default function WorkGallery({ items }: { items: WorkItem[] }) {
@@ -36,10 +38,15 @@ export default function WorkGallery({ items }: { items: WorkItem[] }) {
       <div className="columns-1 gap-4 sm:columns-2 lg:columns-3 [&>figure]:mb-4">
         {items.map((it, i) => (
           <figure key={it.src} className="break-inside-avoid">
-            <button
+            <m.button
               type="button"
               onClick={() => setActive(i)}
               aria-label={`View ${it.title}`}
+              data-cursor="view"
+              variants={wipeReveal}
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.15 }}
               className="glass glass-hover block w-full overflow-hidden rounded-xl"
             >
               <img
@@ -50,7 +57,7 @@ export default function WorkGallery({ items }: { items: WorkItem[] }) {
                 alt={it.title}
                 className="w-full"
               />
-            </button>
+            </m.button>
             {it.href && (
               <figcaption className="mt-2 flex items-center justify-between gap-2 px-1 text-xs">
                 <span className="text-cream-dim">{it.title}</span>

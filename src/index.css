@@ -15,6 +15,21 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Cross-document page transitions where supported (Chrome/Edge/Safari 18+);
+   PageTransition.tsx provides the JS fallback wipe elsewhere. */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.28s;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
 @layer base {
   :root {
     color-scheme: dark;
@@ -92,6 +107,26 @@
   ::-webkit-scrollbar-thumb:hover {
     background: theme("colors.olive.light");
   }
+
+  /* Lenis inertia scrolling (mounted client-only on fine pointers).
+     When active it must own easing — neutralize native smooth scroll. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  /* Custom cursor active (fine pointer, motion-safe): hide the native cursor
+     except over text fields, where the I-beam affordance matters. */
+  .tw-cursor,
+  .tw-cursor *:not(input):not(textarea):not(select) {
+    cursor: none;
+  }
 }
 
 @layer components {
@@ -147,6 +182,23 @@
       inset 0 1px 0 0 rgba(244, 239, 230, 0.07),
       0 24px 64px -22px rgba(0, 0, 0, 0.92),
       0 0 28px -10px rgba(218, 164, 66, 0.18);
+  }
+
+  /* Growing gold underline for body/footer links (background-size sweep). */
+  .link-grow {
+    background-image: linear-gradient(90deg, #daa442, #e8c173);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 0% 1px;
+    transition: background-size 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    padding-bottom: 2px;
+  }
+  .link-grow:hover,
+  .link-grow:focus-visible {
+    background-size: 100% 1px;
+  }
+  [dir="rtl"] .link-grow {
+    background-position: right bottom;
   }
 
   /* Animated gold underline for nav links */

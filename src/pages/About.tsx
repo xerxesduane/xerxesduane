@@ -1,6 +1,9 @@
+import { m } from "framer-motion";
 import { ArrowUpRight, Check, MapPin } from "lucide-react";
 import Reveal from "../components/ui/Reveal";
+import Kinetic from "../components/fx/Kinetic";
 import Contact from "../components/Contact";
+import { fadeUp, stagger } from "../lib/motion";
 
 const FOCUS = [
   "Start by understanding how your business actually operates",
@@ -23,14 +26,19 @@ export default function About() {
     <>
       <section id="top" className="relative overflow-hidden pt-36 pb-12 sm:pt-44 sm:pb-16">
         <div className="container-bl">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold">
+          <m.div
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+            className="mx-auto max-w-3xl text-center"
+          >
+            <m.span variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold">
               About
-            </span>
-            <h1 className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl">
+            </m.span>
+            <Kinetic as="h1" className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl">
               The person behind <span className="text-gradient-gold italic">Threshold Works.</span>
-            </h1>
-          </div>
+            </Kinetic>
+          </m.div>
         </div>
       </section>
 

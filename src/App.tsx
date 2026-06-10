@@ -6,6 +6,10 @@ import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MobileCTA from "./components/MobileCTA";
 import ConsentBanner from "./components/ConsentBanner";
+import SmoothScroll from "./components/fx/SmoothScroll";
+import Cursor from "./components/fx/Cursor";
+import Preloader from "./components/fx/Preloader";
+import PageTransition from "./components/fx/PageTransition";
 
 // Route-level code splitting: each page ships as its own chunk, so a visitor
 // only downloads the JS for the route they're on. The streaming prerender
@@ -81,10 +85,16 @@ export default function App({ path = "/" }: { path?: string }) {
       <div className="grain relative min-h-dvh" dir={isArabic ? "rtl" : "ltr"} lang={isArabic ? "ar" : "en"}>
         <a
           href="#top"
+          data-lenis-ignore
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-deep"
         >
           Skip to content
         </a>
+
+        <SmoothScroll />
+        <Cursor />
+        <Preloader />
+        <PageTransition />
 
         <Background />
         <Nav langHref={lang.href} langLabel={lang.label} locale={isArabic ? "ar" : "en"} />

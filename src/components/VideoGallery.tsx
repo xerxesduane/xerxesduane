@@ -46,6 +46,7 @@ export default function VideoGallery() {
                   setActive(v.id);
                 }}
                 aria-label={`Play video: ${v.title}`}
+                data-cursor="play"
                 className="group absolute inset-0 block"
               >
                 <img

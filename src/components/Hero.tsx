@@ -2,10 +2,18 @@ import { m } from "framer-motion";
 import { ArrowUpRight, Star } from "lucide-react";
 import { fadeUp, stagger, EASE } from "../lib/motion";
 import Button from "./ui/Button";
+import Magnetic from "./fx/Magnetic";
+import Kinetic from "./fx/Kinetic";
+import LogoDraw from "./fx/LogoDraw";
 
 export default function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28">
+      {/* depth: faint golden-hour glow behind the doorway + headline */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_55%_42%_at_50%_18%,rgba(218,164,66,0.10),transparent_70%)]"
+      />
       <div className="container-bl">
         <m.div
           variants={stagger}
@@ -13,6 +21,8 @@ export default function Hero() {
           animate="show"
           className="mx-auto max-w-4xl text-center"
         >
+          <LogoDraw className="mx-auto mb-7 h-14 w-14" />
+
           <m.span
             variants={fadeUp}
             className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-cream-dim/80"
@@ -24,14 +34,14 @@ export default function Hero() {
             All-in-one tech studio · Dubai
           </m.span>
 
-          <m.h1
-            variants={fadeUp}
+          <Kinetic
+            as="h1"
             className="mt-7 text-4xl leading-[1.04] sm:text-6xl md:text-7xl"
           >
             Big-company systems for{" "}
             <span className="text-gradient-gold italic">small businesses</span>
             <br className="hidden sm:block" /> that can't afford a tech team.
-          </m.h1>
+          </Kinetic>
 
           <m.p
             variants={fadeUp}
@@ -48,10 +58,12 @@ export default function Hero() {
             variants={fadeUp}
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
           >
-            <Button href="#contact" className="w-full px-7 py-3.5 sm:w-auto">
-              Book your free audit
-              <ArrowUpRight size={17} strokeWidth={2.5} />
-            </Button>
+            <Magnetic strength={0.3} className="w-full sm:w-auto">
+              <Button href="#contact" className="w-full px-7 py-3.5 sm:w-auto">
+                Book your free audit
+                <ArrowUpRight size={17} strokeWidth={2.5} />
+              </Button>
+            </Magnetic>
             <Button
               variant="ghost"
               href="#services"

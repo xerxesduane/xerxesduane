@@ -3,6 +3,7 @@ import { ArrowUpRight, ArrowLeft } from "lucide-react";
 import { CASE_STUDIES } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import CaseStudyCard from "../components/CaseStudyCard";
+import Kinetic from "../components/fx/Kinetic";
 import Contact from "../components/Contact";
 
 export default function CaseStudies() {
@@ -10,19 +11,24 @@ export default function CaseStudies() {
     <>
       <section id="top" className="relative overflow-hidden pt-36 pb-12 sm:pt-44 sm:pb-16">
         <div className="container-bl">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold">
+          <m.div
+            variants={stagger}
+            initial="hidden"
+            animate="show"
+            className="mx-auto max-w-3xl text-center"
+          >
+            <m.span variants={fadeUp} className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold">
               Case studies
-            </span>
-            <h1 className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl">
+            </m.span>
+            <Kinetic as="h1" className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl">
               Real businesses. <span className="text-gradient-gold italic">Real systems. Real results.</span>
-            </h1>
-            <p className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl">
+            </Kinetic>
+            <m.p variants={fadeUp} className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl">
               A closer look at the work, from full Odoo deployments to ad
               campaigns that pay for themselves, across the UAE, the Philippines,
               and beyond.
-            </p>
-            <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            </m.p>
+            <m.div variants={fadeUp} className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
                 href="/#contact"
                 className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-12px_rgba(217,164,65,0.8)] transition duration-300 hover:bg-gold-soft sm:w-auto"
@@ -37,8 +43,8 @@ export default function CaseStudies() {
                 <ArrowLeft size={16} strokeWidth={2.2} />
                 Back to home
               </a>
-            </div>
-          </div>
+            </m.div>
+          </m.div>
         </div>
       </section>
 

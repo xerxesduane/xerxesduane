@@ -30,7 +30,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
   const gridCols = ar
     ? "sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]"
     : "sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]";
-  const linkCls = "text-cream-dim transition-colors hover:text-gold";
+  const linkCls = "link-grow text-cream-dim transition-colors hover:text-gold";
 
   return (
     <footer className="border-t border-cream/8 bg-ink-deep/60 py-14">

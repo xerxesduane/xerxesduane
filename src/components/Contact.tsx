@@ -23,6 +23,7 @@ export default function Contact() {
 
   // Capture where the lead came from, so every enquiry is attributable.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot client-only init; intentional SSR-safe pattern
     setSource({
       page: window.location.pathname + window.location.search,
       referrer: document.referrer || "direct",

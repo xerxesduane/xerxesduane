@@ -1,6 +1,8 @@
 import { m } from "framer-motion";
+import { useMemo } from "react";
 import type { ReactNode } from "react";
-import { fadeUp, VIEWPORT } from "../../lib/motion";
+import type { Variants } from "framer-motion";
+import { EASE, fadeUp, VIEWPORT } from "../../lib/motion";
 
 interface RevealProps {
   children: ReactNode;
@@ -8,16 +10,34 @@ interface RevealProps {
   delay?: number;
 }
 
-/** Scroll-reveal wrapper. Respects reduced-motion automatically via framer-m. */
+/**
+ * Scroll-reveal wrapper. Reduced-motion handled by MotionConfig in App.tsx.
+ * Note: delay is merged INTO the variant transition — a top-level `transition`
+ * prop would replace the variant's duration/ease entirely (framer semantics).
+ */
 export default function Reveal({ children, className, delay = 0 }: RevealProps) {
+  const variants = useMemo<Variants>(
+    () =>
+      delay === 0
+        ? fadeUp
+        : {
+            hidden: fadeUp.hidden,
+            show: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.7, ease: EASE, delay },
+            },
+          },
+    [delay],
+  );
+
   return (
     <m.div
       className={className}
-      variants={fadeUp}
+      variants={variants}
       initial="hidden"
       whileInView="show"
       viewport={VIEWPORT}
-      transition={{ delay }}
     >
       {children}
     </m.div>

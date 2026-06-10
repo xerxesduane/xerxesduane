@@ -47,6 +47,7 @@ export default function ConsentBanner() {
     if (saved === "granted") {
       grantConsent();
     } else if (saved !== "denied") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot client-only init; intentional SSR-safe pattern
       setShow(true);
     }
   }, []);

@@ -32,7 +32,7 @@ export default function Testimonials() {
               className="glass glass-hover flex flex-col rounded-2xl p-6"
             >
               <Quote size={22} className="text-gold/50" strokeWidth={1.8} aria-hidden />
-              <div className="mt-3 flex items-center gap-0.5 text-gold" aria-label="5 out of 5 stars">
+              <div className="mt-3 flex items-center gap-0.5 text-gold" role="img" aria-label="5 out of 5 stars">
                 {[0, 1, 2, 3, 4].map((i) => (
                   <Star key={i} size={14} fill="currentColor" strokeWidth={0} />
                 ))}

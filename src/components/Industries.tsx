@@ -72,7 +72,7 @@ export default function Industries() {
         <p className="mx-auto mt-10 max-w-2xl text-center text-sm text-muted-dark">
           Also serving legal services, clinics, consultancies, real estate,
           trading companies, restaurants, and design studios.{" "}
-          <a href="#contact" className="text-gold hover:text-gold-soft">
+          <a href="#contact" className="text-gold underline decoration-gold/50 underline-offset-2 hover:text-gold-soft">
             Not sure if we're a fit? Book a free audit →
           </a>
         </p>

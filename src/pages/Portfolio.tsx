@@ -1,27 +1,34 @@
+import { m } from "framer-motion";
 import { ArrowUpRight, Clapperboard } from "lucide-react";
-import Reveal from "../components/ui/Reveal";
+import Kinetic from "../components/fx/Kinetic";
 import WorkGallery from "../components/WorkGallery";
 import Contact from "../components/Contact";
+import { fadeUp, stagger } from "../lib/motion";
 import { WEB_DESIGNS, GRAPHIC_DESIGNS } from "../data/workItems";
 
 export default function Portfolio() {
   return (
     <>
       <section className="container-bl scroll-mt-24 pt-32 pb-12 sm:pt-40">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <span className="eyebrow justify-center">
+        <m.div
+          variants={stagger}
+          initial="hidden"
+          animate="show"
+          className="mx-auto max-w-3xl text-center"
+        >
+          <m.span variants={fadeUp} className="eyebrow justify-center">
             <span className="h-px w-6 bg-gold/60" aria-hidden />
             Portfolio · web &amp; design
-          </span>
-          <h1 className="mt-5 text-4xl sm:text-5xl md:text-6xl">
+          </m.span>
+          <Kinetic as="h1" className="mt-5 text-4xl sm:text-5xl md:text-6xl">
             Work that looks the part{" "}
             <span className="text-gradient-gold italic">and does the job.</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg text-muted">
+          </Kinetic>
+          <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
             A selection of websites and brand &amp; graphic design for businesses
             across the UAE and beyond. Tap any piece to view it full size.
-          </p>
-          <div className="mt-7 flex justify-center">
+          </m.p>
+          <m.div variants={fadeUp} className="mt-7 flex justify-center">
             <a
               href="/showreel"
               className="inline-flex items-center gap-2 rounded-full border border-cream/15 px-5 py-2.5 text-sm font-semibold text-cream transition-colors hover:border-gold/50 hover:text-gold"
@@ -29,28 +36,24 @@ export default function Portfolio() {
               <Clapperboard size={16} />
               Watch the video showreel
             </a>
-          </div>
-        </Reveal>
+          </m.div>
+        </m.div>
       </section>
 
       {WEB_DESIGNS.length > 0 && (
         <section id="web" className="container-bl scroll-mt-24 py-12">
-          <Reveal>
-            <h2 className="mb-8 text-3xl sm:text-4xl">
-              Web <span className="text-gradient-gold">designs</span>
-            </h2>
-          </Reveal>
+          <Kinetic as="h2" mode="inview" className="mb-8 text-3xl sm:text-4xl">
+            Web <span className="text-gradient-gold">designs</span>
+          </Kinetic>
           <WorkGallery items={WEB_DESIGNS} />
         </section>
       )}
 
       {GRAPHIC_DESIGNS.length > 0 && (
         <section id="graphic" className="container-bl scroll-mt-24 py-12 sm:py-16">
-          <Reveal>
-            <h2 className="mb-8 text-3xl sm:text-4xl">
-              Graphic <span className="text-gradient-gold">designs</span>
-            </h2>
-          </Reveal>
+          <Kinetic as="h2" mode="inview" className="mb-8 text-3xl sm:text-4xl">
+            Graphic <span className="text-gradient-gold">designs</span>
+          </Kinetic>
           <WorkGallery items={GRAPHIC_DESIGNS} />
         </section>
       )}

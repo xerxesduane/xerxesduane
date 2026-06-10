@@ -15,7 +15,12 @@ export default defineConfig(({ isSsrBuild }) => {
       rollupOptions: {
         output: {
           manualChunks(id) {
-            if (id.includes('node_modules')) return 'vendor'
+            if (id.includes('node_modules')) {
+              // lenis is dynamically imported post-hydration — keep it out of
+              // the eagerly-loaded vendor chunk so it lazy-loads as its own.
+              if (id.includes('lenis')) return undefined
+              return 'vendor'
+            }
           },
         },
       },
