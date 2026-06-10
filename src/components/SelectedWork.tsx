@@ -1,9 +1,10 @@
 import { m } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { FEATURED_WORK } from "../data/workItems";
-import { scaleIn, stagger, VIEWPORT } from "../lib/motion";
+import { stagger, VIEWPORT, wipeReveal } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
 import Button from "./ui/Button";
+import Parallax from "./fx/Parallax";
 
 /** Curated teaser of portfolio work on the home page. Links to /portfolio. */
 export default function SelectedWork() {
@@ -33,17 +34,19 @@ export default function SelectedWork() {
             <m.a
               key={it.src}
               href="/portfolio"
-              variants={scaleIn}
+              variants={wipeReveal}
               aria-label={`See ${it.title}`}
               data-cursor="view"
               className="glass glass-hover group block aspect-[4/5] overflow-hidden rounded-xl"
             >
-              <img
-                src={it.thumb}
-                alt={it.title}
-                loading="lazy"
-                className="h-full w-full object-cover object-top transition-transform duration-500 ease-smooth group-hover:scale-105"
-              />
+              <Parallax range={14} className="h-full w-full">
+                <img
+                  src={it.thumb}
+                  alt={it.title}
+                  loading="lazy"
+                  className="h-full w-full object-cover object-top transition-transform duration-500 ease-smooth group-hover:scale-105"
+                />
+              </Parallax>
             </m.a>
           ))}
         </m.div>
