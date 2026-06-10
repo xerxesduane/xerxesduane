@@ -9,6 +9,11 @@ import LogoDraw from "./fx/LogoDraw";
 export default function Hero() {
   return (
     <section id="top" className="relative overflow-hidden pt-36 pb-20 sm:pt-44 sm:pb-28">
+      {/* depth: faint golden-hour glow behind the doorway + headline */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_55%_42%_at_50%_18%,rgba(218,164,66,0.10),transparent_70%)]"
+      />
       <div className="container-bl">
         <m.div
           variants={stagger}

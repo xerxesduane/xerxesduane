@@ -35,7 +35,6 @@ export default function Nav({
   const ar = locale === "ar";
   const links = ar ? AR_NAV_LINKS : NAV_LINKS;
   const homeHref = ar ? "/ar" : "/";
-  const homeAria = ar ? AR_CHROME.homeAria : "Threshold Works by Xerxes Duane, home";
   const bookLabel = ar ? AR_CHROME.bookAudit : "Book a free audit";
 
   useEffect(() => {
@@ -70,13 +69,14 @@ export default function Nav({
         >
           <m.a
             href={homeHref}
-            aria-label={homeAria}
             className="py-1"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2, ease: EASE }}
           >
             <Wordmark endorsed />
+            {/* name comes from the visible wordmark; suffix gives context */}
+            <span className="sr-only">{ar ? "— الصفحة الرئيسية" : "— home"}</span>
           </m.a>
 
           <ul className="hidden items-center gap-7 md:flex">

@@ -59,7 +59,7 @@ export default function Marquee() {
     >
       <p
         className={`container-bl mb-6 text-center font-mono text-xs uppercase tracking-[0.22em] ${
-          useLogos ? "text-ink/45" : "text-muted-dark"
+          useLogos ? "text-ink/70" : "text-muted-dark"
         }`}
       >
         Quietly trusted from Dubai to New Zealand

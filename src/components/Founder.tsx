@@ -121,7 +121,7 @@ export default function Founder() {
                   <span className="font-mono text-sm text-gold/70">
                     0{i + 1}
                   </span>
-                  <h4 className="mt-2 text-lg text-cream">{v.title}</h4>
+                  <h3 className="mt-2 text-lg text-cream">{v.title}</h3>
                   <p className="mt-2 text-sm text-muted">{v.body}</p>
                 </m.div>
               ))}
