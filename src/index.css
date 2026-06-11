@@ -3,6 +3,14 @@
 @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/fraunces-500.woff2') format('woff2'); }
 @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/fraunces-600.woff2') format('woff2'); }
 @font-face { font-family: 'Fraunces'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/fraunces-italic-400.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/space-mono-400.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/space-mono-700.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/space-mono-700.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/space-mono-700.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/space-mono-italic-400.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 500; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 600; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
+@font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 700; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-400.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-500.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/inter-600.woff2') format('woff2'); }
@@ -76,7 +84,7 @@
     font-family: theme("fontFamily.display");
     color: theme("colors.cream.DEFAULT");
     font-weight: 500;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     line-height: 1.05;
   }
 

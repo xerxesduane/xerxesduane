@@ -65,7 +65,7 @@ export default function Wordmark({
       {showText && (
         <span className="flex flex-col leading-none">
           <span
-            className="font-display font-semibold tracking-tight text-cream"
+            className="font-display font-semibold tracking-normal text-cream"
             style={{ fontSize: `${size * 0.62}px` }}
           >
             Threshold<span className="text-gold"> Works</span>

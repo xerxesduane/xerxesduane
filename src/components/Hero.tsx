@@ -42,7 +42,7 @@ export default function Hero() {
 
           <Kinetic
             as="h1"
-            className="mt-7 text-4xl leading-[1.04] sm:text-6xl md:text-7xl"
+            className="mt-7 text-[2.15rem] leading-[1.07] sm:text-5xl md:text-6xl lg:text-7xl"
           >
             Big-company systems for{" "}
             <span className="text-gradient-gold italic">small businesses</span>

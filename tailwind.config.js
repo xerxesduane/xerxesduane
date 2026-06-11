@@ -35,9 +35,9 @@ export default {
         },
       },
       fontFamily: {
-        display: ["Fraunces", "ui-serif", "Georgia", "serif"],
+        display: ['"Space Mono"', "ui-monospace", "monospace"],
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ['"JetBrains Mono"', "ui-monospace", "monospace"],
+        mono: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
       },
       maxWidth: {
         content: "1200px",
