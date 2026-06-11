@@ -48,10 +48,12 @@ export default function Services() {
           viewport={VIEWPORT}
           className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:grid-flow-row-dense"
         >
-          <m.article
+          <m.a
+            href={serviceHref[featured.title]}
+            aria-label={`Explore ${featured.title}`}
             variants={scaleIn}
             data-cursor="view"
-            className="border-glow group relative flex flex-col overflow-hidden rounded-[2rem] border border-gold/25 bg-cream text-ink shadow-[0_30px_120px_-70px_rgba(218,164,66,0.95)] sm:col-span-2 lg:col-span-2"
+            className="border-glow group relative flex flex-col overflow-hidden rounded-[2rem] border border-gold/25 bg-cream text-ink shadow-[0_30px_120px_-70px_rgba(218,164,66,0.95)] outline-offset-4 sm:col-span-2 lg:col-span-2"
           >
             <div
               aria-hidden
@@ -89,9 +91,7 @@ export default function Services() {
                         {featured.price}
                       </p>
                     )}
-                    <a
-                      href={serviceHref[featured.title]}
-                      data-cursor="link"
+                    <span
                       className="group/link inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream transition duration-300 hover:bg-gold hover:text-ink"
                     >
                       Explore service
@@ -100,7 +100,7 @@ export default function Services() {
                         strokeWidth={2.3}
                         className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
                       />
-                    </a>
+                    </span>
                   </div>
                 </div>
 
@@ -124,16 +124,18 @@ export default function Services() {
                 </div>
               </div>
             </div>
-          </m.article>
+          </m.a>
 
           {supporting.map((s, index) => {
             const Icon = s.icon;
             return (
-              <m.article
+              <m.a
                 key={s.title}
+                href={serviceHref[s.title]}
+                aria-label={`Explore ${s.title}`}
                 variants={fadeUp}
                 data-cursor="view"
-                className={`glass glass-hover group relative flex min-h-64 flex-col overflow-hidden rounded-2xl p-5 ${
+                className={`glass glass-hover group relative flex min-h-64 flex-col overflow-hidden rounded-2xl p-5 outline-offset-4 ${
                   index === 4 || index === 8 ? "lg:col-span-2" : ""
                 }`}
               >
@@ -164,10 +166,7 @@ export default function Services() {
                   {s.price && (
                     <p className="font-mono text-xs text-gold">{s.price}</p>
                   )}
-                  <a
-                    href={serviceHref[s.title]}
-                    data-cursor="link"
-                    aria-label={`Explore ${s.title}`}
+                  <span
                     className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-dark transition-colors hover:text-gold group-hover:text-gold"
                   >
                     Explore
@@ -176,9 +175,9 @@ export default function Services() {
                       strokeWidth={2.2}
                       className="transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
                     />
-                  </a>
+                  </span>
                 </div>
-              </m.article>
+              </m.a>
             );
           })}
         </m.div>
