@@ -69,29 +69,29 @@ export default function ConsentBanner() {
       role="dialog"
       aria-label="Cookie consent"
       aria-live="polite"
-      className="fixed inset-x-3 bottom-3 z-[60] mx-auto max-w-3xl sm:inset-x-5 sm:bottom-5"
+      className="fixed inset-x-3 bottom-24 z-[60] sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-md"
     >
-      <div className="glass flex flex-col gap-4 rounded-2xl p-5 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.7)] sm:flex-row sm:items-center sm:gap-6">
-        <p className="text-sm text-cream-dim">
-          We use cookies for anonymous analytics to understand how the site is
-          used and improve it. Nothing is shared or sold. See our{" "}
+      <div className="nav-surface flex flex-col gap-3 rounded-2xl p-3.5 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.85)] sm:p-4">
+        <p className="text-xs leading-relaxed text-cream-dim sm:text-sm">
+          We use anonymous analytics to improve the site. Nothing is shared or
+          sold. See our{" "}
           <a href="/privacy" className="text-gold underline-offset-2 hover:underline">
             Privacy Policy
           </a>
           .
         </p>
-        <div className="flex shrink-0 gap-2">
+        <div className="flex shrink-0 items-center justify-end gap-2">
           <button
             type="button"
             onClick={() => decide(false)}
-            className="rounded-full border border-cream/15 px-4 py-2 text-sm font-semibold text-cream transition-colors hover:border-cream/40"
+            className="rounded-full border border-cream/15 px-4 py-2 text-xs font-semibold text-cream transition-colors hover:border-cream/40"
           >
             Decline
           </button>
           <button
             type="button"
             onClick={() => decide(true)}
-            className="rounded-full bg-gold px-5 py-2 text-sm font-semibold text-ink-deep transition-colors hover:bg-gold-soft"
+            className="rounded-full bg-gold px-5 py-2 text-xs font-semibold text-ink-deep transition-colors hover:bg-gold-soft"
           >
             Accept
           </button>
