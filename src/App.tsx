@@ -41,7 +41,9 @@ function altLanguage(path: string): { href: string; label: string } {
   const slug = pathToSlug(path);
   if (slug === "ar") return { href: "/", label: "English" };
   if (slug.startsWith("ar/")) return { href: `/${slug.slice(3)}`, label: "English" };
-  if (getServicePage(slug)) return { href: `/ar/${slug}`, label: "عربي" };
+  if (getServicePage(slug) && getServicePageAr(slug)) {
+    return { href: `/ar/${slug}`, label: "عربي" };
+  }
   return { href: "/ar", label: "عربي" };
 }
 

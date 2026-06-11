@@ -29,7 +29,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
     : SERVICE_PAGES.map((p) => ({ href: `/${p.slug}`, label: p.navLabel }));
   const gridCols = ar
     ? "sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]"
-    : "sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]";
+    : "sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_1.55fr_1fr]";
   const linkCls = "link-grow text-cream-dim transition-colors hover:text-gold";
 
   return (
@@ -100,7 +100,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
             <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
               {ar ? AR_CHROME.footerServicesHeading : "Services in Dubai"}
             </h3>
-            <ul className="mt-4 space-y-2.5 text-sm">
+            <ul className={`mt-4 text-sm ${ar ? "space-y-2.5" : "grid grid-cols-2 gap-x-4 gap-y-2.5"}`}>
               {serviceItems.map((s) => (
                 <li key={s.href}>
                   <a href={s.href} className={linkCls}>

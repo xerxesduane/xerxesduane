@@ -1,6 +1,7 @@
 import { m } from "framer-motion";
 import { ArrowUpRight, ArrowLeft, Check } from "lucide-react";
 import { SERVICE_PAGES, type ServicePageData } from "../data/servicePages";
+import { getServicePageAr } from "../data/servicePagesAr";
 import { CASE_STUDIES } from "../data/content";
 import { INSIGHTS } from "../data/insights";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -18,13 +19,14 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
   const relatedPosts = INSIGHTS.filter((p) =>
     p.relatedServices?.includes(page.slug),
   ).slice(0, 3);
+  const hasArabicPage = Boolean(getServicePageAr(page.slug));
 
   return (
     <>
       {/* Header */}
       <section id="top" className="relative overflow-hidden pt-36 pb-16 sm:pt-44 sm:pb-20">
         <div className="container-bl">
-          <div className="mx-auto mb-6 flex max-w-3xl justify-center">
+          {hasArabicPage && <div className="mx-auto mb-6 flex max-w-3xl justify-center">
             <a
               href={`/ar/${page.slug}`}
               lang="ar"
@@ -32,7 +34,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             >
               العربية
             </a>
-          </div>
+          </div>}
           <m.div
             variants={stagger}
             initial="hidden"
@@ -196,7 +198,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             </h2>
           </Reveal>
           <div className="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-            {SERVICE_PAGES.filter((p) => p.slug !== page.slug).map((p) => {
+            {SERVICE_PAGES.filter((p) => p.slug !== page.slug).slice(0, 6).map((p) => {
               const PIcon = p.icon;
               return (
                 <a

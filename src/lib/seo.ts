@@ -22,6 +22,12 @@ export interface PageMeta {
 
 /** Reciprocal hreflang set for a service page that has an Arabic version. */
 function serviceAlternates(slug: string): { hreflang: string; href: string }[] {
+  if (!getServicePageAr(slug)) {
+    return [
+      { hreflang: "en", href: `${SITE_ORIGIN}/${slug}` },
+      { hreflang: "x-default", href: `${SITE_ORIGIN}/${slug}` },
+    ];
+  }
   return [
     { hreflang: "en", href: `${SITE_ORIGIN}/${slug}` },
     { hreflang: "ar", href: `${SITE_ORIGIN}/ar/${slug}` },
@@ -30,6 +36,20 @@ function serviceAlternates(slug: string): { hreflang: string; href: string }[] {
 }
 
 const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/brand/og-image.png`;
+const SERVICE_OG_IMAGES = new Set([
+  "odoo-erp-dubai",
+  "web-development-dubai",
+  "ai-automation-dubai",
+  "seo-dubai",
+  "answer-engine-optimization-dubai",
+  "generative-engine-optimization-dubai",
+]);
+
+function serviceOgImage(slug: string): string {
+  return SERVICE_OG_IMAGES.has(slug)
+    ? `${SITE_ORIGIN}/brand/og/${slug}.png`
+    : DEFAULT_OG_IMAGE;
+}
 
 /**
  * Bump this when a share image changes. Facebook/WhatsApp/LinkedIn cache the
@@ -248,7 +268,7 @@ export function getPageMeta(path: string): PageMeta {
         description: ar.metaDescription,
         canonical: `${SITE_ORIGIN}/ar/${ar.slug}`,
         ogTitle: ar.metaTitle,
-        ogImage: `${SITE_ORIGIN}/brand/og/${ar.slug}.png`,
+        ogImage: serviceOgImage(ar.slug),
         alternates: serviceAlternates(ar.slug),
       };
     }
@@ -296,7 +316,7 @@ export function getPageMeta(path: string): PageMeta {
     description: page.metaDescription,
     canonical,
     ogTitle: page.ogTitle,
-    ogImage: `${SITE_ORIGIN}/brand/og/${page.slug}.png`,
+    ogImage: serviceOgImage(page.slug),
     alternates: serviceAlternates(page.slug),
     jsonLd: [
       {

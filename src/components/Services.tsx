@@ -4,6 +4,21 @@ import { SERVICES } from "../data/content";
 import { fadeUp, scaleIn, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
 
+const serviceHref: Record<string, string> = {
+  "AI Automation & Solutions": "/ai-automation-dubai",
+  "Custom System Development": "/custom-software-development-dubai",
+  "ERP & Odoo": "/odoo-erp-dubai",
+  "Dashboards & CRM": "/crm-development-dubai",
+  "Mobile & Web Apps": "/mobile-app-development-dubai",
+  "E-Commerce & Stores": "/ecommerce-development-dubai",
+  "Landing Pages & Funnels": "/landing-page-design-dubai",
+  "AEO — Answer Engine Optimization": "/answer-engine-optimization-dubai",
+  "GEO — Generative Engine Optimization": "/generative-engine-optimization-dubai",
+  "Videography & Photography": "/videography-photography-dubai",
+  "Video Editing": "/video-editing-dubai",
+  "Graphic Design & Branding": "/branding-graphic-design-dubai",
+};
+
 export default function Services() {
   const featured = SERVICES.find((service) => service.featured) ?? SERVICES[0];
   const supporting = SERVICES.filter((service) => service.title !== featured.title);
@@ -75,11 +90,11 @@ export default function Services() {
                       </p>
                     )}
                     <a
-                      href="#contact"
+                      href={serviceHref[featured.title]}
                       data-cursor="link"
                       className="group/link inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream transition duration-300 hover:bg-gold hover:text-ink"
                     >
-                      Scope this
+                      Explore service
                       <ArrowUpRight
                         size={16}
                         strokeWidth={2.3}
@@ -149,11 +164,19 @@ export default function Services() {
                   {s.price && (
                     <p className="font-mono text-xs text-gold">{s.price}</p>
                   )}
-                  <ArrowUpRight
-                    size={16}
-                    strokeWidth={2.2}
-                    className="shrink-0 text-muted-dark transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold"
-                  />
+                  <a
+                    href={serviceHref[s.title]}
+                    data-cursor="link"
+                    aria-label={`Explore ${s.title}`}
+                    className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-muted-dark transition-colors hover:text-gold group-hover:text-gold"
+                  >
+                    Explore
+                    <ArrowUpRight
+                      size={14}
+                      strokeWidth={2.2}
+                      className="transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+                    />
+                  </a>
                 </div>
               </m.article>
             );

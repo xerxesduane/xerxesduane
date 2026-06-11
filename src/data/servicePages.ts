@@ -5,6 +5,13 @@ import {
   Search,
   ScanSearch,
   Sparkles,
+  LayoutDashboard,
+  Smartphone,
+  ShoppingBag,
+  Target,
+  Palette,
+  Video,
+  Film,
   type LucideIcon,
 } from "lucide-react";
 
@@ -395,6 +402,479 @@ export const SERVICE_PAGES: ServicePageData[] = [
       {
         q: "How do you measure GEO?",
         a: "We test real buyer prompts across the major AI engines and track mentions, accuracy, and citations over time.",
+      },
+    ],
+  },
+  {
+    slug: "custom-software-development-dubai",
+    navLabel: "Custom Software",
+    icon: Code2,
+    metaTitle: "Custom Software Development in Dubai | Threshold Works",
+    metaDescription:
+      "Custom software development in Dubai for growing businesses: internal tools, client portals, workflow systems, and integrations built around how your team actually works.",
+    ogTitle: "Custom Software Development in Dubai",
+    jsonLdName: "Custom Software Development",
+    price: "from AED 9,000",
+    eyebrow: "Custom Software · Dubai",
+    h1Lead: "Software shaped around your business,",
+    h1Accent: "not the other way around.",
+    lede: "Custom software development in Dubai for businesses that have outgrown generic tools. We build practical internal systems, client portals, workflow platforms, and integrations around how your team already operates, then keep them maintainable as you grow.",
+    bulletsHeading: "What custom software can solve",
+    bullets: [
+      {
+        title: "Internal tools that fit the work",
+        body: "Replace spreadsheets and repetitive admin with focused tools designed around your actual process, permissions, and reporting needs.",
+      },
+      {
+        title: "Client and partner portals",
+        body: "Give customers, suppliers, or partners one secure place to submit requests, track progress, access documents, and communicate.",
+      },
+      {
+        title: "Systems that connect",
+        body: "Join your website, CRM, accounting, ERP, and third-party platforms so data moves automatically instead of being copied by hand.",
+      },
+      {
+        title: "Built to remain understandable",
+        body: "You get clear ownership, documentation, and a maintainable foundation, not a mysterious system only one developer can touch.",
+      },
+    ],
+    forWhoHeading: "Who this is for",
+    forWho: [
+      "Businesses forcing generic software to fit a unique workflow",
+      "Teams running important operations through spreadsheets",
+      "Owners who need a portal, internal tool, or connected platform",
+      "Growing companies ready to replace manual work properly",
+    ],
+    faqs: [
+      {
+        q: "How do I know if I need custom software?",
+        a: "If your team repeatedly works around the limitations of existing tools, copies the same data between systems, or relies on fragile spreadsheets for core operations, a focused custom system may be worthwhile.",
+      },
+      {
+        q: "How much does custom software development cost?",
+        a: "Focused internal tools start from AED 9,000. After the free audit, we define the smallest useful version and provide a fixed quote before development begins.",
+      },
+      {
+        q: "Can you improve an existing custom system?",
+        a: "Yes. We first assess its code, hosting, security, and business fit, then recommend whether to repair, extend, or replace it.",
+      },
+      {
+        q: "Will I own the software?",
+        a: "Yes. Your agreement clearly defines ownership, access, hosting, and any third-party services before the project starts.",
+      },
+    ],
+  },
+  {
+    slug: "crm-development-dubai",
+    navLabel: "CRM & Dashboards",
+    icon: LayoutDashboard,
+    metaTitle: "CRM Development & Setup in Dubai | Threshold Works",
+    metaDescription:
+      "CRM setup and development in Dubai: connected lead pipelines, customer databases, dashboards, and follow-up automation for growing small businesses.",
+    ogTitle: "CRM Development & Setup in Dubai",
+    jsonLdName: "CRM Development, Setup & Dashboards",
+    price: "from AED 4,000",
+    eyebrow: "CRM & Dashboards · Dubai",
+    h1Lead: "Know every lead, customer, and next step,",
+    h1Accent: "without chasing spreadsheets.",
+    lede: "CRM development and setup in Dubai for growing businesses that need a clear view of sales and customers. We organise your pipeline, connect your enquiry sources, automate follow-ups, and build dashboards your team will actually use.",
+    bulletsHeading: "What a useful CRM should give you",
+    bullets: [
+      {
+        title: "One clean customer record",
+        body: "Every enquiry, conversation, document, and next action sits in one place instead of being scattered across inboxes and spreadsheets.",
+      },
+      {
+        title: "A pipeline everyone understands",
+        body: "Clear stages, ownership, reminders, and follow-up rules make it obvious what needs attention and what is likely to close.",
+      },
+      {
+        title: "Connected lead capture",
+        body: "Website forms, ads, WhatsApp enquiries, and imports flow into the right pipeline with the source recorded automatically.",
+      },
+      {
+        title: "Dashboards that answer real questions",
+        body: "See lead volume, response time, conversion, revenue, and team activity without assembling a report by hand.",
+      },
+    ],
+    forWhoHeading: "Who this is for",
+    forWho: [
+      "Teams losing leads between WhatsApp, email, and spreadsheets",
+      "Owners who cannot see the real sales pipeline",
+      "Businesses with a CRM nobody consistently uses",
+      "Growing sales teams that need repeatable follow-up",
+    ],
+    faqs: [
+      {
+        q: "Which CRM should my business use?",
+        a: "That depends on your workflow, team size, integrations, and budget. We assess the process first, then recommend whether Odoo, HubSpot, Zoho, or a focused custom solution fits best.",
+      },
+      {
+        q: "Can you clean up our existing CRM?",
+        a: "Yes. We can remove duplicates, simplify stages, improve fields and permissions, reconnect lead sources, and make reporting useful again.",
+      },
+      {
+        q: "Can a CRM connect to WhatsApp and our website?",
+        a: "Usually, yes. The exact integration depends on your CRM and WhatsApp setup, but capturing website enquiries and recording conversations is a common part of our work.",
+      },
+      {
+        q: "How long does CRM setup take?",
+        a: "A focused setup can take a few weeks. More complex migrations and integrations are phased so your team can start using the core pipeline early.",
+      },
+    ],
+  },
+  {
+    slug: "mobile-app-development-dubai",
+    navLabel: "Mobile & Web Apps",
+    icon: Smartphone,
+    metaTitle: "Mobile App Development in Dubai | Threshold Works",
+    metaDescription:
+      "Mobile and web app development in Dubai for booking, customer portals, memberships, and internal operations. Practical apps built to launch and grow.",
+    ogTitle: "Mobile App Development in Dubai",
+    jsonLdName: "Mobile & Web App Development",
+    price: "from AED 25,000",
+    eyebrow: "Mobile & Web Apps · Dubai",
+    h1Lead: "An app people have a reason to use,",
+    h1Accent: "built for the work it needs to do.",
+    lede: "Mobile and web app development in Dubai for businesses that need more than a website. We build booking platforms, customer portals, membership experiences, and internal apps with a focused first release and a clear path to grow.",
+    bulletsHeading: "What we build into the right app",
+    bullets: [
+      {
+        title: "A focused first release",
+        body: "We define the smallest version that solves a real problem, so you can launch, learn, and improve without funding unnecessary features.",
+      },
+      {
+        title: "Simple, purposeful journeys",
+        body: "Every screen and action is designed around what the user needs to complete, with less friction and fewer dead ends.",
+      },
+      {
+        title: "The systems behind the interface",
+        body: "Authentication, notifications, payments, admin tools, analytics, and integrations are planned as part of the product, not afterthoughts.",
+      },
+      {
+        title: "A foundation ready to grow",
+        body: "We choose architecture and technology that fit the product, expected usage, and your ability to maintain it after launch.",
+      },
+    ],
+    forWhoHeading: "Who this is for",
+    forWho: [
+      "Businesses launching a booking or membership platform",
+      "Teams that need a customer or employee portal",
+      "Founders validating a practical app idea",
+      "Companies replacing a slow manual process with an app",
+    ],
+    faqs: [
+      {
+        q: "Should I build a mobile app or a web app?",
+        a: "A web app is often the fastest and most economical starting point. Native mobile apps make sense when device features, app-store presence, or frequent mobile use are genuinely important.",
+      },
+      {
+        q: "How much does app development cost?",
+        a: "Focused app projects start from AED 25,000. The final fixed quote depends on user roles, integrations, payments, notifications, and the scope of the first release.",
+      },
+      {
+        q: "Can you help define the app before building it?",
+        a: "Yes. We map the users, core workflows, risks, and first-release features before development, so the project starts with a defensible scope.",
+      },
+      {
+        q: "Do you provide support after launch?",
+        a: "Yes. We can maintain, monitor, and improve the app after launch under a clear ongoing support arrangement.",
+      },
+    ],
+  },
+  {
+    slug: "ecommerce-development-dubai",
+    navLabel: "E-Commerce",
+    icon: ShoppingBag,
+    metaTitle: "E-Commerce Development in Dubai | Threshold Works",
+    metaDescription:
+      "E-commerce development in Dubai: fast online stores, secure UAE payments, inventory connections, order workflows, and conversion-focused customer journeys.",
+    ogTitle: "E-Commerce Development in Dubai",
+    jsonLdName: "E-Commerce Development",
+    price: "from AED 9,000",
+    eyebrow: "E-Commerce · Dubai",
+    h1Lead: "An online store that makes buying easy,",
+    h1Accent: "and running it manageable.",
+    lede: "E-commerce development in Dubai for businesses that need the storefront and the operations behind it to work together. We build fast customer journeys, connect payments and inventory, and reduce the manual work between order and delivery.",
+    bulletsHeading: "What a strong online store needs",
+    bullets: [
+      {
+        title: "A smoother path to checkout",
+        body: "Clear products, useful search and filtering, trusted payment options, and fewer distractions help more visitors complete their order.",
+      },
+      {
+        title: "UAE-ready payments and delivery",
+        body: "We configure suitable payment gateways, shipping rules, taxes, and customer communication around how you actually fulfil orders.",
+      },
+      {
+        title: "Connected inventory and orders",
+        body: "Your store can connect with ERP, accounting, CRM, and fulfilment workflows so the team does less copying and correcting.",
+      },
+      {
+        title: "Measurement after launch",
+        body: "Analytics, conversion tracking, and reporting show where customers drop out and which products or campaigns drive revenue.",
+      },
+    ],
+    forWhoHeading: "Who this is for",
+    forWho: [
+      "Retailers launching or rebuilding an online store",
+      "Businesses whose store and inventory do not match",
+      "Teams manually processing online orders",
+      "Brands that need better checkout conversion and reporting",
+    ],
+    caseStudyClient: "Gilani Mobility",
+    faqs: [
+      {
+        q: "Which e-commerce platform should I use?",
+        a: "It depends on your catalogue, operations, integrations, and internal team. We recommend the platform after understanding the business, rather than forcing every store onto the same stack.",
+      },
+      {
+        q: "Can you connect the store to inventory or accounting?",
+        a: "Yes. Connecting the storefront to ERP, inventory, CRM, accounting, or fulfilment tools is often where the biggest operational value sits.",
+      },
+      {
+        q: "Can you improve an existing e-commerce store?",
+        a: "Yes. We can audit its speed, user journey, analytics, checkout, product structure, and integrations before recommending focused improvements or a rebuild.",
+      },
+      {
+        q: "Will the store work well on mobile?",
+        a: "Yes. Mobile usability, speed, product discovery, and checkout are treated as core requirements, not a smaller version of desktop.",
+      },
+    ],
+  },
+  {
+    slug: "landing-page-design-dubai",
+    navLabel: "Landing Pages",
+    icon: Target,
+    metaTitle: "Landing Page Design in Dubai | Threshold Works",
+    metaDescription:
+      "Landing page design in Dubai for campaigns, launches, and lead generation. Conversion-focused pages connected to analytics, forms, CRM, and follow-up.",
+    ogTitle: "Landing Page Design in Dubai",
+    jsonLdName: "Landing Page Design & Sales Funnels",
+    price: "from AED 2,500",
+    eyebrow: "Landing Pages & Funnels · Dubai",
+    h1Lead: "Turn campaign clicks into enquiries,",
+    h1Accent: "not expensive exits.",
+    lede: "Landing page design in Dubai for campaigns that need a clear job and measurable result. We shape the offer, remove distractions, connect lead capture and analytics, and make the follow-up happen quickly.",
+    bulletsHeading: "What makes the page convert",
+    bullets: [
+      {
+        title: "One clear offer",
+        body: "The message, proof, and call to action are built around the visitor and campaign, instead of asking one page to say everything.",
+      },
+      {
+        title: "Fast, focused design",
+        body: "Mobile-first layouts, strong hierarchy, and fast loading keep attention on the next action and reduce campaign waste.",
+      },
+      {
+        title: "Lead capture that connects",
+        body: "Forms, WhatsApp, booking tools, CRM, and follow-up automation work together so leads do not disappear after submitting.",
+      },
+      {
+        title: "Tracking you can trust",
+        body: "Analytics and conversion events are set up clearly, so you can judge the campaign by leads and sales rather than clicks alone.",
+      },
+    ],
+    forWhoHeading: "Who this is for",
+    forWho: [
+      "Businesses running Google or Meta campaigns",
+      "Teams launching a product, event, or new service",
+      "Owners whose homepage is trying to sell too many things",
+      "Campaigns generating clicks but too few enquiries",
+    ],
+    faqs: [
+      {
+        q: "How is a landing page different from a website page?",
+        a: "A landing page is designed around one audience, offer, and action. It removes the choices and general information that can distract campaign visitors.",
+      },
+      {
+        q: "Can you write the landing page copy?",
+        a: "Yes. We can shape the offer, structure the message, and refine the copy using your business knowledge, audience, and campaign intent.",
+      },
+      {
+        q: "Can you connect it to my CRM or booking tool?",
+        a: "Yes. Lead routing, CRM capture, calendar booking, WhatsApp, email follow-up, and conversion tracking can all be included.",
+      },
+      {
+        q: "Can you improve an existing landing page?",
+        a: "Yes. We review the offer, message hierarchy, mobile experience, speed, tracking, and follow-up before prioritising changes.",
+      },
+    ],
+  },
+  {
+    slug: "branding-graphic-design-dubai",
+    navLabel: "Branding & Design",
+    icon: Palette,
+    metaTitle: "Branding & Graphic Design in Dubai | Threshold Works",
+    metaDescription:
+      "Branding and graphic design in Dubai for growing businesses: practical identities, marketing collateral, campaign graphics, and consistent visual systems.",
+    ogTitle: "Branding & Graphic Design in Dubai",
+    jsonLdName: "Branding & Graphic Design",
+    price: "from AED 1,500",
+    eyebrow: "Branding & Graphic Design · Dubai",
+    h1Lead: "Look as credible as the work",
+    h1Accent: "you already deliver.",
+    lede: "Branding and graphic design in Dubai for businesses that need clarity and consistency, not decoration for its own sake. We build useful visual identities and everyday marketing assets that help people recognise, understand, and trust you.",
+    bulletsHeading: "Design that earns its place",
+    bullets: [
+      {
+        title: "Practical brand foundations",
+        body: "Logo, typography, colour, visual direction, and simple usage rules give the business a recognisable and repeatable identity.",
+      },
+      {
+        title: "Marketing collateral that stays consistent",
+        body: "Presentations, brochures, proposals, signage, and sales materials feel like one business instead of unrelated files.",
+      },
+      {
+        title: "Campaign and social graphics",
+        body: "Flexible systems and templates help your team produce regular content without the brand slowly falling apart.",
+      },
+      {
+        title: "Designed around the audience",
+        body: "Every visual decision supports what the customer needs to understand, feel, or do next.",
+      },
+    ],
+    forWhoHeading: "Who this is for",
+    forWho: [
+      "Growing businesses whose visuals no longer match their quality",
+      "New brands that need a useful identity system",
+      "Teams producing inconsistent marketing materials",
+      "Campaigns that need clear, professional creative assets",
+    ],
+    faqs: [
+      {
+        q: "Do you only design logos?",
+        a: "No. A logo can be part of the work, but the useful outcome is a coherent visual system your team can apply across real customer touchpoints.",
+      },
+      {
+        q: "Can you work with our existing brand?",
+        a: "Yes. We can refine, extend, and organise an existing identity without replacing recognisable elements that still work.",
+      },
+      {
+        q: "What files will we receive?",
+        a: "Deliverables depend on the project, but final assets are supplied in practical formats for digital, print, and internal use, with ownership and access clearly defined.",
+      },
+      {
+        q: "Can you create ongoing campaign and social graphics?",
+        a: "Yes. Ongoing creative support can sit inside a monthly partnership when the volume and workflow justify it.",
+      },
+    ],
+  },
+  {
+    slug: "videography-photography-dubai",
+    navLabel: "Video & Photography",
+    icon: Video,
+    metaTitle: "Videography & Photography in Dubai | Threshold Works",
+    metaDescription:
+      "Videography and photography in Dubai for brands, products, events, and campaigns. Purposeful production planned for the channels where the work will be used.",
+    ogTitle: "Videography & Photography in Dubai",
+    jsonLdName: "Videography & Photography",
+    price: "from AED 1,500/day",
+    eyebrow: "Video & Photography · Dubai",
+    h1Lead: "Create the visuals people need",
+    h1Accent: "to understand and trust you.",
+    lede: "Videography and photography in Dubai for brands that need useful campaign assets, not footage without a plan. We shape the story, capture the right moments, and produce content around where and how it will actually be used.",
+    bulletsHeading: "Production with a purpose",
+    bullets: [
+      {
+        title: "Planned around the outcome",
+        body: "We define the audience, message, channels, and required deliverables before the shoot so every setup earns its time.",
+      },
+      {
+        title: "Brand, product, and people",
+        body: "Professional photography and video show the real product, experience, team, or event with clarity and credibility.",
+      },
+      {
+        title: "Content captured for multiple channels",
+        body: "We plan framing, formats, and coverage so one production day can support websites, ads, social media, and presentations.",
+      },
+      {
+        title: "Clean handoff into editing",
+        body: "Footage, selects, editing, captions, and final exports are organised around the agreed deliverables and deadlines.",
+      },
+    ],
+    forWhoHeading: "Who this is for",
+    forWho: [
+      "Brands needing credible website and campaign visuals",
+      "Products and services that need to be demonstrated clearly",
+      "Events that need useful coverage beyond a highlight reel",
+      "Teams planning content across multiple channels",
+    ],
+    faqs: [
+      {
+        q: "What does a production day include?",
+        a: "The exact scope is agreed beforehand and can include planning, filming or photography, equipment, direction, and a defined set of edited deliverables.",
+      },
+      {
+        q: "Can you create both photos and video in one shoot?",
+        a: "Often, yes. We plan the schedule and shot list carefully so both formats receive enough attention and the final assets remain useful.",
+      },
+      {
+        q: "Do you cover events?",
+        a: "Yes, when the coverage has a clear purpose and deliverable plan, including highlights, interviews, social clips, or future campaign assets.",
+      },
+      {
+        q: "Can you help with the concept and script?",
+        a: "Yes. We can help shape the message, story, shot list, interview prompts, and channel-specific deliverables before production.",
+      },
+    ],
+  },
+  {
+    slug: "video-editing-dubai",
+    navLabel: "Video Editing",
+    icon: Film,
+    metaTitle: "Video Editing in Dubai | Threshold Works",
+    metaDescription:
+      "Video editing in Dubai for social reels, ads, interviews, events, and brand films. Clean pacing, captions, motion graphics, and channel-ready exports.",
+    ogTitle: "Video Editing in Dubai",
+    jsonLdName: "Video Editing & Post-Production",
+    price: "from AED 750 per video",
+    eyebrow: "Video Editing · Dubai",
+    h1Lead: "Turn footage into something",
+    h1Accent: "people keep watching.",
+    lede: "Video editing in Dubai for brands and teams that already have footage but need it shaped into clear, engaging content. We edit for attention, understanding, and the platform where the finished piece will live.",
+    bulletsHeading: "What happens in the edit",
+    bullets: [
+      {
+        title: "The story gets clearer",
+        body: "We find the useful moments, remove what slows the piece down, and shape a sequence that makes the message easy to follow.",
+      },
+      {
+        title: "Pacing fits the platform",
+        body: "A social reel, paid ad, interview, event film, and website video each need a different rhythm and structure.",
+      },
+      {
+        title: "Captions and motion support the message",
+        body: "Clean captions, graphics, callouts, and transitions improve understanding without turning the edit into visual noise.",
+      },
+      {
+        title: "Exports arrive ready to publish",
+        body: "Final files are prepared in the agreed aspect ratios, lengths, and technical formats for each channel.",
+      },
+    ],
+    forWhoHeading: "Who this is for",
+    forWho: [
+      "Brands with footage sitting unused",
+      "Teams producing regular reels and social content",
+      "Campaigns needing multiple edits from one shoot",
+      "Events and interviews that need a clear finished story",
+    ],
+    faqs: [
+      {
+        q: "Can you edit footage filmed by someone else?",
+        a: "Yes. We first review the footage quality, audio, available coverage, and intended deliverables, then confirm what can be produced well.",
+      },
+      {
+        q: "How are revisions handled?",
+        a: "The scope defines the included revision rounds and feedback process, so everyone knows how decisions and final approval will work.",
+      },
+      {
+        q: "Can you create several social clips from one long video?",
+        a: "Yes. Turning interviews, events, webinars, or long-form footage into a planned set of shorter clips is a common workflow.",
+      },
+      {
+        q: "Do you add captions and motion graphics?",
+        a: "Yes. Captions, titles, callouts, and restrained motion graphics can be included based on the content and platform.",
       },
     ],
   },
