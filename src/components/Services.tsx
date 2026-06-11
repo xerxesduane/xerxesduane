@@ -31,12 +31,12 @@ export default function Services() {
           initial="hidden"
           whileInView="show"
           viewport={VIEWPORT}
-          className="mt-14 columns-1 gap-3 sm:columns-2 lg:columns-3"
+          className="mt-14 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 lg:grid-flow-row-dense"
         >
           <m.article
             variants={scaleIn}
             data-cursor="view"
-            className="border-glow group relative mb-3 flex break-inside-avoid flex-col overflow-hidden rounded-[2rem] border border-gold/25 bg-cream text-ink shadow-[0_30px_120px_-70px_rgba(218,164,66,0.95)]"
+            className="border-glow group relative flex flex-col overflow-hidden rounded-[2rem] border border-gold/25 bg-cream text-ink shadow-[0_30px_120px_-70px_rgba(218,164,66,0.95)] sm:col-span-2 lg:col-span-2"
           >
             <div
               aria-hidden
@@ -62,44 +62,51 @@ export default function Services() {
                 </div>
               </div>
 
-              <p className="mt-5 max-w-md text-base leading-relaxed text-ink/70 sm:text-lg">
-                {featured.description}
-              </p>
-
-              <div className="mt-6 rounded-2xl border border-ink/10 bg-ink/[0.045] p-3">
-                <div className="grid gap-2 sm:grid-cols-2">
-                  {["Workflows", "Assistants", "Lead handling", "Team time back"].map(
-                    (item) => (
-                      <span
-                        key={item}
-                        className="inline-flex items-center gap-2 rounded-full bg-cream/60 px-3 py-2 text-sm text-ink/75"
-                      >
-                        <CheckCircle2 size={15} className="shrink-0 text-gold-deep" />
-                        {item}
-                      </span>
-                    ),
-                  )}
-                </div>
-              </div>
-
-              <div className="mt-6 flex flex-col gap-3 border-t border-ink/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
-                {featured.price && (
-                  <p className="font-mono text-sm font-semibold text-ink">
-                    {featured.price}
+              <div className="mt-6 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-end">
+                <div>
+                  <p className="max-w-xl text-base leading-relaxed text-ink/70 sm:text-lg">
+                    {featured.description}
                   </p>
-                )}
-                <a
-                  href="#contact"
-                  data-cursor="link"
-                  className="group/link inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream transition duration-300 hover:bg-gold hover:text-ink"
-                >
-                  Scope this
-                  <ArrowUpRight
-                    size={16}
-                    strokeWidth={2.3}
-                    className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-                  />
-                </a>
+
+                  <div className="mt-6 flex flex-col gap-3 border-t border-ink/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                    {featured.price && (
+                      <p className="font-mono text-sm font-semibold text-ink">
+                        {featured.price}
+                      </p>
+                    )}
+                    <a
+                      href="#contact"
+                      data-cursor="link"
+                      className="group/link inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream transition duration-300 hover:bg-gold hover:text-ink"
+                    >
+                      Scope this
+                      <ArrowUpRight
+                        size={16}
+                        strokeWidth={2.3}
+                        className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                      />
+                    </a>
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border border-ink/10 bg-ink/[0.045] p-3">
+                  <p className="px-1 pb-3 font-mono text-[10px] uppercase tracking-[0.18em] text-ink/50">
+                    What it can handle
+                  </p>
+                  <div className="grid gap-2">
+                    {["Workflows", "Assistants", "Lead handling", "Team time back"].map(
+                      (item) => (
+                        <span
+                          key={item}
+                          className="inline-flex items-center gap-2 rounded-full bg-cream/60 px-3 py-2 text-sm text-ink/75"
+                        >
+                          <CheckCircle2 size={15} className="shrink-0 text-gold-deep" />
+                          {item}
+                        </span>
+                      ),
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </m.article>
@@ -111,7 +118,9 @@ export default function Services() {
                 key={s.title}
                 variants={fadeUp}
                 data-cursor="view"
-                className="glass glass-hover group relative mb-3 min-h-56 break-inside-avoid overflow-hidden rounded-2xl p-5"
+                className={`glass glass-hover group relative flex min-h-64 flex-col overflow-hidden rounded-2xl p-5 ${
+                  index === 4 || index === 8 ? "lg:col-span-2" : ""
+                }`}
               >
                 <div
                   aria-hidden
@@ -136,7 +145,7 @@ export default function Services() {
                   {s.description}
                 </p>
 
-                <div className="mt-5 flex items-center justify-between gap-4 border-t border-cream/8 pt-4">
+                <div className="mt-auto flex items-center justify-between gap-4 border-t border-cream/8 pt-4">
                   {s.price && (
                     <p className="font-mono text-xs text-gold">{s.price}</p>
                   )}
