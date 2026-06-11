@@ -43,32 +43,36 @@ export default function Services() {
               className="absolute inset-0 bg-[linear-gradient(135deg,rgba(11,15,13,0.05)_0%,transparent_42%),radial-gradient(circle_at_85%_10%,rgba(218,164,66,0.34),transparent_34%)]"
             />
             <div className="relative flex flex-1 flex-col p-6 sm:p-7 lg:p-8">
-              <div className="flex items-start justify-between gap-5">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-ink text-gold shadow-[0_18px_45px_-24px_rgba(11,15,13,0.8)] transition-transform duration-300 group-hover:-translate-y-1">
+              <div className="flex items-start gap-4">
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-ink text-gold shadow-[0_18px_45px_-24px_rgba(11,15,13,0.8)] transition-transform duration-300 group-hover:-translate-y-1">
                   <FeaturedIcon size={30} strokeWidth={1.6} />
                 </div>
-                <span className="rounded-full border border-ink/10 bg-ink/[0.06] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink/65">
-                  Featured
-                </span>
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="font-mono text-xs uppercase tracking-[0.2em] text-gold-deep">
+                      {featured.tagline}
+                    </p>
+                    <span className="rounded-full border border-ink/10 bg-ink/[0.06] px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink/60">
+                      Featured
+                    </span>
+                  </div>
+                  <h3 className="mt-3 text-3xl leading-[1.08] !text-ink sm:text-4xl">
+                    {featured.title}
+                  </h3>
+                </div>
               </div>
 
-              <div className="mt-8">
-                <p className="font-mono text-xs uppercase tracking-[0.2em] text-gold-deep">
-                  {featured.tagline}
-                </p>
-                <h3 className="mt-4 text-3xl leading-[1.08] !text-ink sm:text-4xl">
-                  {featured.title}
-                </h3>
-                <p className="mt-5 max-w-md text-base leading-relaxed text-ink/70 sm:text-lg">
-                  {featured.description}
-                </p>
+              <p className="mt-5 max-w-md text-base leading-relaxed text-ink/70 sm:text-lg">
+                {featured.description}
+              </p>
 
-                <div className="mt-6 grid gap-2 sm:grid-cols-2">
+              <div className="mt-6 rounded-2xl border border-ink/10 bg-ink/[0.045] p-3">
+                <div className="grid gap-2 sm:grid-cols-2">
                   {["Workflows", "Assistants", "Lead handling", "Team time back"].map(
                     (item) => (
                       <span
                         key={item}
-                        className="inline-flex items-center gap-2 rounded-full bg-ink/[0.06] px-3 py-2 text-sm text-ink/75"
+                        className="inline-flex items-center gap-2 rounded-full bg-cream/60 px-3 py-2 text-sm text-ink/75"
                       >
                         <CheckCircle2 size={15} className="shrink-0 text-gold-deep" />
                         {item}
@@ -76,28 +80,27 @@ export default function Services() {
                     ),
                   )}
                 </div>
-
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  {featured.price && (
-                    <p className="font-mono text-sm font-semibold text-ink">
-                      {featured.price}
-                    </p>
-                  )}
-                  <a
-                    href="#contact"
-                    data-cursor="link"
-                    className="group/link inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream transition duration-300 hover:bg-gold hover:text-ink"
-                  >
-                    Scope this
-                    <ArrowUpRight
-                      size={16}
-                      strokeWidth={2.3}
-                      className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
-                    />
-                  </a>
-                </div>
               </div>
 
+              <div className="mt-6 flex flex-col gap-3 border-t border-ink/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
+                {featured.price && (
+                  <p className="font-mono text-sm font-semibold text-ink">
+                    {featured.price}
+                  </p>
+                )}
+                <a
+                  href="#contact"
+                  data-cursor="link"
+                  className="group/link inline-flex items-center justify-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream transition duration-300 hover:bg-gold hover:text-ink"
+                >
+                  Scope this
+                  <ArrowUpRight
+                    size={16}
+                    strokeWidth={2.3}
+                    className="transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+                  />
+                </a>
+              </div>
             </div>
           </m.article>
 
