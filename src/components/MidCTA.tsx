@@ -1,6 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 import Reveal from "./ui/Reveal";
 import Button from "./ui/Button";
+import DottedOrbit from "./fx/DottedOrbit";
 
 /**
  * Mid-page conversion band. Gives visitors a way to act around the halfway
@@ -8,8 +9,12 @@ import Button from "./ui/Button";
  */
 export default function MidCTA() {
   return (
-    <section className="py-20 sm:py-24" aria-label="Book a free audit">
-      <div className="container-bl">
+    <section className="relative overflow-hidden py-20 sm:py-24" aria-label="Book a free audit">
+      <DottedOrbit
+        tone="gold"
+        className="absolute left-1/2 top-1/2 h-[46rem] w-[46rem] -translate-x-1/2 -translate-y-1/2 opacity-50"
+      />
+      <div className="container-bl relative">
         <Reveal className="glass border-glow relative mx-auto max-w-4xl overflow-hidden rounded-3xl px-6 py-12 text-center sm:px-12 sm:py-14">
           <span
             aria-hidden

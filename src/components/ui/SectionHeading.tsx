@@ -8,6 +8,8 @@ interface SectionHeadingProps {
   title: ReactNode;
   subtitle?: ReactNode;
   align?: "left" | "center";
+  /** light = for cream/sand bands (ink text, deep-gold eyebrow). */
+  tone?: "dark" | "light";
 }
 
 export default function SectionHeading({
@@ -15,7 +17,9 @@ export default function SectionHeading({
   title,
   subtitle,
   align = "center",
+  tone = "dark",
 }: SectionHeadingProps) {
+  const light = tone === "light";
   return (
     <m.div
       variants={stagger}
@@ -28,15 +32,21 @@ export default function SectionHeading({
           : "max-w-2xl text-left"
       }
     >
-      <m.span variants={fadeUp} className="eyebrow">
-        <span className="h-px w-6 bg-gold/60" aria-hidden />
+      <m.span variants={fadeUp} className={`eyebrow ${light ? "!text-gold-deep" : ""}`}>
+        <span className={`h-px w-6 ${light ? "bg-gold-deep/60" : "bg-gold/60"}`} aria-hidden />
         {eyebrow}
       </m.span>
-      <Kinetic as="h2" className="mt-4 text-3xl sm:text-4xl md:text-[2.85rem]">
+      <Kinetic
+        as="h2"
+        className={`mt-4 text-3xl sm:text-4xl md:text-[2.85rem] ${light ? "!text-ink" : ""}`}
+      >
         {title}
       </Kinetic>
       {subtitle && (
-        <m.p variants={fadeUp} className="mt-4 text-base text-muted sm:text-lg">
+        <m.p
+          variants={fadeUp}
+          className={`mt-4 text-base sm:text-lg ${light ? "text-ink/65" : "text-muted"}`}
+        >
           {subtitle}
         </m.p>
       )}
