@@ -31,12 +31,12 @@ export default function Services() {
           initial="hidden"
           whileInView="show"
           viewport={VIEWPORT}
-          className="mt-14 grid gap-4 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,1.42fr)] lg:items-start"
+          className="mt-14 columns-1 gap-3 sm:columns-2 lg:columns-3"
         >
           <m.article
             variants={scaleIn}
             data-cursor="view"
-            className="border-glow group relative flex flex-col overflow-hidden rounded-[2rem] border border-gold/25 bg-cream text-ink shadow-[0_30px_120px_-70px_rgba(218,164,66,0.95)] lg:sticky lg:top-28"
+            className="border-glow group relative mb-3 flex break-inside-avoid flex-col overflow-hidden rounded-[2rem] border border-gold/25 bg-cream text-ink shadow-[0_30px_120px_-70px_rgba(218,164,66,0.95)]"
           >
             <div
               aria-hidden
@@ -104,56 +104,51 @@ export default function Services() {
             </div>
           </m.article>
 
-          <m.div
-            variants={stagger}
-            className="grid gap-3 sm:grid-cols-2"
-          >
-            {supporting.map((s, index) => {
-              const Icon = s.icon;
-              return (
-                <m.article
-                  key={s.title}
-                  variants={fadeUp}
-                  data-cursor="view"
-                  className="glass glass-hover group relative min-h-56 overflow-hidden rounded-2xl p-5"
-                >
-                  <div
-                    aria-hidden
-                    className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-gold/45 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+          {supporting.map((s, index) => {
+            const Icon = s.icon;
+            return (
+              <m.article
+                key={s.title}
+                variants={fadeUp}
+                data-cursor="view"
+                className="glass glass-hover group relative mb-3 min-h-56 break-inside-avoid overflow-hidden rounded-2xl p-5"
+              >
+                <div
+                  aria-hidden
+                  className="absolute inset-x-5 top-0 h-px bg-gradient-to-r from-transparent via-gold/45 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold ring-1 ring-gold/20 transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-gold group-hover:text-ink">
+                    <Icon size={20} strokeWidth={1.7} />
+                  </div>
+                  <span className="font-mono text-[10px] text-muted-dark">
+                    {String(index + 2).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <h3 className="mt-5 text-xl leading-tight text-cream transition-colors group-hover:text-gold">
+                  {s.title}
+                </h3>
+                <p className="mt-2 font-mono text-[11px] uppercase tracking-wider text-gold/75">
+                  {s.tagline}
+                </p>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {s.description}
+                </p>
+
+                <div className="mt-5 flex items-center justify-between gap-4 border-t border-cream/8 pt-4">
+                  {s.price && (
+                    <p className="font-mono text-xs text-gold">{s.price}</p>
+                  )}
+                  <ArrowUpRight
+                    size={16}
+                    strokeWidth={2.2}
+                    className="shrink-0 text-muted-dark transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold"
                   />
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold ring-1 ring-gold/20 transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-gold group-hover:text-ink">
-                      <Icon size={20} strokeWidth={1.7} />
-                    </div>
-                    <span className="font-mono text-[10px] text-muted-dark">
-                      {String(index + 2).padStart(2, "0")}
-                    </span>
-                  </div>
-
-                  <h3 className="mt-5 text-xl leading-tight text-cream transition-colors group-hover:text-gold">
-                    {s.title}
-                  </h3>
-                  <p className="mt-2 font-mono text-[11px] uppercase tracking-wider text-gold/75">
-                    {s.tagline}
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted">
-                    {s.description}
-                  </p>
-
-                  <div className="mt-5 flex items-center justify-between gap-4 border-t border-cream/8 pt-4">
-                    {s.price && (
-                      <p className="font-mono text-xs text-gold">{s.price}</p>
-                    )}
-                    <ArrowUpRight
-                      size={16}
-                      strokeWidth={2.2}
-                      className="shrink-0 text-muted-dark transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-gold"
-                    />
-                  </div>
-                </m.article>
-              );
-            })}
-          </m.div>
+                </div>
+              </m.article>
+            );
+          })}
         </m.div>
 
         <m.div
