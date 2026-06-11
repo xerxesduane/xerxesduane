@@ -4,7 +4,7 @@ import { join, dirname, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const RAW = join(root, "public/work/_raw");
+const RAW = join(root, "work-raw");
 const OUT = join(root, "public/work");
 
 // Drop raw originals here (gitignored). Run: npm run images

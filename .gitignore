@@ -29,5 +29,5 @@ dist-ssr
 .claude
 
 # Raw portfolio originals — optimized WebP outputs are committed instead
-public/work/_raw
 public/hero/raw.mp4
+work-raw
