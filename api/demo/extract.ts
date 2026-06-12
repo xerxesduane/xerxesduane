@@ -4,7 +4,7 @@
 import { generateObject } from "ai";
 import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_FAST, preflight, errorResponse, clamp, json, logAiError, aiErrorDetail } from "../_shared";
+import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -38,7 +38,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   try {
     const { object } = await generateObject({
-      model: groq(MODEL_FAST),
+      model: groq(MODEL_STRUCTURED),
       schema: LeadSchema,
       maxOutputTokens: 500,
       prompt:
@@ -49,6 +49,6 @@ export default async function handler(req: Request): Promise<Response> {
     return json(object);
   } catch (e) {
     logAiError("extract", e);
-    return json({ debug: aiErrorDetail(e) }, 200); // TEMP diagnostic
+    return errorResponse("The model couldn't extract that — try a clearer message.", 502);
   }
 }

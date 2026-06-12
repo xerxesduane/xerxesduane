@@ -14,6 +14,9 @@
 // an easy switch — restore the import + model IDs in the handlers and here.)
 export const MODEL_FAST = "llama-3.3-70b-versatile";
 export const MODEL_SMART = "llama-3.3-70b-versatile";
+// Structured output (generateObject) needs json_schema support, which Llama
+// models lack on Groq — use a gpt-oss model for the extraction demo.
+export const MODEL_STRUCTURED = "openai/gpt-oss-20b";
 
 const WINDOW_MS = 60_000;
 const WINDOW_SEC = WINDOW_MS / 1000;
