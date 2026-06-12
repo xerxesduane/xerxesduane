@@ -130,17 +130,18 @@ function pick(o: unknown, k: string): unknown {
  * APICallError in `.lastError`, whose `.statusCode` + `.responseBody` carry the
  * provider's exact error (e.g. Gemini's 429/permission/region message).
  */
-export function logAiError(where: string, err: unknown): void {
+export function aiErrorDetail(err: unknown): Record<string, unknown> {
   const last = pick(err, "lastError") ?? err;
-  console.error(
-    `[demo:${where}]`,
-    JSON.stringify({
-      name: pick(err, "name"),
-      message: pick(err, "message"),
-      status: pick(last, "statusCode"),
-      url: pick(last, "url"),
-      body: String(pick(last, "responseBody") ?? "").slice(0, 900),
-      cause: pick(pick(err, "cause"), "message"),
-    }),
-  );
+  return {
+    name: pick(err, "name"),
+    message: String(pick(err, "message") ?? "").slice(0, 400),
+    status: pick(last, "statusCode"),
+    url: pick(last, "url"),
+    body: String(pick(last, "responseBody") ?? "").slice(0, 1200),
+    cause: pick(pick(err, "cause"), "message"),
+  };
+}
+
+export function logAiError(where: string, err: unknown): void {
+  console.error(`[demo:${where}]`, JSON.stringify(aiErrorDetail(err)));
 }
