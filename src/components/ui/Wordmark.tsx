@@ -3,14 +3,12 @@ interface WordmarkProps {
   /** size of the logo mark in px (wordmark text scales with it) */
   size?: number;
   showText?: boolean;
-  /** show the "by Xerxes Duane" founder endorsement beneath the wordmark */
-  endorsed?: boolean;
 }
 
 /**
- * Threshold Works logo — "The Threshold".
- * Nested doorway arches (the threshold you cross into something new) rising from
- * a gold foundation line, with a keystone spark at the apex for the "Works".
+ * Xerxes Duane logo — "the Open X".
+ * Two strokes cross low and flare upward and outward (open arms, serve first),
+ * a gold spark cradled in the opening, rooted on the gold foundation line.
  */
 export function LogoMark({ size = 28 }: { size?: number }) {
   return (
@@ -22,9 +20,24 @@ export function LogoMark({ size = 28 }: { size?: number }) {
       aria-hidden
       className="shrink-0"
     >
-      {/* outer arch (structure) */}
+      {/* foundation line */}
       <path
-        d="M7 31 V16 Q7 5.5 18 5.5 Q29 5.5 29 16 V31"
+        d="M5 31 H31"
+        stroke="#DAA442"
+        strokeWidth="2.6"
+        strokeLinecap="round"
+      />
+      {/* back stroke (gold, the value) */}
+      <path
+        d="M23.8 30 C21 23, 14.5 13, 8.2 6.4"
+        stroke="#DAA442"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      {/* front stroke (cream, the work) */}
+      <path
+        d="M12.2 30 C15 23, 21.5 13, 27.8 6.4"
         stroke="currentColor"
         strokeOpacity="0.92"
         strokeWidth="2.3"
@@ -32,23 +45,8 @@ export function LogoMark({ size = 28 }: { size?: number }) {
         strokeLinejoin="round"
         className="text-cream"
       />
-      {/* inner arch (the layer within) */}
-      <path
-        d="M12.5 31 V17.5 Q12.5 11 18 11 Q23.5 11 23.5 17.5 V31"
-        stroke="#DAA442"
-        strokeWidth="2.1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      {/* keystone spark */}
-      <circle cx="18" cy="6.2" r="1.9" fill="#DAA442" />
-      {/* foundation line */}
-      <path
-        d="M3.5 31 H32.5"
-        stroke="#DAA442"
-        strokeWidth="2.6"
-        strokeLinecap="round"
-      />
+      {/* spark cradled in the opening */}
+      <circle cx="18" cy="5.6" r="1.9" fill="#DAA442" />
     </svg>
   );
 }
@@ -57,7 +55,6 @@ export default function Wordmark({
   className = "",
   size = 28,
   showText = true,
-  endorsed = false,
 }: WordmarkProps) {
   return (
     <span className={`inline-flex items-center gap-2.5 ${className}`}>
@@ -68,19 +65,8 @@ export default function Wordmark({
             className="font-display font-semibold tracking-normal text-cream"
             style={{ fontSize: `${size * 0.62}px` }}
           >
-            Threshold<span className="text-gold"> Works</span>
+            Xerxes<span className="text-gold"> Duane</span>
           </span>
-          {endorsed && (
-            <span
-              className="mt-1 font-sans font-medium text-gold"
-              style={{
-                fontSize: `${size * 0.27}px`,
-                letterSpacing: "0.08em",
-              }}
-            >
-              by Xerxes Duane
-            </span>
-          )}
         </span>
       )}
     </span>

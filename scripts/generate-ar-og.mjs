@@ -14,7 +14,7 @@ const AR = "Tahoma, Arial, sans-serif";
 const line1 = "فريق تقني،";
 const line2 = "دون أن توظّف واحدًا.";
 const subtitle = "مواقع · تطبيقات · أودو · أتمتة · ذكاء اصطناعي — دبي.";
-const tagline = "أنظمة ذكية · عمل صادق · نتائج حقيقية";
+const tagline = "الخدمة أولًا · البناء ثانيًا";
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" direction="rtl">
   <defs>
@@ -32,13 +32,12 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" v
   <rect width="1200" height="630" fill="url(#glow)"/>
   <g transform="translate(100,72)">
     <g transform="scale(1.5)" stroke-linecap="round" stroke-linejoin="round" fill="none">
-      <path d="M7 31 V16 Q7 5.5 18 5.5 Q29 5.5 29 16 V31" stroke="#F3EFE6" stroke-width="2.3"/>
-      <path d="M12.5 31 V17.5 Q12.5 11 18 11 Q23.5 11 23.5 17.5 V31" stroke="#DAA442" stroke-width="2.1"/>
-      <circle cx="18" cy="6.2" r="1.9" fill="#DAA442"/>
-      <path d="M3.5 31 H32.5" stroke="#DAA442" stroke-width="2.6"/>
+      <path d="M5 31 H31" stroke="#DAA442" stroke-width="2.6"/>
+      <path d="M23.8 30 C21 23, 14.5 13, 8.2 6.4" stroke="#DAA442" stroke-width="2.1"/>
+      <path d="M12.2 30 C15 23, 21.5 13, 27.8 6.4" stroke="#F3EFE6" stroke-width="2.3"/>
+      <circle cx="18" cy="5.6" r="1.9" fill="#DAA442" stroke="none"/>
     </g>
-    <text x="74" y="38" font-family="Georgia, serif" font-size="32" font-weight="600" fill="#F3EFE6">Threshold <tspan fill="#DAA442">Works</tspan></text>
-    <text x="75" y="58" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="1.4" fill="#DAA442">by Xerxes Duane</text>
+    <text x="74" y="42" font-family="Georgia, serif" font-size="32" font-weight="600" fill="#F3EFE6">Xerxes <tspan fill="#DAA442">Duane</tspan></text>
   </g>
   <text x="1100" y="300" text-anchor="end" direction="rtl" font-family="${AR}" font-size="70" font-weight="700" fill="#F3EFE6">${line1}</text>
   <text x="1100" y="390" text-anchor="end" direction="rtl" font-family="${AR}" font-size="70" font-weight="700" fill="url(#gold)">${line2}</text>

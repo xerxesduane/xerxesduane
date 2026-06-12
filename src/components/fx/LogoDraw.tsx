@@ -2,10 +2,10 @@ import { m } from "framer-motion";
 import { EASE } from "../../lib/motion";
 
 /**
- * The doorway mark, drawn in: foundation line first, then the outer and inner
- * arches stroke-draw, then the keystone spark settles. Decorative (aria-hidden);
- * MotionConfig reducedMotion="user" renders it instantly for reduced motion.
- * Paths match ui/Wordmark.tsx exactly.
+ * The Open X mark, drawn in: foundation line first, then the gold and cream
+ * strokes draw upward and outward, then the spark settles into the opening.
+ * Decorative (aria-hidden); MotionConfig reducedMotion="user" renders it
+ * instantly for reduced motion. Paths match ui/Wordmark.tsx exactly.
  */
 export default function LogoDraw({ className = "" }: { className?: string }) {
   return (
@@ -17,9 +17,9 @@ export default function LogoDraw({ className = "" }: { className?: string }) {
       initial="hidden"
       animate="show"
     >
-      {/* foundation / threshold */}
+      {/* foundation */}
       <m.path
-        d="M3.5 31 H32.5"
+        d="M5 31 H31"
         stroke="#DAA442"
         strokeWidth="2.6"
         strokeLinecap="round"
@@ -32,9 +32,25 @@ export default function LogoDraw({ className = "" }: { className?: string }) {
           },
         }}
       />
-      {/* outer arch */}
+      {/* back stroke (gold) */}
       <m.path
-        d="M7 31 V16 Q7 5.5 18 5.5 Q29 5.5 29 16 V31"
+        d="M23.8 30 C21 23, 14.5 13, 8.2 6.4"
+        stroke="#DAA442"
+        strokeWidth="2.1"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        variants={{
+          hidden: { pathLength: 0, opacity: 0 },
+          show: {
+            pathLength: 1,
+            opacity: 1,
+            transition: { duration: 0.7, ease: EASE, delay: 0.15 },
+          },
+        }}
+      />
+      {/* front stroke (cream) */}
+      <m.path
+        d="M12.2 30 C15 23, 21.5 13, 27.8 6.4"
         stroke="#F3EFE6"
         strokeOpacity="0.92"
         strokeWidth="2.3"
@@ -45,30 +61,14 @@ export default function LogoDraw({ className = "" }: { className?: string }) {
           show: {
             pathLength: 1,
             opacity: 1,
-            transition: { duration: 0.8, ease: EASE, delay: 0.15 },
+            transition: { duration: 0.8, ease: EASE, delay: 0.35 },
           },
         }}
       />
-      {/* inner arch */}
-      <m.path
-        d="M12.5 31 V17.5 Q12.5 11 18 11 Q23.5 11 23.5 17.5 V31"
-        stroke="#DAA442"
-        strokeWidth="2.1"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        variants={{
-          hidden: { pathLength: 0, opacity: 0 },
-          show: {
-            pathLength: 1,
-            opacity: 1,
-            transition: { duration: 0.7, ease: EASE, delay: 0.4 },
-          },
-        }}
-      />
-      {/* keystone spark settles last */}
+      {/* spark settles into the opening last */}
       <m.circle
         cx="18"
-        cy="6.2"
+        cy="5.6"
         r="1.9"
         fill="#DAA442"
         variants={{
@@ -79,7 +79,7 @@ export default function LogoDraw({ className = "" }: { className?: string }) {
             transition: { type: "spring", stiffness: 320, damping: 16, delay: 0.95 },
           },
         }}
-        style={{ transformOrigin: "18px 6.2px" }}
+        style={{ transformOrigin: "18px 5.6px" }}
       />
     </m.svg>
   );

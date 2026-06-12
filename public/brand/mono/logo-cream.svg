@@ -1,11 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="440" height="112" viewBox="0 0 440 112" fill="none">
-  <!-- Threshold Works monochrome lockup — all cream (dark backgrounds) -->
+  <!-- Xerxes Duane monochrome lockup — all cream (dark backgrounds) -->
   <g transform="translate(8,20) scale(2.0)" fill="none" stroke="#F3EFE6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M7 31 V16 Q7 5.5 18 5.5 Q29 5.5 29 16 V31" stroke-width="2.3"/>
-    <path d="M12.5 31 V17.5 Q12.5 11 18 11 Q23.5 11 23.5 17.5 V31" stroke-width="2.1"/>
-    <circle cx="18" cy="6.2" r="1.9" fill="#F3EFE6" stroke="none"/>
-    <path d="M3.5 31 H32.5" stroke-width="2.6"/>
+    <path d="M5 31 H31" stroke-width="2.6"/>
+    <path d="M23.8 30 C21 23, 14.5 13, 8.2 6.4" stroke-width="2.1"/>
+    <path d="M12.2 30 C15 23, 21.5 13, 27.8 6.4" stroke-width="2.3"/>
+    <circle cx="18" cy="5.6" r="1.9" fill="#F3EFE6" stroke="none"/>
   </g>
-  <text x="92" y="60" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="37" font-weight="600" letter-spacing="-1" fill="#F3EFE6">Threshold Works</text>
-  <text x="93" y="84" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="500" letter-spacing="1.2" fill="#F3EFE6">by Xerxes Duane</text>
+  <text x="92" y="68" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="37" font-weight="600" letter-spacing="-1" fill="#F3EFE6">Xerxes Duane</text>
 </svg>

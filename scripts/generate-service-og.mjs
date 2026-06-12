@@ -25,22 +25,45 @@ function ogSvg({ line1, line2, subtitle }) {
   <rect width="1200" height="630" fill="url(#glow)"/>
   <g transform="translate(100,72)">
     <g transform="scale(1.5)" stroke-linecap="round" stroke-linejoin="round" fill="none">
-      <path d="M7 31 V16 Q7 5.5 18 5.5 Q29 5.5 29 16 V31" stroke="#F3EFE6" stroke-width="2.3"/>
-      <path d="M12.5 31 V17.5 Q12.5 11 18 11 Q23.5 11 23.5 17.5 V31" stroke="#DAA442" stroke-width="2.1"/>
-      <circle cx="18" cy="6.2" r="1.9" fill="#DAA442"/>
-      <path d="M3.5 31 H32.5" stroke="#DAA442" stroke-width="2.6"/>
+      <path d="M5 31 H31" stroke="#DAA442" stroke-width="2.6"/>
+      <path d="M23.8 30 C21 23, 14.5 13, 8.2 6.4" stroke="#DAA442" stroke-width="2.1"/>
+      <path d="M12.2 30 C15 23, 21.5 13, 27.8 6.4" stroke="#F3EFE6" stroke-width="2.3"/>
+      <circle cx="18" cy="5.6" r="1.9" fill="#DAA442" stroke="none"/>
     </g>
-    <text x="74" y="38" font-family="Georgia, serif" font-size="32" font-weight="600" fill="#F3EFE6">Threshold <tspan fill="#DAA442">Works</tspan></text>
-    <text x="75" y="58" font-family="Helvetica, Arial, sans-serif" font-size="15" letter-spacing="1.4" fill="#DAA442">by Xerxes Duane</text>
+    <text x="74" y="42" font-family="Georgia, serif" font-size="32" font-weight="600" fill="#F3EFE6">Xerxes <tspan fill="#DAA442">Duane</tspan></text>
   </g>
   <text x="100" y="290" font-family="Georgia, serif" font-size="72" font-weight="600" fill="#F3EFE6">${line1}</text>
   <text x="100" y="375" font-family="Georgia, serif" font-size="72" font-weight="600" font-style="italic" fill="url(#gold)">${line2}</text>
   <text x="100" y="455" font-family="Helvetica, Arial, sans-serif" font-size="30" fill="#9AA39A">${subtitle}</text>
-  <text x="100" y="560" font-family="monospace" font-size="22" letter-spacing="3" fill="#DAA442">SMART SYSTEMS.  HONEST WORK.  REAL RESULTS.</text>
+  <text x="100" y="560" font-family="monospace" font-size="22" letter-spacing="3" fill="#DAA442">SERVE FIRST.  BUILD SECOND.</text>
 </svg>`;
 }
 
 const cards = [
+  {
+    slug: "odoo-erp-dubai",
+    line1: "Odoo ERP,",
+    line2: "set up properly.",
+    subtitle: "Implementation, configuration &amp; support — Dubai small businesses.",
+  },
+  {
+    slug: "web-development-dubai",
+    line1: "A website that",
+    line2: "brings in customers.",
+    subtitle: "Custom sites, web apps &amp; landing pages — Dubai.",
+  },
+  {
+    slug: "ai-automation-dubai",
+    line1: "AI that handles",
+    line2: "the repetitive work.",
+    subtitle: "Chatbots, workflows &amp; custom assistants — Dubai.",
+  },
+  {
+    slug: "seo-dubai",
+    line1: "Be found by buyers,",
+    line2: "not browsers.",
+    subtitle: "Technical, local &amp; content SEO for Dubai small businesses.",
+  },
   {
     slug: "answer-engine-optimization-dubai",
     line1: "Answer Engine",
