@@ -75,7 +75,7 @@ export default function Nav({
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2, ease: EASE }}
           >
-            <Wordmark endorsed />
+            <Wordmark />
             {/* name comes from the visible wordmark; suffix gives context */}
             <span className="sr-only">{ar ? "— الصفحة الرئيسية" : "— home"}</span>
           </m.a>

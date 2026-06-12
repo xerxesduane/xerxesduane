@@ -21,7 +21,7 @@ export default function Founder() {
               <div className="flex items-center gap-4">
                 <img
                   src="/brand/founder-xerxes.jpg"
-                  alt="Xerxes Duane, founder of Threshold Works"
+                  alt="Xerxes Duane, founder and lead consultant"
                   width={64}
                   height={64}
                   loading="lazy"
@@ -32,7 +32,7 @@ export default function Founder() {
                     Xerxes Duane
                   </h3>
                   <p className="font-mono text-xs uppercase tracking-wider text-gold/80">
-                    Founder · Threshold Works
+                    Founder &amp; Lead Consultant
                   </p>
                 </div>
               </div>
@@ -80,9 +80,9 @@ export default function Founder() {
                   wasn't in scope. They've referred me three times since.
                 </p>
                 <p>
-                  I'm a person of faith, and I run Threshold Works the way I'd want
+                  I'm a person of faith, and I run my studio the way I'd want
                   to be treated: honest counsel, plain language, and your interests
-                  ahead of my invoice. When you hire Threshold Works, you work
+                  ahead of my invoice. When you hire me, you work
                   directly with me, not a faceless team or an account manager.
                 </p>
                 <p className="font-display text-base italic text-gold">

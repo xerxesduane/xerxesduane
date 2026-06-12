@@ -53,11 +53,9 @@ export default function Hero() {
             variants={fadeUp}
             className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl"
           >
-            Most small businesses in Dubai are duct-taping together a website,
-            spreadsheets, and five apps that don't talk to each other. Threshold
-            Works builds the websites, apps, ERP, automation, and AI that actually
-            work together, honestly, under one roof, so you can stop managing tools
-            and get back to growing.
+            I build websites, apps, and systems for small businesses, then go
+            beyond the build to serve the business itself, and eventually the
+            life behind it.
           </m.p>
 
           <m.div

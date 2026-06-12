@@ -57,7 +57,7 @@ export default function Diagnosis() {
             are missing, calmly, honestly, in plain language.
           </p>
           <p className="mt-6 font-display text-xl italic text-gold">
-            That's what Threshold Works is for.
+            That's what Xerxes Duane is for.
           </p>
         </Reveal>
       </div>

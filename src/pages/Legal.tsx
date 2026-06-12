@@ -27,15 +27,15 @@ export function Privacy() {
   return (
     <LegalLayout title="Privacy Policy">
       <p>
-        This Privacy Policy explains how Threshold Works by Xerxes Duane
-        ("Threshold Works", "we", "us") collects and uses information when you
+        This Privacy Policy explains how Xerxes Duane
+        ("Xerxes Duane", "we", "us") collects and uses information when you
         visit this website or contact us. We keep this short and in plain
         language, the same way we work.
       </p>
 
       <H2>Who we are</H2>
       <p>
-        Threshold Works is a tech studio based in Dubai, United Arab Emirates.
+        Xerxes Duane is a tech studio based in Dubai, United Arab Emirates.
         You can reach us at{" "}
         <a className={linkCls} href={`mailto:${CONTACT.email}`}>
           {CONTACT.email}
@@ -114,7 +114,7 @@ export function Terms() {
 
       <H2>The website</H2>
       <p>
-        This site describes Threshold Works and shares general information and
+        This site describes Xerxes Duane and shares general information and
         articles. We work to keep it accurate and current, but we provide it "as
         is" without warranties. Blog and guide content is general information,
         not professional, legal, or financial advice for your specific
@@ -130,8 +130,8 @@ export function Terms() {
 
       <H2>Intellectual property</H2>
       <p>
-        The Threshold Works name, logo, design, text, and graphics on this site
-        are owned by Threshold Works unless stated otherwise. Please don't reuse
+        The Xerxes Duane name, logo, design, text, and graphics on this site
+        are owned by Xerxes Duane unless stated otherwise. Please don't reuse
         them without permission. Third-party brand names belong to their owners.
       </p>
 
@@ -143,7 +143,7 @@ export function Terms() {
 
       <H2>Liability</H2>
       <p>
-        To the extent permitted by law, Threshold Works isn't liable for any
+        To the extent permitted by law, Xerxes Duane isn't liable for any
         loss arising from your use of this website or reliance on its general
         content.
       </p>

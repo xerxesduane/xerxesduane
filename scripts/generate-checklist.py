@@ -50,8 +50,8 @@ def draw():
                        "systems-audit-checklist.pdf")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     c = canvas.Canvas(out, pagesize=A4, pageCompression=1)
-    c.setTitle("The Systems Audit Checklist - Threshold Works")
-    c.setAuthor("Threshold Works")
+    c.setTitle("The Systems Audit Checklist - Xerxes Duane")
+    c.setAuthor("Xerxes Duane")
 
     # Background
     c.setFillColor(CREAM)

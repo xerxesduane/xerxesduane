@@ -1,7 +1,7 @@
-# Threshold Works, Website
+# Xerxes Duane, Website
 
 The all-in-one tech studio for small businesses in Dubai.
-**Smart systems. Honest work. Real results.**
+**Serve first. Build second.**
 
 Built with Vite + React + TypeScript + Tailwind CSS + Framer Motion.
 Single-page, dark "golden-hour" design, cinematic, glassmorphic, fully responsive

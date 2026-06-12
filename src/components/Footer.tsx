@@ -23,7 +23,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
   const ar = locale === "ar";
   const tagline = ar
     ? AR_CHROME.footerTagline
-    : "Smart systems. Honest work. Real results.";
+    : "Serve first. Build second.";
   const serviceItems = ar
     ? SERVICE_PAGES_AR.map((p) => ({ href: `/ar/${p.slug}`, label: p.navLabel }))
     : SERVICE_PAGES.map((p) => ({ href: `/${p.slug}`, label: p.navLabel }));
@@ -37,14 +37,14 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
       <div className="container-bl">
         <div className={`grid gap-10 ${gridCols}`}>
           <div>
-            <Wordmark endorsed />
+            <Wordmark />
             <p className="mt-4 max-w-xs font-display text-lg italic text-cream-dim">
               {tagline}
             </p>
             {!ar && (
               <>
                 <p className="mt-3 text-sm text-muted">
-                  Threshold Works by Xerxes Duane · Dubai, UAE
+                  Xerxes Duane · Dubai, UAE
                 </p>
                 <p className="mt-1 text-xs text-muted-dark">
                   Serving Dubai &amp; the wider UAE.
@@ -65,7 +65,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
                 href="https://www.instagram.com/xerxes.duane"
                 target="_blank"
                 rel="noopener"
-                aria-label={ar ? AR_CHROME.instagramAria : "Threshold Works on Instagram"}
+                aria-label={ar ? AR_CHROME.instagramAria : "Xerxes Duane on Instagram"}
                 className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/10 text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
               >
                 <InstagramIcon />
@@ -144,7 +144,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
             </>
           ) : (
             <>
-              <span>© {new Date().getFullYear()} Threshold Works. Built with care in Dubai.</span>
+              <span>© {new Date().getFullYear()} Xerxes Duane. Built with care in Dubai.</span>
               <span className="flex items-center gap-3">
                 <a href="/privacy" className="transition-colors hover:text-gold">
                   Privacy

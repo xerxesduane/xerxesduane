@@ -8,7 +8,7 @@ import Reveal from "../components/ui/Reveal";
 import FaqList from "../components/FaqList";
 
 const waHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
-  "مرحبًا Threshold Works، أودّ حجز تدقيق مجاني لأنظمتي.",
+  "مرحبًا Xerxes Duane، أودّ حجز تدقيق مجاني لأنظمتي.",
 )}`;
 
 export default function ServicePageAr({ page }: { page: ArPage }) {

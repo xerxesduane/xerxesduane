@@ -89,7 +89,7 @@ export const INSIGHTS: InsightPost[] = [
         type: "p",
         text: "The build itself is usually a one-off cost. Hosting and maintenance are ongoing but small. Be wary of anyone who only offers an open-ended monthly fee with no clear deliverable, and make sure you are never locked out of your own site.",
       },
-      { type: "h2", text: "What it costs with Threshold Works" },
+      { type: "h2", text: "What it costs with Xerxes Duane" },
       {
         type: "p",
         text: "We give you a fixed quote after a free 60-minute audit, so you only pay for what actually moves your business, and you own the domain, hosting, and code. No surprise invoices, no lock-in. If a simple page is all you need, we will tell you that. Book a free audit and we will map exactly what your site should do, and what it should cost.",
@@ -410,7 +410,7 @@ export const INSIGHTS: InsightPost[] = [
     slug: "what-a-systems-audit-covers",
     title: "What a free systems audit actually covers",
     description:
-      "No jargon, no sales pitch: exactly what happens in a free 60-minute systems audit with Threshold Works, and the plain-English map you walk away with.",
+      "No jargon, no sales pitch: exactly what happens in a free 60-minute systems audit with Xerxes Duane, and the plain-English map you walk away with.",
     date: "2026-05-12",
     author: "Xerxes Duane",
     readingMinutes: 4,

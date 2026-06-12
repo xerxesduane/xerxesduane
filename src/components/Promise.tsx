@@ -9,7 +9,7 @@ export default function Promise() {
     <section className="py-20 sm:py-28">
       <div className="container-bl">
         <Reveal className="mx-auto max-w-2xl text-center">
-          <span className="eyebrow justify-center">The Threshold Works promise</span>
+          <span className="eyebrow justify-center">The Xerxes Duane promise</span>
           <h2 className="mt-4 text-3xl sm:text-4xl">
             We earn trust the <span className="text-gradient-gold">slow way.</span>
           </h2>

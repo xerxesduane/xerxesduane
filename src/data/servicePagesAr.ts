@@ -20,7 +20,7 @@ export const SERVICE_PAGES_AR: ServicePageAr[] = [
   {
     slug: "odoo-erp-dubai",
     navLabel: "أودو / تخطيط الموارد",
-    metaTitle: "تطبيق أودو ERP في دبي | Threshold Works",
+    metaTitle: "Xerxes Duane | تطبيق أودو ERP في دبي",
     metaDescription:
       "إعداد وتخصيص ودعم نظام أودو ERP للشركات الصغيرة في دبي. نظام واحد للمخزون والمبيعات والفوترة وإدارة العملاء. احجز تدقيقًا مجانيًا لأنظمتك.",
     eyebrow: "أودو وتخطيط الموارد · دبي",
@@ -50,7 +50,7 @@ export const SERVICE_PAGES_AR: ServicePageAr[] = [
   {
     slug: "web-development-dubai",
     navLabel: "تطوير المواقع",
-    metaTitle: "تطوير المواقع في دبي | Threshold Works",
+    metaTitle: "Xerxes Duane | تطوير المواقع في دبي",
     metaDescription:
       "مواقع وتطبيقات وصفحات هبوط مخصّصة للشركات الصغيرة في دبي. سريعة، تعمل أولًا على الجوال، جاهزة لمحركات البحث، بأسعار ثابتة وبلا قيود. احجز تدقيقًا مجانيًا.",
     eyebrow: "تطوير المواقع · دبي",
@@ -80,7 +80,7 @@ export const SERVICE_PAGES_AR: ServicePageAr[] = [
   {
     slug: "ai-automation-dubai",
     navLabel: "أتمتة الذكاء الاصطناعي",
-    metaTitle: "أتمتة الذكاء الاصطناعي في دبي | Threshold Works",
+    metaTitle: "Xerxes Duane | أتمتة الذكاء الاصطناعي في دبي",
     metaDescription:
       "أتمتة بالذكاء الاصطناعي للشركات الصغيرة في دبي: روبوتات محادثة ومسارات عمل ومساعدون مخصّصون يؤهّلون العملاء ويجيبون عن الأسئلة ويزيلون العمل المتكرر. احجز تدقيقًا مجانيًا.",
     eyebrow: "الذكاء الاصطناعي والأتمتة · دبي",
@@ -110,7 +110,7 @@ export const SERVICE_PAGES_AR: ServicePageAr[] = [
   {
     slug: "seo-dubai",
     navLabel: "تحسين محركات البحث",
-    metaTitle: "خدمات تحسين محركات البحث في دبي | Threshold Works",
+    metaTitle: "Xerxes Duane | خدمات تحسين محركات البحث في دبي",
     metaDescription:
       "تحسين محركات البحث في دبي يستهدف الكلمات التي تُحوّل، لا الزيارات الفارغة. تحسين تقني وبحث محلي ومحتوى للشركات الصغيرة، مع تقارير شفافة. احجز تدقيقًا مجانيًا.",
     eyebrow: "تحسين محركات البحث · دبي",
@@ -160,16 +160,16 @@ export const AR_NAV_LINKS = [
 ];
 
 export const AR_CHROME = {
-  homeAria: "Threshold Works، الصفحة الرئيسية",
+  homeAria: "Xerxes Duane، الصفحة الرئيسية",
   bookAudit: "احجز تدقيقًا مجانيًا",
   openMenu: "افتح القائمة",
   closeMenu: "أغلق القائمة",
-  whatsappAria: "تواصل مع Threshold Works عبر واتساب",
-  footerTagline: "أنظمة ذكية. عمل صادق. نتائج حقيقية.",
+  whatsappAria: "تواصل مع Xerxes Duane عبر واتساب",
+  footerTagline: "الخدمة أولًا. البناء ثانيًا.",
   footerServicesHeading: "خدماتنا في دبي",
   footerContactHeading: "تواصل معنا",
-  footerRights: "Threshold Works · دبي، الإمارات.",
+  footerRights: "Xerxes Duane · دبي، الإمارات.",
   footerSince: "موثوق بهدوء منذ ٢٠١٩.",
   linkedinAria: "Xerxes Duane على LinkedIn",
-  instagramAria: "Threshold Works على Instagram",
+  instagramAria: "Xerxes Duane على Instagram",
 };

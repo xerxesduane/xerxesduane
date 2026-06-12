@@ -9,7 +9,7 @@ export default function WhyUs() {
     <section id="why" className="scroll-mt-24 py-20 sm:py-28">
       <div className="container-bl">
         <SectionHeading
-          eyebrow="Why Threshold Works"
+          eyebrow="Why Xerxes Duane"
           title={
             <>
               The difference is{" "}
@@ -31,7 +31,7 @@ export default function WhyUs() {
               Typical agency
             </div>
             <div className="border-l border-gold/20 bg-gold/[0.07] px-5 py-4 font-mono text-xs uppercase tracking-wider text-gold">
-              Threshold Works
+              Xerxes Duane
             </div>
           </m.div>
 

@@ -6,7 +6,7 @@ import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import Reveal from "../components/ui/Reveal";
 
 const waHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
-  "مرحبًا Threshold Works، أودّ حجز تدقيق مجاني لأنظمتي.",
+  "مرحبًا Xerxes Duane، أودّ حجز تدقيق مجاني لأنظمتي.",
 )}`;
 
 export default function HomeAr() {

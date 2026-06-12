@@ -5,7 +5,7 @@ import { AR_CHROME } from "../data/servicePagesAr";
 export default function WhatsAppButton({ locale = "en" }: { locale?: "en" | "ar" }) {
   const ar = locale === "ar";
   const href = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
-    ar ? "مرحبًا Threshold Works، أودّ معرفة المزيد." : "Hi Threshold Works, I'd like to learn more.",
+    ar ? "مرحبًا Xerxes Duane، أودّ معرفة المزيد." : "Hi Xerxes Duane, I'd like to learn more.",
   )}`;
 
   return (
@@ -13,7 +13,7 @@ export default function WhatsAppButton({ locale = "en" }: { locale?: "en" | "ar"
       href={href}
       target="_blank"
       rel="noopener"
-      aria-label={ar ? AR_CHROME.whatsappAria : "Chat with Threshold Works on WhatsApp"}
+      aria-label={ar ? AR_CHROME.whatsappAria : "Chat with Xerxes Duane on WhatsApp"}
       className="group fixed bottom-24 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-olive text-cream shadow-[0_12px_40px_-8px_rgba(0,0,0,0.6)] ring-1 ring-gold/30 transition-transform duration-300 ease-smooth hover:scale-105 md:bottom-7 md:right-7"
     >
       <span

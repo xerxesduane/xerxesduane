@@ -36,7 +36,7 @@ export default function About() {
               About
             </m.span>
             <Kinetic as="h1" className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl">
-              The person behind <span className="text-gradient-gold italic">Threshold Works.</span>
+              The person behind <span className="text-gradient-gold italic">the work.</span>
             </Kinetic>
           </m.div>
         </div>
@@ -49,7 +49,7 @@ export default function About() {
               <div className="glass border-glow rounded-3xl p-7 text-center">
                 <img
                   src="/brand/founder-xerxes.jpg"
-                  alt="Xerxes Duane, founder and lead consultant of Threshold Works"
+                  alt="Xerxes Duane, founder and lead consultant"
                   width={120}
                   height={120}
                   className="mx-auto h-28 w-28 rounded-2xl object-cover ring-1 ring-gold/30"
@@ -128,9 +128,9 @@ export default function About() {
             </p>
             */}
             <p className="mt-6 font-display text-xl italic text-gold">
-              Whatever the project, the standard stays the same: smart systems,
-              honest work, and results you can measure. I do this through my
-              Dubai studio, Threshold Works.
+              I don't just create things. I help your business run, and I stay
+              for the parts of your life it touches. Serving comes first; the
+              build is how I do it.
             </p>
             <div className="mt-8">
               <a

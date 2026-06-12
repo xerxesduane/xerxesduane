@@ -56,7 +56,7 @@ function serviceOgImage(slug: string): string {
  * OG image by URL for weeks, so a versioned query string forces them to fetch
  * the current image instead of serving a stale (or wrong) cached one.
  */
-const OG_IMAGE_VERSION = "3";
+const OG_IMAGE_VERSION = "4";
 
 /** Absolute, cache-busted share-image URL for a page. */
 function ogImageUrl(image?: string): string {
@@ -91,11 +91,11 @@ const FAQ_SCHEMA = {
 };
 
 const HOME_META: PageMeta = {
-  title: "Threshold Works | Web, Apps, Odoo/ERP & AI Studio in Dubai",
+  title: "Xerxes Duane | Web, Apps, Odoo/ERP & AI Studio in Dubai",
   description:
-    "Dubai tech studio for small businesses: websites, apps, Odoo/ERP & CRM, automation, AI and ads. Founded by Xerxes Duane. Book a free 60-minute systems audit.",
+    "Xerxes Duane is a Dubai tech studio for small businesses: websites, apps, Odoo/ERP & CRM, automation, AI and ads. Serve first. Build second. Book a free 60-minute systems audit.",
   canonical: `${SITE_ORIGIN}/`,
-  ogTitle: "Threshold Works | Web, Apps, Odoo/ERP & AI Studio in Dubai",
+  ogTitle: "Xerxes Duane | Web, Apps, Odoo/ERP & AI Studio in Dubai",
   alternates: [
     { hreflang: "en", href: `${SITE_ORIGIN}/` },
     { hreflang: "ar", href: `${SITE_ORIGIN}/ar` },
@@ -146,21 +146,21 @@ const HOME_ALTERNATES = [
 ];
 
 const AR_HOME_META: PageMeta = {
-  title: "Threshold Works | استوديو تقني للأعمال الصغيرة في دبي",
+  title: "Xerxes Duane | استوديو تقني للأعمال الصغيرة في دبي",
   description:
     "استوديو تقني متكامل في دبي للأعمال الصغيرة: مواقع وتطبيقات وأنظمة أودو ERP وأتمتة وذكاء اصطناعي وتحسين محركات البحث. احجز تدقيقًا مجانيًا لأنظمتك.",
   canonical: `${SITE_ORIGIN}/ar`,
-  ogTitle: "Threshold Works | استوديو تقني للأعمال الصغيرة في دبي",
+  ogTitle: "Xerxes Duane | استوديو تقني للأعمال الصغيرة في دبي",
   ogImage: `${SITE_ORIGIN}/brand/og/ar-home.png`,
   alternates: HOME_ALTERNATES,
 };
 
 const ABOUT_META: PageMeta = {
-  title: "About Xerxes Duane | Threshold Works",
+  title: "About Xerxes Duane | Odoo & Systems Consultant in Dubai",
   description:
-    "Xerxes Duane, founder of Threshold Works: a hands-on Odoo consultant helping Dubai small businesses turn fragmented operations into one connected system. You work directly with him.",
+    "Xerxes Duane is a hands-on Odoo consultant helping Dubai small businesses turn fragmented operations into one connected system. You work directly with him.",
   canonical: `${SITE_ORIGIN}/about`,
-  ogTitle: "About Xerxes Duane | Threshold Works",
+  ogTitle: "About Xerxes Duane | Odoo & Systems Consultant in Dubai",
   ogImage: `${SITE_ORIGIN}/brand/og/about.png`,
   jsonLd: [
     {
@@ -189,11 +189,11 @@ const ABOUT_META: PageMeta = {
 };
 
 const CASE_STUDIES_META: PageMeta = {
-  title: "Case Studies | Threshold Works",
+  title: "Xerxes Duane | Case Studies",
   description:
-    "Real client work from Threshold Works: Odoo ERP deployments, CRM and web builds, and ad campaigns across the UAE, the Philippines, and beyond.",
+    "Xerxes Duane shares real client work: Odoo ERP deployments, CRM and web builds, and ad campaigns across the UAE, the Philippines, and beyond.",
   canonical: `${SITE_ORIGIN}/case-studies`,
-  ogTitle: "Case Studies | Threshold Works",
+  ogTitle: "Xerxes Duane | Case Studies",
   ogImage: `${SITE_ORIGIN}/brand/og/case-studies.png`,
   jsonLd: [
     breadcrumb([HOME_CRUMB, { name: "Case Studies", url: `${SITE_ORIGIN}/case-studies` }]),
@@ -201,49 +201,49 @@ const CASE_STUDIES_META: PageMeta = {
 };
 
 const INSIGHTS_META: PageMeta = {
-  title: "Insights | Threshold Works",
+  title: "Xerxes Duane | Insights",
   description:
-    "Plain-English thinking on systems, Odoo, automation, and growth for small businesses in Dubai and beyond, from Threshold Works.",
+    "Xerxes Duane shares plain-English thinking on systems, Odoo, automation, and growth for small businesses in Dubai and beyond.",
   canonical: `${SITE_ORIGIN}/insights`,
-  ogTitle: "Insights | Threshold Works",
+  ogTitle: "Xerxes Duane | Insights",
   ogImage: `${SITE_ORIGIN}/brand/og/insights.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Insights", url: `${SITE_ORIGIN}/insights` }])],
 };
 
 const PRIVACY_META: PageMeta = {
-  title: "Privacy Policy | Threshold Works",
+  title: "Xerxes Duane | Privacy Policy",
   description:
-    "How Threshold Works collects and uses information: contact enquiries, consent-based analytics, cookies, and your choices. Plain language, no data selling.",
+    "How Xerxes Duane collects and uses information: contact enquiries, consent-based analytics, cookies, and your choices. Plain language, no data selling.",
   canonical: `${SITE_ORIGIN}/privacy`,
-  ogTitle: "Privacy Policy | Threshold Works",
+  ogTitle: "Xerxes Duane | Privacy Policy",
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Privacy Policy", url: `${SITE_ORIGIN}/privacy` }])],
 };
 
 const TERMS_META: PageMeta = {
-  title: "Terms of Use | Threshold Works",
+  title: "Xerxes Duane | Terms of Use",
   description:
-    "The terms for using the Threshold Works website: quotes, intellectual property, external links, liability, and governing law (UAE).",
+    "The terms for using the Xerxes Duane website: quotes, intellectual property, external links, liability, and governing law (UAE).",
   canonical: `${SITE_ORIGIN}/terms`,
-  ogTitle: "Terms of Use | Threshold Works",
+  ogTitle: "Xerxes Duane | Terms of Use",
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Terms of Use", url: `${SITE_ORIGIN}/terms` }])],
 };
 
 const PORTFOLIO_META: PageMeta = {
-  title: "Portfolio — Web & Graphic Design | Threshold Works",
+  title: "Xerxes Duane | Portfolio — Web & Graphic Design",
   description:
-    "A portfolio of website and brand & graphic design work by Threshold Works for businesses across the UAE and beyond. See the craft, then book a free systems audit.",
+    "Xerxes Duane's portfolio of website and brand & graphic design work for businesses across the UAE and beyond. See the craft, then book a free systems audit.",
   canonical: `${SITE_ORIGIN}/portfolio`,
-  ogTitle: "Portfolio — Web & Graphic Design | Threshold Works",
+  ogTitle: "Xerxes Duane | Portfolio — Web & Graphic Design",
   ogImage: `${SITE_ORIGIN}/brand/og/portfolio.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Portfolio", url: `${SITE_ORIGIN}/portfolio` }])],
 };
 
 const SHOWREEL_META: PageMeta = {
-  title: "Showreel — Video, Editing & Motion | Threshold Works",
+  title: "Xerxes Duane | Showreel — Video, Editing & Motion",
   description:
-    "Video production, editing, color grading, and animation by Threshold Works: events, documentaries, social reels, and brand work across the UAE and beyond.",
+    "Xerxes Duane's video production, editing, color grading, and animation: events, documentaries, social reels, and brand work across the UAE and beyond.",
   canonical: `${SITE_ORIGIN}/showreel`,
-  ogTitle: "Showreel — Video, Editing & Motion | Threshold Works",
+  ogTitle: "Xerxes Duane | Showreel — Video, Editing & Motion",
   ogImage: `${SITE_ORIGIN}/brand/og/showreel.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Showreel", url: `${SITE_ORIGIN}/showreel` }])],
 };
@@ -258,7 +258,7 @@ export function getPageMeta(path: string): PageMeta {
     if (study) {
       const canonical = `${SITE_ORIGIN}/case-studies/${study.slug}`;
       return {
-        title: `${study.client} Case Study | Threshold Works`,
+        title: `Xerxes Duane | ${study.client} Case Study`,
         description: study.summary,
         canonical,
         ogTitle: `${study.client} | ${study.category} Case Study`,
@@ -308,7 +308,7 @@ export function getPageMeta(path: string): PageMeta {
     if (post) {
       const canonical = `${SITE_ORIGIN}/insights/${post.slug}`;
       return {
-        title: `${post.title} | Threshold Works`,
+        title: `Xerxes Duane | ${post.title}`,
         description: post.description,
         canonical,
         ogTitle: post.title,

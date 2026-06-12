@@ -37,7 +37,7 @@ export default function Contact() {
   }, [state.succeeded, source.page]);
 
   const whatsappMessage = [
-    `Hi Threshold Works, I'd like to book a free audit.`,
+    `Hi Xerxes Duane, I'd like to book a free audit.`,
     ``,
     `Name: ${form.name}`,
     `Business: ${form.business}`,

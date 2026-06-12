@@ -46,7 +46,7 @@ for (const route of routes) {
 // 404 page (Vercel serves /404.html for unmatched routes, with a 404 status).
 const notFound = await render("/__not-found__");
 const notFoundHead =
-  "<title>Page not found | Threshold Works</title>\n" +
+  "<title>Xerxes Duane | Page not found</title>\n" +
   '    <meta name="robots" content="noindex" />';
 const notFoundPage = template
   .replace("<!--app-head-->", notFoundHead)

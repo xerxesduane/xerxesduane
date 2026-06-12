@@ -596,7 +596,7 @@ export const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Do you work with very small businesses?",
-    a: "Yes. Most of our clients are 2–10 person teams. That's literally who we built Threshold Works for.",
+    a: "Yes. Most of our clients are 2–10 person teams. That's literally who we built this studio for.",
   },
   {
     q: "Do you support Arabic-speaking clients or bilingual sites?",
