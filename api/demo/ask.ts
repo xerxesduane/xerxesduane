@@ -91,7 +91,7 @@ async function resolveContext(body: {
 }
 
 export default async function handler(req: Request): Promise<Response> {
-  const blocked = preflight(req);
+  const blocked = await preflight(req);
   if (blocked) return blocked;
 
   let body: { source?: string; content?: string; question?: string };

@@ -24,7 +24,7 @@ const SYSTEM: Record<string, string> = {
 };
 
 export default async function handler(req: Request): Promise<Response> {
-  const blocked = preflight(req);
+  const blocked = await preflight(req);
   if (blocked) return blocked;
 
   let body: { demo?: string; messages?: Turn[] };

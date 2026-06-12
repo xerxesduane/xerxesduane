@@ -1,5 +1,5 @@
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -8,6 +8,7 @@ import Contact from "../components/Contact";
 import DemoChat from "../components/demos/DemoChat";
 import DemoAsk from "../components/demos/DemoAsk";
 import DemoExtract from "../components/demos/DemoExtract";
+import DemoTranslate from "../components/demos/DemoTranslate";
 import { fadeUp, stagger } from "../lib/motion";
 
 function DemoCard({
@@ -123,6 +124,15 @@ export default function Demos() {
               blurb="Drop in a rambling enquiry and watch it become a tidy, typed record — the first step of any automation."
             >
               <DemoExtract />
+            </DemoCard>
+
+            <DemoCard
+              icon={Languages}
+              eyebrow="Arabic ⇄ English"
+              title="Translate either direction, instantly"
+              blurb="Bilingual is the default in Dubai. Paste Arabic or English and get a natural translation — handy for sites, support, and content."
+            >
+              <DemoTranslate />
             </DemoCard>
           </div>
 
