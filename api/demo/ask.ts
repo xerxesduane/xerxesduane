@@ -2,7 +2,7 @@
 // URL. Demonstrates the "answers from your own content" capability. Streams
 // plain text tokens back to the browser.
 import { streamText } from "ai";
-import { google } from "@ai-sdk/google";
+import { groq } from "@ai-sdk/groq";
 import { MODEL_SMART, preflight, errorResponse, clamp, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
@@ -113,7 +113,7 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   const result = streamText({
-    model: google(MODEL_SMART),
+    model: groq(MODEL_SMART),
     system:
       "You answer questions strictly from the provided CONTEXT. " +
       "If the answer isn't in the context, say so plainly — do not use outside knowledge or guess. " +

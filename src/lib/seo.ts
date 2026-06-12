@@ -252,7 +252,7 @@ const SHOWREEL_META: PageMeta = {
 const AI_LAB_META: PageMeta = {
   title: "Xerxes Duane AI Lab | Try Live AI Demos",
   description:
-    "Test real, live AI built by Xerxes Duane: a business chatbot, a lead-qualifying assistant, document Q&A, and structured data extraction. Powered by Google Gemini, running live in Dubai.",
+    "Test real, live AI built by Xerxes Duane: a business chatbot, a lead-qualifying assistant, document Q&A, and structured data extraction. Powered by Llama 3 on Groq, running live in Dubai.",
   canonical: `${SITE_ORIGIN}/ai-lab`,
   ogTitle: "Xerxes Duane AI Lab | Try Live AI Demos",
   ogImage: `${SITE_ORIGIN}/brand/og/demos.png`,

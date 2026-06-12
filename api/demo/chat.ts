@@ -3,7 +3,7 @@
 //   "lead"      — a lead-qualifying assistant for Xerxes Duane
 // Streams plain text tokens back to the browser (see src/lib/demoClient.ts).
 import { streamText } from "ai";
-import { google } from "@ai-sdk/google";
+import { groq } from "@ai-sdk/groq";
 import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
@@ -50,7 +50,7 @@ export default async function handler(req: Request): Promise<Response> {
   if (totalChars > 6000) return errorResponse("That conversation is too long for the demo.");
 
   const result = streamText({
-    model: google(MODEL_FAST),
+    model: groq(MODEL_FAST),
     system,
     messages,
     maxOutputTokens: 500,

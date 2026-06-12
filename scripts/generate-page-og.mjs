@@ -76,7 +76,7 @@ const cards = [
     slug: "demos",
     line1: "Try the AI,",
     line2: "not just read about it.",
-    subtitle: "Live, working AI demos — chat, Q&amp;A &amp; extraction. Powered by Gemini.",
+    subtitle: "Live, working AI demos — chat, Q&amp;A &amp; extraction. Powered by Llama 3 on Groq.",
   },
   {
     slug: "website-cost-dubai",

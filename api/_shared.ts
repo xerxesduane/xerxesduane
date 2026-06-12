@@ -5,14 +5,15 @@
 // PUBLIC, unauthenticated demo: tight output caps, short input caps, and a
 // per-IP rate limit.
 //
-// Provider: Google Gemini, on its free tier (no spend, generous rate limits).
-// Free key from https://aistudio.google.com — set GOOGLE_GENERATIVE_AI_API_KEY
-// in Vercel. The @ai-sdk/google provider reads that env var automatically.
-
-// Gemini Flash is fast and free. To switch back to Claude, restore the
-// @ai-sdk/anthropic imports in the handlers and use "claude-haiku-4-5" here.
-export const MODEL_FAST = "gemini-2.0-flash";
-export const MODEL_SMART = "gemini-2.0-flash";
+// Provider: Groq's free tier (no card, no regional billing restriction, very
+// fast). Free key from https://console.groq.com — set GROQ_API_KEY in Vercel.
+// The @ai-sdk/groq provider reads that env var automatically.
+//
+// (We tried Gemini, but Google requires prepaid billing in this region, so its
+// "free" tier 429s. @ai-sdk/anthropic + @ai-sdk/google are still installed for
+// an easy switch — restore the import + model IDs in the handlers and here.)
+export const MODEL_FAST = "llama-3.3-70b-versatile";
+export const MODEL_SMART = "llama-3.3-70b-versatile";
 
 const WINDOW_MS = 60_000;
 const WINDOW_SEC = WINDOW_MS / 1000;
@@ -83,7 +84,7 @@ export function clientIp(req: Request): string {
 }
 
 export function hasKey(): boolean {
-  return Boolean(process.env.GOOGLE_GENERATIVE_AI_API_KEY);
+  return Boolean(process.env.GROQ_API_KEY);
 }
 
 /** JSON response with no-store caching (demo responses must never be cached). */
@@ -103,7 +104,7 @@ export async function preflight(req: Request): Promise<Response | null> {
   if (req.method !== "POST") return errorResponse("Method not allowed.", 405);
   if (!hasKey()) {
     return errorResponse(
-      "This demo isn't configured yet — the site owner needs to add a GOOGLE_GENERATIVE_AI_API_KEY.",
+      "This demo isn't configured yet — the site owner needs to add a GROQ_API_KEY.",
       503,
     );
   }

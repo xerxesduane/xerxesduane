@@ -2,9 +2,9 @@
 // typed JSON (the kind of thing that auto-files a lead into a CRM). Returns a
 // validated object via the AI SDK's generateObject + a Zod schema.
 import { generateObject } from "ai";
-import { google } from "@ai-sdk/google";
+import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_FAST, preflight, errorResponse, clamp, json, logAiError, aiErrorDetail } from "../_shared";
+import { MODEL_FAST, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -38,7 +38,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   try {
     const { object } = await generateObject({
-      model: google(MODEL_FAST),
+      model: groq(MODEL_FAST),
       schema: LeadSchema,
       maxOutputTokens: 500,
       prompt:
@@ -49,7 +49,6 @@ export default async function handler(req: Request): Promise<Response> {
     return json(object);
   } catch (e) {
     logAiError("extract", e);
-    // TEMP diagnostic: surface the provider's real error to the caller.
-    return json({ debug: aiErrorDetail(e) }, 200);
+    return errorResponse("The model couldn't extract that — try a clearer message.", 502);
   }
 }
