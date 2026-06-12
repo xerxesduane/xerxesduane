@@ -1,5 +1,8 @@
-// Arabic (MSA) content for the service pages. DRAFT — pending native review.
-// Rendered at /ar/<slug> with dir="rtl" and noindex until approved.
+// Arabic (MSA) content for the service pages, rendered at /ar/<slug> with
+// dir="rtl". These pages are LIVE and INDEXED (hreflang + sitemap); the copy
+// is still pending a native-speaker review. Voice note: the Arabic uses
+// first-person plural (نحن) forms — converting to singular like the English
+// site should happen as part of that native review, not mechanically.
 export interface ServicePageAr {
   slug: string;
   navLabel: string;
