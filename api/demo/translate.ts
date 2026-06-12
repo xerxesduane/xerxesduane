@@ -2,7 +2,7 @@
 // Streams the translation back as plain text.
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
-import { MODEL_FAST, preflight, errorResponse, clamp } from "../_shared";
+import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -41,6 +41,7 @@ export default async function handler(req: Request): Promise<Response> {
     messages: [{ role: "user", content: text }],
     maxOutputTokens: 700,
     temperature: 0.2,
+    onError: ({ error }) => logAiError("translate", error),
   });
 
   return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });

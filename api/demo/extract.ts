@@ -4,7 +4,7 @@
 import { generateObject } from "ai";
 import { google } from "@ai-sdk/google";
 import { z } from "zod";
-import { MODEL_FAST, preflight, errorResponse, clamp, json } from "../_shared";
+import { MODEL_FAST, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -47,7 +47,8 @@ export default async function handler(req: Request): Promise<Response> {
         `MESSAGE:\n"""\n${text}\n"""`,
     });
     return json(object);
-  } catch {
+  } catch (e) {
+    logAiError("extract", e);
     return errorResponse("The model couldn't extract that — try a clearer message.", 502);
   }
 }

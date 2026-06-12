@@ -4,7 +4,7 @@
 // Streams plain text tokens back to the browser (see src/lib/demoClient.ts).
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
-import { MODEL_FAST, preflight, errorResponse, clamp } from "../_shared";
+import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -55,6 +55,7 @@ export default async function handler(req: Request): Promise<Response> {
     messages,
     maxOutputTokens: 500,
     temperature: 0.5,
+    onError: ({ error }) => logAiError("chat", error),
   });
 
   return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });

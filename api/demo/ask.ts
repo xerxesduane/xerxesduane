@@ -3,7 +3,7 @@
 // plain text tokens back to the browser.
 import { streamText } from "ai";
 import { google } from "@ai-sdk/google";
-import { MODEL_SMART, preflight, errorResponse, clamp } from "../_shared";
+import { MODEL_SMART, preflight, errorResponse, clamp, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -123,6 +123,7 @@ export default async function handler(req: Request): Promise<Response> {
     ],
     maxOutputTokens: 500,
     temperature: 0.2,
+    onError: ({ error }) => logAiError("ask", error),
   });
 
   return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });

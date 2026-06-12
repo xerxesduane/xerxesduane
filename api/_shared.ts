@@ -120,3 +120,27 @@ export async function preflight(req: Request): Promise<Response | null> {
 export function clamp(text: unknown, max: number): string {
   return typeof text === "string" ? text.slice(0, max) : "";
 }
+
+function pick(o: unknown, k: string): unknown {
+  return o && typeof o === "object" ? (o as Record<string, unknown>)[k] : undefined;
+}
+
+/**
+ * Log the real cause behind an AI SDK failure. AI_RetryError wraps the final
+ * APICallError in `.lastError`, whose `.statusCode` + `.responseBody` carry the
+ * provider's exact error (e.g. Gemini's 429/permission/region message).
+ */
+export function logAiError(where: string, err: unknown): void {
+  const last = pick(err, "lastError") ?? err;
+  console.error(
+    `[demo:${where}]`,
+    JSON.stringify({
+      name: pick(err, "name"),
+      message: pick(err, "message"),
+      status: pick(last, "statusCode"),
+      url: pick(last, "url"),
+      body: String(pick(last, "responseBody") ?? "").slice(0, 900),
+      cause: pick(pick(err, "cause"), "message"),
+    }),
+  );
+}
