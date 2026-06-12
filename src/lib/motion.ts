@@ -33,8 +33,18 @@ export const scaleIn: Variants = {
   },
 };
 
-/** Shared viewport config so sections reveal once, slightly before fully in view. */
-export const VIEWPORT = { once: true, amount: 0.2 } as const;
+/**
+ * Shared viewport config so sections reveal once, as they enter view.
+ *
+ * The threshold is intentionally low. `amount` is the fraction of the element's
+ * area that must be on screen to trigger the reveal. A tall, single-column
+ * section on mobile can be 5–6× the viewport height, so its maximum possible
+ * on-screen fraction is only ~0.17 — an `amount` of 0.2 could never be reached
+ * and the section would stay hidden forever (this is exactly what broke the
+ * home-page service cards on phones). 0.05 reveals as soon as a sliver enters,
+ * which is reliable for sections of any height.
+ */
+export const VIEWPORT = { once: true, amount: 0.05 } as const;
 
 /* ---------------------------------------------------------------------------
  * Motion system tokens — one signature feel, reused everywhere.
