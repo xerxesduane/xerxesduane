@@ -58,6 +58,13 @@ export default function Hero() {
             life behind it.
           </m.p>
 
+          <m.p
+            variants={fadeUp}
+            className="mx-auto mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark"
+          >
+            Websites · Apps · Odoo/ERP · Automation · AI — Dubai
+          </m.p>
+
           <m.div
             variants={fadeUp}
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
@@ -73,7 +80,7 @@ export default function Hero() {
               href="#services"
               className="w-full px-7 py-3.5 sm:w-auto"
             >
-              See how we work
+              See how I work
             </Button>
           </m.div>
 

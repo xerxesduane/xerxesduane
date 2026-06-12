@@ -1,8 +1,12 @@
+import { useState } from "react";
 import { m } from "framer-motion";
-import { ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, CheckCircle2, ChevronDown } from "lucide-react";
 import { SERVICES } from "../data/content";
 import { fadeUp, scaleIn, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
+
+/** Supporting cards shown on phones before the "show all" expander. */
+const MOBILE_PREVIEW_COUNT = 4;
 
 const serviceHref: Record<string, string> = {
   "AI Automation & Solutions": "/ai-automation-dubai",
@@ -23,6 +27,11 @@ export default function Services() {
   const featured = SERVICES.find((service) => service.featured) ?? SERVICES[0];
   const supporting = SERVICES.filter((service) => service.title !== featured.title);
   const FeaturedIcon = featured.icon;
+  // Phones collapse the grid to the featured card + a preview; the full list
+  // is a single column ~5000px tall otherwise. CSS-only hiding (sm:flex keeps
+  // every card visible from the sm breakpoint up), so prerendered HTML still
+  // contains all cards.
+  const [showAll, setShowAll] = useState(false);
 
   return (
     <section id="services" className="relative scroll-mt-24 overflow-hidden py-20 sm:py-28">
@@ -32,13 +41,13 @@ export default function Services() {
       />
       <div className="container-bl">
         <SectionHeading
-          eyebrow="What we build"
+          eyebrow="What I build"
           title={
             <>
               One studio. <span className="text-gradient-gold">The whole stack.</span>
             </>
           }
-          subtitle="Most studios sell you one piece. We build the whole system, and the AI that ties it all together."
+          subtitle="Most studios sell you one piece. I build the whole system, and the AI that ties it all together."
         />
 
         <m.div
@@ -135,9 +144,9 @@ export default function Services() {
                 aria-label={`Explore ${s.title}`}
                 variants={fadeUp}
                 data-cursor="view"
-                className={`glass glass-hover group relative flex min-h-64 flex-col overflow-hidden rounded-2xl p-5 outline-offset-4 ${
-                  index === 4 || index === 8 ? "lg:col-span-2" : ""
-                }`}
+                className={`glass glass-hover group relative min-h-64 flex-col overflow-hidden rounded-2xl p-5 outline-offset-4 ${
+                  index >= MOBILE_PREVIEW_COUNT && !showAll ? "hidden sm:flex" : "flex"
+                } ${index === 4 || index === 8 ? "lg:col-span-2" : ""}`}
               >
                 <div
                   aria-hidden
@@ -181,6 +190,18 @@ export default function Services() {
             );
           })}
         </m.div>
+
+        {!showAll && (
+          <button
+            type="button"
+            onClick={() => setShowAll(true)}
+            aria-expanded={false}
+            className="mx-auto mt-5 flex items-center gap-2 rounded-full border border-cream/15 px-5 py-2.5 font-mono text-xs uppercase tracking-wider text-cream-dim transition-colors hover:border-gold/50 hover:text-gold sm:hidden"
+          >
+            Show all {SERVICES.length} services
+            <ChevronDown size={14} strokeWidth={2.2} aria-hidden />
+          </button>
+        )}
 
         <m.div
           variants={fadeUp}

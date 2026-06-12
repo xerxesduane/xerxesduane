@@ -37,6 +37,27 @@
       window.__CLARITY_ID__ = "x0f7gwiena";
     </script>
 
+    <!-- Pre-hydration reveal fallback. framer-motion prerenders scroll-reveal
+         targets with inline opacity:0 / off-canvas transforms, so until the JS
+         bundle hydrates, the page would look blank below the fold. CSS
+         animations outrank inline styles, so this force-reveals everything
+         after ~2s — but only while <html> lacks .js-ready, which
+         entry-client.tsx adds the moment the bundle executes. Fast connections
+         never see it; slow or failed JS gets a readable page. -->
+    <style>
+      @keyframes reveal-fallback {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      html:not(.js-ready) [style*="opacity:0"],
+      html:not(.js-ready) [style*="opacity: 0"],
+      html:not(.js-ready) [style*="115%"] {
+        animation: reveal-fallback 0.7s ease 2.2s forwards;
+      }
+    </style>
+
     <!-- tw-intro: first-paint curtain for the intro preloader. Keep commented
          while PRELOADER_ENABLED=false in src/lib/config.ts. When enabling the
          preloader, uncomment BOTH blocks so the curtain paints before the JS

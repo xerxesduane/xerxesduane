@@ -7,6 +7,10 @@ import { initCtaTracking } from "./lib/analytics";
 
 initCtaTracking();
 
+// Disarm the pre-hydration reveal fallback (see the inline <style> in
+// index.html): once the bundle is executing, framer-motion owns the reveals.
+document.documentElement.classList.add("js-ready");
+
 const container = document.getElementById("root")!;
 const tree = (
   <StrictMode>
