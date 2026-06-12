@@ -64,7 +64,7 @@ function Route({ path }: { path: string }) {
   if (slug === "terms") return <Terms />;
   if (slug === "showreel") return <Showreel />;
   if (slug === "portfolio") return <Portfolio />;
-  if (slug === "demos") return <Demos />;
+  if (slug === "ai-lab" || slug === "demos") return <Demos />;
   if (slug === "ar") return <HomeAr />;
 
   // Arabic service pages: /ar/<service-slug>

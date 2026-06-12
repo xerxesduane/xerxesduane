@@ -81,7 +81,7 @@ export default function Nav({
   const desktopLinks = ar
     ? links
     : links.filter((link) =>
-        ["Services", "Work", "Portfolio", "About", "Insights"].includes(link.label),
+        ["Services", "AI Lab", "Work", "Portfolio", "About", "Insights"].includes(link.label),
       );
   const homeHref = ar ? "/ar" : "/";
   const bookLabel = ar ? AR_CHROME.bookAudit : "Book a free audit";
@@ -134,8 +134,13 @@ export default function Nav({
                 <Magnetic strength={0.18}>
                   <a
                     href={l.href}
-                    className="inline-flex min-h-9 items-center gap-1 rounded-full px-3.5 text-xs font-medium text-cream-dim/80 transition-colors duration-200 hover:bg-cream/[0.06] hover:text-gold"
+                    className={`inline-flex min-h-9 items-center gap-1 rounded-full px-3.5 text-xs font-medium transition-colors duration-200 ${
+                      l.label === "AI Lab"
+                        ? "bg-gold/10 text-gold ring-1 ring-gold/20 hover:bg-gold hover:text-ink"
+                        : "text-cream-dim/80 hover:bg-cream/[0.06] hover:text-gold"
+                    }`}
                   >
+                    {l.label === "AI Lab" && <Sparkles size={12} />}
                     {l.label}
                     {!ar && l.label === "Services" && <ChevronDown size={13} className="transition-transform group-hover/nav:rotate-180 group-focus-within/nav:rotate-180" />}
                   </a>
@@ -180,13 +185,19 @@ export default function Nav({
                           </div>
                         ))}
                       </div>
-                      <a href="#contact" className="group/mega flex items-center justify-between border-t border-gold/20 bg-gold/[0.08] px-5 py-3.5">
-                        <span className="flex items-center gap-2 text-xs font-medium text-cream">
-                          <Sparkles size={14} className="text-gold" />
-                          Not sure what you need? Start with a free systems audit.
-                        </span>
-                        <ArrowUpRight size={14} className="text-gold transition-transform group-hover/mega:translate-x-0.5 group-hover/mega:-translate-y-0.5" />
-                      </a>
+                      <div className="grid grid-cols-2 border-t border-gold/20 bg-gold/[0.08]">
+                        <a href="/ai-lab" className="group/mega flex items-center justify-between border-r border-gold/20 px-5 py-3.5">
+                          <span className="flex items-center gap-2 text-xs font-medium text-cream">
+                            <Sparkles size={14} className="text-gold" />
+                            Try working AI in the Lab
+                          </span>
+                          <ArrowUpRight size={14} className="text-gold transition-transform group-hover/mega:translate-x-0.5 group-hover/mega:-translate-y-0.5" />
+                        </a>
+                        <a href="#contact" className="group/mega flex items-center justify-between px-5 py-3.5">
+                          <span className="text-xs font-medium text-cream">Start with a free systems audit</span>
+                          <ArrowUpRight size={14} className="text-gold transition-transform group-hover/mega:translate-x-0.5 group-hover/mega:-translate-y-0.5" />
+                        </a>
+                      </div>
                     </div>
                   </div>
                 )}

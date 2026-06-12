@@ -92,6 +92,12 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
                     Case studies
                   </a>
                 </li>
+                <li>
+                  <a href="/ai-lab" className="inline-flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
+                    AI Lab
+                    <span aria-hidden>→</span>
+                  </a>
+                </li>
               </ul>
             </div>
           )}

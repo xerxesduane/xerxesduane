@@ -19,6 +19,7 @@ import LeadMagnet from "../components/LeadMagnet";
 import Contact from "../components/Contact";
 import MidCTA from "../components/MidCTA";
 import WhoFor from "../components/WhoFor";
+import AILabPreview from "../components/AILabPreview";
 
 /**
  * Section band — gives the long homepage rhythm. Alternating bands get a
@@ -60,6 +61,9 @@ export default function Home() {
         <Services />
       </Band>
       <Band>
+        <AILabPreview />
+      </Band>
+      <Band tint>
         <Layers />
       </Band>
 

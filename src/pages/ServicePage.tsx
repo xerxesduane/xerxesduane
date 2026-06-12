@@ -104,6 +104,31 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
 
       <ServiceVisual page={page} />
 
+      {page.slug === "ai-automation-dubai" && (
+        <section className="pb-16 sm:pb-24">
+          <div className="container-bl">
+            <Reveal className="mx-auto max-w-4xl">
+              <a
+                href="/ai-lab"
+                className="group flex flex-col justify-between gap-6 rounded-3xl border border-gold/25 bg-gold/[0.09] p-7 transition-colors hover:border-gold/50 sm:flex-row sm:items-center sm:p-9"
+              >
+                <div>
+                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold">Live AI Lab</span>
+                  <h2 className="mt-3 text-2xl text-cream sm:text-3xl">Try working AI before we talk about building yours.</h2>
+                  <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+                    Test a business assistant, lead qualifier, document Q&amp;A, and structured extraction tool. No sign-up and nothing canned.
+                  </p>
+                </div>
+                <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink">
+                  Enter AI Lab
+                  <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </span>
+              </a>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
       {/* What you get */}
       <section className="py-16 sm:py-24">
         <div className="container-bl">
