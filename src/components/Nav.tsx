@@ -146,7 +146,7 @@ export default function Nav({
                   </a>
                 </Magnetic>
                 {!ar && l.label === "Services" && (
-                  <div className="invisible absolute left-1/2 top-full w-[52rem] -translate-x-[36%] pt-4 opacity-0 transition duration-200 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100">
+                  <div className="invisible absolute left-1/2 top-full w-[44rem] -translate-x-1/4 pt-4 opacity-0 transition duration-200 group-hover/nav:visible group-hover/nav:opacity-100 group-focus-within/nav:visible group-focus-within/nav:opacity-100">
                     <div className="nav-surface overflow-hidden rounded-3xl shadow-[0_30px_100px_-35px_rgba(0,0,0,0.95)]">
                       <div className="flex items-center justify-between border-b border-cream/10 px-5 py-4">
                         <div className="flex items-center gap-3">
@@ -282,7 +282,7 @@ export default function Nav({
               <div className="nav-surface mt-2 max-h-[calc(100dvh-6.5rem)] overflow-y-auto rounded-3xl p-3 shadow-[0_30px_100px_-35px_rgba(0,0,0,0.95)]">
                 <div className="mb-2 flex items-center justify-between rounded-2xl border border-gold/20 bg-gold/[0.08] px-4 py-3">
                   <div>
-                    <p className="font-mono text-[10px] uppercase tracking-wider text-gold">{ar ? "Threshold Works" : "Dubai · Available for new projects"}</p>
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-gold">{ar ? "Xerxes Duane" : "Dubai · Available for new projects"}</p>
                     <p className="mt-1 text-xs text-cream-dim">{ar ? AR_CHROME.bookAudit : "One studio for systems, digital, and growth."}</p>
                   </div>
                   <span className="h-2 w-2 rounded-full bg-gold shadow-[0_0_18px_rgba(218,164,66,0.9)]" aria-hidden />
