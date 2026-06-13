@@ -1,5 +1,5 @@
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces, Languages } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -9,6 +9,7 @@ import DemoChat from "../components/demos/DemoChat";
 import DemoAsk from "../components/demos/DemoAsk";
 import DemoExtract from "../components/demos/DemoExtract";
 import DemoTranslate from "../components/demos/DemoTranslate";
+import DemoWhatsApp from "../components/demos/DemoWhatsApp";
 import { fadeUp, stagger } from "../lib/motion";
 
 function DemoCard({
@@ -106,6 +107,15 @@ export default function Demos() {
                   "I need a website that converts",
                 ]}
               />
+            </DemoCard>
+
+            <DemoCard
+              icon={Send}
+              eyebrow="Outreach on autopilot"
+              title="WhatsApp outreach, personalized by AI"
+              blurb="Point it at your contact leads and it writes a unique, on-brand WhatsApp opener for each one — then sends the whole list while you sleep."
+            >
+              <DemoWhatsApp />
             </DemoCard>
 
             <DemoCard
