@@ -36,8 +36,8 @@ export default function AILabPreview() {
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              A dozen live, working tools — the assistants, outreach, content, and automations I build
-              into client products. Type into them and they respond for real.
+              A whole toolkit of live, working tools — the assistants, outreach, content, and automations
+              I build into client products. Type into them and they respond for real.
             </p>
             <a
               href="/ai-lab"
