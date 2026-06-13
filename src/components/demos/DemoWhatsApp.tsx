@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
-import { Play, RotateCcw, Check, CheckCheck, Phone, MoreVertical } from "lucide-react";
+import { Play, RotateCcw, Check, CheckCheck, Phone, MoreVertical, Sheet, Upload, FileSpreadsheet } from "lucide-react";
 import { streamDemo } from "../../lib/demoClient";
 
 // One contact "in the CRM". `interest` is editable so a visitor can change it
@@ -13,6 +13,7 @@ type Lead = {
   interest: string;
   city: string;
   source: string;
+  phone?: string;
   color: string;
   reply?: string;
 };
@@ -22,52 +23,134 @@ type Status = "idle" | "writing" | "sent" | "delivered" | "read" | "replied";
 const STEP = ["idle", "writing", "sent", "delivered", "read", "replied"] as const;
 const reached = (s: Status, t: Status) => STEP.indexOf(s) >= STEP.indexOf(t);
 
-const INITIAL_LEADS: Lead[] = [
-  {
-    id: 1,
-    name: "Aisha Rahman",
-    company: "Noor Interiors",
-    interest: "a kitchen renovation quote",
-    city: "Dubai",
-    source: "Instagram ad",
-    color: "#C9A227",
-    reply: "Oh perfect timing — yes please, can you send pricing? 😍",
-  },
-  {
-    id: 2,
-    name: "Daniel Okafor",
-    company: "BrightPath Tutoring",
-    interest: "the 1-on-1 SAT prep program",
-    city: "Abu Dhabi",
-    source: "website form",
-    color: "#5B8DEF",
-    reply: "Great — what slots do you have next week?",
-  },
-  {
-    id: 3,
-    name: "Mei Lin Chen",
-    company: "Lotus Wellness",
-    interest: "the monthly membership",
-    city: "Dubai",
-    source: "a referral",
-    color: "#3FB984",
-  },
+// The demo personalizes this many leads live (keeps the public endpoint within
+// its rate limit); the rest still show in the list. Production runs the lot.
+const MAX_LIVE = 6;
+
+const COLORS = ["#C9A227", "#5B8DEF", "#3FB984", "#E8557E", "#9B59B6", "#FF7A45", "#19B5A3", "#F4A300"];
+
+const SAMPLE_LEADS: Lead[] = [
+  { id: 1, name: "Aisha Rahman", company: "Noor Interiors", interest: "a kitchen renovation quote", city: "Dubai", source: "Instagram ad", color: COLORS[0], reply: "Oh perfect timing — yes please, can you send pricing? 😍" },
+  { id: 2, name: "Daniel Okafor", company: "BrightPath Tutoring", interest: "the 1-on-1 SAT prep program", city: "Abu Dhabi", source: "website form", color: COLORS[1], reply: "Great — what slots do you have next week?" },
+  { id: 3, name: "Mei Lin Chen", company: "Lotus Wellness", interest: "the monthly membership", city: "Dubai", source: "a referral", color: COLORS[2] },
 ];
+
+const SAMPLE_CSV = `Name, Company, Interest, City, Source
+Omar Khalid, Khalid Motors, a full car detailing package, Sharjah, Instagram
+Lina Haddad, Bloom Florist, a weekly office flowers subscription, Dubai, website form
+Yusuf Ali, Peak Fitness, the 12-week personal training plan, Abu Dhabi, walk-in
+Fatima Noor, Noor Skin Clinic, a hydrafacial package, Dubai, referral`;
+
+const HEADER_HINTS = ["name", "phone", "company", "business", "interest", "want", "need", "city", "location", "source", "note"];
+
+function splitRow(line: string, delim: string): string[] {
+  if (delim === "\t") return line.split("\t").map((c) => c.trim());
+  const out: string[] = [];
+  let cur = "";
+  let inQ = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQ && line[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else inQ = !inQ;
+    } else if (ch === "," && !inQ) {
+      out.push(cur);
+      cur = "";
+    } else cur += ch;
+  }
+  out.push(cur);
+  return out.map((c) => c.trim());
+}
+
+/** Parse pasted spreadsheet rows (tab- or comma-separated) into leads. */
+function parseLeads(text: string): Lead[] {
+  const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  if (!lines.length) return [];
+  const delim = lines[0].includes("\t") ? "\t" : ",";
+  const rows = lines.map((l) => splitRow(l, delim));
+  const first = rows[0].map((c) => c.toLowerCase());
+  const hasHeader = first.some((c) => HEADER_HINTS.some((h) => c.includes(h)));
+
+  let idx = { name: 0, company: 1, interest: 2, city: 3, source: 4, phone: -1 };
+  let dataRows = rows;
+  if (hasHeader) {
+    const find = (...keys: string[]) => first.findIndex((c) => keys.some((k) => c.includes(k)));
+    idx = {
+      name: Math.max(find("name"), 0),
+      company: find("company", "business"),
+      interest: find("interest", "want", "need", "service", "product", "enquir", "note"),
+      city: find("city", "location", "area", "emirate"),
+      source: find("source", "channel", "how did"),
+      phone: find("phone", "mobile", "number", "whatsapp"),
+    };
+    dataRows = rows.slice(1);
+  }
+
+  const get = (r: string[], k: number) => (k >= 0 && k < r.length ? r[k] : "");
+  return dataRows.slice(0, 50).map((r, i) => ({
+    id: i + 1,
+    name: get(r, idx.name) || `Lead ${i + 1}`,
+    company: get(r, idx.company),
+    interest: get(r, idx.interest) || "your services",
+    city: get(r, idx.city),
+    source: get(r, idx.source) || "your list",
+    phone: get(r, idx.phone),
+    color: COLORS[i % COLORS.length],
+  }));
+}
 
 const sleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 export default function DemoWhatsApp() {
-  const [leads, setLeads] = useState<Lead[]>(INITIAL_LEADS);
+  const [leads, setLeads] = useState<Lead[]>(SAMPLE_LEADS);
+  const [imported, setImported] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
+  const [raw, setRaw] = useState("");
   const [status, setStatus] = useState<Record<number, Status>>({});
   const [messages, setMessages] = useState<Record<number, string>>({});
-  const [activeId, setActiveId] = useState<number>(INITIAL_LEADS[0].id);
+  const [activeId, setActiveId] = useState<number>(SAMPLE_LEADS[0].id);
   const [running, setRunning] = useState(false);
   const [done, setDone] = useState(false);
   const [error, setError] = useState("");
   const abort = useRef<AbortController | null>(null);
+  const fileRef = useRef<HTMLInputElement | null>(null);
 
   const active = leads.find((l) => l.id === activeId) ?? leads[0];
   const st = (id: number): Status => status[id] ?? "idle";
+
+  function loadLeads(next: Lead[], isImport: boolean) {
+    abort.current?.abort();
+    setLeads(next);
+    setImported(isImport);
+    setStatus({});
+    setMessages({});
+    setActiveId(next[0]?.id ?? 1);
+    setRunning(false);
+    setDone(false);
+    setError("");
+  }
+
+  function applyImport(text: string) {
+    const parsed = parseLeads(text);
+    if (!parsed.length) {
+      setError("Couldn't read any leads — check the format (Name, Company, Interest, City).");
+      return;
+    }
+    loadLeads(parsed, true);
+    setImportOpen(false);
+    setRaw("");
+  }
+
+  function onFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => applyImport(String(reader.result ?? ""));
+    reader.readAsText(file);
+    e.target.value = "";
+  }
 
   function setInterest(id: number, value: string) {
     setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, interest: value } : l)));
@@ -79,13 +162,7 @@ export default function DemoWhatsApp() {
     setMessages((m2) => ({ ...m2, [lead.id]: "" }));
     await streamDemo(
       "/api/demo/whatsapp",
-      {
-        name: lead.name,
-        company: lead.company,
-        interest: lead.interest,
-        city: lead.city,
-        source: lead.source,
-      },
+      { name: lead.name, company: lead.company, interest: lead.interest, city: lead.city, source: lead.source },
       (full) => setMessages((m2) => ({ ...m2, [lead.id]: full })),
       abort.current?.signal,
     );
@@ -109,7 +186,7 @@ export default function DemoWhatsApp() {
     setMessages({});
     abort.current = new AbortController();
     try {
-      for (const lead of leads) {
+      for (const lead of leads.slice(0, MAX_LIVE)) {
         await sendLead(lead);
         await sleep(450);
       }
@@ -130,9 +207,10 @@ export default function DemoWhatsApp() {
     setError("");
     setStatus({});
     setMessages({});
-    setActiveId(leads[0].id);
+    setActiveId(leads[0]?.id ?? 1);
   }
 
+  const liveCount = Math.min(leads.length, MAX_LIVE);
   const vals = Object.values(status);
   const stats = {
     generated: vals.filter((s) => reached(s, "sent")).length,
@@ -142,6 +220,90 @@ export default function DemoWhatsApp() {
 
   return (
     <div className="flex flex-col gap-5">
+      {/* source bar — sample vs imported, with the importer toggle */}
+      <div className="flex flex-wrap items-center gap-3 rounded-2xl border border-cream/10 bg-ink-deep/40 p-3">
+        <FileSpreadsheet size={18} className="text-gold" />
+        <p className="text-sm text-cream-dim">
+          {imported ? (
+            <><b className="text-cream">{leads.length}</b> leads imported from your sheet</>
+          ) : (
+            <><b className="text-cream">3</b> sample leads loaded</>
+          )}
+        </p>
+        <div className="ml-auto flex items-center gap-2">
+          {imported && (
+            <button
+              type="button"
+              onClick={() => loadLeads(SAMPLE_LEADS, false)}
+              className="rounded-full px-3 py-1.5 text-xs font-medium text-cream-dim transition-colors hover:text-gold"
+            >
+              Use sample
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={() => setImportOpen((v) => !v)}
+            className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/10 px-3 py-1.5 text-xs font-semibold text-gold transition-colors hover:bg-gold/20"
+          >
+            <Sheet size={13} /> Import from Sheets / Excel
+          </button>
+        </div>
+      </div>
+
+      <AnimatePresence initial={false}>
+        {importOpen && (
+          <m.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="overflow-hidden"
+          >
+            <div className="flex flex-col gap-3 rounded-2xl border border-cream/10 bg-cream/[0.03] p-4">
+              <p className="text-sm text-cream-dim">
+                Open your Google Sheet or Excel file, select your lead rows, and paste them here — or upload a CSV.
+                Columns are matched automatically (<span className="text-cream">Name, Company, Interest, City, Source</span>).
+              </p>
+              <textarea
+                value={raw}
+                onChange={(e) => setRaw(e.target.value)}
+                rows={5}
+                placeholder={"Paste rows from Google Sheets / Excel here…\nName, Company, Interest, City, Source"}
+                aria-label="Paste your leads"
+                className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 font-mono text-[12.5px] text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
+              />
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => applyImport(raw)}
+                  disabled={raw.trim().length < 3}
+                  className="inline-flex items-center gap-2 rounded-full bg-gold px-4 py-2 text-sm font-semibold text-ink-deep transition hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  Import these leads
+                </button>
+                <button
+                  type="button"
+                  onClick={() => fileRef.current?.click()}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-cream/15 bg-cream/5 px-4 py-2 text-sm font-medium text-cream transition hover:border-gold/40"
+                >
+                  <Upload size={14} /> Upload CSV
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setRaw(SAMPLE_CSV)}
+                  className="ml-auto text-xs text-gold/80 transition-colors hover:text-gold"
+                >
+                  Paste example data
+                </button>
+                <input ref={fileRef} type="file" accept=".csv,.tsv,.txt" onChange={onFile} className="hidden" />
+              </div>
+              <p className="font-mono text-[10px] uppercase tracking-wider text-muted-dark">
+                Your data stays in your browser · nothing is uploaded until you run the campaign
+              </p>
+            </div>
+          </m.div>
+        )}
+      </AnimatePresence>
+
       {/* controls + live stats */}
       <div className="flex flex-wrap items-center gap-3">
         {!done ? (
@@ -184,47 +346,54 @@ export default function DemoWhatsApp() {
           <p className="font-mono text-[10px] uppercase tracking-wider text-muted-dark">
             Contact leads · edit any interest, then run
           </p>
-          {leads.map((lead) => {
-            const s = st(lead.id);
-            const initials = lead.name.split(" ").map((p) => p[0]).join("");
-            return (
-              <button
-                type="button"
-                key={lead.id}
-                onClick={() => setActiveId(lead.id)}
-                className={`flex items-center gap-3 rounded-2xl border p-3 text-left transition ${
-                  lead.id === activeId
-                    ? "border-gold/40 bg-cream/[0.06]"
-                    : "border-cream/10 bg-ink-deep/40 hover:border-cream/20"
-                }`}
-              >
-                <span
-                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-ink-deep"
-                  style={{ background: lead.color }}
+          <div className="flex max-h-[430px] flex-col gap-2.5 overflow-y-auto pr-1">
+            {leads.map((lead, i) => {
+              const s = st(lead.id);
+              const initials = lead.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
+              const skipped = i >= MAX_LIVE;
+              return (
+                <button
+                  type="button"
+                  key={lead.id}
+                  onClick={() => setActiveId(lead.id)}
+                  className={`flex items-center gap-3 rounded-2xl border p-3 text-left transition ${
+                    lead.id === activeId ? "border-gold/40 bg-cream/[0.06]" : "border-cream/10 bg-ink-deep/40 hover:border-cream/20"
+                  } ${skipped ? "opacity-50" : ""}`}
                 >
-                  {initials}
-                </span>
-                <span className="min-w-0 flex-1">
-                  <span className="flex items-center justify-between gap-2">
-                    <span className="truncate text-sm font-medium text-cream">{lead.name}</span>
-                    <StatusBadge status={s} />
+                  <span
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-xs font-semibold text-ink-deep"
+                    style={{ background: lead.color }}
+                  >
+                    {initials}
                   </span>
-                  <span className="mt-1 block text-[11px] text-muted-dark">{lead.company} · {lead.city}</span>
-                  <span className="mt-1.5 flex items-center gap-1.5">
-                    <span className="text-[11px] text-muted-dark">↳</span>
-                    <input
-                      value={lead.interest}
-                      onChange={(e) => setInterest(lead.id, e.target.value)}
-                      onClick={(e) => e.stopPropagation()}
-                      disabled={running}
-                      aria-label={`Interest for ${lead.name}`}
-                      className="w-full bg-transparent text-[12.5px] text-cream-dim outline-none placeholder:text-muted-dark focus:text-cream disabled:opacity-70"
-                    />
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-center justify-between gap-2">
+                      <span className="truncate text-sm font-medium text-cream">{lead.name}</span>
+                      {skipped ? (
+                        <span className="shrink-0 rounded-full bg-cream/5 px-2 py-0.5 text-[10px] font-medium text-muted-dark">Queued (prod)</span>
+                      ) : (
+                        <StatusBadge status={s} />
+                      )}
+                    </span>
+                    <span className="mt-1 block truncate text-[11px] text-muted-dark">
+                      {[lead.company, lead.city].filter(Boolean).join(" · ") || "—"}
+                    </span>
+                    <span className="mt-1.5 flex items-center gap-1.5">
+                      <span className="text-[11px] text-muted-dark">↳</span>
+                      <input
+                        value={lead.interest}
+                        onChange={(e) => setInterest(lead.id, e.target.value)}
+                        onClick={(e) => e.stopPropagation()}
+                        disabled={running}
+                        aria-label={`Interest for ${lead.name}`}
+                        className="w-full bg-transparent text-[12.5px] text-cream-dim outline-none placeholder:text-muted-dark focus:text-cream disabled:opacity-70"
+                      />
+                    </span>
                   </span>
-                </span>
-              </button>
-            );
-          })}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* WhatsApp phone */}
@@ -234,7 +403,9 @@ export default function DemoWhatsApp() {
       {error && <p className="text-xs text-gold">{error}</p>}
 
       <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-dark">
-        Each opener is written live by the model · in production this sends through the WhatsApp Business API
+        {leads.length > MAX_LIVE
+          ? `Demo personalizes the first ${liveCount} live · production runs all ${leads.length} through the WhatsApp Business API`
+          : "Each opener is written live by the model · in production this sends through the WhatsApp Business API"}
       </p>
     </div>
   );
@@ -254,7 +425,7 @@ function StatusBadge({ status }: { status: Status }) {
 }
 
 function PhoneMock({ lead, status, message }: { lead: Lead; status: Status; message?: string }) {
-  const initials = lead.name.split(" ").map((p) => p[0]).join("");
+  const initials = lead.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
   return (
     <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-[26px] border-[6px] border-black/70 bg-[#0b141a] shadow-2xl">
       {/* header */}

@@ -35,6 +35,7 @@ type Demo = {
   title: string;
   blurb: string;
   node: ReactNode;
+  featured?: boolean;
 };
 
 const DEMOS: Demo[] = [
@@ -78,9 +79,10 @@ const DEMOS: Demo[] = [
     id: "whatsapp",
     category: "convert",
     icon: Send,
-    eyebrow: "Outreach on autopilot",
-    title: "WhatsApp outreach, personalized by AI",
-    blurb: "Point it at your contact leads and it writes a unique, on-brand WhatsApp opener for each one — then sends the whole list while you sleep.",
+    featured: true,
+    eyebrow: "Flagship · WhatsApp marketing automation",
+    title: "Turn your lead list into personal WhatsApp messages",
+    blurb: "Import your leads straight from Google Sheets or Excel and the AI writes a unique, on-brand WhatsApp opener for every single one — then sends the whole list, while you sleep. Personalization at scale, on the channel people actually read.",
     node: <DemoWhatsApp />,
   },
   {
@@ -185,6 +187,31 @@ function DemoCard({ demo }: { demo: Demo }) {
   );
 }
 
+function FeaturedDemo({ demo }: { demo: Demo }) {
+  const Icon = demo.icon;
+  return (
+    <Reveal>
+      <div className="relative mx-auto max-w-3xl overflow-hidden rounded-[26px] border border-gold/30 bg-[linear-gradient(180deg,rgba(218,164,66,0.10),rgba(218,164,66,0.02)_40%,transparent)] p-6 shadow-[0_40px_120px_-50px_rgba(218,164,66,0.55)] sm:p-9">
+        <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-gold/20 blur-3xl" />
+        <span className="relative inline-flex items-center gap-1.5 rounded-full bg-gold px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-[0.16em] text-ink-deep">
+          <Sparkles size={12} /> Flagship offer
+        </span>
+        <div className="relative mt-5 flex items-start gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gold/15 text-gold ring-1 ring-gold/30">
+            <Icon size={24} strokeWidth={1.7} />
+          </div>
+          <div className="min-w-0 flex-1">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-gold/80">{demo.eyebrow}</p>
+            <h2 className="mt-1.5 text-2xl leading-tight text-cream sm:text-[2rem]">{demo.title}</h2>
+            <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-muted">{demo.blurb}</p>
+          </div>
+        </div>
+        <div className="relative mt-7">{demo.node}</div>
+      </div>
+    </Reveal>
+  );
+}
+
 function FilterPill({ active, onClick, children }: { active: boolean; onClick: () => void; children: ReactNode }) {
   return (
     <m.button
@@ -204,7 +231,9 @@ function FilterPill({ active, onClick, children }: { active: boolean; onClick: (
 
 export default function Demos() {
   const [filter, setFilter] = useState<CatId | "all">("all");
-  const visible = filter === "all" ? DEMOS : DEMOS.filter((d) => d.category === filter);
+  const featured = DEMOS.find((d) => d.featured);
+  const rest = DEMOS.filter((d) => !d.featured);
+  const visible = filter === "all" ? rest : rest.filter((d) => d.category === filter);
 
   return (
     <>
@@ -235,15 +264,29 @@ export default function Demos() {
         </div>
       </section>
 
+      {/* flagship offer */}
+      {featured && (
+        <section className="pb-12">
+          <div className="container-bl">
+            <FeaturedDemo demo={featured} />
+          </div>
+        </section>
+      )}
+
       {/* category filter */}
       <section className="pb-2">
         <div className="container-bl">
+          <Reveal>
+            <p className="mb-5 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-muted-dark">
+              And {rest.length} more live tools
+            </p>
+          </Reveal>
           <div className="flex flex-wrap items-center justify-center gap-2">
             <FilterPill active={filter === "all"} onClick={() => setFilter("all")}>
-              All <span className="opacity-50">{DEMOS.length}</span>
+              All <span className="opacity-50">{rest.length}</span>
             </FilterPill>
             {CATEGORIES.map((c) => {
-              const n = DEMOS.filter((d) => d.category === c.id).length;
+              const n = rest.filter((d) => d.category === c.id).length;
               return (
                 <FilterPill key={c.id} active={filter === c.id} onClick={() => setFilter(c.id)}>
                   {c.label} <span className="opacity-50">{n}</span>
