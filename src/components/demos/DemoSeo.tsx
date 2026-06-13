@@ -68,7 +68,7 @@ export default function DemoSeo() {
           {/* SERP preview */}
           <div className="rounded-xl bg-ink-deep/50 p-3">
             <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-muted-dark">Google preview</p>
-            <p className="text-[13px] text-[#8ab4f8]">{window.location.host}/{result.slug}</p>
+            <p className="text-[13px] text-[#8ab4f8]">{typeof window !== "undefined" ? window.location.host : "www.xerxesduane.com"}/{result.slug}</p>
             <p className="mt-0.5 text-[17px] leading-tight text-[#c8a2ff]">{result.title}</p>
             <p className="mt-1 text-[13px] leading-snug text-cream-dim">{result.metaDescription}</p>
           </div>

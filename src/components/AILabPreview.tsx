@@ -36,13 +36,13 @@ export default function AILabPreview() {
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              A whole toolkit of live, working tools — the assistants, outreach, content, and automations
-              I build into client products. Type into them and they respond for real.
+              A whole toolkit of live, working tools — the exact assistants, WhatsApp automations, and
+              content engines I install for clients. What you type here is what your customers would get.
             </p>
             <a
               href="/ai-lab"
               data-cursor="link"
-              className="group mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink shadow-[0_14px_50px_-18px_rgba(218,164,66,0.8)] transition-colors hover:bg-gold-soft"
+              className="group mt-7 inline-flex items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-18px_rgba(218,164,66,0.8)] transition-colors hover:bg-gold-soft"
             >
               Enter the AI Lab
               <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

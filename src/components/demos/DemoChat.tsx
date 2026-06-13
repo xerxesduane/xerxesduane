@@ -6,7 +6,7 @@ import { track } from "../../lib/analytics";
 type Msg = { role: "user" | "assistant"; content: string };
 
 interface DemoChatProps {
-  demo: "assistant" | "lead" | "receptionist";
+  demo: "assistant" | "lead" | "receptionist" | "booking" | "trades";
   greeting: string;
   placeholder: string;
   suggestions: string[];

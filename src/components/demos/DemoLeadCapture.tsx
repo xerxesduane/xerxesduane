@@ -29,7 +29,7 @@ export default function DemoLeadCapture({
     return (
       <div className="mt-6 flex items-center gap-3 rounded-2xl border border-gold/25 bg-gold/[0.06] p-4 text-sm text-cream">
         <CheckCircle2 size={18} className="shrink-0 text-gold" />
-        Got it — I'll be in touch shortly. Want to skip ahead?{" "}
+        Got it — I'll be in touch within a few hours. Want to skip ahead?{" "}
         <a
           href={`https://wa.me/${CONTACT.whatsapp}`}
           target="_blank"

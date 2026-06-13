@@ -39,8 +39,7 @@ export default async function handler(req: Request): Promise<Response> {
       schema: SeoSchema,
       maxOutputTokens: 1300,
       prompt:
-        "Generate search-engine metadata for a web page about the following. " +
-        "Keep the title short (aim for a snippet that won't get truncated) and the meta description to about one punchy sentence. " +
+        "Generate concise, compelling search-engine metadata for a web page about the following. " +
         (hint ? `Prioritize these keywords if relevant: ${hint}.\n\n` : "\n") +
         `PAGE TOPIC:\n"""\n${topic}\n"""`,
     });

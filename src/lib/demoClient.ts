@@ -42,6 +42,18 @@ export async function streamDemo(
       onToken(full, delta);
     }
   }
+  // Flush any bytes left in the decoder — without this, a stream that ends
+  // mid-way through a multi-byte UTF-8 sequence (common with Arabic + emoji in
+  // the translate/receptionist/WhatsApp demos) drops its final glyph.
+  const tail = decoder.decode();
+  if (tail) {
+    full += tail;
+    onToken(full, tail);
+  }
+  // The endpoint commits a 200 before the model runs, so a mid-stream provider
+  // failure (Groq 429/500) closes the stream with no body and no error. Surface
+  // it instead of silently showing nothing — the page's whole pitch is "real AI".
+  if (!full) throw new Error("The AI didn't respond — please try again in a moment.");
   return full;
 }
 

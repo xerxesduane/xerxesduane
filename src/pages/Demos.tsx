@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown, Building2, UtensilsCrossed, Split, FileText, Wand2, CalendarClock, Wrench } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -20,6 +20,12 @@ import DemoLeadCapture from "../components/demos/DemoLeadCapture";
 import DemoQuote from "../components/demos/DemoQuote";
 import DemoAds from "../components/demos/DemoAds";
 import DemoProduct from "../components/demos/DemoProduct";
+import DemoProperty from "../components/demos/DemoProperty";
+import DemoMenu from "../components/demos/DemoMenu";
+import DemoBroadcast from "../components/demos/DemoBroadcast";
+import DemoTriage from "../components/demos/DemoTriage";
+import DemoInvoice from "../components/demos/DemoInvoice";
+import DemoTone from "../components/demos/DemoTone";
 import { fadeUp, stagger } from "../lib/motion";
 
 type CatId = "convert" | "comms" | "create" | "automate";
@@ -103,6 +109,47 @@ const DEMOS: Demo[] = [
     ),
   },
   {
+    id: "booking",
+    category: "convert",
+    icon: CalendarClock,
+    eyebrow: "Bookings, hands-free",
+    title: "An AI concierge that books appointments",
+    blurb: "It chats with a customer, collects the service, day, time and number, then confirms the booking — a front desk that never sleeps, in Arabic or English.",
+    node: (
+      <DemoChat
+        demo="booking"
+        greeting="Hi! I can book you in 💆 Tell me what you'd like and when — أو راسلني بالعربي."
+        placeholder="e.g. a haircut on Saturday afternoon…"
+        suggestions={["Book a haircut for Saturday", "أبغى موعد تنظيف بشرة", "Do you have evening slots?"]}
+      />
+    ),
+  },
+  {
+    id: "trades",
+    category: "convert",
+    icon: Wrench,
+    eyebrow: "Trades lead qualifier",
+    title: "Qualify a repair job, capture the callback",
+    blurb: "A homeowner describes the problem; the AI asks the right questions, gives a likely cause and a ballpark, and takes their number — a dispatcher that pre-qualifies every job.",
+    node: (
+      <DemoChat
+        demo="trades"
+        greeting="Hi! Tell me what's going on and where, and I'll help sort it — AC, plumbing, handyman…"
+        placeholder="e.g. AC not cooling, 2BR in JLT…"
+        suggestions={["My AC isn't cooling, JLT", "Kitchen sink is leaking", "Need a handyman this week"]}
+      />
+    ),
+  },
+  {
+    id: "broadcast",
+    category: "convert",
+    icon: Megaphone,
+    eyebrow: "WhatsApp campaigns",
+    title: "Build a WhatsApp broadcast campaign",
+    blurb: "Describe a promo and get a Meta-ready opt-in template, two follow-up nudges, and the audience to send it to — a full campaign, drafted in seconds.",
+    node: <DemoBroadcast />,
+  },
+  {
     id: "whatsapp",
     category: "convert",
     icon: Send,
@@ -138,6 +185,15 @@ const DEMOS: Demo[] = [
     title: "Translate either direction, instantly",
     blurb: "Bilingual is the default in Dubai. Paste Arabic or English and get a natural translation — handy for sites, support, and content.",
     node: <DemoTranslate />,
+  },
+  {
+    id: "triage",
+    category: "comms",
+    icon: Split,
+    eyebrow: "Inbox routing",
+    title: "Triage & route any inbound message",
+    blurb: "Paste a customer message and it tags the department, priority, sentiment, language, and a suggested SLA — plus a ready acknowledgement. The brain behind a shared inbox.",
+    node: <DemoTriage />,
   },
   {
     id: "social",
@@ -176,6 +232,33 @@ const DEMOS: Demo[] = [
     node: <DemoProduct />,
   },
   {
+    id: "property",
+    category: "create",
+    icon: Building2,
+    eyebrow: "Real estate listings",
+    title: "Turn bullet facts into a property listing",
+    blurb: "Drop in the basics — beds, area, size, price — and get a polished portal listing, a punchy headline, and a ready-to-send WhatsApp blurb in English and Arabic.",
+    node: <DemoProperty />,
+  },
+  {
+    id: "menu",
+    category: "create",
+    icon: UtensilsCrossed,
+    eyebrow: "Delivery-app menus",
+    title: "Make your menu sell on Talabat & Deliveroo",
+    blurb: "Paste a rough menu and get appetizing dish names, mouth-watering descriptions, allergen tags, and upsell pairings — formatted to convert on the delivery apps.",
+    node: <DemoMenu />,
+  },
+  {
+    id: "tone",
+    category: "create",
+    icon: Wand2,
+    eyebrow: "Brand voice",
+    title: "Rewrite anything in your brand voice",
+    blurb: "Paste any text and pick a voice — luxury, playful, corporate, or Gulf-warm — and watch it get rewritten on-brand, live.",
+    node: <DemoTone />,
+  },
+  {
     id: "ask",
     category: "automate",
     icon: FileSearch,
@@ -210,6 +293,15 @@ const DEMOS: Demo[] = [
     title: "Turn a job into a priced quote",
     blurb: "Describe the work and get an itemized quote with line items, 5% UAE VAT, and a total — the kind of thing your Odoo/CRM can send automatically.",
     node: <DemoQuote />,
+  },
+  {
+    id: "invoice",
+    category: "automate",
+    icon: FileText,
+    eyebrow: "Bookkeeping automation",
+    title: "Parse a messy invoice into clean data",
+    blurb: "Paste a supplier invoice or statement and get structured line items with 5% VAT and totals computed — ready to push into Odoo or Zoho Books.",
+    node: <DemoInvoice />,
   },
 ];
 
@@ -290,7 +382,7 @@ function ProductionPipeline() {
           data-cursor="link"
           className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-ink-deep transition-colors hover:bg-gold-soft"
         >
-          Book a free automation audit
+          Book your free audit
           <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
         </a>
       </div>
@@ -412,7 +504,7 @@ export default function Demos() {
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </Kinetic>
             <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              {DEMOS.length} real, working tools — the same AI I build into client products. Powered by Llama 3
+              {DEMOS.length} real, working tools — the same AI I build into client products. Open models
               on Groq, running live. Type into them, they respond for real.
             </m.p>
             <m.p variants={fadeUp} className="mx-auto mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark">
@@ -477,7 +569,7 @@ export default function Demos() {
               Like one of these? I build them tuned to your business, your data, and your tone —
               then wire them into the tools you already use.{" "}
               <a href="/#contact" className="text-gold underline decoration-gold/50 underline-offset-2 hover:text-gold-soft">
-                Book a free audit →
+                Book your free audit →
               </a>
             </p>
           </Reveal>
