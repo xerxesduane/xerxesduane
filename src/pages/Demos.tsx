@@ -1,5 +1,5 @@
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -10,6 +10,11 @@ import DemoAsk from "../components/demos/DemoAsk";
 import DemoExtract from "../components/demos/DemoExtract";
 import DemoTranslate from "../components/demos/DemoTranslate";
 import DemoWhatsApp from "../components/demos/DemoWhatsApp";
+import DemoReview from "../components/demos/DemoReview";
+import DemoReply from "../components/demos/DemoReply";
+import DemoSocial from "../components/demos/DemoSocial";
+import DemoSeo from "../components/demos/DemoSeo";
+import DemoSummarize from "../components/demos/DemoSummarize";
 import { fadeUp, stagger } from "../lib/motion";
 
 function DemoCard({
@@ -134,6 +139,51 @@ export default function Demos() {
               blurb="Drop in a rambling enquiry and watch it become a tidy, typed record — the first step of any automation."
             >
               <DemoExtract />
+            </DemoCard>
+
+            <DemoCard
+              icon={CornerDownLeft}
+              eyebrow="Inbox on autopilot"
+              title="Draft replies to any message"
+              blurb="Paste an email, WhatsApp, or DM and pick a tone — get a ready-to-send reply that answers every question in it."
+            >
+              <DemoReply />
+            </DemoCard>
+
+            <DemoCard
+              icon={Star}
+              eyebrow="Reputation, handled"
+              title="Reply to reviews the right way"
+              blurb="Paste any Google review — glowing or brutal — and it writes a calm, on-brand public response in seconds."
+            >
+              <DemoReview />
+            </DemoCard>
+
+            <DemoCard
+              icon={Sparkles}
+              eyebrow="Content in seconds"
+              title="Social captions, tuned per platform"
+              blurb="One idea in, a scroll-stopping caption out — written natively for Instagram, LinkedIn, or TikTok, hashtags included."
+            >
+              <DemoSocial />
+            </DemoCard>
+
+            <DemoCard
+              icon={Search}
+              eyebrow="SEO &amp; answer-engine ready"
+              title="Generate search metadata that ranks"
+              blurb="Describe a page and get an optimized title, meta description, slug, keywords, and FAQ schema — the groundwork for SEO and AI search."
+            >
+              <DemoSeo />
+            </DemoCard>
+
+            <DemoCard
+              icon={ListChecks}
+              eyebrow="From chaos to clarity"
+              title="Turn meeting notes into action items"
+              blurb="Drop in messy notes or a voice-note transcript and get a clean summary, the decisions made, and who owns what."
+            >
+              <DemoSummarize />
             </DemoCard>
 
             <DemoCard
