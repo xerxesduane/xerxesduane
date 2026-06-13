@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Send, RotateCcw, Sparkles } from "lucide-react";
 import { streamDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -28,6 +29,7 @@ export default function DemoChat({ demo, greeting, placeholder, suggestions }: D
   async function send(text: string) {
     const trimmed = text.trim();
     if (!trimmed || streaming) return;
+    if (messages.length === 0) track("demo_run", { demo });
     setError("");
     const next: Msg[] = [...messages, { role: "user", content: trimmed }];
     setMessages([...next, { role: "assistant", content: "" }]);

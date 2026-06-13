@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -298,6 +298,44 @@ function ProductionPipeline() {
   );
 }
 
+const FLAGSHIP_FAQ = [
+  {
+    q: "Will my WhatsApp number get banned?",
+    a: "No. It runs on the official WhatsApp Business Cloud API with Meta-approved templates and opt-in contacts — the compliant route, not a grey-market blaster.",
+  },
+  {
+    q: "Isn't this just spam?",
+    a: "Only people who opted in get messaged, every message is personalized 1:1, and opting out is one tap. It reads like a person because the AI writes for each lead.",
+  },
+  {
+    q: "What does it cost to run?",
+    a: "You pay Meta a small per-conversation fee (cents, not dirhams). The build itself is a one-off — I'll scope it precisely in your free audit.",
+  },
+  {
+    q: "How fast can it go live?",
+    a: "Once your WhatsApp number is verified with Meta, a working pilot runs in days, not months.",
+  },
+];
+
+function FlagshipFAQ() {
+  return (
+    <div className="relative mt-8 border-t border-cream/10 pt-7">
+      <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-gold/80">Questions you're probably asking</p>
+      <div className="mt-4 flex flex-col gap-2">
+        {FLAGSHIP_FAQ.map((f) => (
+          <details key={f.q} className="group rounded-2xl border border-cream/10 bg-ink-deep/40 px-4 py-3">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-medium text-cream [&::-webkit-details-marker]:hidden">
+              {f.q}
+              <ChevronDown size={16} className="shrink-0 text-gold/70 transition-transform group-open:rotate-180" />
+            </summary>
+            <p className="mt-2 text-[13.5px] leading-relaxed text-muted">{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function FeaturedDemo({ demo }: { demo: Demo }) {
   const Icon = demo.icon;
   return (
@@ -319,6 +357,7 @@ function FeaturedDemo({ demo }: { demo: Demo }) {
         </div>
         <div className="relative mt-7">{demo.node}</div>
         <ProductionPipeline />
+        <FlagshipFAQ />
         <div className="relative">
           <DemoLeadCapture
             demo="whatsapp"
