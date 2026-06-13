@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -17,6 +17,9 @@ import DemoSocial from "../components/demos/DemoSocial";
 import DemoSeo from "../components/demos/DemoSeo";
 import DemoSummarize from "../components/demos/DemoSummarize";
 import DemoLeadCapture from "../components/demos/DemoLeadCapture";
+import DemoQuote from "../components/demos/DemoQuote";
+import DemoAds from "../components/demos/DemoAds";
+import DemoProduct from "../components/demos/DemoProduct";
 import { fadeUp, stagger } from "../lib/motion";
 
 type CatId = "convert" | "comms" | "create" | "automate";
@@ -155,6 +158,24 @@ const DEMOS: Demo[] = [
     node: <DemoSeo />,
   },
   {
+    id: "ads",
+    category: "create",
+    icon: Megaphone,
+    eyebrow: "Paid ads, written fast",
+    title: "Ad copy for Google & Meta",
+    blurb: "Describe your offer and get conversion-ready headlines and descriptions, sized for Google Search or Facebook & Instagram.",
+    node: <DemoAds />,
+  },
+  {
+    id: "product",
+    category: "create",
+    icon: ShoppingBag,
+    eyebrow: "E-commerce copy",
+    title: "Product descriptions that sell",
+    blurb: "A few notes in, a polished store-ready description with highlight bullets out — in the tone your brand wants.",
+    node: <DemoProduct />,
+  },
+  {
     id: "ask",
     category: "automate",
     icon: FileSearch,
@@ -180,6 +201,15 @@ const DEMOS: Demo[] = [
     title: "Turn meeting notes into action items",
     blurb: "Drop in messy notes or a voice-note transcript and get a clean summary, the decisions made, and who owns what.",
     node: <DemoSummarize />,
+  },
+  {
+    id: "quote",
+    category: "automate",
+    icon: ReceiptText,
+    eyebrow: "Quotes in seconds",
+    title: "Turn a job into a priced quote",
+    blurb: "Describe the work and get an itemized quote with line items, 5% UAE VAT, and a total — the kind of thing your Odoo/CRM can send automatically.",
+    node: <DemoQuote />,
   },
 ];
 
@@ -343,7 +373,7 @@ export default function Demos() {
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </Kinetic>
             <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              A dozen real, working tools — the same AI I build into client products. Powered by Llama 3
+              {DEMOS.length} real, working tools — the same AI I build into client products. Powered by Llama 3
               on Groq, running live. Type into them, they respond for real.
             </m.p>
             <m.p variants={fadeUp} className="mx-auto mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark">
