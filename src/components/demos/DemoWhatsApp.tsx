@@ -19,9 +19,9 @@ type Lead = {
   reply?: string;
 };
 
-type Status = "idle" | "writing" | "sent" | "delivered" | "read" | "replied";
+type Status = "idle" | "writing" | "sent" | "delivered" | "read" | "replied" | "responding" | "booked";
 
-const STEP = ["idle", "writing", "sent", "delivered", "read", "replied"] as const;
+const STEP = ["idle", "writing", "sent", "delivered", "read", "replied", "responding", "booked"] as const;
 const reached = (s: Status, t: Status) => STEP.indexOf(s) >= STEP.indexOf(t);
 
 // The demo personalizes this many leads live (keeps the public endpoint within
@@ -111,6 +111,7 @@ export default function DemoWhatsApp() {
   const [raw, setRaw] = useState("");
   const [status, setStatus] = useState<Record<number, Status>>({});
   const [messages, setMessages] = useState<Record<number, string>>({});
+  const [agentReplies, setAgentReplies] = useState<Record<number, string>>({});
   const [activeId, setActiveId] = useState<number>(SAMPLE_LEADS[0].id);
   const [running, setRunning] = useState(false);
   const [done, setDone] = useState(false);
@@ -127,6 +128,7 @@ export default function DemoWhatsApp() {
     setImported(isImport);
     setStatus({});
     setMessages({});
+    setAgentReplies({});
     setActiveId(next[0]?.id ?? 1);
     setRunning(false);
     setDone(false);
@@ -161,7 +163,7 @@ export default function DemoWhatsApp() {
     setActiveId(lead.id);
     setStatus((s) => ({ ...s, [lead.id]: "writing" }));
     setMessages((m2) => ({ ...m2, [lead.id]: "" }));
-    await streamDemo(
+    const opener = await streamDemo(
       "/api/demo/whatsapp",
       { name: lead.name, company: lead.company, interest: lead.interest, city: lead.city, source: lead.source },
       (full) => setMessages((m2) => ({ ...m2, [lead.id]: full })),
@@ -173,8 +175,26 @@ export default function DemoWhatsApp() {
     await sleep(750);
     setStatus((s) => ({ ...s, [lead.id]: "read" }));
     if (lead.reply) {
-      await sleep(1100);
+      await sleep(1000);
       setStatus((s) => ({ ...s, [lead.id]: "replied" }));
+      // Two-way: the AI reads the lead's reply and responds live, qualifying
+      // and moving toward a booking — not just an outbound blast.
+      await sleep(900);
+      setStatus((s) => ({ ...s, [lead.id]: "responding" }));
+      setAgentReplies((a) => ({ ...a, [lead.id]: "" }));
+      await streamDemo(
+        "/api/demo/chat",
+        {
+          demo: "wa_agent",
+          messages: [
+            { role: "assistant", content: opener },
+            { role: "user", content: lead.reply },
+          ],
+        },
+        (full) => setAgentReplies((a) => ({ ...a, [lead.id]: full })),
+        abort.current?.signal,
+      );
+      setStatus((s) => ({ ...s, [lead.id]: "booked" }));
     }
   }
 
@@ -186,6 +206,7 @@ export default function DemoWhatsApp() {
     setRunning(true);
     setStatus({});
     setMessages({});
+    setAgentReplies({});
     abort.current = new AbortController();
     try {
       for (const lead of leads.slice(0, MAX_LIVE)) {
@@ -209,6 +230,7 @@ export default function DemoWhatsApp() {
     setError("");
     setStatus({});
     setMessages({});
+    setAgentReplies({});
     setActiveId(leads[0]?.id ?? 1);
   }
 
@@ -217,7 +239,7 @@ export default function DemoWhatsApp() {
   const stats = {
     generated: vals.filter((s) => reached(s, "sent")).length,
     read: vals.filter((s) => reached(s, "read")).length,
-    replied: vals.filter((s) => s === "replied").length,
+    booked: vals.filter((s) => s === "booked").length,
   };
 
   return (
@@ -338,7 +360,7 @@ export default function DemoWhatsApp() {
         <div className="ml-auto flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.14em] text-muted-dark">
           <span><b className="text-cream">{stats.generated}</b> sent</span>
           <span><b className="text-[#53bdeb]">{stats.read}</b> read</span>
-          <span><b className="text-[#3FB984]">{stats.replied}</b> replied</span>
+          <span><b className="text-[#3FB984]">{stats.booked}</b> booked</span>
         </div>
       </div>
 
@@ -399,15 +421,15 @@ export default function DemoWhatsApp() {
         </div>
 
         {/* WhatsApp phone */}
-        <PhoneMock lead={active} status={st(active.id)} message={messages[active.id]} />
+        <PhoneMock lead={active} status={st(active.id)} message={messages[active.id]} agentReply={agentReplies[active.id]} />
       </div>
 
       {error && <p className="text-xs text-gold">{error}</p>}
 
       <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-dark">
         {leads.length > MAX_LIVE
-          ? `Demo personalizes the first ${liveCount} live · production runs all ${leads.length} through the WhatsApp Business API`
-          : "Each opener is written live by the model · in production this sends through the WhatsApp Business API"}
+          ? `Openers + replies are written live by the AI for the first ${liveCount} · production runs all ${leads.length} through the WhatsApp Business API`
+          : "Openers AND replies are written live by the AI — it personalizes, then handles the conversation and books. Production runs through the WhatsApp Business API."}
       </p>
     </div>
   );
@@ -421,12 +443,24 @@ function StatusBadge({ status }: { status: Status }) {
     delivered: { t: "Delivered", c: "bg-cream/10 text-cream-dim" },
     read: { t: "Read", c: "bg-[#53bdeb]/15 text-[#53bdeb]" },
     replied: { t: "Replied", c: "bg-[#3FB984]/15 text-[#3FB984]" },
+    responding: { t: "AI replying…", c: "bg-gold/15 text-gold" },
+    booked: { t: "Booked ✓", c: "bg-[#3FB984]/20 text-[#3FB984]" },
   };
   const b = map[status];
   return <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-medium ${b.c}`}>{b.t}</span>;
 }
 
-function PhoneMock({ lead, status, message }: { lead: Lead; status: Status; message?: string }) {
+function PhoneMock({
+  lead,
+  status,
+  message,
+  agentReply,
+}: {
+  lead: Lead;
+  status: Status;
+  message?: string;
+  agentReply?: string;
+}) {
   const initials = lead.name.split(" ").map((p) => p[0]).join("").slice(0, 2);
   return (
     <div className="mx-auto w-full max-w-[300px] overflow-hidden rounded-[26px] border-[6px] border-black/70 bg-[#0b141a] shadow-2xl">
@@ -441,7 +475,7 @@ function PhoneMock({ lead, status, message }: { lead: Lead; status: Status; mess
         <span className="min-w-0 flex-1">
           <span className="block truncate text-[13px] font-medium text-white">{lead.name}</span>
           <span className="block h-3.5 text-[10.5px] text-[#8aa0a8]">
-            {status === "writing" ? "typing…" : "online"}
+            {status === "writing" || status === "responding" ? "typing…" : "online"}
           </span>
         </span>
         <HeaderIcons />
@@ -476,7 +510,7 @@ function PhoneMock({ lead, status, message }: { lead: Lead; status: Status; mess
         )}
 
         <AnimatePresence>
-          {status === "replied" && lead.reply && (
+          {reached(status, "replied") && lead.reply && (
             <m.div
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
@@ -487,6 +521,21 @@ function PhoneMock({ lead, status, message }: { lead: Lead; status: Status; mess
             </m.div>
           )}
         </AnimatePresence>
+
+        {status === "responding" && !agentReply && <Typing />}
+
+        {agentReply && (
+          <m.div
+            initial={{ opacity: 0, scale: 0.97 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="ml-auto max-w-[82%] rounded-lg rounded-tr-sm bg-[#144d3c] px-2.5 py-1.5 text-[12.5px] leading-snug text-[#e9fbe8]"
+          >
+            {agentReply}
+            <span className="mt-0.5 flex items-center justify-end gap-1 text-[9px] text-[#e9fbe8]/55">
+              now <CheckCheck size={12} className="text-[#53bdeb]" />
+            </span>
+          </m.div>
+        )}
 
         {status === "idle" && !message && (
           <span className="m-auto px-4 text-center text-[11.5px] leading-relaxed text-[#5f7079]">

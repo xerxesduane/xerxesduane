@@ -109,7 +109,7 @@ const DEMOS: Demo[] = [
     featured: true,
     eyebrow: "Flagship · WhatsApp marketing automation",
     title: "Turn your lead list into personal WhatsApp messages",
-    blurb: "Import your leads straight from Google Sheets or Excel and the AI writes a unique, on-brand WhatsApp opener for every single one — then sends the whole list, while you sleep. Personalization at scale, on the channel people actually read.",
+    blurb: "Import your leads from Google Sheets or Excel and the AI writes a unique, on-brand WhatsApp opener for every one — then, when they reply, it answers, qualifies, and books the appointment. A full two-way conversation at scale, on the channel people actually read.",
     node: <DemoWhatsApp />,
   },
   {
@@ -245,7 +245,7 @@ const PIPELINE: { icon: LucideIcon; title: string; text: string }[] = [
   { icon: FileSpreadsheet, title: "Your leads", text: "Connect the Google Sheet, Excel, or CRM your contacts already live in — no migration." },
   { icon: Sparkles, title: "AI personalizes", text: "Every lead gets a unique, on-brand opener with their name, interest and city woven in." },
   { icon: Send, title: "Sent on WhatsApp", text: "Delivered through the official WhatsApp Business API with your pre-approved templates." },
-  { icon: Inbox, title: "Replies come back", text: "Two-way — responses route to your inbox or CRM, with delivery and read status synced." },
+  { icon: Inbox, title: "AI handles replies", text: "Two-way — the AI answers questions, qualifies, and books, then hands you a warm lead. Status synced to your CRM." },
 ];
 
 function ProductionPipeline() {
