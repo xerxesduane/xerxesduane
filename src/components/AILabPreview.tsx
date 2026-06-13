@@ -1,23 +1,23 @@
 import { m } from "framer-motion";
-import { ArrowUpRight, Bot, Braces, FileSearch, Sparkles } from "lucide-react";
+import { ArrowUpRight, Bot, Send, Search, Sparkles } from "lucide-react";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import Reveal from "./ui/Reveal";
 
 const demos = [
   {
     icon: Bot,
-    label: "Business assistant",
-    text: "Answers customer questions in your tone, around the clock.",
+    label: "Website assistant",
+    text: "Answers customers and qualifies leads in your tone, around the clock.",
   },
   {
-    icon: FileSearch,
-    label: "Document answers",
-    text: "Finds useful answers inside your own content and files.",
+    icon: Send,
+    label: "WhatsApp outreach",
+    text: "Writes a personal opener for every lead, then sends the whole list.",
   },
   {
-    icon: Braces,
-    label: "Structured extraction",
-    text: "Turns messy enquiries into clean, usable business data.",
+    icon: Search,
+    label: "Content & SEO",
+    text: "Captions, review replies, and search metadata — drafted in seconds.",
   },
 ];
 
@@ -36,7 +36,8 @@ export default function AILabPreview() {
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              Live, working examples of the assistants, document tools, and automations I build into client products.
+              Eleven live, working tools — the assistants, outreach, content, and automations I build
+              into client products. Type into them and they respond for real.
             </p>
             <a
               href="/ai-lab"
