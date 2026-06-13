@@ -19,7 +19,7 @@ const LeadSchema = z.object({
   services: z.array(z.string()).describe("Services or products they mention wanting, may be empty"),
   urgency: z.enum(["low", "medium", "high", "unknown"]).describe("How time-sensitive the request reads"),
   summary: z.string().describe("One-sentence summary of what they want"),
-  suggestedReply: z.string().describe("A short, friendly first reply (under 50 words) the business could send back"),
+  suggestedReply: z.string().describe("A short, friendly first reply (one or two sentences) the business could send back"),
 });
 
 export default async function handler(req: Request): Promise<Response> {
@@ -40,7 +40,7 @@ export default async function handler(req: Request): Promise<Response> {
     const { object } = await generateObject({
       model: groq(MODEL_STRUCTURED),
       schema: LeadSchema,
-      maxOutputTokens: 500,
+      maxOutputTokens: 1200,
       prompt:
         "Extract structured lead details from this inbound message. " +
         "Use empty strings for missing text fields and an empty array for missing services. Do not invent information.\n\n" +
