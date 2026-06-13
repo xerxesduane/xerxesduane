@@ -5,7 +5,7 @@ import { streamDemo } from "../../lib/demoClient";
 type Msg = { role: "user" | "assistant"; content: string };
 
 interface DemoChatProps {
-  demo: "assistant" | "lead";
+  demo: "assistant" | "lead" | "receptionist";
   greeting: string;
   placeholder: string;
   suggestions: string[];

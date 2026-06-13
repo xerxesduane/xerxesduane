@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { Play, RotateCcw, Check, CheckCheck, Phone, MoreVertical, Sheet, Upload, FileSpreadsheet } from "lucide-react";
 import { streamDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 // One contact "in the CRM". `interest` is editable so a visitor can change it
 // and watch the AI re-personalize for real. `reply` is a scripted inbound
@@ -179,6 +180,7 @@ export default function DemoWhatsApp() {
 
   async function run() {
     if (running) return;
+    track("demo_run", { demo: "whatsapp", leads: imported ? "imported" : "sample", count: Math.min(leads.length, MAX_LIVE) });
     setError("");
     setDone(false);
     setRunning(true);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -16,6 +16,7 @@ import DemoReply from "../components/demos/DemoReply";
 import DemoSocial from "../components/demos/DemoSocial";
 import DemoSeo from "../components/demos/DemoSeo";
 import DemoSummarize from "../components/demos/DemoSummarize";
+import DemoLeadCapture from "../components/demos/DemoLeadCapture";
 import { fadeUp, stagger } from "../lib/motion";
 
 type CatId = "convert" | "comms" | "create" | "automate";
@@ -73,6 +74,29 @@ const DEMOS: Demo[] = [
           "I need a website that converts",
         ]}
       />
+    ),
+  },
+  {
+    id: "receptionist",
+    category: "convert",
+    icon: Headset,
+    eyebrow: "Bilingual front desk",
+    title: "An AI receptionist that speaks Arabic & English",
+    blurb: "Write to it in Arabic or English — it answers in the same language, handles your FAQs, and books appointments. The 24/7 front desk every Dubai business needs.",
+    node: (
+      <>
+        <DemoChat
+          demo="receptionist"
+          greeting="Hi! I'm a bilingual AI receptionist — اسألني بالعربي أو بالإنجليزي 🙂 I can answer questions or book you an appointment. How can I help?"
+          placeholder="Type in English or بالعربية…"
+          suggestions={["I'd like to book an appointment", "ما هي ساعات العمل؟", "Where are you located?"]}
+        />
+        <DemoLeadCapture
+          demo="receptionist"
+          prompt="Want a bilingual receptionist like this?"
+          sub="Drop your WhatsApp or email — I'll show you how it'd handle your customers, in Arabic and English."
+        />
+      </>
     ),
   },
   {
@@ -265,6 +289,13 @@ function FeaturedDemo({ demo }: { demo: Demo }) {
         </div>
         <div className="relative mt-7">{demo.node}</div>
         <ProductionPipeline />
+        <div className="relative">
+          <DemoLeadCapture
+            demo="whatsapp"
+            prompt="Want this running on your lead list?"
+            sub="Drop your WhatsApp or email and I'll show you exactly what it takes to set up for your business — free."
+          />
+        </div>
       </div>
     </Reveal>
   );
@@ -306,13 +337,13 @@ export default function Demos() {
               variants={fadeUp}
               className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold"
             >
-              Live AI lab · 11 tools
+              Live AI lab · {DEMOS.length} tools
             </m.span>
             <Kinetic as="h1" className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl">
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </Kinetic>
             <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              Eleven real, working tools — the same AI I build into client products. Powered by Llama 3
+              A dozen real, working tools — the same AI I build into client products. Powered by Llama 3
               on Groq, running live. Type into them, they respond for real.
             </m.p>
             <m.p variants={fadeUp} className="mx-auto mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark">
