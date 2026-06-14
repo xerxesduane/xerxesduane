@@ -1,0 +1,130 @@
+<!doctype html>
+<!--
+  Live WhatsApp opt-in page → served at /whatsapp-optin.html
+  Captures explicit consent so a contact can be messaged compliantly.
+
+  Default: posts to the site's existing Formspree (works the moment it deploys).
+  To write STRAIGHT into a Google Sheet the pilot reads, deploy the Apps Script
+  in whatsapp-pilot/optin-appsscript.gs and change POST_URL below to its /exec URL.
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Get WhatsApp updates · Xerxes Duane</title>
+    <style>
+      :root {
+        --bg: #0b0e14;
+        --card: #151b27;
+        --line: #232c3d;
+        --text: #e7ecf4;
+        --muted: #8b97ad;
+        --gold: #daa442;
+        --green: #25d366;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        padding: 24px;
+        background: radial-gradient(900px 500px at 50% -10%, rgba(218, 164, 66, 0.1), transparent 60%), var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      .optin { width: 100%; max-width: 420px; background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px; }
+      .badge { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--green); background: rgba(37, 211, 102, 0.1); padding: 6px 12px; border-radius: 999px; }
+      h1 { font-size: 22px; margin: 16px 0 6px; }
+      p.sub { margin: 0 0 20px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+      label { display: block; font-size: 13px; color: var(--muted); margin: 0 0 6px; }
+      input[type="text"], input[type="tel"] { width: 100%; padding: 12px 14px; margin-bottom: 14px; background: #0e1420; border: 1px solid var(--line); border-radius: 12px; color: var(--text); font-size: 15px; }
+      input:focus { outline: none; border-color: var(--gold); }
+      .consent { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--muted); line-height: 1.45; margin: 6px 0 18px; }
+      .consent input { margin-top: 2px; width: 16px; height: 16px; accent-color: var(--green); }
+      button { width: 100%; padding: 13px; border: 0; border-radius: 999px; background: var(--green); color: #04231a; font-size: 15px; font-weight: 700; cursor: pointer; }
+      button:disabled { opacity: 0.6; cursor: default; }
+      .ok { text-align: center; }
+      .ok h1 { color: var(--green); }
+      .wa-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 12px 18px; border-radius: 999px; background: var(--green); color: #04231a; font-weight: 700; text-decoration: none; }
+      .err { color: var(--gold); font-size: 13px; margin: 8px 0 0; }
+      .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+      .fine { margin-top: 14px; font-size: 11px; color: #5d6982; text-align: center; }
+    </style>
+  </head>
+  <body>
+    <div class="optin" id="card">
+      <span class="badge">✓ WhatsApp</span>
+      <h1>Get updates on WhatsApp</h1>
+      <p class="sub">News, offers, and quick answers from Xerxes Duane — straight to your WhatsApp. Opt out anytime by replying STOP.</p>
+      <form id="form" novalidate>
+        <label for="name">Your name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe" />
+
+        <label for="phone">WhatsApp number</label>
+        <input id="phone" name="phone" type="tel" autocomplete="tel" required placeholder="+971 5X XXX XXXX" />
+
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="_subject" value="New WhatsApp opt-in" />
+        <input type="hidden" name="form" value="whatsapp-optin" />
+
+        <label class="consent">
+          <input type="checkbox" name="consent" value="yes" required />
+          <span id="consentText">I agree to receive WhatsApp messages from Xerxes Duane. I can opt out anytime.</span>
+        </label>
+
+        <button type="submit" id="submit">Yes, message me on WhatsApp</button>
+        <p class="err" id="err" hidden></p>
+      </form>
+      <p class="fine">Your number is only used to message you, and is never sold.</p>
+    </div>
+
+    <script>
+      // ── CONFIG ──────────────────────────────────────────────
+      const WA_NUMBER = "971543281995"; // Xerxes Duane's WhatsApp (international, no '+')
+      // Default endpoint = the site's existing Formspree (works immediately).
+      // To write straight into a Google Sheet, deploy optin-appsscript.gs and put
+      // its /exec URL here instead:
+      const POST_URL = "https://formspree.io/f/xrednbek";
+      // ────────────────────────────────────────────────────────
+
+      const form = document.getElementById("form");
+      const btn = document.getElementById("submit");
+      const err = document.getElementById("err");
+      const isAppsScript = POST_URL.includes("script.google.com");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        err.hidden = true;
+        if (!form.checkValidity()) {
+          err.textContent = "Please add your name, number, and tick the box.";
+          err.hidden = false;
+          return;
+        }
+        btn.disabled = true;
+        btn.textContent = "Saving…";
+        try {
+          // Apps Script web apps don't send CORS headers, so post fire-and-forget
+          // (no-cors); Formspree supports a normal CORS JSON submission.
+          await fetch(POST_URL, {
+            method: "POST",
+            mode: isAppsScript ? "no-cors" : "cors",
+            headers: isAppsScript ? {} : { Accept: "application/json" },
+            body: new FormData(form),
+          });
+          const waLink = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hi! I just signed up for WhatsApp updates.")}`;
+          document.getElementById("card").innerHTML =
+            `<div class="ok"><span class="badge">✓ You're in</span><h1>Thanks!</h1>` +
+            `<p class="sub">You'll hear from us on WhatsApp. Want to start the chat now?</p>` +
+            `<a class="wa-link" href="${waLink}" target="_blank" rel="noopener">Open WhatsApp →</a></div>`;
+        } catch (e2) {
+          err.textContent = "Something went wrong — please try again.";
+          err.hidden = false;
+          btn.disabled = false;
+          btn.textContent = "Yes, message me on WhatsApp";
+        }
+      });
+    </script>
+  </body>
+</html>
