@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ListChecks, CheckCircle2 } from "lucide-react";
 import { jsonDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 type Notes = {
   summary: string;
@@ -19,6 +20,7 @@ export default function DemoSummarize() {
   async function run(e: React.FormEvent) {
     e.preventDefault();
     if (loading || notes.trim().length < 15) return;
+    track("demo_run", { demo: "summarize" });
     setError("");
     setResult(null);
     setLoading(true);
@@ -50,10 +52,10 @@ export default function DemoSummarize() {
         {loading ? "Processing…" : "Summarize & extract tasks"}
       </button>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {result && (
-        <div className="flex flex-col gap-4 rounded-2xl border border-cream/10 bg-cream/5 p-4">
+        <div role="status" aria-live="polite" aria-busy={loading} className="flex flex-col gap-4 rounded-2xl border border-cream/10 bg-cream/5 p-4">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-wider text-muted-dark">Summary</p>
             <p className="mt-1 text-sm text-cream-dim">{result.summary}</p>

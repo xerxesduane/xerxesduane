@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Search } from "lucide-react";
 import { jsonDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 type Seo = {
   title: string;
@@ -22,6 +23,7 @@ export default function DemoSeo() {
   async function generate(e: React.FormEvent) {
     e.preventDefault();
     if (loading || topic.trim().length < 4) return;
+    track("demo_run", { demo: "seo" });
     setError("");
     setResult(null);
     setLoading(true);
@@ -61,10 +63,10 @@ export default function DemoSeo() {
         </button>
       </div>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {result && (
-        <div className="flex flex-col gap-4 rounded-2xl border border-cream/10 bg-cream/5 p-4">
+        <div role="status" aria-live="polite" aria-busy={loading} className="flex flex-col gap-4 rounded-2xl border border-cream/10 bg-cream/5 p-4">
           {/* SERP preview */}
           <div className="rounded-xl bg-ink-deep/50 p-3">
             <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-muted-dark">Google preview</p>

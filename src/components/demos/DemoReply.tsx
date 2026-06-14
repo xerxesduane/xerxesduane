@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { Sparkles, CornerDownLeft } from "lucide-react";
 import { streamDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 type Tone = "friendly" | "formal" | "brief";
 
@@ -24,6 +25,7 @@ export default function DemoReply() {
   async function draft(e: React.FormEvent) {
     e.preventDefault();
     if (loading || !message.trim()) return;
+    track("demo_run", { demo: "reply" });
     setError("");
     setOut("");
     setLoading(true);
@@ -83,10 +85,10 @@ export default function DemoReply() {
         </button>
       </div>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {(out || loading) && (
-        <div className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-[15px] leading-relaxed text-cream-dim">
+        <div role="status" aria-live="polite" aria-busy={loading} className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-[15px] leading-relaxed text-cream-dim">
           <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-gold/70">Draft reply</p>
           <p className="whitespace-pre-wrap">{out || "…"}</p>
         </div>

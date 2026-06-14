@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { ArrowLeftRight, Languages, Sparkles } from "lucide-react";
 import { streamDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 type Dir = "auto" | "ar2en" | "en2ar";
 
@@ -23,6 +24,7 @@ export default function DemoTranslate() {
   async function translate(e: React.FormEvent) {
     e.preventDefault();
     if (loading || !text.trim()) return;
+    track("demo_run", { demo: "translate" });
     setError("");
     setOut("");
     setLoading(true);
@@ -83,10 +85,13 @@ export default function DemoTranslate() {
         </button>
       </div>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {(out || loading) && (
         <div
+          role="status"
+          aria-live="polite"
+          aria-busy={loading}
           dir="auto"
           className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-[15px] leading-relaxed text-cream-dim"
         >
