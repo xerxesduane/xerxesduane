@@ -1,28 +1,18 @@
 import type { ReactNode } from "react";
 import Hero from "../components/Hero";
 import Marquee from "../components/Marquee";
-import ResultsBand from "../components/ResultsBand";
-import Testimonials from "../components/Testimonials";
 import Diagnosis from "../components/Diagnosis";
 import Services from "../components/Services";
-import Layers from "../components/Layers";
-import ConnectedSystems from "../components/ConnectedSystems";
-import Industries from "../components/Industries";
+import AILabPreview from "../components/AILabPreview";
+import ResultsBand from "../components/ResultsBand";
 import Work from "../components/Work";
-import SelectedWork from "../components/SelectedWork";
-import ProofBand from "../components/ProofBand";
-import Clients from "../components/Clients";
-import Stats from "../components/Stats";
+import ConnectedSystems from "../components/ConnectedSystems";
 import Process from "../components/Process";
+import Packages from "../components/Packages";
 import WhyUs from "../components/WhyUs";
 import Founder from "../components/Founder";
-import Packages from "../components/Packages";
 import FAQ from "../components/FAQ";
-import LeadMagnet from "../components/LeadMagnet";
 import Contact from "../components/Contact";
-import MidCTA from "../components/MidCTA";
-import WhoFor from "../components/WhoFor";
-import AILabPreview from "../components/AILabPreview";
 
 /**
  * Section band — gives the long homepage rhythm. Alternating bands get a
@@ -50,18 +40,21 @@ function Band({
   );
 }
 
+/**
+ * Homepage flow (deliberately tightened from ~23 sections to a scannable ~13):
+ * Hero → trust strip → problem → services → AI Lab → real numbers → case
+ * studies → connected system → process → packages → trust/founder → FAQ →
+ * contact. Each section makes ONE point; duplicates (a second numbers band, a
+ * second AI-Lab pitch, a second "who's it for", a second work grid, a mid-page
+ * CTA clone) were removed so the page earns the scroll.
+ */
 export default function Home() {
   return (
     <>
       <Hero />
       <Marquee />
 
-      {/* Proof leads: real, attributed outcome numbers right after the logo wall */}
-      <Band divide={false}>
-        <ResultsBand />
-      </Band>
-
-      {/* The problem → what we do */}
+      {/* The problem → what I do */}
       <Band divide={false}>
         <Diagnosis />
       </Band>
@@ -71,50 +64,33 @@ export default function Home() {
       <Band>
         <AILabPreview />
       </Band>
-      <Band tint>
-        <Layers />
-      </Band>
-      <Band>
-        <ConnectedSystems />
-      </Band>
 
-      {/* Proof: numbers, case studies, craft, words */}
+      {/* Proof: real numbers → case studies → how it connects */}
       <Band tint>
-        <Stats />
+        <ResultsBand />
       </Band>
       <Band>
         <Work />
-        <SelectedWork />
       </Band>
       <Band tint>
-        <ProofBand />
-        <Testimonials />
-        <Clients />
+        <ConnectedSystems />
       </Band>
 
-      {/* Mid-page conversion point */}
-      <MidCTA />
+      {/* How I work (cream contrast band) */}
+      <Process />
 
-      {/* How we work + who you work with */}
+      {/* Offer → trust → close */}
       <Band tint>
-        <WhoFor />
-        <Industries />
-        <Process />
+        <Packages />
       </Band>
       <Band>
         <WhyUs />
         <Founder />
       </Band>
-
-      {/* Offer → close */}
       <Band tint>
-        <Packages />
-      </Band>
-      <Band>
         <FAQ />
-        <LeadMagnet />
       </Band>
-      <Band tint divide={false}>
+      <Band divide={false}>
         <Contact />
       </Band>
     </>
