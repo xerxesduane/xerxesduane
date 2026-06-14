@@ -30,12 +30,20 @@ export default function Work() {
           ))}
         </m.div>
 
-        <div className="mt-10 text-center">
+        <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-6">
           <a
             href="/case-studies"
-            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-gold transition-colors hover:text-gold-soft"
+            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted transition-colors hover:text-gold"
           >
             See all case studies
+            <span aria-hidden>→</span>
+          </a>
+          <a
+            href="/#contact"
+            data-cursor="link"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-soft"
+          >
+            See how I'd approach yours
             <span aria-hidden>→</span>
           </a>
         </div>

@@ -31,6 +31,19 @@ export const CONTACT = {
   formspreeId: "xrednbek",
 };
 
+// The free-audit journey + what you actually receive — shared by the Contact
+// section and the Packages "Audit" card so the promise never drifts between them.
+export const AUDIT_STEPS = [
+  "I confirm your audit time on WhatsApp within a few hours.",
+  "We meet for 60 minutes: call, Zoom, or in person if you prefer.",
+  "Within 5 business days, you get your plain-English roadmap.",
+];
+export const AUDIT_DELIVERABLES = [
+  "A plain-English map of your current systems",
+  "3 quick wins you can act on right away",
+  "A prioritised next-step plan — yours to keep, hire me or not",
+];
+
 export const NAV_LINKS = [
   { label: "Services", href: "/#services" },
   { label: "AI Lab", href: "/ai-lab" },
