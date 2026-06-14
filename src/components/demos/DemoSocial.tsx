@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Camera, Briefcase, Music2, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { streamDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 type Platform = "instagram" | "linkedin" | "tiktok";
 
@@ -24,6 +25,7 @@ export default function DemoSocial() {
   async function write(e: React.FormEvent) {
     e.preventDefault();
     if (loading || !topic.trim()) return;
+    track("demo_run", { demo: "social" });
     setError("");
     setOut("");
     setLoading(true);
@@ -86,10 +88,10 @@ export default function DemoSocial() {
         </button>
       </div>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {(out || loading) && (
-        <div className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-[15px] leading-relaxed text-cream-dim">
+        <div role="status" aria-live="polite" aria-busy={loading} className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-[15px] leading-relaxed text-cream-dim">
           <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-gold/70">{platform} caption</p>
           <p className="whitespace-pre-wrap">{out || "…"}</p>
         </div>

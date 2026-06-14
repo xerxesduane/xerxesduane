@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Wand2 } from "lucide-react";
 import { jsonDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 type Lead = {
   name: string;
@@ -32,6 +33,7 @@ export default function DemoExtract() {
   async function extract(e: React.FormEvent) {
     e.preventDefault();
     if (loading) return;
+    track("demo_run", { demo: "extract" });
     setError("");
     setResult(null);
     setLoading(true);
@@ -63,10 +65,10 @@ export default function DemoExtract() {
         {loading ? "Extracting…" : "Extract structured data"}
       </button>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {result && (
-        <div className="rounded-2xl border border-cream/10 bg-cream/5 p-4">
+        <div role="status" aria-live="polite" aria-busy={loading} className="rounded-2xl border border-cream/10 bg-cream/5 p-4">
           <div className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
             <Field label="Name" value={result.name} />
             <Field label="Company" value={result.company} />

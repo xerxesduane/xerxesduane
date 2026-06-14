@@ -60,10 +60,10 @@ export default function DemoQuote() {
         {loading ? "Building…" : "Generate a quote"}
       </button>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {quote && (
-        <div className="rounded-2xl border border-cream/10 bg-cream/5 p-4 sm:p-5">
+        <div role="status" aria-live="polite" aria-busy={loading} className="rounded-2xl border border-cream/10 bg-cream/5 p-4 sm:p-5">
           <div className="flex items-center justify-between border-b border-cream/10 pb-3">
             <div>
               <p className="font-mono text-[10px] uppercase tracking-wider text-muted-dark">Quotation for</p>

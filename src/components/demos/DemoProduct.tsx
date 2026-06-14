@@ -84,10 +84,10 @@ export default function DemoProduct() {
         </button>
       </div>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {(out || loading) && (
-        <div className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-[15px] leading-relaxed text-cream-dim">
+        <div role="status" aria-live="polite" aria-busy={loading} className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-[15px] leading-relaxed text-cream-dim">
           <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-gold/70">Product description</p>
           <p className="whitespace-pre-wrap">{out || "…"}</p>
         </div>

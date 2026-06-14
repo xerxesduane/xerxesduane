@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { ArrowRight, FileText, Link2, Sparkles } from "lucide-react";
 import { streamDemo } from "../../lib/demoClient";
+import { track } from "../../lib/analytics";
 
 const EXAMPLE_TEXT = `Greenfield Landscaping — Service Terms (2026)
 
@@ -27,6 +28,7 @@ export default function DemoAsk() {
   async function ask(e: React.FormEvent) {
     e.preventDefault();
     if (loading) return;
+    track("demo_run", { demo: "ask" });
     setError("");
     setAnswer("");
     setLoading(true);
@@ -116,10 +118,10 @@ export default function DemoAsk() {
         </button>
       </div>
 
-      {error && <p className="text-xs text-gold">{error}</p>}
+      {error && <p role="alert" className="text-xs text-gold">{error}</p>}
 
       {(answer || loading) && (
-        <div className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-sm leading-relaxed text-cream-dim">
+        <div role="status" aria-live="polite" aria-busy={loading} className="rounded-2xl border border-cream/10 bg-cream/5 p-4 text-sm leading-relaxed text-cream-dim">
           <p className="mb-2 font-mono text-[10px] uppercase tracking-wider text-gold/70">Answer</p>
           <p className="whitespace-pre-wrap">{answer || "…"}</p>
         </div>
