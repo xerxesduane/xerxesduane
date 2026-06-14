@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown, Building2, UtensilsCrossed, Split, FileText, Wand2, CalendarClock, Wrench } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown, Building2, UtensilsCrossed, Split, FileText, Wand2, CalendarClock, Wrench, Mic, Camera, Workflow, BarChart3, ScanSearch, LayoutTemplate, Cpu } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -26,11 +26,20 @@ import DemoBroadcast from "../components/demos/DemoBroadcast";
 import DemoTriage from "../components/demos/DemoTriage";
 import DemoInvoice from "../components/demos/DemoInvoice";
 import DemoTone from "../components/demos/DemoTone";
+import DemoAgent from "../components/demos/DemoAgent";
+import DemoVoice from "../components/demos/DemoVoice";
+import DemoReceipt from "../components/demos/DemoReceipt";
+import DemoVisionProduct from "../components/demos/DemoVisionProduct";
+import DemoOnDevice from "../components/demos/DemoOnDevice";
+import DemoData from "../components/demos/DemoData";
+import DemoAeo from "../components/demos/DemoAeo";
+import DemoSection from "../components/demos/DemoSection";
 import { fadeUp, stagger } from "../lib/motion";
 
-type CatId = "convert" | "comms" | "create" | "automate";
+type CatId = "frontier" | "convert" | "comms" | "create" | "automate";
 
 const CATEGORIES: { id: CatId; label: string }[] = [
+  { id: "frontier", label: "Multimodal & agentic" },
   { id: "convert", label: "Win customers" },
   { id: "comms", label: "Communicate" },
   { id: "create", label: "Create content" },
@@ -49,6 +58,86 @@ type Demo = {
 };
 
 const DEMOS: Demo[] = [
+  {
+    id: "agent",
+    category: "frontier",
+    icon: Workflow,
+    eyebrow: "Agentic workflow",
+    title: "Watch an AI agent work a lead, step by step",
+    blurb:
+      "Paste an inbound enquiry and the agent reads it, enriches the contact, scores the fit, drafts a reply, offers a time and updates the CRM — every step and tool-call shown live. The visible reasoning is the point.",
+    node: <DemoAgent />,
+  },
+  {
+    id: "voice",
+    category: "frontier",
+    icon: Mic,
+    eyebrow: "Voice receptionist · EN/AR",
+    title: "Talk to an AI receptionist — out loud",
+    blurb:
+      "Tap, speak in Arabic or English, and it transcribes you, replies, and talks back — a real bilingual front desk you can hold a conversation with. Prefer to type? There's always a text box.",
+    node: <DemoVoice />,
+  },
+  {
+    id: "vision-receipt",
+    category: "frontier",
+    icon: ReceiptText,
+    eyebrow: "Vision · bookkeeping",
+    title: "Snap a receipt → a clean expense line",
+    blurb:
+      "Photograph any receipt or invoice and the AI reads it into a tidy expense record — merchant, date, category, line items and 5% VAT — ready to push into Odoo or your books.",
+    node: <DemoReceipt />,
+  },
+  {
+    id: "vision-product",
+    category: "frontier",
+    icon: Camera,
+    eyebrow: "Vision · e-commerce",
+    title: "Photograph a product → a full listing",
+    blurb:
+      "Point your camera at a product and get a store-ready description, highlight bullets, SEO title + meta, tags and a suggested AED price — straight from the photo.",
+    node: <DemoVisionProduct />,
+  },
+  {
+    id: "ondevice",
+    category: "frontier",
+    icon: Cpu,
+    eyebrow: "On-device · private",
+    title: "AI that runs entirely in your browser",
+    blurb:
+      "A real embedding model loads once into your browser, then answers questions semantically — fully on your device, nothing sent to a server. The privacy-first option for sensitive data.",
+    node: <DemoOnDevice />,
+  },
+  {
+    id: "data",
+    category: "automate",
+    icon: BarChart3,
+    eyebrow: "Data → insight",
+    title: "Turn a CSV into insights + a chart",
+    blurb:
+      "Paste or upload a small sales CSV and get three specific insights, a generated chart, and a recommended next move — the analyst layer on top of your numbers.",
+    node: <DemoData />,
+  },
+  {
+    id: "aeo",
+    category: "convert",
+    icon: ScanSearch,
+    eyebrow: "AEO/GEO · AI search",
+    title: "See how AI describes your business",
+    blurb:
+      "Describe your business and see how an AI engine would summarise it today, what's hurting your AI visibility, and the schema + fixes to get accurately cited by ChatGPT and Perplexity.",
+    node: <DemoAeo />,
+  },
+  {
+    id: "section",
+    category: "create",
+    icon: LayoutTemplate,
+    eyebrow: "Instant landing section",
+    title: "Describe a business → a live landing section",
+    blurb:
+      "Type a business or offer and watch a complete, on-brand hero section render live — headline, value bullets, CTAs and a proof stat — the way I'd ship it.",
+    node: <DemoSection />,
+  },
   {
     id: "assistant",
     category: "convert",
@@ -504,8 +593,8 @@ export default function Demos() {
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </Kinetic>
             <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              {DEMOS.length} real, working tools — the same AI I build into client products. Open models
-              on Groq, running live. Type into them, they respond for real.
+              {DEMOS.length} real, working tools — the same AI I build into client products. Most run live
+              on open models via Groq; one runs entirely in your browser. Type into them, they respond for real.
             </m.p>
             <m.p variants={fadeUp} className="mx-auto mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark">
               Nothing here is canned · No sign-up · Your input isn't stored
