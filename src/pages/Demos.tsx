@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { m } from "framer-motion";
-import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown, Building2, UtensilsCrossed, Split, FileText, Wand2, CalendarClock, Wrench, Mic, Camera, Workflow, BarChart3, ScanSearch, LayoutTemplate, Cpu } from "lucide-react";
+import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown, Building2, UtensilsCrossed, Split, FileText, Wand2, CalendarClock, Wrench, Mic, Camera, Workflow, BarChart3, ScanSearch, LayoutTemplate, Cpu, Route, GitBranch, Calculator, Recycle, MessageSquareReply, ClipboardList } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Kinetic from "../components/fx/Kinetic";
@@ -34,6 +34,12 @@ import DemoOnDevice from "../components/demos/DemoOnDevice";
 import DemoData from "../components/demos/DemoData";
 import DemoAeo from "../components/demos/DemoAeo";
 import DemoSection from "../components/demos/DemoSection";
+import DemoProcess from "../components/demos/DemoProcess";
+import DemoPipeline from "../components/demos/DemoPipeline";
+import DemoRoi from "../components/demos/DemoRoi";
+import DemoRepurpose from "../components/demos/DemoRepurpose";
+import DemoLeadResponse from "../components/demos/DemoLeadResponse";
+import DemoCritique from "../components/demos/DemoCritique";
 import { fadeUp, stagger } from "../lib/motion";
 
 type CatId = "frontier" | "convert" | "comms" | "create" | "automate";
@@ -137,6 +143,66 @@ const DEMOS: Demo[] = [
     blurb:
       "Type a business or offer and watch a complete, on-brand hero section render live — headline, value bullets, CTAs and a proof stat — the way I'd ship it.",
     node: <DemoSection />,
+  },
+  {
+    id: "process",
+    category: "automate",
+    icon: Route,
+    eyebrow: "Process analyzer",
+    title: "Find the automation in your busywork",
+    blurb:
+      "Describe a manual workflow and the AI maps the steps, flags the bottlenecks and repeated work, and returns a concrete automation plan with a rough time-saved estimate.",
+    node: <DemoProcess />,
+  },
+  {
+    id: "pipeline",
+    category: "automate",
+    icon: GitBranch,
+    eyebrow: "CRM pipeline designer",
+    title: "Design your sales pipeline in seconds",
+    blurb:
+      "Describe how you sell and the AI proposes practical pipeline stages, the fields to capture, and the automations worth setting up — the blueprint for a CRM that fits how you work.",
+    node: <DemoPipeline />,
+  },
+  {
+    id: "roi",
+    category: "automate",
+    icon: Calculator,
+    eyebrow: "Automation ROI calculator",
+    title: "See what a repeated task really costs",
+    blurb:
+      "Enter how often a manual task runs and what it costs, and get an estimate of the hours and money you'd win back by automating it. Runs entirely in your browser — just math, no AI.",
+    node: <DemoRoi />,
+  },
+  {
+    id: "repurpose",
+    category: "create",
+    icon: Recycle,
+    eyebrow: "Content repurposing",
+    title: "One message → email, social & a video",
+    blurb:
+      "Paste a long update and get a concise email, a ready-to-post social caption, and a short-video outline — the same idea, reshaped for every channel in one go.",
+    node: <DemoRepurpose />,
+  },
+  {
+    id: "leadresponse",
+    category: "convert",
+    icon: MessageSquareReply,
+    eyebrow: "Lead response assistant",
+    title: "Reply to an enquiry the right way",
+    blurb:
+      "Paste a customer enquiry and get a clear, professional reply plus a read on their intent, urgency, and the best next step — so no lead waits or gets a weak answer.",
+    node: <DemoLeadResponse />,
+  },
+  {
+    id: "critique",
+    category: "convert",
+    icon: ClipboardList,
+    eyebrow: "Conversion critique",
+    title: "Find what's costing you conversions",
+    blurb:
+      "Enter a page URL or paste your copy and get a prioritized critique — unclear messaging, missing trust signals, weak CTAs, and the friction to fix first. Suggestions, never guarantees.",
+    node: <DemoCritique />,
   },
   {
     id: "assistant",
