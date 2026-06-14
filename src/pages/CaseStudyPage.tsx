@@ -44,13 +44,13 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
         <div className="container-bl">
           <div className="grid gap-5 lg:grid-cols-[1.25fr_0.75fr]">
             <Reveal className="glass border-glow rounded-3xl p-7 sm:p-10">
-              <span className="font-mono text-xs uppercase tracking-wider text-gold">The challenge</span>
+              <span className="font-mono text-xs uppercase tracking-wider text-gold">Before</span>
               <h2 className="mt-4 text-3xl text-cream sm:text-4xl">What needed to change</h2>
               <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
                 {study.challenge}
               </p>
               <div className="mt-9 border-t border-cream/10 pt-8">
-                <span className="font-mono text-xs uppercase tracking-wider text-gold">The approach</span>
+                <span className="font-mono text-xs uppercase tracking-wider text-gold">What changed</span>
                 <ul className="mt-5 grid gap-4 sm:grid-cols-2">
                   {study.approach.map((item) => (
                     <li key={item} className="flex items-start gap-3 text-sm leading-relaxed text-cream-dim">
@@ -69,13 +69,16 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
                 </div>
               )}
               {study.stats && (
-                <div className="grid grid-cols-2 gap-3">
-                  {study.stats.map((stat) => (
-                    <div key={stat.label} className="rounded-2xl border border-cream/8 bg-ink-deep/40 p-4">
-                      <div className="font-mono text-2xl font-semibold text-gold">{stat.value}</div>
-                      <div className="mt-1 text-xs text-muted">{stat.label}</div>
-                    </div>
-                  ))}
+                <div>
+                  <span className="font-mono text-xs uppercase tracking-wider text-gold">Measured result</span>
+                  <div className="mt-4 grid grid-cols-2 gap-3">
+                    {study.stats.map((stat) => (
+                      <div key={stat.label} className="rounded-2xl border border-cream/8 bg-ink-deep/40 p-4">
+                        <div className="font-mono text-2xl font-semibold text-gold">{stat.value}</div>
+                        <div className="mt-1 text-xs text-muted">{stat.label}</div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
               {study.scope && (
@@ -104,6 +107,14 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
             <p className="mt-5 font-display text-3xl italic leading-tight text-cream sm:text-4xl">
               {study.takeaway}
             </p>
+            <a
+              href="/#contact"
+              data-cursor="link"
+              className="mt-7 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-soft"
+            >
+              Want a result like this? Book your free audit
+              <ArrowUpRight size={15} />
+            </a>
           </Reveal>
 
           <div className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-3">

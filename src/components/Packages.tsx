@@ -1,6 +1,6 @@
 import { m } from "framer-motion";
 import { ArrowUpRight, Check } from "lucide-react";
-import { PACKAGES } from "../data/content";
+import { PACKAGES, AUDIT_DELIVERABLES } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import SectionHeading from "./ui/SectionHeading";
 
@@ -104,8 +104,22 @@ export default function Packages() {
                 ))}
               </ul>
 
+              {p.featured && (
+                <div className="mt-5 rounded-xl border border-ink/10 bg-ink/[0.04] p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-wider text-gold-deep">You walk away with</p>
+                  <ul className="mt-2 space-y-1.5">
+                    {AUDIT_DELIVERABLES.map((d) => (
+                      <li key={d} className="flex items-start gap-2 text-sm text-ink/70">
+                        <Check size={14} className="mt-0.5 shrink-0 text-gold-deep" />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
               <a
-                href="#contact"
+                href="/#contact"
                 data-cursor="link"
                 className={`mt-7 inline-flex items-center justify-center gap-1.5 rounded-full px-5 py-3 text-sm font-semibold transition duration-300 ${
                   p.featured

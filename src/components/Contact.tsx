@@ -1,17 +1,11 @@
 import { useEffect, useState } from "react";
 import { m } from "framer-motion";
 import { useForm, ValidationError } from "@formspree/react";
-import { ArrowUpRight, CalendarCheck, Mail, MapPin, MessageCircle } from "lucide-react";
-import { CONTACT } from "../data/content";
+import { ArrowUpRight, CalendarCheck, Check, Mail, MapPin, MessageCircle } from "lucide-react";
+import { CONTACT, AUDIT_STEPS, AUDIT_DELIVERABLES } from "../data/content";
 import { track } from "../lib/analytics";
 import Reveal from "./ui/Reveal";
 import GoogleRating from "./GoogleRating";
-
-const STEPS = [
-  "I confirm your audit time on WhatsApp within a few hours.",
-  "We meet for 60 minutes: call, Zoom, or in person if you prefer.",
-  "Within 5 business days, you get your plain-English roadmap.",
-];
 
 export default function Contact() {
   const [form, setForm] = useState({ name: "", business: "", phone: "", note: "" });
@@ -70,8 +64,9 @@ export default function Contact() {
               systems and three quick wins you can use right away.
             </p>
 
-            <ol className="mt-8 space-y-4">
-              {STEPS.map((s, i) => (
+            <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.18em] text-gold/80">What happens next</p>
+            <ol className="mt-3 space-y-4">
+              {AUDIT_STEPS.map((s, i) => (
                 <li key={s} className="flex gap-3 text-sm text-cream-dim">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/15 font-mono text-xs text-gold">
                     {i + 1}
@@ -80,6 +75,18 @@ export default function Contact() {
                 </li>
               ))}
             </ol>
+
+            <div className="mt-6 rounded-2xl border border-cream/10 bg-ink-deep/40 p-4">
+              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold/80">You walk away with</p>
+              <ul className="mt-2.5 space-y-1.5">
+                {AUDIT_DELIVERABLES.map((d) => (
+                  <li key={d} className="flex items-start gap-2 text-sm text-cream-dim">
+                    <Check size={14} className="mt-0.5 shrink-0 text-gold" />
+                    {d}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
             <a
               href={CONTACT.calendar}
