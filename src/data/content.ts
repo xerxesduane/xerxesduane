@@ -459,28 +459,67 @@ export const STATS: { value: number; suffix: string; label: string }[] = [
 ];
 
 export interface Result {
-  /** The headline figure, e.g. "791", "$6.89", "117K". */
+  /** Anonymous business category, e.g. "Wellness business · Dubai". */
+  category: string;
+  /** The initial problem, in one line. */
+  problem: string;
+  /** Headline figure, e.g. "791", "$6.89", "8 → 1". */
   value: string;
   /** What the figure measures. */
   label: string;
-  /** Named client the result belongs to. */
-  client: string;
-  /** Short context line (channel · market). */
-  context: string;
-  /** Visibly-marked slot Xerxes fills with a real number. */
-  placeholder?: boolean;
+  /** Short, honest explanation of what changed — no over-claimed causation. */
+  whatChanged: string;
+  /** Credibility/context label, e.g. "Verified campaign data · Meta Ads". */
+  proof: string;
+  /** Relevant service page to deep-link to. */
+  serviceHref: string;
 }
 
-// Real, attributable outcomes from delivered work (sourced from CASE_STUDIES),
-// plus clearly-marked placeholders for outcome numbers only Xerxes can supply.
-// DO NOT invent numbers — replace [ADD] slots with real figures before launch.
+// REAL numbers from delivered projects, presented WITHOUT naming clients (the
+// named, permission-based attribution lives in the CLIENTS logo wall below).
+// Every figure is verified from CASE_STUDIES — nothing here is invented or
+// inflated, and no causation is claimed beyond what was measured.
 export const RESULTS: Result[] = [
-  { value: "791", label: "customer conversations driven", client: "AYA Home Spa", context: "Meta Ads · Dubai wellness" },
-  { value: "610", label: "conversions", client: "Wellington Cash for Cars", context: "Google Ads · run from Dubai" },
-  { value: "$6.89", label: "avg. cost per click", client: "Wellington Cash for Cars", context: "disciplined, low-CPA spend" },
-  { value: "117K", label: "ad views delivered", client: "AYA Home Spa", context: "Meta Ads · Dubai" },
-  { value: "[ADD]", label: "e.g. quote turnaround: 3 days → 20 min", client: "Blocktec / an Odoo build", context: "Odoo ERP · add a real before/after", placeholder: true },
-  { value: "[ADD]", label: "e.g. admin hours saved per week", client: "an automation client", context: "automation · add a real figure", placeholder: true },
+  {
+    category: "Wellness business · Dubai",
+    problem: "Needed real digital visibility in a crowded market.",
+    value: "791",
+    label: "customer conversations",
+    whatChanged:
+      "A focused paid-social campaign reached more than 54,000 people and produced 98,000 video plays. The goal wasn't passive engagement — it was starting real conversations with potential customers.",
+    proof: "Verified campaign data · Meta Ads",
+    serviceHref: "/landing-page-design-dubai",
+  },
+  {
+    category: "Automotive service · International campaign",
+    problem: "A competitive search market, with pressure to keep cost-per-acquisition low.",
+    value: "610",
+    label: "tracked conversions from 1,530+ clicks",
+    whatChanged:
+      "A disciplined search campaign focused budget on high-intent searches, holding an 8.28% top-ad click-through rate at an average cost per click of $6.89 — managed remotely from Dubai.",
+    proof: "Verified campaign data · Google Ads",
+    serviceHref: "/seo-dubai",
+  },
+  {
+    category: "Multi-location organization · Dubai",
+    problem: "Hard to find across locations, with an inconsistent presence on web, search, and social.",
+    value: "452",
+    label: "direction requests in one month",
+    whatChanged:
+      "Website improvements, local-search optimization, and better-managed business profiles helped more people discover locations and take a measurable next step — alongside 60,000+ monthly content views.",
+    proof: "Measured monthly activity · Web · GMB · Social",
+    serviceHref: "/web-development-dubai",
+  },
+  {
+    category: "Construction & manufacturing business",
+    problem: "Eight disconnected workflows on spreadsheets, manual tracking, and fragmented department communication.",
+    value: "8 → 1",
+    label: "workflows in one operating system",
+    whatChanged:
+      "CRM, quotations, purchasing, inventory, accounting, project management, e-commerce, and automation — connected through one structured Odoo ERP platform.",
+    proof: "Delivered scope · Odoo ERP",
+    serviceHref: "/odoo-erp-dubai",
+  },
 ];
 
 export interface Testimonial {
