@@ -6,6 +6,7 @@ import Testimonials from "../components/Testimonials";
 import Diagnosis from "../components/Diagnosis";
 import Services from "../components/Services";
 import Layers from "../components/Layers";
+import ConnectedSystems from "../components/ConnectedSystems";
 import Industries from "../components/Industries";
 import Work from "../components/Work";
 import SelectedWork from "../components/SelectedWork";
@@ -72,6 +73,9 @@ export default function Home() {
       </Band>
       <Band tint>
         <Layers />
+      </Band>
+      <Band>
+        <ConnectedSystems />
       </Band>
 
       {/* Proof: numbers, case studies, craft, words */}
