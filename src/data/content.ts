@@ -453,9 +453,9 @@ export const COMPARISON: { agency: string; bayt: string }[] = [
 
 export const STATS: { value: number; suffix: string; label: string }[] = [
   { value: 6, suffix: "+", label: "Years building for Dubai businesses" },
-  { value: 50, suffix: "+", label: "Businesses helped across industries" },
   { value: 117, suffix: "K+", label: "Ad impressions delivered" },
-  { value: 100, suffix: "%", label: "Growth from referrals & word of mouth" },
+  { value: 20, suffix: "+", label: "Live AI tools you can try" },
+  { value: 4, suffix: "", label: "Countries served" },
 ];
 
 export const PROMISE = {
@@ -503,36 +503,8 @@ export const PACKAGES = [
   },
 ];
 
-export interface Testimonial {
-  quote: string;
-  name: string;
-  role: string;
-  context: string;
-}
-
-export const TESTIMONIALS: Testimonial[] = [
-  {
-    quote:
-      "Xerxes doesn't just design, he solves communication problems. His work is clean, strategic, and always built around what the audience needs to understand. Whether it's branding, social media, or digital campaigns, he consistently delivers work that creates impact.",
-    name: "Paul R.",
-    role: "Marketing Manager",
-    context: "Brand Strategy & Digital Marketing",
-  },
-  {
-    quote:
-      "Working with Xerxes brought clarity and consistency to our brand. He has a strong ability to transform rough ideas into polished visuals that feel professional, modern, and purposeful. His attention to detail and understanding of marketing make him a valuable creative partner.",
-    name: "Sarah M.",
-    role: "Communications Lead",
-    context: "Content & Brand Development",
-  },
-  {
-    quote:
-      "Xerxes is creative, reliable, and highly skilled in both design and digital execution. He understands how visual design supports business goals, which makes his work practical, effective, and results-driven. Every project was delivered with professionalism and care.",
-    name: "David L.",
-    role: "Project Director",
-    context: "Web Design & Creative Services",
-  },
-];
+// Testimonials intentionally removed until real, attributable client quotes
+// exist (see ProofBand.tsx, which points to the live AI Lab as proof instead).
 
 export interface Client {
   name: string;

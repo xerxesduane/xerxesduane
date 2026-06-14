@@ -7,7 +7,7 @@ import Layers from "../components/Layers";
 import Industries from "../components/Industries";
 import Work from "../components/Work";
 import SelectedWork from "../components/SelectedWork";
-import Testimonials from "../components/Testimonials";
+import ProofBand from "../components/ProofBand";
 import Clients from "../components/Clients";
 import Stats from "../components/Stats";
 import Process from "../components/Process";
@@ -76,7 +76,7 @@ export default function Home() {
         <SelectedWork />
       </Band>
       <Band tint>
-        <Testimonials />
+        <ProofBand />
         <Clients />
       </Band>
 
