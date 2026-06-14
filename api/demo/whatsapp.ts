@@ -27,7 +27,13 @@ export default async function handler(req: Request): Promise<Response> {
     source?: string;
   };
   try {
-    body = await req.json();
+    body = (await req.json()) as {
+      name?: string;
+      company?: string;
+      interest?: string;
+      city?: string;
+      source?: string;
+    };
   } catch {
     return errorResponse("Invalid request body.");
   }

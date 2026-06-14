@@ -27,7 +27,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   let body: { notes?: string };
   try {
-    body = await req.json();
+    body = (await req.json()) as { notes?: string };
   } catch {
     return errorResponse("Invalid request body.");
   }

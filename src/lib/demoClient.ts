@@ -68,3 +68,53 @@ export async function jsonDemo<T>(path: string, body: unknown, signal?: AbortSig
   if (!res.ok) throw new Error(await readError(res));
   return (await res.json()) as T;
 }
+
+/**
+ * POST `body` to an NDJSON streaming endpoint and invoke `onEvent` for each
+ * complete JSON line as it arrives. Used by the visible agentic-workflow demo,
+ * where each line is one step (enrich → qualify → draft → book → sync) so the
+ * agent's reasoning appears on screen as it happens. Pass an AbortSignal to cancel.
+ */
+export async function streamNdjson<T>(
+  path: string,
+  body: unknown,
+  onEvent: (event: T) => void,
+  signal?: AbortSignal,
+): Promise<void> {
+  const res = await fetch(path, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(body),
+    signal,
+  });
+  if (!res.ok || !res.body) throw new Error(await readError(res));
+
+  const reader = res.body.getReader();
+  const decoder = new TextDecoder();
+  let buf = "";
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    buf += decoder.decode(value, { stream: true });
+    let nl: number;
+    while ((nl = buf.indexOf("\n")) !== -1) {
+      const line = buf.slice(0, nl).trim();
+      buf = buf.slice(nl + 1);
+      if (line) {
+        try {
+          onEvent(JSON.parse(line) as T);
+        } catch {
+          /* ignore a partial/non-JSON line */
+        }
+      }
+    }
+  }
+  const tail = buf.trim();
+  if (tail) {
+    try {
+      onEvent(JSON.parse(tail) as T);
+    } catch {
+      /* ignore */
+    }
+  }
+}

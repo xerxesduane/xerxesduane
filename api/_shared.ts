@@ -17,6 +17,12 @@ export const MODEL_SMART = "llama-3.3-70b-versatile";
 // Structured output (generateObject) needs json_schema support, which Llama
 // models lack on Groq — use a gpt-oss model for the extraction demo.
 export const MODEL_STRUCTURED = "openai/gpt-oss-20b";
+// Vision / multimodal: Llama 4 Scout accepts image input (Preview on Groq).
+// Being a Llama model it also lacks json_schema, so the vision endpoints use
+// generateText + parseLooseJson rather than generateObject.
+export const MODEL_VISION = "meta-llama/llama-4-scout-17b-16e-instruct";
+// Speech-to-text: Groq's hosted Whisper (called over REST, see groqTranscribe).
+export const MODEL_TRANSCRIBE = "whisper-large-v3-turbo";
 
 const WINDOW_MS = 60_000;
 const WINDOW_SEC = WINDOW_MS / 1000;
@@ -148,4 +154,73 @@ export function aiErrorDetail(err: unknown): Record<string, unknown> {
 
 export function logAiError(where: string, err: unknown): void {
   console.error(`[demo:${where}]`, JSON.stringify(aiErrorDetail(err)));
+}
+
+/**
+ * Best-effort parse of a model's JSON output. Strips ```json fences and any
+ * surrounding prose, then parses the first {...} or [...] block. Vision/voice
+ * models can't use generateObject (no json_schema on Groq), so the endpoints
+ * ask for JSON in the prompt and lean on this to recover a typed object.
+ */
+export function parseLooseJson<T = unknown>(text: string): T | null {
+  if (typeof text !== "string") return null;
+  const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  const body = fenced ? fenced[1] : text;
+  const objStart = body.indexOf("{");
+  const arrStart = body.indexOf("[");
+  const from =
+    objStart === -1 ? arrStart : arrStart === -1 ? objStart : Math.min(objStart, arrStart);
+  if (from === -1) return null;
+  const end = Math.max(body.lastIndexOf("}"), body.lastIndexOf("]"));
+  if (end <= from) return null;
+  try {
+    return JSON.parse(body.slice(from, end + 1)) as T;
+  } catch {
+    return null;
+  }
+}
+
+/** Decode a base64 (or data-URL) string to raw bytes. Edge-runtime safe. */
+export function base64ToBytes(b64: string): Uint8Array {
+  const clean = b64.includes(",") ? b64.slice(b64.indexOf(",") + 1) : b64;
+  const bin = atob(clean);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+/**
+ * Transcribe audio with Groq's hosted Whisper via the REST endpoint. Kept as a
+ * raw multipart fetch so it doesn't depend on AI-SDK transcription support.
+ * `audio` is the raw bytes; returns the recognised text. `language` is an
+ * optional ISO-639-1 hint ("en"/"ar").
+ */
+export async function groqTranscribe(
+  audio: Uint8Array,
+  mime: string,
+  language?: string,
+): Promise<string> {
+  const ext = mime.includes("wav")
+    ? "wav"
+    : mime.includes("mp4") || mime.includes("m4a")
+      ? "m4a"
+      : mime.includes("mpeg") || mime.includes("mp3")
+        ? "mp3"
+        : mime.includes("ogg")
+          ? "ogg"
+          : "webm";
+  const form = new FormData();
+  form.append("file", new Blob([audio], { type: mime || "audio/webm" }), `clip.${ext}`);
+  form.append("model", MODEL_TRANSCRIBE);
+  form.append("response_format", "text");
+  if (language) form.append("language", language);
+  const res = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
+    method: "POST",
+    headers: { authorization: `Bearer ${process.env.GROQ_API_KEY}` },
+    body: form,
+  });
+  if (!res.ok) {
+    throw new Error(`groq transcribe ${res.status}: ${(await res.text()).slice(0, 300)}`);
+  }
+  return (await res.text()).trim();
 }

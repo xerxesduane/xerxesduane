@@ -29,7 +29,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   let body: { topic?: string; platform?: string };
   try {
-    body = await req.json();
+    body = (await req.json()) as { topic?: string; platform?: string };
   } catch {
     return errorResponse("Invalid request body.");
   }
