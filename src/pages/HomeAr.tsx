@@ -1,5 +1,5 @@
 import { m } from "framer-motion";
-import { ArrowUpRight, MessageCircle, CalendarCheck } from "lucide-react";
+import { ArrowUpRight, MessageCircle, CalendarCheck, FlaskConical, ChevronDown } from "lucide-react";
 import { SERVICE_PAGES_AR } from "../data/servicePagesAr";
 import { CONTACT } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -8,6 +8,25 @@ import Reveal from "../components/ui/Reveal";
 const waHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
   "مرحبًا Xerxes، أودّ حجز تدقيق مجاني لأنظمتي.",
 )}`;
+
+const FAQ_AR = [
+  {
+    q: "ماذا يحدث إذا لم أستطع الوصول إليك، أو كنت مشغولًا أو مسافرًا؟",
+    a: "تتعامل مع رقمٍ واحدٍ موثوق طوال الوقت، وكل نظامٍ نبنيه يكون موثّقًا بوضوح. حتى لو تأخّرت في الردّ، يبقى عملك في يدك ولا تعلق يومًا في انتظار أحد.",
+  },
+  {
+    q: "هل أملك كل شيء فعلًا؟ الموقع والنطاق والحسابات؟",
+    a: "نعم، بالكامل. النطاق والاستضافة والشيفرة البرمجية وكل الحسابات تكون باسمك أنت منذ اليوم الأول، لا باسمي. أنا أبني لك، لكن الملكية ملكك وحدك.",
+  },
+  {
+    q: "هل التدقيق المجاني مجاني حقًا وبلا أي التزام؟",
+    a: "نعم، مجاني تمامًا وبلا أي التزام. ستون دقيقةً تخرج منها بخريطة واضحة لأنظمتك وثلاثة مكاسب سريعة، سواء عملنا معًا بعدها أم لا.",
+  },
+  {
+    q: "هل الذكاء الاصطناعي في الموقع حقيقي أم مجرد عرض؟",
+    a: "حقيقي وحيّ بالكامل. يمكنك تجربته بنفسك الآن، قبل أن نتحدّث أصلًا، عبر صفحة مختبر الذكاء الاصطناعي، وسترى كيف يستجيب فعلًا.",
+  },
+];
 
 export default function HomeAr() {
   return (
@@ -95,6 +114,61 @@ export default function HomeAr() {
               </m.a>
             ))}
           </m.div>
+        </div>
+      </section>
+
+      {/* AI Lab */}
+      <section className="py-14 sm:py-20">
+        <div className="container-bl">
+          <Reveal>
+            <div className="glass border-glow mx-auto max-w-3xl rounded-3xl p-8 text-center sm:p-12">
+              <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-gold">
+                <FlaskConical size={14} />
+                مختبر الذكاء الاصطناعي
+              </span>
+              <h2 className="mt-5 text-2xl leading-[1.5] sm:text-3xl">
+                جرّب الذكاء الاصطناعي <span className="text-gradient-gold">لا تكتفِ بالقراءة عنه.</span>
+              </h2>
+              <p className="mx-auto mt-5 max-w-xl leading-loose text-muted">
+                هذه أدوات ذكاء اصطناعي حقيقية وعاملة، من النوع الذي أبنيه لعملائي: مساعدون آليون،
+                وأتمتة واتساب، وإنشاء المحتوى، وحلول ثنائية اللغة بالعربية والإنجليزية. جرّبها مباشرةً
+                الآن، فهي تستجيب لك فعلًا لا في عرضٍ مسجّل.
+              </p>
+              <a
+                href="/ai-lab"
+                className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep transition duration-300 hover:bg-gold-soft"
+              >
+                <FlaskConical size={16} />
+                جرّب أكثر من ٢٠ أداة حية
+                <ArrowUpRight size={15} />
+              </a>
+              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.15em] text-muted-dark">
+                بلا تسجيل · تستجيب فعلًا
+              </p>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-14 sm:py-20">
+        <div className="container-bl">
+          <Reveal className="mx-auto max-w-2xl text-center">
+            <h2 className="text-2xl sm:text-3xl">
+              أسئلة <span className="text-gradient-gold">شائعة</span>
+            </h2>
+          </Reveal>
+          <div className="mx-auto mt-10 flex max-w-2xl flex-col gap-3">
+            {FAQ_AR.map((f) => (
+              <details key={f.q} className="group rounded-2xl border border-cream/10 bg-ink-deep/40 px-5 py-4">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-base font-medium text-cream [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <ChevronDown size={18} className="shrink-0 text-gold/70 transition-transform group-open:rotate-180" />
+                </summary>
+                <p className="mt-3 leading-loose text-muted">{f.a}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 
