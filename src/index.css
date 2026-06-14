@@ -311,4 +311,19 @@
       transparent
     );
   }
+
+  /* Mirror directional icons (arrows) under RTL so they point the reading way. */
+  [dir="rtl"] .rtl-flip {
+    transform: scaleX(-1);
+  }
+}
+
+/* Mobile perf: the big blurred background blobs animate continuously, which is
+   the heaviest always-on effect. On touch/coarse-pointer devices (phones) drop
+   the drift and serve a static gradient — saves GPU + battery, no visual loss. */
+@media (hover: none) and (pointer: coarse) {
+  .animate-float-blob,
+  .animate-float-blob-slow {
+    animation: none;
+  }
 }

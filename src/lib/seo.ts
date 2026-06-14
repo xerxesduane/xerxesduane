@@ -252,7 +252,7 @@ const SHOWREEL_META: PageMeta = {
 const AI_LAB_META: PageMeta = {
   title: "Xerxes Duane AI Lab | Try Live AI Demos",
   description:
-    "Test real, live AI built by Xerxes Duane: WhatsApp automation, a bilingual receptionist, document Q&A, quotes, ad copy, and more. Open models on Groq, running live in Dubai.",
+    "Try 30+ live AI demos built by Xerxes Duane in Dubai: a bilingual voice receptionist, vision tools, a visible AI agent, WhatsApp automation, data insights, and on-device AI. Real, live, nothing stored.",
   canonical: `${SITE_ORIGIN}/ai-lab`,
   ogTitle: "Xerxes Duane AI Lab | Try Live AI Demos",
   ogImage: `${SITE_ORIGIN}/brand/og/demos.png`,

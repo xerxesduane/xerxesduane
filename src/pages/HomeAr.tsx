@@ -110,7 +110,7 @@ export default function HomeAr() {
                     {s.eyebrow}
                   </span>
                 </span>
-                <ArrowUpRight size={18} className="shrink-0 text-muted-dark transition-colors group-hover:text-gold" aria-hidden />
+                <ArrowUpRight size={18} className="rtl-flip shrink-0 text-muted-dark transition-colors group-hover:text-gold" aria-hidden />
               </m.a>
             ))}
           </m.div>
@@ -139,8 +139,8 @@ export default function HomeAr() {
                 className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep transition duration-300 hover:bg-gold-soft"
               >
                 <FlaskConical size={16} />
-                جرّب أكثر من ٢٠ أداة حية
-                <ArrowUpRight size={15} />
+                جرّب أكثر من ٣٠ أداة حية
+                <ArrowUpRight size={15} className="rtl-flip" />
               </a>
               <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.15em] text-muted-dark">
                 بلا تسجيل · تستجيب فعلًا

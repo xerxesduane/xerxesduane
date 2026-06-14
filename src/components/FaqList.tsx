@@ -18,7 +18,7 @@ export default function FaqList({ heading = "Questions, answered", items }: FaqL
           <div className="mt-10 divide-y divide-cream/8 border-y border-cream/8">
             {items.map((f) => (
               <details key={f.q} className="group py-2">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-left text-cream marker:content-['']">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-start text-cream marker:content-['']">
                   <span className="font-display text-lg">{f.q}</span>
                   <Plus
                     size={18}
@@ -26,7 +26,7 @@ export default function FaqList({ heading = "Questions, answered", items }: FaqL
                     aria-hidden
                   />
                 </summary>
-                <p className="pb-5 pr-8 text-[15px] leading-relaxed text-muted">
+                <p className="pb-5 pe-8 text-[15px] leading-relaxed text-muted">
                   {f.a}
                 </p>
               </details>
