@@ -454,8 +454,69 @@ export const COMPARISON: { agency: string; bayt: string }[] = [
 export const STATS: { value: number; suffix: string; label: string }[] = [
   { value: 6, suffix: "+", label: "Years building for Dubai businesses" },
   { value: 117, suffix: "K+", label: "Ad impressions delivered" },
-  { value: 20, suffix: "+", label: "Live AI tools you can try" },
+  { value: 30, suffix: "+", label: "Live AI tools you can try" },
   { value: 4, suffix: "", label: "Countries served" },
+];
+
+export interface Result {
+  /** The headline figure, e.g. "791", "$6.89", "117K". */
+  value: string;
+  /** What the figure measures. */
+  label: string;
+  /** Named client the result belongs to. */
+  client: string;
+  /** Short context line (channel · market). */
+  context: string;
+  /** Visibly-marked slot Xerxes fills with a real number. */
+  placeholder?: boolean;
+}
+
+// Real, attributable outcomes from delivered work (sourced from CASE_STUDIES),
+// plus clearly-marked placeholders for outcome numbers only Xerxes can supply.
+// DO NOT invent numbers — replace [ADD] slots with real figures before launch.
+export const RESULTS: Result[] = [
+  { value: "791", label: "customer conversations driven", client: "AYA Home Spa", context: "Meta Ads · Dubai wellness" },
+  { value: "610", label: "conversions", client: "Wellington Cash for Cars", context: "Google Ads · run from Dubai" },
+  { value: "$6.89", label: "avg. cost per click", client: "Wellington Cash for Cars", context: "disciplined, low-CPA spend" },
+  { value: "117K", label: "ad views delivered", client: "AYA Home Spa", context: "Meta Ads · Dubai" },
+  { value: "[ADD]", label: "e.g. quote turnaround: 3 days → 20 min", client: "Blocktec / an Odoo build", context: "Odoo ERP · add a real before/after", placeholder: true },
+  { value: "[ADD]", label: "e.g. admin hours saved per week", client: "an automation client", context: "automation · add a real figure", placeholder: true },
+];
+
+export interface Testimonial {
+  quote: string;
+  name: string;
+  business: string;
+  sector: string;
+  /** Visibly-marked slot Xerxes fills with a real, attributable quote. */
+  placeholder?: boolean;
+}
+
+// Placeholders only — replace with REAL, attributable client quotes (with
+// permission) before production. DO NOT invent quotes. Rendered as visibly
+// marked placeholders so the section can be reviewed and filled in.
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    quote: "Add a real client quote here — ideally what changed for their business, in their own words.",
+    name: "[Client name]",
+    business: "[Business]",
+    sector: "[Sector · Dubai]",
+    placeholder: true,
+  },
+  {
+    quote: "A second short, specific quote — the more concrete the result, the more it persuades.",
+    name: "[Client name]",
+    business: "[Business]",
+    sector: "[Sector · UAE]",
+    placeholder: true,
+  },
+  {
+    quote: "A third quote, ideally from a different sector, to show range across the GCC.",
+    name: "[Client name]",
+    business: "[Business]",
+    sector: "[Sector · GCC]",
+    placeholder: true,
+  },
 ];
 
 export const PROMISE = {
@@ -469,6 +530,7 @@ export const PROMISE = {
     "Honest answers, even when they cost me money",
     "One trusted person who picks up the phone",
     "A real audit before any recommendation",
+    "You own everything I build — code, accounts, and data",
     "I'll tell you when you don't need me, and I mean it",
   ],
 };

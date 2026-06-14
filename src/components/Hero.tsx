@@ -1,5 +1,5 @@
 import { m } from "framer-motion";
-import { ArrowUpRight, Star } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { fadeUp, stagger, EASE } from "../lib/motion";
 import Button from "./ui/Button";
 import Magnetic from "./fx/Magnetic";
@@ -84,15 +84,17 @@ export default function Hero() {
             </Button>
           </m.div>
 
+          <m.p
+            variants={fadeUp}
+            className="mx-auto mt-5 font-mono text-[11px] tracking-wide text-muted-dark"
+          >
+            Free · 60 minutes · no lock-in · you own everything I build
+          </m.p>
+
           <m.div
             variants={fadeUp}
-            className="mt-8 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-xs text-muted"
+            className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-xs text-muted"
           >
-            <span className="inline-flex items-center gap-1 text-gold">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} size={13} fill="currentColor" strokeWidth={0} />
-              ))}
-            </span>
             <span>50+ businesses since 2019</span>
             <span className="text-muted-dark">·</span>
             <span>Dubai → New Zealand</span>

@@ -46,7 +46,7 @@ export default function ProofBand() {
             className="group inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-18px_rgba(218,164,66,0.8)] transition-colors hover:bg-gold-soft"
           >
             <FlaskConical size={16} />
-            Try 20+ live AI tools
+            Try 30+ live AI tools
             <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </m.a>
 

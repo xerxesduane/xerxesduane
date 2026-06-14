@@ -85,6 +85,9 @@ export default function Nav({
       );
   const homeHref = ar ? "/ar" : "/";
   const bookLabel = ar ? AR_CHROME.bookAudit : "Book a free audit";
+  // Absolute so the booking CTA works from every route, not just pages that
+  // render <Contact/> — a bare "#contact" was a dead link on /about, /ai-lab, etc.
+  const contactHref = ar ? "/ar#contact" : "/#contact";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -193,7 +196,7 @@ export default function Nav({
                           </span>
                           <ArrowUpRight size={14} className="text-gold transition-transform group-hover/mega:translate-x-0.5 group-hover/mega:-translate-y-0.5" />
                         </a>
-                        <a href="#contact" className="group/mega flex items-center justify-between px-5 py-3.5">
+                        <a href={contactHref} className="group/mega flex items-center justify-between px-5 py-3.5">
                           <span className="text-xs font-medium text-cream">Start with a free systems audit</span>
                           <ArrowUpRight size={14} className="text-gold transition-transform group-hover/mega:translate-x-0.5 group-hover/mega:-translate-y-0.5" />
                         </a>
@@ -220,7 +223,7 @@ export default function Nav({
             </m.a>
             <Magnetic strength={0.35} className="hidden lg:inline-block">
               <m.a
-                href="#contact"
+                href={contactHref}
                 className="group inline-flex items-center gap-1.5 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-ink-deep shadow-[0_8px_24px_-10px_rgba(218,164,66,0.7)] transition-colors duration-300 hover:bg-gold-soft"
                 whileHover={{ y: -2, scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
@@ -335,7 +338,7 @@ export default function Nav({
                   </div>
                 )}
                 <m.a
-                  href="#contact"
+                  href={contactHref}
                   onClick={() => setOpen(false)}
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}

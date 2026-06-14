@@ -29,7 +29,10 @@ export interface TrustConfig {
 }
 
 export const TRUST: TrustConfig = {
-  enabled: false,
+  // Logos are real files in /public/brand/clients/, so the logo wall is on.
+  // `google` stays null until a real Google Business rating exists, so the
+  // <GoogleRating/> badge stays hidden (no invented rating).
+  enabled: true,
   clientCount: 50,
   since: 2019,
   google: null,
