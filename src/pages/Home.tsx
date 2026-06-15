@@ -5,6 +5,7 @@ import Diagnosis from "../components/Diagnosis";
 import Services from "../components/Services";
 import AILabPreview from "../components/AILabPreview";
 import ResultsBand from "../components/ResultsBand";
+import Targets from "../components/Targets";
 import Work from "../components/Work";
 import ConnectedSystems from "../components/ConnectedSystems";
 import Process from "../components/Process";
@@ -69,6 +70,8 @@ export default function Home() {
       <Band tint>
         <ResultsBand />
       </Band>
+      {/* Forward-looking targets (cream contrast band), clearly not past results */}
+      <Targets />
       <Band>
         <Work />
       </Band>
