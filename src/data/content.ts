@@ -533,6 +533,36 @@ export const RESULTS: Result[] = [
     proof: "Delivered scope · Odoo ERP",
     serviceHref: "/odoo-erp-dubai",
   },
+  {
+    category: "SEO campaign · UAE",
+    problem: "Low organic visibility in search.",
+    value: "800%",
+    label: "increase in organic visits",
+    whatChanged:
+      "A long-term SEO campaign — technical fixes, content, and targeted keywords — also grew new users by 270%, page views by 200%, and put 115 keywords on page one.",
+    proof: "Campaign result · SEO",
+    serviceHref: "/seo-dubai",
+  },
+  {
+    category: "Lead generation · Dubai",
+    problem: "Not enough inbound enquiries and leads coming in.",
+    value: "300%",
+    label: "increase in leads",
+    whatChanged:
+      "A focused ads-and-social push tripled inbound leads — including a 300% rise in daily Facebook enquiries.",
+    proof: "Campaign result · Growth",
+    serviceHref: "/crm-development-dubai",
+  },
+  {
+    category: "Growth campaign · UAE",
+    problem: "Sales had plateaued.",
+    value: "50%+",
+    label: "increase in overall sales",
+    whatChanged:
+      "A connected marketing-and-systems push lifted overall sales by more than half.",
+    proof: "Campaign result · Growth",
+    serviceHref: "/landing-page-design-dubai",
+  },
 ];
 
 export interface Testimonial {
