@@ -2,10 +2,8 @@
 // into a practical CRM blueprint — ordered stages (purpose + exit criteria),
 // the deal/contact fields worth tracking, and a few automations. Text-only, so
 // it uses generateObject with the structured model. Nothing is stored.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -53,10 +51,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (process.length < 20) return errorResponse("Describe your sales process in a sentence or two.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: PipelineSchema,
-      maxOutputTokens: 1400,
       prompt:
         "Design a practical CRM pipeline for the sales process below. Return ordered stages (each with a clear " +
         "purpose and concrete exit criteria), the deal/contact fields worth tracking (with sensible types and which " +

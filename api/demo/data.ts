@@ -2,10 +2,8 @@
 // spec, and a recommended next action. Text-only, so it uses generateObject
 // with the structured model. The chart is rendered client-side as inline SVG
 // (no chart library). Nothing is stored.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -41,10 +39,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (csv.length < 20) return errorResponse("Paste a small CSV — a header row plus a few rows.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: DataSchema,
-      maxOutputTokens: 1100,
       prompt:
         "Analyse this small CSV of business data. Return exactly three specific insights, a single chart spec " +
         "(pick the most meaningful series; labels and values arrays MUST be the same length and in order), and one " +

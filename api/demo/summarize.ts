@@ -1,10 +1,8 @@
 // Notes-to-action-items demo — turns messy meeting notes or a voice-note
 // transcript into a clean summary, decisions, and owned action items. Showcases
 // the kind of ops automation that saves hours. Returns validated JSON.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { preflight, errorResponse, clamp, json, logAiError, structured } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -36,10 +34,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (notes.length < 15) return errorResponse("Paste some notes to summarize.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: NotesSchema,
-      maxOutputTokens: 700,
       prompt:
         "Turn these raw meeting notes into a clean summary, a list of decisions, and owned action " +
         "items. Only use information present in the notes — do not invent owners or tasks. Use " +

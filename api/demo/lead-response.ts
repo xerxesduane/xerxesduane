@@ -1,10 +1,8 @@
 // Lead Response Assistant — reads a pasted customer enquiry, classifies its
 // intent + urgency, summarises it, and drafts a ready-to-send professional reply
 // plus the recommended next step. Showcases CRM/lead-handling automation. JSON.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -31,10 +29,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (enquiry.length < 10) return errorResponse("Paste a customer enquiry to respond to.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: LeadResponseSchema,
-      maxOutputTokens: 900,
       prompt:
         "Read this inbound customer enquiry. Classify its intent and urgency, summarise it briefly, " +
         "then write a clear, professional, ready-to-send reply and the single recommended next step for " +

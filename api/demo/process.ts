@@ -2,10 +2,8 @@
 // and returns the workflow broken into steps, its bottlenecks, a concrete
 // automation plan, and a rough time-saved estimate. Showcases AI automation
 // scoping. Returns JSON (structured output).
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -49,10 +47,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (workflow.length < 20) return errorResponse("Describe the manual workflow in a bit more detail.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: ProcessSchema,
-      maxOutputTokens: 1500,
       prompt:
         "You analyse a small business's manual workflow. Break it into clear ordered steps, then find the " +
         "bottlenecks and repeated work, and propose concrete, realistic automation opportunities (name a " +

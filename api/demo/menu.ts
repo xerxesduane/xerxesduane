@@ -2,10 +2,8 @@
 // appetizing, structured listings ready for Talabat/Deliveroo/Noon. Each dish
 // gets a polished name, a mouth-watering description, tags, and an upsell
 // pairing. Returns a validated object via generateObject + a Zod schema.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -41,10 +39,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (menu.length < 10) return errorResponse("Paste a menu to rewrite.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: MenuSchema,
-      maxOutputTokens: 1500,
       prompt:
         "You are a food copywriter for UAE delivery apps (Talabat, Deliveroo, Noon). " +
         "Rewrite this rough restaurant menu into appetizing, delivery-ready listings. " +

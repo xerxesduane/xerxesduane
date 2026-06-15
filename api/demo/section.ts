@@ -3,10 +3,8 @@
 // STRUCTURED fields (not raw HTML) so the preview is rendered into safe,
 // branded markup — no dangerouslySetInnerHTML, no CSP risk. Text-only ->
 // generateObject. Not stored.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -37,10 +35,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (business.length < 10) return errorResponse("Describe the business or offer in a sentence.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: SectionSchema,
-      maxOutputTokens: 800,
       prompt:
         "Write a high-converting landing-page hero section for this business. Confident, benefit-led, no fluff. " +
         "Exactly three bullets. Keep it concise. Assume a UAE/Dubai audience unless told otherwise.\n\n" +

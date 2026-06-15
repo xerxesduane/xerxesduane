@@ -2,10 +2,8 @@
 // how an AI engine (ChatGPT/Perplexity) would summarise it today, the gaps that
 // hurt its AI visibility, concrete improvements, and a ready-to-paste JSON-LD
 // block. Ties to the AEO/GEO services. Text-only -> generateObject. Not stored.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -40,10 +38,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (business.length < 15) return errorResponse("Describe the business in a sentence or two.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: AeoSchema,
-      maxOutputTokens: 1100,
       prompt:
         "Act as an answer-engine (AEO/GEO) auditor. Given this business description, write how an AI engine would " +
         "summarise it today, judge confidence, list the gaps hurting its AI visibility, give three concrete " +

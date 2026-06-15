@@ -1,10 +1,8 @@
 // Content-repurposing demo — turns one long-form message/article into a concise
 // email, a single social post, and a short-video outline. Showcases the
 // content/video side. Returns JSON via generateObject.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -40,10 +38,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (content.length < 40) return errorResponse("Paste a longer message or article to repurpose.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: RepurposeSchema,
-      maxOutputTokens: 1400,
       prompt:
         "Repurpose the message below into three formats: a concise email (subject + body), a single " +
         "ready-to-post social media post, and a short-form video outline (a hook, 3-6 talking-point " +

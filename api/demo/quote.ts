@@ -1,10 +1,8 @@
 // Quote/invoice generator — turns a plain-English job description into itemized
 // line items. The UI computes subtotal + 5% UAE VAT + total from the numbers,
 // so the maths is always exact. Showcases finance/Odoo automation. Returns JSON.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -38,10 +36,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (request.length < 8) return errorResponse("Describe the job to quote for.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: QuoteSchema,
-      maxOutputTokens: 1200,
       prompt:
         "Turn this job description into a clear, itemized quote. Infer reasonable line items and fair " +
         "market unit prices in AED for the UAE when amounts aren't given. Do NOT add VAT or totals — " +

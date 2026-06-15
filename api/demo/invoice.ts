@@ -2,10 +2,8 @@
 // clean, typed line items. The UI computes subtotal + 5% UAE VAT + total from the
 // numbers, so the maths is always exact. Showcases bookkeeping/Odoo automation.
 // Returns JSON via the AI SDK's generateObject + a Zod schema.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -39,10 +37,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (text.length < 10) return errorResponse("Paste an invoice or statement to parse.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: InvoiceSchema,
-      maxOutputTokens: 1500,
       prompt:
         "Parse this messy supplier invoice or statement into clean, structured line items. " +
         "Extract each line's description, quantity, and unit price. Use an empty string for a " +

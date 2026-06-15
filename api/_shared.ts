@@ -12,6 +12,10 @@
 // (We tried Gemini, but Google requires prepaid billing in this region, so its
 // "free" tier 429s. @ai-sdk/anthropic + @ai-sdk/google are still installed for
 // an easy switch — restore the import + model IDs in the handlers and here.)
+import { generateObject } from "ai";
+import { groq } from "@ai-sdk/groq";
+import type { z } from "zod";
+
 export const MODEL_FAST = "llama-3.3-70b-versatile";
 export const MODEL_SMART = "llama-3.3-70b-versatile";
 // Structured output (generateObject) needs json_schema support, which Llama
@@ -223,4 +227,41 @@ export async function groqTranscribe(
     throw new Error(`groq transcribe ${res.status}: ${(await res.text()).slice(0, 300)}`);
   }
   return (await res.text()).trim();
+}
+
+/**
+ * Resilient structured generation for the demo endpoints.
+ *
+ * MODEL_STRUCTURED (gpt-oss) is a *reasoning* model: it spends output tokens
+ * "thinking" before it emits the JSON. With a tight token cap that reasoning can
+ * eat the whole budget and truncate the JSON, so generateObject throws — which
+ * is why some structured demos failed intermittently (and why two demos with the
+ * same cap could behave differently run to run). This gives a generous budget
+ * and, if the first attempt still throws, retries once with even more room and a
+ * terser instruction. generateObject is used on BOTH attempts so the schema is
+ * always injected and the JSON keys stay correct.
+ */
+export async function structured<T>(opts: {
+  schema: z.ZodType<T>;
+  prompt: string;
+  maxOutputTokens?: number;
+}): Promise<T> {
+  const budget = opts.maxOutputTokens ?? 4000;
+  try {
+    const { object } = await generateObject({
+      model: groq(MODEL_STRUCTURED),
+      schema: opts.schema,
+      prompt: opts.prompt,
+      maxOutputTokens: budget,
+    });
+    return object;
+  } catch {
+    const { object } = await generateObject({
+      model: groq(MODEL_STRUCTURED),
+      schema: opts.schema,
+      prompt: opts.prompt + "\n\nRespond concisely with just the structured result.",
+      maxOutputTokens: Math.max(budget, 6000),
+    });
+    return object;
+  }
 }

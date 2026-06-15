@@ -1,10 +1,8 @@
 // Structured-extraction demo — turns a messy inbound message into clean,
 // typed JSON (the kind of thing that auto-files a lead into a CRM). Returns a
 // validated object via the AI SDK's generateObject + a Zod schema.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { preflight, errorResponse, clamp, json, logAiError, structured } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -37,10 +35,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (text.length < 10) return errorResponse("Paste a message to extract from.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: LeadSchema,
-      maxOutputTokens: 1200,
       prompt:
         "Extract structured lead details from this inbound message. " +
         "Use empty strings for missing text fields and an empty array for missing services. Do not invent information.\n\n" +

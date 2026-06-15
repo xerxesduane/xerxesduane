@@ -2,10 +2,8 @@
 // into a polished portal listing, key highlights, and ready-to-send WhatsApp
 // blurbs in English + Arabic. Showcases real-estate marketing automation.
 // Returns a validated object via the AI SDK's generateObject + a Zod schema.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -40,10 +38,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (facts.length < 8) return errorResponse("List a few facts about the property.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: ListingSchema,
-      maxOutputTokens: 1400,
       prompt:
         "You are an expert UAE real-estate copywriter. From these bullet facts about a property, write a " +
         "compelling, accurate listing. Use only the facts provided — never invent amenities, prices, or " +

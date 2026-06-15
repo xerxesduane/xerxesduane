@@ -2,10 +2,8 @@
 // decision (department, priority, sentiment, language, SLA) plus a ready-to-send
 // acknowledgement. The kind of thing that auto-files a helpdesk ticket. Returns
 // a validated object via the AI SDK's generateObject + a Zod schema.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -41,10 +39,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (message.length < 10) return errorResponse("Paste a message to triage.");
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: TriageSchema,
-      maxOutputTokens: 1200,
       prompt:
         "You are an inbox-routing assistant for a customer support team. Read this inbound message and " +
         "decide which department should handle it, how urgent it is, the sender's sentiment, the language " +

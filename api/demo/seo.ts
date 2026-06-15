@@ -1,10 +1,8 @@
 // SEO-metadata demo — turns a page topic into ready-to-ship search metadata:
 // title tag, meta description, URL slug, and a couple of FAQ entries (the kind
 // answer engines surface). Showcases the SEO/AEO service. Returns validated JSON.
-import { generateObject } from "ai";
-import { groq } from "@ai-sdk/groq";
 import { z } from "zod";
-import { MODEL_STRUCTURED, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
+import { structured, preflight, errorResponse, clamp, json, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -34,10 +32,8 @@ export default async function handler(req: Request): Promise<Response> {
   const hint = clamp(body.keywords, 200).trim();
 
   try {
-    const { object } = await generateObject({
-      model: groq(MODEL_STRUCTURED),
+    const object = await structured({
       schema: SeoSchema,
-      maxOutputTokens: 1300,
       prompt:
         "Generate concise, compelling search-engine metadata for a web page about the following. " +
         (hint ? `Prioritize these keywords if relevant: ${hint}.\n\n` : "\n") +
