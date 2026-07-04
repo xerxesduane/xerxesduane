@@ -1,23 +1,39 @@
 import { m } from "framer-motion";
-import { ArrowUpRight, Bot, Send, Search, Sparkles } from "lucide-react";
+import { ArrowUpRight, Send, Inbox, Receipt, PackageOpen, GitBranch, Route, Sparkles } from "lucide-react";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import Reveal from "./ui/Reveal";
 
+// Every tile maps to a live, working demo on /ai-lab — nothing aspirational.
 const demos = [
   {
-    icon: Bot,
-    label: "Website assistant",
-    text: "Answers customers and qualifies leads in your tone, around the clock.",
-  },
-  {
     icon: Send,
-    label: "WhatsApp outreach",
+    label: "WhatsApp marketing automation",
     text: "Writes a personal opener for every lead, then sends the whole list.",
   },
   {
-    icon: Search,
-    label: "Content & SEO",
-    text: "Captions, review replies, and search metadata — drafted in seconds.",
+    icon: Inbox,
+    label: "Lead handling",
+    text: "Captures, qualifies, and replies to enquiries in your tone — instantly.",
+  },
+  {
+    icon: Receipt,
+    label: "Receipt extraction",
+    text: "Turns a photo of a receipt into clean, structured expense data.",
+  },
+  {
+    icon: PackageOpen,
+    label: "Product listings",
+    text: "Drafts store-ready titles, descriptions, and specs from a photo.",
+  },
+  {
+    icon: GitBranch,
+    label: "Process analysis",
+    text: "Maps a messy workflow and shows where the time is leaking.",
+  },
+  {
+    icon: Route,
+    label: "CRM pipeline design",
+    text: "Designs a sales pipeline around the way your team actually sells.",
   },
 ];
 
@@ -33,11 +49,14 @@ export default function AILabPreview() {
               Xerxes Duane AI Lab
             </span>
             <h2 id="ai-lab-heading" className="mt-5 text-4xl leading-tight sm:text-5xl">
-              Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
+              Don't just read about AI.{" "}
+              <span className="text-gradient-gold italic">Test it.</span>
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
-              A whole toolkit of live, working tools — the exact assistants, WhatsApp automations, and
-              content engines I install for clients. What you type here is what your customers would get.
+              A live showroom of 30+ working tools — the kind your business
+              could actually use, and the exact assistants, WhatsApp
+              automations, and extractors I install for clients. What you type
+              here is what your customers would get.
             </p>
             <a
               href="/ai-lab"
@@ -49,7 +68,7 @@ export default function AILabPreview() {
             </a>
           </Reveal>
 
-          <m.div variants={stagger} initial="hidden" whileInView="show" viewport={VIEWPORT} className="grid gap-3 sm:grid-cols-3">
+          <m.div variants={stagger} initial="hidden" whileInView="show" viewport={VIEWPORT} className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
             {demos.map((demo, index) => {
               const Icon = demo.icon;
               return (
@@ -58,7 +77,7 @@ export default function AILabPreview() {
                   href="/ai-lab"
                   variants={fadeUp}
                   data-cursor="view"
-                  className="glass glass-hover group relative flex min-h-56 flex-col overflow-hidden rounded-2xl p-5"
+                  className="glass glass-hover group relative flex flex-col overflow-hidden rounded-2xl p-5"
                 >
                   <span className="absolute right-4 top-4 font-mono text-[10px] text-muted-dark">{String(index + 1).padStart(2, "0")}</span>
                   <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-gold/10 text-gold ring-1 ring-gold/20 transition-colors group-hover:bg-gold group-hover:text-ink">

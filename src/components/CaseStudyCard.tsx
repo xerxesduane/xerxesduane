@@ -19,7 +19,10 @@ export default function CaseStudyCard({ c }: { c: CaseStudy }) {
       <h3 className="mt-5 font-display text-2xl text-cream sm:text-3xl">
           {c.client}
       </h3>
-      <p className="mt-3 text-sm text-muted">{c.challenge}</p>
+      <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-gold/70">The problem</p>
+      <p className="mt-1.5 text-sm text-muted">{c.challenge}</p>
+      <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.18em] text-gold/70">What I built</p>
+      <p className="mt-1.5 text-sm text-cream-dim">{c.summary}</p>
 
       {c.stats && (
         <div className="mt-7 grid grid-cols-2 gap-3 sm:grid-cols-4">
@@ -51,7 +54,8 @@ export default function CaseStudyCard({ c }: { c: CaseStudy }) {
       )}
 
       <div className="mt-auto pt-6">
-        <p className="flex items-center gap-2 border-t border-cream/8 pt-5 font-display text-base italic text-cream-dim">
+        <p className="border-t border-cream/8 pt-5 font-mono text-[10px] uppercase tracking-[0.18em] text-gold/70">What changed</p>
+        <p className="mt-1.5 flex items-center gap-2 font-display text-base italic text-cream-dim">
           <ArrowUpRight size={16} className="text-gold" />
           {c.takeaway}
         </p>

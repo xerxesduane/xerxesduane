@@ -31,7 +31,7 @@ export default function Contact() {
   }, [state.succeeded, source.page]);
 
   const whatsappMessage = [
-    `Hi Xerxes, I'd like to book a free audit.`,
+    `Hi Xerxes, I'd like to book a free systems audit.`,
     ``,
     `Name: ${form.name}`,
     `Business: ${form.business}`,
@@ -53,7 +53,7 @@ export default function Contact() {
           <Reveal>
             <span className="eyebrow">
               <span className="h-px w-6 bg-gold/60" aria-hidden />
-              Book your free audit
+              Free Business Systems Audit
             </span>
             <h2 className="mt-4 text-3xl sm:text-4xl">
               Just curious what{" "}
@@ -234,7 +234,7 @@ export default function Contact() {
                 disabled={state.submitting}
                 className="group mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-12px_rgba(217,164,65,0.7)] transition duration-300 hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {state.submitting ? "Sending…" : "Book my free audit"}
+                {state.submitting ? "Sending…" : "Book my free systems audit"}
                 {!state.submitting && <ArrowUpRight size={17} strokeWidth={2.5} />}
               </button>
               <p className="text-center text-xs text-muted-dark">

@@ -166,6 +166,63 @@ export const SERVICES: Service[] = [
   },
 ];
 
+export interface Outcome {
+  no: string;
+  title: string;
+  promise: string;
+  body: string;
+  items: { label: string; href: string }[];
+}
+
+// The 12 services, reframed as the three business outcomes clients actually
+// buy. Every link resolves to an existing service page — no new routes.
+export const OUTCOMES: Outcome[] = [
+  {
+    no: "01",
+    title: "Get more leads",
+    promise: "Be found, be chosen, be contacted.",
+    body: "A web presence engineered to bring enquiries in — not just to look good. Pages built to convert, and search work that puts you in front of buyers (and the AI engines they now ask).",
+    items: [
+      { label: "Websites that convert", href: "/web-development-dubai" },
+      { label: "Landing pages & funnels", href: "/landing-page-design-dubai" },
+      { label: "SEO · AEO · GEO", href: "/seo-dubai" },
+      { label: "E-commerce & online stores", href: "/ecommerce-development-dubai" },
+      { label: "Paid campaign support (Google & Meta)", href: "/landing-page-design-dubai" },
+    ],
+  },
+  {
+    no: "02",
+    title: "Stop losing leads",
+    promise: "Every enquiry captured, followed up, and visible.",
+    body: "Most businesses don't have a lead problem — they have a leak problem. I connect your forms, WhatsApp, and CRM so nothing falls through, and dashboards show you exactly where every lead stands.",
+    items: [
+      { label: "CRM setup & pipelines", href: "/crm-development-dubai" },
+      { label: "WhatsApp workflows & follow-ups", href: "/ai-automation-dubai" },
+      { label: "Lead routing & automations", href: "/ai-automation-dubai" },
+      { label: "Dashboards & reporting", href: "/crm-development-dubai" },
+    ],
+  },
+  {
+    no: "03",
+    title: "Run the business better",
+    promise: "One operating system instead of ten tools.",
+    body: "Inventory, invoicing, projects, and people — wired into one place. From full Odoo/ERP rollouts to custom internal tools and practical AI that gives your team hours back every week.",
+    items: [
+      { label: "Odoo / ERP implementation", href: "/odoo-erp-dubai" },
+      { label: "Custom internal systems", href: "/custom-software-development-dubai" },
+      { label: "Mobile & web apps", href: "/mobile-app-development-dubai" },
+      { label: "AI tools & process automation", href: "/ai-automation-dubai" },
+    ],
+  },
+];
+
+// Creative work that supports all three outcomes — kept visible, not equal-billed.
+export const CREATIVE_SUPPORT: { label: string; href: string }[] = [
+  { label: "Videography & photography", href: "/videography-photography-dubai" },
+  { label: "Video editing", href: "/video-editing-dubai" },
+  { label: "Branding & graphic design", href: "/branding-graphic-design-dubai" },
+];
+
 export interface Layer {
   no: string;
   name: string;
@@ -619,12 +676,12 @@ export const PROMISE = {
 
 export const PACKAGES = [
   {
-    name: "The Audit",
+    name: "The Systems Audit",
     price: "Free",
     note: "for a limited time",
     pitch: "Start here",
-    body: "A 60-minute deep-dive into your tech stack, website, software, marketing, automation. You walk away with a plain-English roadmap of what to fix first.",
-    cta: "Book your audit",
+    body: "A 60-minute diagnostic of your whole stack — website, leads, CRM, WhatsApp, spreadsheets, automation. You leave with a plain-English map of what's disconnected and a prioritised roadmap of what to fix first. No pressure, no lock-in.",
+    cta: "Book your free systems audit",
     featured: true,
   },
   {

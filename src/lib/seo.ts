@@ -93,7 +93,7 @@ const FAQ_SCHEMA = {
 const HOME_META: PageMeta = {
   title: "Xerxes Duane | Web, Apps, Odoo/ERP & AI Studio in Dubai",
   description:
-    "Xerxes Duane is a Dubai tech studio for small businesses: websites, apps, Odoo/ERP & CRM, automation, AI and ads. Serve first. Build second. Book a free 60-minute systems audit.",
+    "Big-company systems for small businesses that can't afford a tech team. Xerxes Duane connects websites, CRM, Odoo/ERP, WhatsApp, automation and AI into one growth system — Dubai. Book a free systems audit.",
   canonical: `${SITE_ORIGIN}/`,
   ogTitle: "Xerxes Duane | Web, Apps, Odoo/ERP & AI Studio in Dubai",
   alternates: [

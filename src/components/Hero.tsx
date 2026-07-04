@@ -53,16 +53,17 @@ export default function Hero() {
             variants={fadeUp}
             className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl"
           >
-            I build websites, apps, and systems for small businesses, then go
-            beyond the build to serve the business itself, and eventually the
-            life behind it.
+            I help growing businesses in Dubai turn disconnected websites,
+            CRMs, spreadsheets, ads, and WhatsApp messages into one connected
+            system — built clearly, run honestly, and designed to bring in
+            leads, save time, and support real growth.
           </m.p>
 
           <m.p
             variants={fadeUp}
             className="mx-auto mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark"
           >
-            Websites · Apps · Odoo/ERP · Automation · AI — Dubai
+            Websites · CRM · Odoo/ERP · Automation · AI
           </m.p>
 
           <m.div
@@ -71,16 +72,16 @@ export default function Hero() {
           >
             <Magnetic strength={0.3} className="w-full sm:w-auto">
               <Button href="#contact" className="w-full px-7 py-3.5 sm:w-auto">
-                Book your free audit
+                Book your free systems audit
                 <ArrowUpRight size={17} strokeWidth={2.5} />
               </Button>
             </Magnetic>
             <Button
               variant="ghost"
-              href="#services"
+              href="/ai-lab"
               className="w-full px-7 py-3.5 sm:w-auto"
             >
-              See how I work
+              See the AI Lab
             </Button>
           </m.div>
 
@@ -95,11 +96,11 @@ export default function Hero() {
             variants={fadeUp}
             className="mt-6 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 font-mono text-xs text-muted"
           >
-            <span>50+ businesses since 2019</span>
+            <span>50+ businesses helped since 2019</span>
             <span className="text-muted-dark">·</span>
-            <span>Dubai → New Zealand</span>
+            <span>Dubai to New Zealand</span>
             <span className="text-muted-dark">·</span>
-            <span>60-min audit, zero pressure</span>
+            <span>You own everything I build</span>
           </m.div>
         </m.div>
       </div>
