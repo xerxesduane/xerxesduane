@@ -50,33 +50,55 @@ function AnimatedHeading({ lines }: AnimatedHeadingProps) {
   return (
     <h2
       aria-label={label}
-      className="text-center font-display text-4xl font-normal leading-[0.9] tracking-[-0.04em] text-cream md:text-5xl lg:text-6xl xl:text-7xl"
+      className="text-center font-sans text-3xl font-semibold leading-[0.98] tracking-[-0.025em] text-cream md:text-4xl lg:text-[2.75rem]"
       style={{ textShadow: "0 2px 22px rgba(0, 0, 0, 0.55)" }}
     >
       {lines.map((line) => (
         <span key={line.text} aria-hidden="true" className={`block ${line.className ?? ""}`}>
-          {Array.from(line.text).map((char, index) => {
-            const delay = HEADING_INITIAL_DELAY_MS + charIndex * HEADING_CHAR_DELAY_MS;
-            charIndex += 1;
+          {line.text.split(" ").map((word, wordIndex, words) => (
+            <span key={`${line.text}-${wordIndex}`} className="inline-block whitespace-nowrap">
+              {Array.from(word).map((char, index) => {
+                const delay = HEADING_INITIAL_DELAY_MS + charIndex * HEADING_CHAR_DELAY_MS;
+                charIndex += 1;
 
-            return (
-              <span
-                key={`${line.text}-${index}`}
-                className="inline-block"
-                style={{
-                  opacity: visible ? 1 : 0,
-                  transform:
-                    visible || prefersReducedMotion ? "translateX(0)" : "translateX(-18px)",
-                  transitionProperty: prefersReducedMotion ? "none" : "opacity, transform",
-                  transitionDuration: `${HEADING_DURATION_MS}ms`,
-                  transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-                  transitionDelay: prefersReducedMotion ? "0ms" : `${delay}ms`,
-                }}
-              >
-                {char === " " ? "\u00A0" : char}
-              </span>
-            );
-          })}
+                return (
+                  <span
+                    key={`${word}-${index}`}
+                    className="inline-block"
+                    style={{
+                      opacity: visible ? 1 : 0,
+                      transform:
+                        visible || prefersReducedMotion ? "translateX(0)" : "translateX(-18px)",
+                      transitionProperty: prefersReducedMotion ? "none" : "opacity, transform",
+                      transitionDuration: `${HEADING_DURATION_MS}ms`,
+                      transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                      transitionDelay: prefersReducedMotion ? "0ms" : `${delay}ms`,
+                    }}
+                  >
+                    {char}
+                  </span>
+                );
+              })}
+              {wordIndex < words.length - 1 && (
+                <span
+                  className="inline-block"
+                  style={{
+                    opacity: visible ? 1 : 0,
+                    transform:
+                      visible || prefersReducedMotion ? "translateX(0)" : "translateX(-18px)",
+                    transitionProperty: prefersReducedMotion ? "none" : "opacity, transform",
+                    transitionDuration: `${HEADING_DURATION_MS}ms`,
+                    transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                    transitionDelay: prefersReducedMotion
+                      ? "0ms"
+                      : `${HEADING_INITIAL_DELAY_MS + charIndex++ * HEADING_CHAR_DELAY_MS}ms`,
+                  }}
+                >
+                  {"\u00A0"}
+                </span>
+              )}
+            </span>
+          ))}
         </span>
       ))}
     </h2>
@@ -122,7 +144,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="relative isolate min-h-screen overflow-hidden bg-black px-6 py-28 sm:py-32"
+      className="relative isolate min-h-screen overflow-hidden bg-black px-6 py-20 sm:py-24 lg:py-28"
       aria-label="What I build"
     >
       <video
@@ -137,8 +159,8 @@ export default function Services() {
         <source src={VIDEO_SRC} type="video/mp4" />
       </video>
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl">
-        <div className="mx-auto max-w-4xl text-center">
+      <div className="relative z-10 mx-auto w-full max-w-6xl">
+        <div className="mx-auto max-w-3xl text-center">
           <p
             className="mb-6 font-mono text-[11px] uppercase tracking-[0.35em] text-gold"
             style={{ textShadow: "0 2px 18px rgba(0, 0, 0, 0.6)" }}
@@ -153,7 +175,7 @@ export default function Services() {
           />
           <FadeIn delay={800} duration={1000}>
             <p
-              className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-cream-dim md:text-lg"
+              className="mx-auto mt-5 max-w-2xl text-center text-base leading-relaxed text-cream-dim md:text-lg"
               style={{ textShadow: "0 2px 18px rgba(0, 0, 0, 0.65)" }}
             >
               Not a menu of twelve disconnected services — one connected system,
@@ -162,14 +184,18 @@ export default function Services() {
           </FadeIn>
         </div>
 
-        <FadeIn delay={1100} duration={1000} className="mt-16 grid gap-4 lg:grid-cols-3">
+        <FadeIn
+          delay={1100}
+          duration={1000}
+          className="mt-10 grid min-w-0 gap-4 lg:grid-cols-[repeat(3,minmax(0,1fr))]"
+        >
           {OUTCOMES.map((outcome, index) => {
             const Icon = OUTCOME_ICONS[index] ?? Workflow;
 
             return (
               <article
                 key={outcome.title}
-                className="liquid-glass liquid-glass-dark group relative flex min-h-[520px] flex-col overflow-hidden rounded-3xl border border-white/20 px-6 py-7 sm:p-7"
+                className="liquid-glass liquid-glass-dark group relative flex min-h-[440px] min-w-0 flex-col overflow-hidden rounded-3xl border border-white/20 px-6 py-6 sm:p-7 lg:min-h-[500px]"
               >
                 <div className="flex items-start justify-between gap-4">
                   <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/40 text-gold ring-1 ring-gold/20 transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-gold group-hover:text-ink">
@@ -178,7 +204,7 @@ export default function Services() {
                   <span className="font-mono text-xs text-cream-dim/70">{outcome.no}</span>
                 </div>
 
-                <h3 className="mt-6 text-2xl leading-tight text-cream sm:text-[1.7rem]">
+                <h3 className="mt-6 font-sans text-xl font-semibold leading-tight tracking-[-0.02em] text-cream sm:text-[1.45rem]">
                   {outcome.title}
                 </h3>
                 <p className="mt-2 font-mono text-[11px] uppercase tracking-wider text-gold/80">
@@ -194,7 +220,7 @@ export default function Services() {
                         data-cursor="link"
                         className="group/item flex items-center justify-between gap-3 rounded-lg px-2 py-2 text-sm text-cream-dim transition-colors hover:bg-white/[0.06] hover:text-gold"
                       >
-                        {item.label}
+                        <span className="min-w-0">{item.label}</span>
                         <ArrowUpRight
                           size={14}
                           strokeWidth={2}

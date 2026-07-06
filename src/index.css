@@ -335,7 +335,7 @@
   }
 
   .liquid-glass-dark {
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.52);
     background-blend-mode: luminosity;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
