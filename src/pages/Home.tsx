@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
-import Hero from "../components/Hero";
+import MainframeHero from "../components/MainframeHero";
+import FormerHeroVideoSection from "../components/FormerHeroVideoSection";
 import Marquee from "../components/Marquee";
 import Diagnosis from "../components/Diagnosis";
 import FeaturedShowreel from "../components/FeaturedShowreel";
@@ -53,7 +54,8 @@ function Band({
 export default function Home() {
   return (
     <>
-      <Hero />
+      <MainframeHero />
+      <FormerHeroVideoSection />
       <Marquee />
 
       {/* The problem → creative proof → what I do */}

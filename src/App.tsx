@@ -88,6 +88,9 @@ function Route({ path }: { path: string }) {
 export default function App({ path = "/" }: { path?: string }) {
   const slug = pathToSlug(path);
   const isArabic = slug === "ar" || slug.startsWith("ar/");
+  // The homepage renders the Mainframe landing hero with its own navbar and
+  // CTAs — hide the global chrome there so the two don't stack.
+  const isMainframeLanding = slug === "";
   const lang = altLanguage(path);
   return (
     <LazyMotion features={domAnimation} strict>
@@ -107,7 +110,9 @@ export default function App({ path = "/" }: { path?: string }) {
         <PageTransition />
 
         <Background />
-        <Nav langHref={lang.href} langLabel={lang.label} locale={isArabic ? "ar" : "en"} />
+        {!isMainframeLanding && (
+          <Nav langHref={lang.href} langLabel={lang.label} locale={isArabic ? "ar" : "en"} />
+        )}
 
         <main className="relative z-10">
           <Suspense fallback={null}>
@@ -117,9 +122,9 @@ export default function App({ path = "/" }: { path?: string }) {
 
         <Footer locale={isArabic ? "ar" : "en"} />
         {/* mobile bar height, so the footer is never hidden behind it */}
-        <div className="h-16 md:hidden" aria-hidden />
-        <WhatsAppButton locale={isArabic ? "ar" : "en"} />
-        <MobileCTA locale={isArabic ? "ar" : "en"} />
+        {!isMainframeLanding && <div className="h-16 md:hidden" aria-hidden />}
+        {!isMainframeLanding && <WhatsAppButton locale={isArabic ? "ar" : "en"} />}
+        {!isMainframeLanding && <MobileCTA locale={isArabic ? "ar" : "en"} />}
         <ConsentBanner />
       </div>
       </MotionConfig>

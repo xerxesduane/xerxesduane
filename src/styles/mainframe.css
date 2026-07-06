@@ -1,0 +1,27 @@
+/* Mainframe-style landing hero (homepage only). Fonts are loaded via the
+   onlinewebfonts stylesheets linked in index.html. The body font override is
+   scoped to .mainframe-landing so inner pages keep the site's Inter stack. */
+:root {
+  --font-heading: 'HelveticaNowDisplay-Medium', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'HelveticaNowDisplayW01-Rg', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.mainframe-landing,
+.mainframe-landing p,
+.mainframe-landing button,
+.mainframe-landing a {
+  font-family: var(--font-body);
+}
+
+.mainframe-logo-text {
+  font-family: var(--font-heading);
+}
+
+.mainframe-asterisk {
+  letter-spacing: -0.02em;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
