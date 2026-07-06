@@ -1,9 +1,10 @@
-/* Mainframe-style landing hero (homepage only). Fonts are loaded via the
-   onlinewebfonts stylesheets linked in index.html. The body font override is
-   scoped to .mainframe-landing so inner pages keep the site's Inter stack. */
+/* Mainframe-style landing hero (homepage only). Developer/terminal type:
+   Space Mono for the wordmark, JetBrains Mono for the typed greeting and UI —
+   both already self-hosted (see @font-face in index.css). Scoped to
+   .mainframe-landing so inner pages keep the site's Inter stack. */
 :root {
-  --font-heading: 'HelveticaNowDisplay-Medium', 'Helvetica Neue', Arial, sans-serif;
-  --font-body: 'HelveticaNowDisplayW01-Rg', 'Helvetica Neue', Arial, sans-serif;
+  --font-heading: 'Space Mono', ui-monospace, monospace;
+  --font-body: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
 }
 
 .mainframe-landing,

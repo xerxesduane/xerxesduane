@@ -68,12 +68,16 @@ export default function Nav({
   langHref,
   langLabel,
   locale = "en",
+  revealOnScroll = false,
 }: {
   langHref: string;
   langLabel: string;
   locale?: "en" | "ar";
+  /** Homepage: keep the nav hidden until the visitor scrolls past the landing hero. */
+  revealOnScroll?: boolean;
 }) {
   const [scrolled, setScrolled] = useState(false);
+  const [revealed, setRevealed] = useState(!revealOnScroll);
   const [open, setOpen] = useState(false);
 
   const ar = locale === "ar";
@@ -90,11 +94,14 @@ export default function Nav({
   const contactHref = ar ? "/ar#contact" : "/#contact";
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      if (revealOnScroll) setRevealed(window.scrollY > window.innerHeight * 0.6);
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [revealOnScroll]);
 
   useEffect(() => {
     // body overflow alone doesn't halt Lenis's rAF scrolling — stop it too.
@@ -109,7 +116,11 @@ export default function Nav({
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+        revealed ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-full opacity-0"
+      }`}
+    >
       <div className="container-bl pt-3 sm:pt-4">
         <m.nav
           initial={{ y: -28, opacity: 0 }}

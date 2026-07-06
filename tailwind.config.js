@@ -35,7 +35,7 @@ export default {
         },
       },
       fontFamily: {
-        display: ['"Instrument Serif"', "Georgia", "serif"],
+        display: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
       },

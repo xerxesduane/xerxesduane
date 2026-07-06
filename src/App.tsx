@@ -110,9 +110,12 @@ export default function App({ path = "/" }: { path?: string }) {
         <PageTransition />
 
         <Background />
-        {!isMainframeLanding && (
-          <Nav langHref={lang.href} langLabel={lang.label} locale={isArabic ? "ar" : "en"} />
-        )}
+        <Nav
+          langHref={lang.href}
+          langLabel={lang.label}
+          locale={isArabic ? "ar" : "en"}
+          revealOnScroll={isMainframeLanding}
+        />
 
         <main className="relative z-10">
           <Suspense fallback={null}>

@@ -3,7 +3,6 @@ import MainframeHero from "../components/MainframeHero";
 import FormerHeroVideoSection from "../components/FormerHeroVideoSection";
 import Marquee from "../components/Marquee";
 import Diagnosis from "../components/Diagnosis";
-import FeaturedShowreel from "../components/FeaturedShowreel";
 import Services from "../components/Services";
 import AILabPreview from "../components/AILabPreview";
 import ResultsBand from "../components/ResultsBand";
@@ -58,12 +57,9 @@ export default function Home() {
       <FormerHeroVideoSection />
       <Marquee />
 
-      {/* The problem → creative proof → what I do */}
+      {/* The problem → what I do */}
       <Band divide={false}>
         <Diagnosis />
-      </Band>
-      <Band>
-        <FeaturedShowreel />
       </Band>
       <Band tint>
         <Services />
