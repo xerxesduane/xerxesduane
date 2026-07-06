@@ -460,12 +460,21 @@
   font-display: swap;
 }
 
-/* /PPMondwest-Regular.woff2 is not currently in /public — declaration kept so
-   dropping the file in later activates it; Georgia serves as the fallback. */
 @font-face {
   font-family: 'PP Mondwest';
-  src: url('/PPMondwest-Regular.woff2') format('woff2');
+  src:
+    url('/fonts/PPMondwest-Regular.woff2') format('woff2'),
+    url('/fonts/PPMondwest-Regular.otf') format('opentype');
   font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'PP NeueBit';
+  src:
+    url('/fonts/PPNeueBit-Bold.woff2') format('woff2'),
+    url('/fonts/PPNeueBit-Bold.otf') format('opentype');
+  font-weight: 700;
   font-display: swap;
 }
 
@@ -475,6 +484,11 @@
 
 .font-studio-serif {
   font-family: 'PP Mondwest', Georgia, serif;
+}
+
+.font-studio-pixel {
+  font-family: 'PP NeueBit', 'PP Mondwest', ui-monospace, monospace;
+  font-weight: 700;
 }
 
 .studio-reference-page {

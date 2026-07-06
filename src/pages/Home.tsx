@@ -3,6 +3,7 @@ import FormerHeroVideoSection from "../components/FormerHeroVideoSection";
 import StudioIntroSection from "../components/StudioIntroSection";
 import InfiniteWorksMarquee from "../components/InfiniteWorksMarquee";
 import StudioQuoteSection from "../components/StudioQuoteSection";
+import StudioAILabSection from "../components/StudioAILabSection";
 import PricingSection from "../components/PricingSection";
 import TestimonialCarousel from "../components/TestimonialCarousel";
 import ProjectsSection from "../components/ProjectsSection";
@@ -37,6 +38,7 @@ export default function Home() {
       <StudioIntroSection />
       <InfiniteWorksMarquee />
       <StudioQuoteSection />
+      <StudioAILabSection />
       <PricingSection />
       <TestimonialCarousel />
       <ProjectsSection />
