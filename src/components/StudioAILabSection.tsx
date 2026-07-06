@@ -3,11 +3,6 @@ import useInViewAnimation, { fadeClass } from "../hooks/useInViewAnimation";
 import Button from "./Button";
 import { AI_LAB_CARDS, AI_LAB_TRUST } from "../data/aiLabHome";
 
-/**
- * Studio-reference AI Lab section: the six live, Groq-backed demos from
- * aiLabHome.ts rendered as reference-style cards. Everything links into the
- * real /ai-lab demos — nothing here is mocked.
- */
 export default function StudioAILabSection() {
   const { ref, inView } = useInViewAnimation<HTMLElement>();
 
@@ -38,9 +33,9 @@ export default function StudioAILabSection() {
             className={`font-studio-body mt-5 text-sm leading-relaxed text-[#273C46] md:text-base ${fadeClass(inView)}`}
             style={{ animationDelay: "0.3s" }}
           >
-            Live tools built around real UAE workflows — quoting, WhatsApp leads, Odoo
-            readiness, bilingual replies. Open one, type your own scenario, and see what
-            practical AI feels like in your business.
+            37 real working tools built around the same practical AI patterns I use in
+            client products. Type into them and see what useful AI can do inside a
+            business workflow.
           </p>
           <ul
             className={`mt-5 flex flex-wrap items-center justify-center gap-2 ${fadeClass(inView)}`}
@@ -82,7 +77,7 @@ export default function StudioAILabSection() {
                 {card.whatItDoes}
               </p>
               <p className="font-studio-body mt-4 text-xs italic text-[#273C46]">
-                Try it: “{card.example}”
+                Try it: "{card.example}"
               </p>
               <span className="font-studio-body mt-auto pt-6 text-sm font-medium text-[#051A24] underline-offset-4 group-hover:underline">
                 {card.cta}

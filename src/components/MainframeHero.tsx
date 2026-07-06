@@ -7,9 +7,10 @@ const VIDEO_SRC =
 const EMAIL = "hi@xerxesduane.com";
 
 const NAV_LINKS = [
+  { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
-  { label: "AI Lab", href: "/ai-lab" },
   { label: "Work", href: "/#work" },
+  { label: "AI Lab", href: "/ai-lab" },
   { label: "About", href: "/about" },
 ];
 
@@ -17,7 +18,6 @@ const PILL_LINKS = [
   { label: "Book a free systems audit", href: "#contact" },
   { label: "Try the AI Lab", href: "/ai-lab" },
   { label: "See the work", href: "/#work" },
-  { label: "How I operate", href: "/#process" },
 ];
 
 /** Typewriter: reveals `text` one character at a time after `startDelay` ms. */
@@ -53,7 +53,7 @@ export default function MainframeHero() {
   const [heroVisible, setHeroVisible] = useState(true);
 
   const { shown, typing } = useTypewriter(
-    "Glad you stopped in. Good taste tends to find us. Now, what are we building?",
+    "Big-company systems for small businesses that can't afford a tech team.",
   );
 
   // Buttons slide in 400ms after load, independent of the typewriter.
@@ -238,7 +238,7 @@ export default function MainframeHero() {
           >
             Hey there, welcome to Xerxes Duane,
             <br />
-            Dubai's connected-systems studio for small business
+            Independent Systems Consultant in Dubai
           </p>
 
           {/* typewriter greeting */}
@@ -259,6 +259,12 @@ export default function MainframeHero() {
                 style={{ animation: "blink 1s step-end infinite" }}
               />
             )}
+          </p>
+          <p className="mb-5 max-w-lg text-sm leading-relaxed text-black/75 sm:mb-6 sm:text-base">
+            I help small businesses connect websites, CRM, Odoo/ERP, WhatsApp,
+            automation, ads, and AI into one practical operating system - built
+            clearly, priced honestly, and designed to save time, capture leads,
+            and support real growth.
           </p>
 
           {/* pill CTAs */}

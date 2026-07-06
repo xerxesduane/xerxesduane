@@ -85,10 +85,11 @@ export default function Nav({
   const desktopLinks = ar
     ? links
     : links.filter((link) =>
-        ["Services", "AI Lab", "Work", "Portfolio", "About", "Insights"].includes(link.label),
+        ["Home", "Services", "Work", "AI Lab", "About"].includes(link.label),
       );
   const homeHref = ar ? "/ar" : "/";
-  const bookLabel = ar ? AR_CHROME.bookAudit : "Book a free audit";
+  const bookLabel = ar ? AR_CHROME.bookAudit : "Book Audit";
+  const mobileBookLabel = ar ? AR_CHROME.bookAudit : "Book a free systems audit";
   // Absolute so the booking CTA works from every route, not just pages that
   // render <Contact/> — a bare "#contact" was a dead link on /about, /ai-lab, etc.
   const contactHref = ar ? "/ar#contact" : "/#contact";
@@ -302,7 +303,7 @@ export default function Nav({
                 <div className="mb-2 flex items-center justify-between rounded-2xl border border-gold/20 bg-gold/[0.08] px-4 py-3">
                   <div>
                     <p className="font-mono text-[10px] uppercase tracking-wider text-gold">{ar ? "Xerxes Duane" : "Dubai · Available for new projects"}</p>
-                    <p className="mt-1 text-xs text-cream-dim">{ar ? AR_CHROME.bookAudit : "One studio for systems, digital, and growth."}</p>
+                    <p className="mt-1 text-xs text-cream-dim">{ar ? AR_CHROME.bookAudit : "One clear operating system for your business."}</p>
                   </div>
                   <span className="h-2 w-2 rounded-full bg-gold shadow-[0_0_18px_rgba(218,164,66,0.9)]" aria-hidden />
                 </div>
@@ -362,7 +363,7 @@ export default function Nav({
                   transition={{ duration: 0.35, ease: EASE, delay: 0.08 + links.length * 0.055 }}
                   className="mt-2 flex items-center justify-center gap-1.5 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink-deep shadow-[0_10px_30px_-12px_rgba(218,164,66,0.8)]"
                 >
-                  {bookLabel}
+                  {mobileBookLabel}
                   <ArrowUpRight size={16} strokeWidth={2.5} />
                 </m.a>
               </div>

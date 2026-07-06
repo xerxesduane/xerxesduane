@@ -35,7 +35,7 @@ export function Privacy() {
 
       <H2>Who we are</H2>
       <p>
-        Xerxes Duane is a tech studio based in Dubai, United Arab Emirates.
+        Xerxes Duane is an independent systems consultant based in Dubai, United Arab Emirates.
         You can reach us at{" "}
         <a className={linkCls} href={`mailto:${CONTACT.email}`}>
           {CONTACT.email}

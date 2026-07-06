@@ -77,7 +77,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
           {!ar && (
             <div>
               <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
-                Studio
+                Navigate
               </h3>
               <ul className="mt-4 space-y-2.5 text-sm">
                 {NAV_LINKS.map((l) => (

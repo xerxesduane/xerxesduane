@@ -91,11 +91,11 @@ const FAQ_SCHEMA = {
 };
 
 const HOME_META: PageMeta = {
-  title: "Xerxes Duane | Web, Apps, Odoo/ERP & AI Studio in Dubai",
+  title: "Xerxes Duane | Independent Systems Consultant in Dubai",
   description:
-    "Big-company systems for small businesses that can't afford a tech team. Xerxes Duane connects websites, CRM, Odoo/ERP, WhatsApp, automation and AI into one growth system — Dubai. Book a free systems audit.",
+    "Big-company systems for small businesses that can't afford a tech team. Xerxes Duane connects websites, CRM, Odoo/ERP, WhatsApp, automation, ads, and AI into one practical operating system.",
   canonical: `${SITE_ORIGIN}/`,
-  ogTitle: "Xerxes Duane | Web, Apps, Odoo/ERP & AI Studio in Dubai",
+  ogTitle: "Xerxes Duane | Independent Systems Consultant in Dubai",
   alternates: [
     { hreflang: "en", href: `${SITE_ORIGIN}/` },
     { hreflang: "ar", href: `${SITE_ORIGIN}/ar` },

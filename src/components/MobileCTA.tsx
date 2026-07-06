@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { ArrowUpRight } from "lucide-react";
 import { AnimatePresence, m } from "framer-motion";
 import { EASE } from "../lib/motion";
 import { AR_CHROME } from "../data/servicePagesAr";
@@ -12,7 +11,7 @@ import { AR_CHROME } from "../data/servicePagesAr";
  */
 export default function MobileCTA({ locale = "en" }: { locale?: "en" | "ar" }) {
   const ar = locale === "ar";
-  const label = ar ? AR_CHROME.bookAudit : "Book a free audit";
+  const label = ar ? AR_CHROME.bookAudit : "Free systems audit";
 
   const [scrolledPast, setScrolledPast] = useState(false);
   const [atContact, setAtContact] = useState(false);
@@ -51,12 +50,8 @@ export default function MobileCTA({ locale = "en" }: { locale?: "en" | "ar" }) {
             href={ar ? "/ar#contact" : "/#contact"}
             className="group flex w-full items-center justify-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink-deep shadow-[0_10px_30px_-12px_rgba(218,164,66,0.8)] transition-colors duration-300 hover:bg-gold-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink"
           >
+            <img src="/brand/icon/icon-light.svg" alt="" className="h-5 w-5" />
             {label}
-            <ArrowUpRight
-              size={16}
-              strokeWidth={2.5}
-              className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
           </a>
         </m.div>
       )}

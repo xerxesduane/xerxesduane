@@ -20,8 +20,7 @@ export interface AiLabCard {
 }
 
 // Six business-outcome framed entry points into the live AI Lab. Each one maps
-// to a real, already-live Groq-backed demo — no new endpoints, no new tools,
-// just a clearer front door for the ones that matter most to a UAE business.
+// to a real demo already available on /ai-lab.
 export const AI_LAB_CARDS: AiLabCard[] = [
   {
     demoId: "leadresponse",

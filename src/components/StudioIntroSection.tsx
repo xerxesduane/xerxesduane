@@ -27,7 +27,7 @@ export default function StudioIntroSection() {
           className={`mb-2 font-mono text-xs text-[#051A24] md:text-sm ${fadeClass(inView)}`}
           style={{ animationDelay: "0.2s" }}
         >
-          The connected-systems studio of Xerxes Duane
+          Independent Systems Consultant in Dubai
         </p>
 
         <h2
@@ -45,14 +45,13 @@ export default function StudioIntroSection() {
           style={{ animationDelay: "0.4s" }}
         >
           <p>
-            I help small businesses in Dubai connect websites, CRM, WhatsApp, invoicing,
-            dashboards, ads, AI tools, and internal systems into one practical operating
-            system.
+            I help small businesses connect websites, CRM, Odoo/ERP, WhatsApp,
+            automation, ads, and AI into one practical operating system.
           </p>
           <p>
-            The studio is deliberately small. You work directly with Xerxes on the
-            strategy, build, and decisions — with creative and technical support brought
-            in when the project needs it.
+            The work is deliberately direct. You work with Xerxes on the
+            strategy, build, and decisions. Creative and technical support is brought
+            in only when the project needs it.
           </p>
           <p>
             Projects start from AED 5,000. Monthly partnership starts from AED

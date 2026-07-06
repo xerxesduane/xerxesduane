@@ -45,15 +45,11 @@ export const AUDIT_DELIVERABLES = [
 ];
 
 export const NAV_LINKS = [
+  { label: "Home", href: "/" },
   { label: "Services", href: "/#services" },
-  { label: "AI Lab", href: "/ai-lab" },
   { label: "Work", href: "/#work" },
-  { label: "Portfolio", href: "/portfolio" },
-  { label: "Showreel", href: "/showreel" },
-  { label: "Process", href: "/#process" },
+  { label: "AI Lab", href: "/ai-lab" },
   { label: "About", href: "/about" },
-  { label: "Insights", href: "/insights" },
-  { label: "FAQ", href: "/#faq" },
 ];
 
 export interface Service {
@@ -517,7 +513,7 @@ export const COMPARISON: { agency: string; bayt: string }[] = [
   { agency: "Long-term lock-in contracts", bayt: "Month-to-month, cancel anytime" },
   { agency: "Disappears after launch", bayt: "Picks up the phone five years later" },
   { agency: "Upsells everything", bayt: "Tells you when you don't need me" },
-  { agency: "One service, one expert", bayt: "One studio, the whole stack" },
+  { agency: "One service, one expert", bayt: "One consultant, the whole stack" },
   { agency: "Hides pricing", bayt: 'Transparent "from AED X" pricing' },
 ];
 
@@ -698,7 +694,7 @@ export const PACKAGES = [
     price: "from AED 2,500",
     note: "per month",
     pitch: "Your long-term tech partner",
-    body: "I become your outsourced tech team. Ongoing IT, maintenance, SEO, ads, and automation, one trusted number to call for everything.",
+    body: "I become your practical systems partner. Ongoing IT, maintenance, SEO, ads, and automation, one trusted number to call for everything.",
     cta: "Talk to me",
     featured: false,
   },
@@ -770,7 +766,7 @@ export const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Do you work with very small businesses?",
-    a: "Yes. Most of my clients are 2–10 person teams. That's literally who I built this studio for.",
+    a: "Yes. Most of my clients are 2-10 person teams. That's literally who I built this work for.",
   },
   {
     q: "Do you support Arabic-speaking clients or bilingual sites?",

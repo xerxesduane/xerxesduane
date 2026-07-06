@@ -1,11 +1,9 @@
 import MainframeHero from "../components/MainframeHero";
-import FormerHeroVideoSection from "../components/FormerHeroVideoSection";
 import StudioIntroSection from "../components/StudioIntroSection";
 import InfiniteWorksMarquee from "../components/InfiniteWorksMarquee";
 import StudioQuoteSection from "../components/StudioQuoteSection";
 import StudioAILabSection from "../components/StudioAILabSection";
 import PricingSection from "../components/PricingSection";
-import TestimonialCarousel from "../components/TestimonialCarousel";
 import ProjectsSection from "../components/ProjectsSection";
 import PartnerSection from "../components/PartnerSection";
 import FAQ from "../components/FAQ";
@@ -32,7 +30,6 @@ export default function Home() {
     <>
       {/* Sections 1 & 2 — retained exactly */}
       <MainframeHero />
-      <FormerHeroVideoSection />
 
       {/* Studio-reference landing flow */}
       <StudioIntroSection />
@@ -40,7 +37,6 @@ export default function Home() {
       <StudioQuoteSection />
       <StudioAILabSection />
       <PricingSection />
-      <TestimonialCarousel />
       <ProjectsSection />
       <PartnerSection />
 

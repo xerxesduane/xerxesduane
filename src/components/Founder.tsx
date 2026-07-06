@@ -52,7 +52,7 @@ export default function Founder() {
                   For six-plus years I've worked with businesses across the UAE,
                   the Philippines, and beyond, translation firms, healthcare
                   mobility, automotive platforms, schools, wellness brands, and
-                  event studios. I've built e-learning platforms, integrated
+                  event businesses. I've built e-learning platforms, integrated
                   QuickBooks with CRMs, run Meta Ads that reached 50,000+ people,
                   and supported the IT and marketing of multiple businesses at
                   once.
@@ -80,7 +80,7 @@ export default function Founder() {
                   wasn't in scope. They've referred me three times since.
                 </p>
                 <p>
-                  I'm a person of faith, and I run my studio the way I'd want
+                  I'm a person of faith, and I run this work the way I'd want
                   to be treated: honest counsel, plain language, and your interests
                   ahead of my invoice. When you hire me, you work
                   directly with me, not a faceless team or an account manager.

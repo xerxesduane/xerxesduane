@@ -36,11 +36,6 @@ function AnimatedHeading({ lines }: AnimatedHeadingProps) {
   const label = lines.map((line) => line.text).join(" ");
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setVisible(true);
-      return;
-    }
-
     const timer = window.setTimeout(() => setVisible(true), 0);
     return () => window.clearTimeout(timer);
   }, [prefersReducedMotion]);
@@ -117,12 +112,7 @@ function FadeIn({ children, className, delay = 0, duration = 1000 }: FadeInProps
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (prefersReducedMotion) {
-      setVisible(true);
-      return;
-    }
-
-    const timer = window.setTimeout(() => setVisible(true), delay);
+    const timer = window.setTimeout(() => setVisible(true), prefersReducedMotion ? 0 : delay);
     return () => window.clearTimeout(timer);
   }, [delay, prefersReducedMotion]);
 

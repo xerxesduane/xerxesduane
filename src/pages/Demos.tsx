@@ -659,8 +659,8 @@ export default function Demos() {
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </Kinetic>
             <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              {DEMOS.length} real, working tools — the same AI I build into client products. Most run live
-              on open models via Groq; one runs entirely in your browser. Type into them, they respond for real.
+              {DEMOS.length} real working tools built around the same practical AI patterns I use in
+              client products. Type into them and see what useful AI can do inside a business workflow.
             </m.p>
             <m.p variants={fadeUp} className="mx-auto mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark">
               Nothing here is canned · No sign-up · Your input isn't stored

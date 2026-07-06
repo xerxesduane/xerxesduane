@@ -37,7 +37,7 @@ export default function Hero() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold/70" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
             </span>
-            All-in-one tech studio Â· Dubai
+            Independent Systems Consultant · Dubai
           </m.span>
 
           <Kinetic

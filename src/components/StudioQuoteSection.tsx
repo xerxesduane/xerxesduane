@@ -84,7 +84,7 @@ export default function StudioQuoteSection() {
           className={`font-studio-body text-[32px] leading-[1.1] tracking-tight text-[#0D212C] md:text-[40px] lg:text-[44px] ${fadeClass(inView)}`}
           style={{ animationDelay: "0.2s" }}
         >
-          “I built this <span className="font-studio-serif">studio</span> for businesses
+          "I built this <span className="font-studio-serif">work</span> for businesses
           that are tired of <span className="font-studio-serif">disconnected tools</span>,
           unclear vendors, and systems that only one person understands.”
         </blockquote>
@@ -98,7 +98,7 @@ export default function StudioQuoteSection() {
         <ul
           className={`mt-10 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 ${fadeClass(inView)}`}
           style={{ animationDelay: "0.4s" }}
-          aria-label="Studio capabilities"
+          aria-label="Consulting capabilities"
         >
           {CAPABILITIES.map((c) => (
             <li

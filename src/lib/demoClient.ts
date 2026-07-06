@@ -51,7 +51,7 @@ export async function streamDemo(
     onToken(full, tail);
   }
   // The endpoint commits a 200 before the model runs, so a mid-stream provider
-  // failure (Groq 429/500) closes the stream with no body and no error. Surface
+  // failure (429/500) closes the stream with no body and no error. Surface
   // it instead of silently showing nothing — the page's whole pitch is "real AI".
   if (!full) throw new Error("The AI didn't respond — please try again in a moment.");
   return full;

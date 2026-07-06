@@ -42,6 +42,18 @@
   :root {
     color-scheme: dark;
     scroll-behavior: smooth;
+    --bg: #f7f3ea;
+    --surface: #ffffff;
+    --surface-alt: #efe7d8;
+    --ink: #111827;
+    --muted: #5f6673;
+    --line: #e2d8c8;
+    --navy: #102a43;
+    --navy-dark: #081827;
+    --gold: #b8892f;
+    --gold-soft: #efe1bf;
+    --success: #1f7a5a;
+    --danger: #b94242;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -479,21 +491,22 @@
 }
 
 .font-studio-body {
-  font-family: 'PP Neue Montreal', Inter, system-ui, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
 }
 
 .font-studio-serif {
-  font-family: 'PP Mondwest', Georgia, serif;
+  font-family: Inter, system-ui, sans-serif;
 }
 
 .font-studio-pixel {
-  font-family: 'PP NeueBit', 'PP Mondwest', ui-monospace, monospace;
+  font-family: 'Space Mono', ui-monospace, monospace;
   font-weight: 700;
 }
 
 .studio-reference-page {
-  font-family: 'PP Neue Montreal', Inter, system-ui, sans-serif;
+  font-family: Inter, system-ui, sans-serif;
   color-scheme: light;
+  color: var(--ink);
 }
 
 /* Reference button shadows */

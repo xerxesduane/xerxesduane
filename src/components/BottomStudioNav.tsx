@@ -15,9 +15,9 @@ export default function BottomStudioNav() {
       <a
         href="/"
         aria-label="Xerxes Duane — home"
-        className="font-studio-serif text-2xl font-semibold text-[#051A24] transition-opacity hover:opacity-70"
+        className="flex h-10 w-10 items-center justify-center rounded-full bg-[#F7F3EA] transition-opacity hover:opacity-70"
       >
-        XD
+        <img src="/brand/icon/icon-light.svg" alt="" className="h-7 w-7" />
       </a>
       <Button
         variant="primary"

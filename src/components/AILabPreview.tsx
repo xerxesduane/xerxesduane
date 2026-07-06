@@ -23,7 +23,7 @@ export default function AILabPreview() {
           subtitle="Most Dubai businesses don't need AI as a buzzword. They need faster replies, cleaner quotes, fewer missed WhatsApp leads, better customer follow-up, and systems that finally talk to each other. The AI Lab shows what that looks like in practice."
         />
 
-        {/* six business-outcome cards, each a live Groq-backed demo */}
+        {/* six business-outcome cards, each a live demo */}
         <m.div
           variants={stagger}
           initial="hidden"

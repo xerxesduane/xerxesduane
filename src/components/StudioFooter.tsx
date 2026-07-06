@@ -13,11 +13,11 @@ const COLUMN_2 = [
   { label: "Email", href: `mailto:${CONTACT.email}` },
 ];
 
-/** Reference-style footer for the studio landing flow (sits above the global footer). */
+/** Reference-style footer for the homepage landing flow. */
 export default function StudioFooter() {
   return (
     <footer
-      aria-label="Studio footer"
+      aria-label="Homepage footer"
       className="studio-reference-page w-full bg-[#FDFCFA]"
     >
       <div className="mx-auto flex max-w-[1200px] flex-col gap-10 px-6 py-12 md:flex-row md:items-start md:justify-between">
