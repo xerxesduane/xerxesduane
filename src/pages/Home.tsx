@@ -1,103 +1,54 @@
-import type { ReactNode } from "react";
 import MainframeHero from "../components/MainframeHero";
 import FormerHeroVideoSection from "../components/FormerHeroVideoSection";
-import Marquee from "../components/Marquee";
-import Diagnosis from "../components/Diagnosis";
-import Services from "../components/Services";
-import AILabPreview from "../components/AILabPreview";
-import ResultsBand from "../components/ResultsBand";
-import Targets from "../components/Targets";
-import Work from "../components/Work";
-import ConnectedSystems from "../components/ConnectedSystems";
-import Process from "../components/Process";
-import Packages from "../components/Packages";
-import WhyUs from "../components/WhyUs";
-import Founder from "../components/Founder";
+import StudioIntroSection from "../components/StudioIntroSection";
+import InfiniteWorksMarquee from "../components/InfiniteWorksMarquee";
+import StudioQuoteSection from "../components/StudioQuoteSection";
+import PricingSection from "../components/PricingSection";
+import TestimonialCarousel from "../components/TestimonialCarousel";
+import ProjectsSection from "../components/ProjectsSection";
+import PartnerSection from "../components/PartnerSection";
 import FAQ from "../components/FAQ";
 import Contact from "../components/Contact";
+import StudioFooter from "../components/StudioFooter";
+import CopyrightBar from "../components/CopyrightBar";
+import BottomStudioNav from "../components/BottomStudioNav";
 
 /**
- * Section band — gives the long homepage rhythm. Alternating bands get a
- * barely-there tint and an edge-faded hairline at the top, so stacked sections
- * read as distinct "chapters" without hiding the animated background.
- */
-function Band({
-  tint = false,
-  divide = true,
-  children,
-}: {
-  tint?: boolean;
-  divide?: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <div className={`relative ${tint ? "bg-cream/[0.015]" : ""}`}>
-      {divide && (
-        <div className="container-bl">
-          <div className="hairline" />
-        </div>
-      )}
-      {children}
-    </div>
-  );
-}
-
-/**
- * Homepage flow (deliberately tightened from ~23 sections to a scannable ~13):
- * Hero → trust strip → problem → services → AI Lab → real numbers → case
- * studies → connected system → process → packages → trust/founder → FAQ →
- * contact. Each section makes ONE point; duplicates (a second numbers band, a
- * second AI-Lab pitch, a second "who's it for", a second work grid, a mid-page
- * CTA clone) were removed so the page earns the scroll.
+ * Homepage flow:
+ *   1–2. Retained exactly as before — the dark cinematic "Serve first. Build
+ *        second." hero (MainframeHero) and the light computer-head section
+ *        (FormerHeroVideoSection). Do not modify.
+ *   3+.  Studio-reference landing flow (Viktor Oddy / Vortex-style structure,
+ *        adapted to Xerxes Duane): intro → works marquee → founder quote →
+ *        pricing → proof carousel → projects → partner CTA → FAQ → contact →
+ *        studio footer → copyright → floating bottom nav.
+ * The lower sections are light-palette (.studio-reference-page) and use the
+ * PP Neue Montreal / PP Mondwest font system, scoped so the top two sections
+ * keep their existing look.
  */
 export default function Home() {
   return (
     <>
+      {/* Sections 1 & 2 — retained exactly */}
       <MainframeHero />
       <FormerHeroVideoSection />
-      <Marquee />
 
-      {/* The problem → what I do */}
-      <Band divide={false}>
-        <Diagnosis />
-      </Band>
-      <Band tint>
-        <Services />
-      </Band>
-      <Band>
-        <AILabPreview />
-      </Band>
+      {/* Studio-reference landing flow */}
+      <StudioIntroSection />
+      <InfiniteWorksMarquee />
+      <StudioQuoteSection />
+      <PricingSection />
+      <TestimonialCarousel />
+      <ProjectsSection />
+      <PartnerSection />
 
-      {/* Proof: real numbers → case studies → how it connects */}
-      <Band tint>
-        <ResultsBand />
-      </Band>
-      {/* Forward-looking targets (cream contrast band), clearly not past results */}
-      <Targets />
-      <Band>
-        <Work />
-      </Band>
-      <Band tint>
-        <ConnectedSystems />
-      </Band>
+      {/* Kept from the previous flow (dark-themed, stay on the dark canvas) */}
+      <FAQ />
+      <Contact />
 
-      {/* How I work (cream contrast band) */}
-      <Process />
-
-      {/* Offer → trust → close */}
-      <Band tint>
-        <Packages />
-      </Band>
-      <Band>
-        <WhyUs />
-        <Founder />
-      </Band>
-      <Band tint>
-        <FAQ />
-      </Band>
-      <Band divide={false}>
-        <Contact />
-      </Band>
+      <StudioFooter />
+      <CopyrightBar />
+      <BottomStudioNav />
     </>
   );
 }
