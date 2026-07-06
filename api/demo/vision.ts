@@ -1,8 +1,8 @@
 // Vision / multimodal demo: an uploaded photo -> a structured result. Two modes:
 //   "receipt" -> an itemized expense line (merchant, date, total, 5% VAT, category)
 //   "product" -> a store-ready description + SEO + a suggested AED price
-// Uses Llama 4 Scout (image input, Preview on Groq). Llama models lack
-// json_schema on Groq, so we prompt for strict JSON and recover it with
+// Uses Llama 4 Scout image input. Llama models lack
+// json_schema in this runtime, so we prompt for strict JSON and recover it with
 // parseLooseJson rather than generateObject. Images are processed in memory
 // and never stored.
 import { generateText } from "ai";

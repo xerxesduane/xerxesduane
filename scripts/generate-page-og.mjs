@@ -14,30 +14,30 @@ function ogSvg({ line1, line2, subtitle }) {
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#07090A"/><stop offset="0.5" stop-color="#0B0F0D"/><stop offset="1" stop-color="#07090A"/>
+      <stop offset="0" stop-color="#081827"/><stop offset="0.5" stop-color="#102A43"/><stop offset="1" stop-color="#081827"/>
     </linearGradient>
     <radialGradient id="glow" cx="50%" cy="22%" r="55%">
-      <stop offset="0" stop-color="#DAA442" stop-opacity="0.30"/><stop offset="1" stop-color="#DAA442" stop-opacity="0"/>
+      <stop offset="0" stop-color="#B8892F" stop-opacity="0.30"/><stop offset="1" stop-color="#B8892F" stop-opacity="0"/>
     </radialGradient>
     <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#F3EFE6"/><stop offset="0.5" stop-color="#E8C173"/><stop offset="1" stop-color="#DAA442"/>
+      <stop offset="0" stop-color="#F7F3EA"/><stop offset="0.5" stop-color="#EFE1BF"/><stop offset="1" stop-color="#B8892F"/>
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect width="1200" height="630" fill="url(#glow)"/>
   <g transform="translate(100,72)">
     <g transform="scale(1.5)" stroke-linecap="round" stroke-linejoin="round" fill="none">
-      <path d="M5 31 H31" stroke="#DAA442" stroke-width="2.6"/>
-      <path d="M23.8 30 C21 23, 14.5 13, 8.2 6.4" stroke="#DAA442" stroke-width="2.1"/>
-      <path d="M12.2 30 C15 23, 21.5 13, 27.8 6.4" stroke="#F3EFE6" stroke-width="2.3"/>
-      <circle cx="18" cy="5.6" r="1.9" fill="#DAA442" stroke="none"/>
+      <path d="M5 31 H31" stroke="#B8892F" stroke-width="2.6"/>
+      <path d="M23.8 30 C21 23, 14.5 13, 8.2 6.4" stroke="#B8892F" stroke-width="2.1"/>
+      <path d="M12.2 30 C15 23, 21.5 13, 27.8 6.4" stroke="#F7F3EA" stroke-width="2.3"/>
+      <circle cx="18" cy="5.6" r="1.9" fill="#B8892F" stroke="none"/>
     </g>
-    <text x="74" y="42" font-family="Georgia, serif" font-size="32" font-weight="600"><tspan fill="url(#gold)">Xerxes</tspan> <tspan fill="#F3EFE6">Duane</tspan></text>
+    <text x="74" y="42" font-family="Inter, Helvetica, Arial, sans-serif" font-size="32" font-weight="600"><tspan fill="url(#gold)">Xerxes</tspan> <tspan fill="#F7F3EA">Duane</tspan></text>
   </g>
-  <text x="100" y="300" font-family="Georgia, serif" font-size="72" font-weight="600" fill="#F3EFE6">${line1}</text>
-  <text x="100" y="385" font-family="Georgia, serif" font-size="72" font-weight="600" font-style="italic" fill="url(#gold)">${line2}</text>
-  <text x="100" y="465" font-family="Helvetica, Arial, sans-serif" font-size="29" fill="#9AA39A">${subtitle}</text>
-  <text x="100" y="560" font-family="monospace" font-size="22" letter-spacing="3" fill="#DAA442">SERVE FIRST.  BUILD SECOND.</text>
+  <text x="100" y="300" font-family="Inter, Helvetica, Arial, sans-serif" font-size="72" font-weight="600" fill="#F7F3EA">${line1}</text>
+  <text x="100" y="385" font-family="Inter, Helvetica, Arial, sans-serif" font-size="72" font-weight="600" font-style="italic" fill="url(#gold)">${line2}</text>
+  <text x="100" y="465" font-family="Inter, Helvetica, Arial, sans-serif" font-size="29" fill="#EFE7D8">${subtitle}</text>
+  <text x="100" y="560" font-family="Inter, Helvetica, Arial, sans-serif" font-size="22" letter-spacing="3" fill="#B8892F">INDEPENDENT SYSTEMS CONSULTANT IN DUBAI</text>
 </svg>`;
 }
 
@@ -74,9 +74,9 @@ const cards = [
   },
   {
     slug: "demos",
-    line1: "Try the AI,",
-    line2: "not just read about it.",
-    subtitle: "Live, working AI demos — chat, Q&amp;A &amp; extraction. Powered by Llama 3 on Groq.",
+    line1: "Practical AI",
+    line2: "for real workflows.",
+    subtitle: "AI Lab tools for sales, service, content, operations &amp; reporting.",
   },
   {
     slug: "website-cost-dubai",

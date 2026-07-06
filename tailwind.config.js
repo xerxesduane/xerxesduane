@@ -6,10 +6,10 @@ export default {
       colors: {
         // Dark canvas — never pure black (avoids OLED smear, feels premium)
         ink: {
-          deep: "#07090A",
-          DEFAULT: "#0B0F0D",
-          surface: "#111813",
-          raised: "#16201A",
+          deep: "#081827",
+          DEFAULT: "#102A43",
+          surface: "#FFFFFF",
+          raised: "#EFE7D8",
         },
         // Brand olive — "bayt = home", grounded
         olive: {
@@ -19,23 +19,23 @@ export default {
         },
         // Dubai golden-hour accent (brand spec exact)
         gold: {
-          DEFAULT: "#DAA442",
-          soft: "#E8C173",
-          deep: "#B8842F",
+          DEFAULT: "#B8892F",
+          soft: "#EFE1BF",
+          deep: "#9B7227",
         },
-        sage: "#C7D0BC",
+        sage: "#EFE7D8",
         cream: {
-          DEFAULT: "#F3EFE6",
-          dim: "#D8D2C4",
+          DEFAULT: "#F7F3EA",
+          dim: "#EFE7D8",
         },
         muted: {
-          DEFAULT: "#9AA39A",
+          DEFAULT: "#5F6673",
           // Nudged lighter to clear WCAG AA (~5.9:1 on #0B0F0D) for small/secondary text.
-          dark: "#828B7E",
+          dark: "#5F6673",
         },
       },
       fontFamily: {
-        display: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
+        display: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
       },

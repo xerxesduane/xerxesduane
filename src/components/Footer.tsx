@@ -23,7 +23,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
   const ar = locale === "ar";
   const tagline = ar
     ? AR_CHROME.footerTagline
-    : "Serve first. Build second.";
+    : "Independent systems support for small businesses in Dubai.";
   const serviceItems = ar
     ? SERVICE_PAGES_AR.map((p) => ({ href: `/ar/${p.slug}`, label: p.navLabel }))
     : SERVICE_PAGES.map((p) => ({ href: `/${p.slug}`, label: p.navLabel }));

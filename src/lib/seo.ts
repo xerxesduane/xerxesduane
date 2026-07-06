@@ -56,7 +56,7 @@ function serviceOgImage(slug: string): string {
  * OG image by URL for weeks, so a versioned query string forces them to fetch
  * the current image instead of serving a stale (or wrong) cached one.
  */
-const OG_IMAGE_VERSION = "5";
+const OG_IMAGE_VERSION = "6";
 
 /** Absolute, cache-busted share-image URL for a page. */
 function ogImageUrl(image?: string): string {
@@ -91,11 +91,11 @@ const FAQ_SCHEMA = {
 };
 
 const HOME_META: PageMeta = {
-  title: "Xerxes Duane | Independent Systems Consultant in Dubai",
+  title: "Xerxes Duane - Independent Systems Consultant in Dubai",
   description:
-    "Big-company systems for small businesses that can't afford a tech team. Xerxes Duane connects websites, CRM, Odoo/ERP, WhatsApp, automation, ads, and AI into one practical operating system.",
+    "Websites, CRM, Odoo/ERP, WhatsApp, automation, ads, and AI connected into one practical operating system for small businesses.",
   canonical: `${SITE_ORIGIN}/`,
-  ogTitle: "Xerxes Duane | Independent Systems Consultant in Dubai",
+  ogTitle: "Xerxes Duane - Independent Systems Consultant in Dubai",
   alternates: [
     { hreflang: "en", href: `${SITE_ORIGIN}/` },
     { hreflang: "ar", href: `${SITE_ORIGIN}/ar` },
@@ -157,11 +157,11 @@ const AR_HOME_META: PageMeta = {
 };
 
 const ABOUT_META: PageMeta = {
-  title: "About Xerxes Duane | Odoo & Systems Consultant in Dubai",
+  title: "About - Xerxes Duane",
   description:
-    "Xerxes Duane is a hands-on Odoo consultant helping Dubai small businesses turn fragmented operations into one connected system. You work directly with him.",
+    "Independent systems consultant in Dubai helping small businesses connect websites, CRM, Odoo/ERP, automation, ads, WhatsApp, and AI.",
   canonical: `${SITE_ORIGIN}/about`,
-  ogTitle: "About Xerxes Duane | Odoo & Systems Consultant in Dubai",
+  ogTitle: "About - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/about.png`,
   jsonLd: [
     {
@@ -171,7 +171,7 @@ const ABOUT_META: PageMeta = {
         "@type": "Person",
         "@id": `${SITE_ORIGIN}/#xerxes`,
         name: "Xerxes Duane",
-        jobTitle: "Founder & Lead Consultant",
+        jobTitle: "Independent Systems Consultant",
         worksFor: { "@id": `${SITE_ORIGIN}/#org` },
         image: `${SITE_ORIGIN}/brand/founder-xerxes.jpg`,
         url: `${SITE_ORIGIN}/about`,
@@ -190,11 +190,11 @@ const ABOUT_META: PageMeta = {
 };
 
 const CASE_STUDIES_META: PageMeta = {
-  title: "Xerxes Duane | Case Studies",
+  title: "Work - Xerxes Duane",
   description:
-    "Xerxes Duane shares real client work: Odoo ERP deployments, CRM and web builds, and ad campaigns across the UAE, the Philippines, and beyond.",
+    "Real examples of websites, systems, automations, SEO, AI tools, and business workflows built to save time and increase leads.",
   canonical: `${SITE_ORIGIN}/case-studies`,
-  ogTitle: "Xerxes Duane | Case Studies",
+  ogTitle: "Work - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/case-studies.png`,
   jsonLd: [
     breadcrumb([HOME_CRUMB, { name: "Case Studies", url: `${SITE_ORIGIN}/case-studies` }]),
@@ -202,59 +202,59 @@ const CASE_STUDIES_META: PageMeta = {
 };
 
 const INSIGHTS_META: PageMeta = {
-  title: "Xerxes Duane | Insights",
+  title: "Insights - Xerxes Duane",
   description:
     "Xerxes Duane shares plain-English thinking on systems, Odoo, automation, and growth for small businesses in Dubai and beyond.",
   canonical: `${SITE_ORIGIN}/insights`,
-  ogTitle: "Xerxes Duane | Insights",
+  ogTitle: "Insights - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/insights.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Insights", url: `${SITE_ORIGIN}/insights` }])],
 };
 
 const PRIVACY_META: PageMeta = {
-  title: "Xerxes Duane | Privacy Policy",
+  title: "Privacy Policy - Xerxes Duane",
   description:
     "How Xerxes Duane collects and uses information: contact enquiries, consent-based analytics, cookies, and your choices. Plain language, no data selling.",
   canonical: `${SITE_ORIGIN}/privacy`,
-  ogTitle: "Xerxes Duane | Privacy Policy",
+  ogTitle: "Privacy Policy - Xerxes Duane",
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Privacy Policy", url: `${SITE_ORIGIN}/privacy` }])],
 };
 
 const TERMS_META: PageMeta = {
-  title: "Xerxes Duane | Terms of Use",
+  title: "Terms of Use - Xerxes Duane",
   description:
     "The terms for using the Xerxes Duane website: quotes, intellectual property, external links, liability, and governing law (UAE).",
   canonical: `${SITE_ORIGIN}/terms`,
-  ogTitle: "Xerxes Duane | Terms of Use",
+  ogTitle: "Terms of Use - Xerxes Duane",
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Terms of Use", url: `${SITE_ORIGIN}/terms` }])],
 };
 
 const PORTFOLIO_META: PageMeta = {
-  title: "Xerxes Duane | Portfolio — Web & Graphic Design",
+  title: "Portfolio - Xerxes Duane",
   description:
     "Xerxes Duane's portfolio of website and brand & graphic design work for businesses across the UAE and beyond. See the craft, then book a free systems audit.",
   canonical: `${SITE_ORIGIN}/portfolio`,
-  ogTitle: "Xerxes Duane | Portfolio — Web & Graphic Design",
+  ogTitle: "Portfolio - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/portfolio.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Portfolio", url: `${SITE_ORIGIN}/portfolio` }])],
 };
 
 const SHOWREEL_META: PageMeta = {
-  title: "Xerxes Duane | Showreel — Video, Editing & Motion",
+  title: "Showreel - Xerxes Duane",
   description:
     "Xerxes Duane's video production, editing, color grading, and animation: events, documentaries, social reels, and brand work across the UAE and beyond.",
   canonical: `${SITE_ORIGIN}/showreel`,
-  ogTitle: "Xerxes Duane | Showreel — Video, Editing & Motion",
+  ogTitle: "Showreel - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/showreel.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Showreel", url: `${SITE_ORIGIN}/showreel` }])],
 };
 
 const AI_LAB_META: PageMeta = {
-  title: "Xerxes Duane AI Lab | Try Live AI Demos",
+  title: "AI Lab - Xerxes Duane",
   description:
-    "Try 30+ live AI demos built by Xerxes Duane in Dubai: a bilingual voice receptionist, vision tools, a visible AI agent, WhatsApp automation, data insights, and on-device AI. Real, live, nothing stored.",
+    "A collection of practical AI tools and workflow experiments built for real business use cases.",
   canonical: `${SITE_ORIGIN}/ai-lab`,
-  ogTitle: "Xerxes Duane AI Lab | Try Live AI Demos",
+  ogTitle: "AI Lab - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/demos.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "AI Lab", url: `${SITE_ORIGIN}/ai-lab` }])],
 };
@@ -270,10 +270,11 @@ export function getPageMeta(path: string): PageMeta {
     if (study) {
       const canonical = `${SITE_ORIGIN}/case-studies/${study.slug}`;
       return {
-        title: `Xerxes Duane | ${study.client} Case Study`,
-        description: study.summary,
+        title: `${study.client} - Xerxes Duane`,
+        description:
+          "A practical look at how connected systems, automation, websites, CRM, or AI improved a real business workflow.",
         canonical,
-        ogTitle: `${study.client} | ${study.category} Case Study`,
+        ogTitle: `${study.client} - Xerxes Duane`,
         jsonLd: [
           {
             "@context": "https://schema.org",
@@ -320,7 +321,7 @@ export function getPageMeta(path: string): PageMeta {
     if (post) {
       const canonical = `${SITE_ORIGIN}/insights/${post.slug}`;
       return {
-        title: `Xerxes Duane | ${post.title}`,
+        title: `${post.title} - Xerxes Duane`,
         description: post.description,
         canonical,
         ogTitle: post.title,
@@ -349,7 +350,16 @@ export function getPageMeta(path: string): PageMeta {
   }
 
   const page = getServicePage(slug);
-  if (!page) return HOME_META;
+  if (!page) {
+    return {
+      title: "Page Not Found - Xerxes Duane",
+      description:
+        "This page could not be found. Return to Xerxes Duane's website to explore systems consulting, AI tools, services, and work.",
+      canonical: `${SITE_ORIGIN}${path === "/__not-found__" ? "/404" : path}`,
+      ogTitle: "Page Not Found - Xerxes Duane",
+      noindex: true,
+    };
+  }
 
   const canonical = `${SITE_ORIGIN}/${page.slug}`;
   return {

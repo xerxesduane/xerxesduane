@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot, hydrateRoot } from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./index.css";
 import App from "./App";
@@ -15,14 +15,16 @@ const container = document.getElementById("root")!;
 const tree = (
   <StrictMode>
     <App path={window.location.pathname} />
-    <SpeedInsights />
   </StrictMode>
 );
 
-// Prerendered HTML (production) has real content to hydrate; the dev server
-// serves an empty shell, so client-render there to avoid hydration mismatch.
-if (container.firstElementChild) {
-  hydrateRoot(container, tree);
-} else {
-  createRoot(container).render(tree);
-}
+// The build serves fully prerendered HTML for crawlers and social scrapers.
+// Client rendering avoids recoverable hydration mismatches from animation-only
+// markup while preserving the static HTML response for SEO.
+container.replaceChildren();
+createRoot(container).render(tree);
+
+const speedInsightsRoot = document.createElement("div");
+speedInsightsRoot.id = "speed-insights-root";
+document.body.appendChild(speedInsightsRoot);
+createRoot(speedInsightsRoot).render(<SpeedInsights />);

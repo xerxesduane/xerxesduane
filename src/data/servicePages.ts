@@ -53,7 +53,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "odoo-erp-dubai",
     navLabel: "Odoo / ERP",
     icon: Boxes,
-    metaTitle: "Xerxes Duane | Odoo ERP Implementation in Dubai",
+    metaTitle: "Odoo ERP Implementation in Dubai - Xerxes Duane",
     metaDescription:
       "Odoo ERP setup, configuration, and support for small businesses in Dubai. One system for inventory, sales, invoicing, and CRM, run by a hands-on Odoo administrator. Book a free systems audit.",
     ogTitle: "Odoo ERP Implementation in Dubai",
@@ -113,7 +113,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "web-development-dubai",
     navLabel: "Web Development",
     icon: Code2,
-    metaTitle: "Xerxes Duane | Web Development in Dubai",
+    metaTitle: "Web Development in Dubai - Xerxes Duane",
     metaDescription:
       "Custom websites, web apps, and high-converting landing pages for Dubai small businesses. Fast, mobile-first, SEO-ready, with fixed quotes and no lock-in. Book a free systems audit.",
     ogTitle: "Web Development in Dubai",
@@ -172,7 +172,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "ai-automation-dubai",
     navLabel: "AI Automation",
     icon: Bot,
-    metaTitle: "Xerxes Duane | AI Automation in Dubai",
+    metaTitle: "AI Automation in Dubai - Xerxes Duane",
     metaDescription:
       "AI automation in Dubai for small businesses: chatbots, AI workflows, and custom assistants that qualify leads, answer questions, and remove repetitive work. Book a free systems audit.",
     ogTitle: "AI Automation in Dubai",
@@ -231,7 +231,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "seo-dubai",
     navLabel: "SEO",
     icon: Search,
-    metaTitle: "Xerxes Duane | SEO Services in Dubai",
+    metaTitle: "SEO Services in Dubai - Xerxes Duane",
     metaDescription:
       "SEO in Dubai that targets keywords that convert, not vanity rankings. Technical SEO, local search, and content for small businesses, with transparent reporting. Book a free systems audit.",
     ogTitle: "SEO Services in Dubai",
@@ -291,7 +291,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "answer-engine-optimization-dubai",
     navLabel: "AEO",
     icon: ScanSearch,
-    metaTitle: "Xerxes Duane | Answer Engine Optimization (AEO) in Dubai",
+    metaTitle: "Answer Engine Optimization (AEO) in Dubai - Xerxes Duane",
     metaDescription:
       "AEO in Dubai: get your business quoted by Google AI Overviews, voice assistants, and featured snippets. Answer-first content, structured data, and FAQ schema. Book a free systems audit.",
     ogTitle: "Answer Engine Optimization (AEO) in Dubai",
@@ -350,7 +350,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "generative-engine-optimization-dubai",
     navLabel: "GEO",
     icon: Sparkles,
-    metaTitle: "Xerxes Duane | Generative Engine Optimization (GEO) in Dubai",
+    metaTitle: "Generative Engine Optimization (GEO) in Dubai - Xerxes Duane",
     metaDescription:
       "GEO in Dubai: become the business ChatGPT, Gemini, and Perplexity recommend. I shape content, entities, and citations so AI engines surface and cite you. Book a free systems audit.",
     ogTitle: "Generative Engine Optimization (GEO) in Dubai",
@@ -409,7 +409,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "custom-software-development-dubai",
     navLabel: "Custom Software",
     icon: Code2,
-    metaTitle: "Xerxes Duane | Custom Software Development in Dubai",
+    metaTitle: "Custom Software Development in Dubai - Xerxes Duane",
     metaDescription:
       "Custom software development in Dubai for growing businesses: internal tools, client portals, workflow systems, and integrations built around how your team actually works.",
     ogTitle: "Custom Software Development in Dubai",
@@ -468,7 +468,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "crm-development-dubai",
     navLabel: "CRM & Dashboards",
     icon: LayoutDashboard,
-    metaTitle: "Xerxes Duane | CRM Development & Setup in Dubai",
+    metaTitle: "CRM Development & Setup in Dubai - Xerxes Duane",
     metaDescription:
       "CRM setup and development in Dubai: connected lead pipelines, customer databases, dashboards, and follow-up automation for growing small businesses.",
     ogTitle: "CRM Development & Setup in Dubai",
@@ -527,7 +527,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "mobile-app-development-dubai",
     navLabel: "Mobile & Web Apps",
     icon: Smartphone,
-    metaTitle: "Xerxes Duane | Mobile App Development in Dubai",
+    metaTitle: "Mobile App Development in Dubai - Xerxes Duane",
     metaDescription:
       "Mobile and web app development in Dubai for booking, customer portals, memberships, and internal operations. Practical apps built to launch and grow.",
     ogTitle: "Mobile App Development in Dubai",
@@ -586,7 +586,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "ecommerce-development-dubai",
     navLabel: "E-Commerce",
     icon: ShoppingBag,
-    metaTitle: "Xerxes Duane | E-Commerce Development in Dubai",
+    metaTitle: "E-Commerce Development in Dubai - Xerxes Duane",
     metaDescription:
       "E-commerce development in Dubai: fast online stores, secure UAE payments, inventory connections, order workflows, and conversion-focused customer journeys.",
     ogTitle: "E-Commerce Development in Dubai",
@@ -646,7 +646,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "landing-page-design-dubai",
     navLabel: "Landing Pages",
     icon: Target,
-    metaTitle: "Xerxes Duane | Landing Page Design in Dubai",
+    metaTitle: "Landing Page Design in Dubai - Xerxes Duane",
     metaDescription:
       "Landing page design in Dubai for campaigns, launches, and lead generation. Conversion-focused pages connected to analytics, forms, CRM, and follow-up.",
     ogTitle: "Landing Page Design in Dubai",
@@ -705,7 +705,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "branding-graphic-design-dubai",
     navLabel: "Branding & Design",
     icon: Palette,
-    metaTitle: "Xerxes Duane | Branding & Graphic Design in Dubai",
+    metaTitle: "Branding & Graphic Design in Dubai - Xerxes Duane",
     metaDescription:
       "Branding and graphic design in Dubai for growing businesses: practical identities, marketing collateral, campaign graphics, and consistent visual systems.",
     ogTitle: "Branding & Graphic Design in Dubai",
@@ -764,7 +764,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "videography-photography-dubai",
     navLabel: "Video & Photography",
     icon: Video,
-    metaTitle: "Xerxes Duane | Videography & Photography in Dubai",
+    metaTitle: "Videography & Photography in Dubai - Xerxes Duane",
     metaDescription:
       "Videography and photography in Dubai for brands, products, events, and campaigns. Purposeful production planned for the channels where the work will be used.",
     ogTitle: "Videography & Photography in Dubai",
@@ -823,7 +823,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     slug: "video-editing-dubai",
     navLabel: "Video Editing",
     icon: Film,
-    metaTitle: "Xerxes Duane | Video Editing in Dubai",
+    metaTitle: "Video Editing in Dubai - Xerxes Duane",
     metaDescription:
       "Video editing in Dubai for social reels, ads, interviews, events, and brand films. Clean pacing, captions, motion graphics, and channel-ready exports.",
     ogTitle: "Video Editing in Dubai",

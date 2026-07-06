@@ -1,5 +1,5 @@
 // Speech-to-text for the voice-receptionist demo. Audio is captured in the
-// browser (MediaRecorder), sent here as base64, and transcribed by Groq's
+// browser (MediaRecorder), sent here as base64, and transcribed by the
 // hosted Whisper. The spoken *reply* is produced by the existing
 // /api/demo/chat receptionist persona, so this endpoint only does STT —
 // nothing is stored; the bytes live in memory for the length of the request.

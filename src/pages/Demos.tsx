@@ -653,17 +653,16 @@ export default function Demos() {
               variants={fadeUp}
               className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold"
             >
-              Live AI lab · {DEMOS.length} tools
+              AI Lab - {DEMOS.length} tools
             </m.span>
             <Kinetic as="h1" className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl">
               Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
             </Kinetic>
             <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-              {DEMOS.length} real working tools built around the same practical AI patterns I use in
-              client products. Type into them and see what useful AI can do inside a business workflow.
+              Practical AI tools for real business workflows. Type into them and see what useful AI can do inside sales, service, content, operations, and reporting work.
             </m.p>
             <m.p variants={fadeUp} className="mx-auto mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark">
-              Nothing here is canned · No sign-up · Your input isn't stored
+              Practical demos - No sign-up - Your input isn't stored
             </m.p>
           </m.div>
         </div>

@@ -88,7 +88,7 @@ export default function Nav({
         ["Home", "Services", "Work", "AI Lab", "About"].includes(link.label),
       );
   const homeHref = ar ? "/ar" : "/";
-  const bookLabel = ar ? AR_CHROME.bookAudit : "Book Audit";
+  const bookLabel = ar ? AR_CHROME.bookAudit : "Book a free systems audit";
   const mobileBookLabel = ar ? AR_CHROME.bookAudit : "Book a free systems audit";
   // Absolute so the booking CTA works from every route, not just pages that
   // render <Contact/> — a bare "#contact" was a dead link on /about, /ai-lab, etc.
@@ -141,7 +141,7 @@ export default function Nav({
             <Wordmark />
             {!ar && (
               <span className="mt-0.5 hidden font-mono text-[9px] uppercase tracking-[0.18em] text-muted-dark xl:block">
-                Serve first. Build second.
+                Independent systems support.
               </span>
             )}
             {/* name comes from the visible wordmark; suffix gives context */}

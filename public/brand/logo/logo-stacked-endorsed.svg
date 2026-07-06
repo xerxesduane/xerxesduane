@@ -2,15 +2,15 @@
   <!-- Xerxes Duane stacked lockup with tagline — centered, dark backgrounds -->
   <defs>
     <linearGradient id="xgold" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#F4EFE6"/><stop offset="0.5" stop-color="#E8C173"/><stop offset="1" stop-color="#DAA442"/>
+      <stop offset="0" stop-color="#F4EFE6"/><stop offset="0.5" stop-color="#E8C173"/><stop offset="1" stop-color="#B8892F"/>
     </linearGradient>
   </defs>
   <g transform="translate(136.8,18) scale(2.4)" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M5 31 H31" stroke="#DAA442" stroke-width="2.6"/>
-    <path d="M23.8 30 C21 23, 14.5 13, 8.2 6.4" stroke="#DAA442" stroke-width="2.1"/>
+    <path d="M5 31 H31" stroke="#B8892F" stroke-width="2.6"/>
+    <path d="M23.8 30 C21 23, 14.5 13, 8.2 6.4" stroke="#B8892F" stroke-width="2.1"/>
     <path d="M12.2 30 C15 23, 21.5 13, 27.8 6.4" stroke="#F3EFE6" stroke-width="2.3"/>
-    <circle cx="18" cy="5.6" r="1.9" fill="#DAA442"/>
+    <circle cx="18" cy="5.6" r="1.9" fill="#B8892F"/>
   </g>
   <text x="180" y="146" text-anchor="middle" font-family="Fraunces, Georgia, 'Times New Roman', serif" font-size="34" font-weight="600" letter-spacing="-1"><tspan fill="url(#xgold)">Xerxes</tspan> <tspan fill="#F3EFE6">Duane</tspan></text>
-  <text x="180" y="172" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="500" letter-spacing="1.2" fill="#DAA442">Serve first. Build second.</text>
+  <text x="180" y="172" text-anchor="middle" font-family="Inter, Helvetica, Arial, sans-serif" font-size="14" font-weight="500" letter-spacing="1.2" fill="#B8892F">Independent systems support.</text>
 </svg>

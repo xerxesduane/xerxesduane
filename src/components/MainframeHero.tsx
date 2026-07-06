@@ -134,7 +134,7 @@ export default function MainframeHero() {
         src={VIDEO_SRC}
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         aria-hidden
         className={`fixed inset-0 z-0 h-full w-full object-cover transition-opacity duration-500 ${
           heroVisible ? "opacity-100" : "pointer-events-none opacity-0"
@@ -173,7 +173,7 @@ export default function MainframeHero() {
           href="#contact"
           className="hidden text-[23px] text-black underline underline-offset-2 transition-opacity hover:opacity-60 md:block"
         >
-          Get in touch
+          Book a free systems audit
         </a>
 
         {/* mobile hamburger */}
@@ -211,7 +211,7 @@ export default function MainframeHero() {
           onClick={() => setMenuOpen(false)}
           className="text-[32px] font-medium text-black underline underline-offset-2"
         >
-          Get in touch
+          Book a free systems audit
         </a>
       </div>
 
@@ -289,7 +289,7 @@ export default function MainframeHero() {
               onClick={() => navigator.clipboard?.writeText(EMAIL).catch(() => {})}
               className="mx-[0.2em] mb-[0.4em] inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-black/40 bg-transparent px-4 py-[0.3em] text-[13px] text-black transition-colors duration-200 hover:bg-black hover:text-white sm:gap-3 sm:px-5 sm:text-[15px]"
             >
-              Reach us:{" "}
+            Email:{" "}
               <span className="underline underline-offset-1">{EMAIL}</span>
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
                 <rect x="3.5" y="3.5" width="7" height="7" rx="1" stroke="currentColor" />

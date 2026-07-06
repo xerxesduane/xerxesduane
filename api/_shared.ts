@@ -5,13 +5,7 @@
 // PUBLIC, unauthenticated demo: tight output caps, short input caps, and a
 // per-IP rate limit.
 //
-// Provider: Groq's free tier (no card, no regional billing restriction, very
-// fast). Free key from https://console.groq.com — set GROQ_API_KEY in Vercel.
-// The @ai-sdk/groq provider reads that env var automatically.
-//
-// (We tried Gemini, but Google requires prepaid billing in this region, so its
-// "free" tier 429s. @ai-sdk/anthropic + @ai-sdk/google are still installed for
-// an easy switch — restore the import + model IDs in the handlers and here.)
+// Provider details stay server-side. Public copy should describe the tools by business workflow, not by model vendor or infrastructure.
 import { generateObject } from "ai";
 import { groq } from "@ai-sdk/groq";
 import type { z } from "zod";
@@ -19,13 +13,13 @@ import type { z } from "zod";
 export const MODEL_FAST = "llama-3.3-70b-versatile";
 export const MODEL_SMART = "llama-3.3-70b-versatile";
 // Structured output (generateObject) needs json_schema support, which Llama
-// models lack on Groq — use a gpt-oss model for the extraction demo.
+// models lack in this runtime — use a gpt-oss model for the extraction demo.
 export const MODEL_STRUCTURED = "openai/gpt-oss-20b";
-// Vision / multimodal: Llama 4 Scout accepts image input (Preview on Groq).
+// Vision / multimodal: Llama 4 Scout accepts image input (preview).
 // Being a Llama model it also lacks json_schema, so the vision endpoints use
 // generateText + parseLooseJson rather than generateObject.
 export const MODEL_VISION = "meta-llama/llama-4-scout-17b-16e-instruct";
-// Speech-to-text: Groq's hosted Whisper (called over REST, see groqTranscribe).
+// Speech-to-text: hosted speech-to-text (called over REST, see groqTranscribe).
 export const MODEL_TRANSCRIBE = "whisper-large-v3-turbo";
 
 const WINDOW_MS = 60_000;
@@ -117,7 +111,7 @@ export async function preflight(req: Request): Promise<Response | null> {
   if (req.method !== "POST") return errorResponse("Method not allowed.", 405);
   if (!hasKey()) {
     return errorResponse(
-      "This demo isn't configured yet — the site owner needs to add a GROQ_API_KEY.",
+      "This demo isn't configured yet. Please try again later or book a free systems audit.",
       503,
     );
   }
@@ -163,7 +157,7 @@ export function logAiError(where: string, err: unknown): void {
 /**
  * Best-effort parse of a model's JSON output. Strips ```json fences and any
  * surrounding prose, then parses the first {...} or [...] block. Vision/voice
- * models can't use generateObject (no json_schema on Groq), so the endpoints
+ * models can't use generateObject (no json_schema in this runtime), so the endpoints
  * ask for JSON in the prompt and lean on this to recover a typed object.
  */
 export function parseLooseJson<T = unknown>(text: string): T | null {
@@ -194,7 +188,7 @@ export function base64ToBytes(b64: string): Uint8Array {
 }
 
 /**
- * Transcribe audio with Groq's hosted Whisper via the REST endpoint. Kept as a
+ * Transcribe audio with hosted speech-to-text via the REST endpoint. Kept as a
  * raw multipart fetch so it doesn't depend on AI-SDK transcription support.
  * `audio` is the raw bytes; returns the recognised text. `language` is an
  * optional ISO-639-1 hint ("en"/"ar").
@@ -224,7 +218,7 @@ export async function groqTranscribe(
     body: form,
   });
   if (!res.ok) {
-    throw new Error(`groq transcribe ${res.status}: ${(await res.text()).slice(0, 300)}`);
+    throw new Error(`speech transcribe ${res.status}: ${(await res.text()).slice(0, 300)}`);
   }
   return (await res.text()).trim();
 }
