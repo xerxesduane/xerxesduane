@@ -12,6 +12,7 @@ export default function StudioIntroSection() {
   return (
     <section
       ref={ref}
+      id="services"
       aria-labelledby="studio-intro-heading"
       className="studio-reference-page bg-[#FDFCFA] px-6 py-16 md:py-20"
     >
@@ -66,7 +67,7 @@ export default function StudioIntroSection() {
           <Button variant="primary" href={CONTACT.calendar} target="_blank" rel="noopener">
             Book a free systems audit
           </Button>
-          <Button variant="secondary" href="#studio-projects">
+          <Button variant="secondary" href="#work">
             View projects
           </Button>
         </div>

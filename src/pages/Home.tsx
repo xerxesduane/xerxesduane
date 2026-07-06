@@ -8,8 +8,6 @@ import ProjectsSection from "../components/ProjectsSection";
 import PartnerSection from "../components/PartnerSection";
 import FAQ from "../components/FAQ";
 import Contact from "../components/Contact";
-import StudioFooter from "../components/StudioFooter";
-import CopyrightBar from "../components/CopyrightBar";
 import BottomStudioNav from "../components/BottomStudioNav";
 
 /**
@@ -44,8 +42,6 @@ export default function Home() {
       <FAQ />
       <Contact />
 
-      <StudioFooter />
-      <CopyrightBar />
       <BottomStudioNav />
     </>
   );

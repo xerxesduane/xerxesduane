@@ -73,7 +73,7 @@ function ProjectItem({
 export default function ProjectsSection() {
   return (
     <section
-      id="studio-projects"
+      id="work"
       aria-labelledby="studio-projects-heading"
       className="studio-reference-page w-full bg-[#FDFCFA]"
     >
