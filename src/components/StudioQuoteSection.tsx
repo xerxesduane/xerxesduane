@@ -28,7 +28,7 @@ function ParallaxImage() {
       const rect = wrap.getBoundingClientRect();
       const progress = 1 - (rect.top + rect.height) / (window.innerHeight + rect.height);
       const offset = Math.max(-200, Math.min(200, (progress - 0.5) * 400));
-      img.style.transform = `translateY(${offset}px) scale(1.25)`;
+      img.style.transform = `translateY(${offset}px) scale(1.12)`;
     };
     const onScroll = () => {
       if (visible && !raf) raf = requestAnimationFrame(update);
@@ -53,11 +53,11 @@ function ParallaxImage() {
     >
       <img
         ref={imgRef}
-        src="https://images.higgs.ai/?default=1&output=webp&url=https%3A%2F%2Fd8j0ntlcm91z4.cloudfront.net%2Fuser_38xzZboKViGWJOttwIXH07lWA1P%2Fhf_20260330_103804_7aa5494f-4d5b-432e-9dc7-20715275f143.png&w=1280&q=85"
-        alt="Studio mood image"
+        src="/brand/xerxes-magdaluyo-photo.jpeg"
+        alt="Xerxes Magdaluyo"
         loading="lazy"
-        className="h-full w-full object-cover will-change-transform"
-        style={{ transform: "scale(1.25)" }}
+        className="h-full w-full object-cover object-[center_35%] will-change-transform"
+        style={{ transform: "scale(1.12)" }}
       />
     </div>
   );
