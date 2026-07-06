@@ -127,6 +127,11 @@ export default function Nav({
             transition={{ duration: 0.2, ease: EASE }}
           >
             <Wordmark />
+            {!ar && (
+              <span className="mt-0.5 hidden font-mono text-[9px] uppercase tracking-[0.18em] text-muted-dark xl:block">
+                Serve first. Build second.
+              </span>
+            )}
             {/* name comes from the visible wordmark; suffix gives context */}
             <span className="sr-only">{ar ? "— الصفحة الرئيسية" : "— home"}</span>
           </m.a>

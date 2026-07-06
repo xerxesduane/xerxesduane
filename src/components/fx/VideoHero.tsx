@@ -1,18 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { useReducedMotionPref } from "../../lib/usePrefs";
 
+/** Fade duration (ms) for both the fade-in and fade-out ramps. */
+const FADE_MS = 500;
+/** Start fading out when this much of the clip remains (seconds). */
+const FADE_OUT_REMAINING = 0.55;
+
 /**
- * Full-bleed hero footage layer (Verteal-style). The poster + ink scrims are
- * prerendered (decorative, aria-hidden); the looping muted/inline video mounts
- * client-side on desktop AND mobile, fading in once it plays. Skipped only
- * under reduced-motion or Save-Data — those get the cinematic still. Pauses
- * when off-screen. Some mobiles block autoplay (e.g. iOS Low Power Mode); the
- * poster remains visible underneath in that case.
+ * Full-bleed hero footage layer. The poster + ink scrims are prerendered
+ * (decorative, aria-hidden); the muted/inline video mounts client-side on
+ * desktop AND mobile. Instead of a hard loop, the clip fades in over 500ms
+ * once it can play, fades out over the final ~0.55s, then restarts and fades
+ * back in — a smooth "liquid" loop driven by requestAnimationFrame (opacity
+ * is set imperatively; no CSS transitions). Skipped under reduced-motion or
+ * Save-Data — those get the cinematic still. Pauses when off-screen.
  */
 export default function VideoHero() {
   const reduced = useReducedMotionPref();
   const [showVideo, setShowVideo] = useState(false);
-  const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -28,16 +33,64 @@ export default function VideoHero() {
     if (!showVideo) return;
     const v = videoRef.current;
     if (!v) return;
+
     // Some mobile browsers require muted as a property (not just the attribute)
     // before they'll honor autoplay.
     v.muted = true;
+    v.style.opacity = "0";
+
+    let raf = 0;
+    // Current fade ramp: null = idle, otherwise animate opacity from -> to.
+    let ramp: { from: number; to: number; start: number } | null = null;
+    let canPlay = false;
+    let fadingOut = false;
+
+    const startRamp = (to: number) => {
+      ramp = { from: parseFloat(v.style.opacity) || 0, to, start: performance.now() };
+    };
+
+    const tick = (now: number) => {
+      if (ramp) {
+        const t = Math.min(1, (now - ramp.start) / FADE_MS);
+        v.style.opacity = String(ramp.from + (ramp.to - ramp.from) * t);
+        if (t >= 1) ramp = null;
+      }
+      // Begin the fade-out ramp as the clip approaches its end.
+      if (canPlay && !fadingOut && v.duration > 0 && v.duration - v.currentTime <= FADE_OUT_REMAINING) {
+        fadingOut = true;
+        startRamp(0);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+
+    const onCanPlay = () => {
+      if (canPlay) return;
+      canPlay = true;
+      startRamp(1);
+    };
+    const onEnded = () => {
+      v.currentTime = 0;
+      fadingOut = false;
+      v.play().catch(() => {});
+      startRamp(1);
+    };
+    v.addEventListener("canplay", onCanPlay);
+    v.addEventListener("ended", onEnded);
     v.play().catch(() => {});
+
     const io = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) v.play().catch(() => {});
       else v.pause();
     });
     io.observe(v);
-    return () => io.disconnect();
+
+    return () => {
+      cancelAnimationFrame(raf);
+      v.removeEventListener("canplay", onCanPlay);
+      v.removeEventListener("ended", onEnded);
+      io.disconnect();
+    };
   }, [showVideo]);
 
   return (
@@ -56,13 +109,9 @@ export default function VideoHero() {
           poster="/hero/poster.webp"
           autoPlay
           muted
-          loop
           playsInline
           preload="auto"
-          onPlaying={() => setPlaying(true)}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-            playing ? "opacity-100" : "opacity-0"
-          }`}
+          className="absolute inset-0 h-full w-full object-cover object-center opacity-0"
         />
       )}
       {/* ink scrims: keep the cream/gold copy AA-legible over bright footage,

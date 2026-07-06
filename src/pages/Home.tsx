@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import Hero from "../components/Hero";
 import Marquee from "../components/Marquee";
 import Diagnosis from "../components/Diagnosis";
+import FeaturedShowreel from "../components/FeaturedShowreel";
 import Services from "../components/Services";
 import AILabPreview from "../components/AILabPreview";
 import ResultsBand from "../components/ResultsBand";
@@ -55,9 +56,12 @@ export default function Home() {
       <Hero />
       <Marquee />
 
-      {/* The problem → what I do */}
+      {/* The problem → creative proof → what I do */}
       <Band divide={false}>
         <Diagnosis />
+      </Band>
+      <Band>
+        <FeaturedShowreel />
       </Band>
       <Band tint>
         <Services />

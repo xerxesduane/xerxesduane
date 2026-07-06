@@ -31,7 +31,7 @@ export default function Hero() {
 
           <m.span
             variants={fadeUp}
-            className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-cream-dim/80"
+            className="liquid-glass inline-flex items-center gap-2 rounded-full px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-cream-dim/80"
           >
             <span className="relative flex h-2 w-2">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold/70" />
@@ -44,9 +44,10 @@ export default function Hero() {
             as="h1"
             className="mt-7 text-[2.15rem] leading-[1.07] sm:text-5xl md:text-6xl lg:text-7xl"
           >
-            Big-company systems for{" "}
-            <span className="text-gradient-gold italic">small businesses</span>
-            <br className="hidden sm:block" /> that can't afford a tech team.
+            Big-company systems
+            <br className="hidden sm:block" /> for small businesses
+            <br />
+            <span className="text-gradient-gold italic">that can't afford a tech team.</span>
           </Kinetic>
 
           <m.p
@@ -99,8 +100,6 @@ export default function Hero() {
             <span>50+ businesses helped since 2019</span>
             <span className="text-muted-dark">·</span>
             <span>Dubai to New Zealand</span>
-            <span className="text-muted-dark">·</span>
-            <span>You own everything I build</span>
           </m.div>
         </m.div>
       </div>

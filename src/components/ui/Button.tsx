@@ -17,7 +17,7 @@ export default function Button({
   if (variant === "ghost") {
     return (
       <a
-        className={`${base} border border-cream/15 text-cream hover:border-gold/50 hover:text-gold ${className}`}
+        className={`${base} liquid-glass text-cream hover:text-gold ${className}`}
         {...props}
       >
         {children}
