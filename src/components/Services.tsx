@@ -1,55 +1,181 @@
-import { m } from "framer-motion";
+import { useEffect, useState, type ReactNode } from "react";
 import { ArrowUpRight, Magnet, ShieldCheck, Workflow, type LucideIcon } from "lucide-react";
 import { OUTCOMES, CREATIVE_SUPPORT } from "../data/content";
-import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
-import SectionHeading from "./ui/SectionHeading";
 
 const OUTCOME_ICONS: LucideIcon[] = [Magnet, ShieldCheck, Workflow];
 const OUTCOME_PRICES = ["from AED 2,500", "from AED 4,000", "from AED 6,000"];
+const VIDEO_SRC =
+  "https://res.cloudinary.com/dymdk9ysp/video/upload/v1783345689/Dubai_City_Skyline_Night_Traffic_Aerial_by_Yavor_Yanakiev_-_Stock_Video_-_Motion_Array_rf86de.mp4";
+
+const HEADING_CHAR_DELAY_MS = 30;
+const HEADING_INITIAL_DELAY_MS = 200;
+const HEADING_DURATION_MS = 500;
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setPrefersReducedMotion(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+interface AnimatedHeadingProps {
+  lines: { text: string; className?: string }[];
+}
+
+function AnimatedHeading({ lines }: AnimatedHeadingProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [visible, setVisible] = useState(false);
+  const label = lines.map((line) => line.text).join(" ");
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setVisible(true);
+      return;
+    }
+
+    const timer = window.setTimeout(() => setVisible(true), 0);
+    return () => window.clearTimeout(timer);
+  }, [prefersReducedMotion]);
+
+  let charIndex = 0;
+
+  return (
+    <h2
+      aria-label={label}
+      className="text-center font-display text-4xl font-normal leading-[0.9] tracking-[-0.04em] text-cream md:text-5xl lg:text-6xl xl:text-7xl"
+      style={{ textShadow: "0 2px 22px rgba(0, 0, 0, 0.55)" }}
+    >
+      {lines.map((line) => (
+        <span key={line.text} aria-hidden="true" className={`block ${line.className ?? ""}`}>
+          {Array.from(line.text).map((char, index) => {
+            const delay = HEADING_INITIAL_DELAY_MS + charIndex * HEADING_CHAR_DELAY_MS;
+            charIndex += 1;
+
+            return (
+              <span
+                key={`${line.text}-${index}`}
+                className="inline-block"
+                style={{
+                  opacity: visible ? 1 : 0,
+                  transform:
+                    visible || prefersReducedMotion ? "translateX(0)" : "translateX(-18px)",
+                  transitionProperty: prefersReducedMotion ? "none" : "opacity, transform",
+                  transitionDuration: `${HEADING_DURATION_MS}ms`,
+                  transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                  transitionDelay: prefersReducedMotion ? "0ms" : `${delay}ms`,
+                }}
+              >
+                {char === " " ? "\u00A0" : char}
+              </span>
+            );
+          })}
+        </span>
+      ))}
+    </h2>
+  );
+}
+
+interface FadeInProps {
+  children: ReactNode;
+  className?: string;
+  delay?: number;
+  duration?: number;
+}
+
+function FadeIn({ children, className, delay = 0, duration = 1000 }: FadeInProps) {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setVisible(true);
+      return;
+    }
+
+    const timer = window.setTimeout(() => setVisible(true), delay);
+    return () => window.clearTimeout(timer);
+  }, [delay, prefersReducedMotion]);
+
+  return (
+    <div
+      className={`transition-opacity ${className ?? ""}`}
+      style={{
+        opacity: visible ? 1 : 0,
+        transitionDuration: prefersReducedMotion ? "0ms" : `${duration}ms`,
+        transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+      }}
+    >
+      {children}
+    </div>
+  );
+}
 
 export default function Services() {
   return (
-    <section id="services" className="relative scroll-mt-24 overflow-hidden py-20 sm:py-28">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-10 -z-10 h-96 bg-[radial-gradient(ellipse_55%_45%_at_50%_0%,rgba(218,164,66,0.13),transparent_68%)]"
-      />
-      <div className="container-bl">
-        <SectionHeading
-          eyebrow="What I build"
-          title={
-            <>
-              Everything I build serves{" "}
-              <span className="text-gradient-gold">one of three outcomes.</span>
-            </>
-          }
-          subtitle="Not a menu of twelve disconnected services — one connected system, built in the order your business needs it."
-        />
+    <section
+      id="services"
+      className="relative isolate min-h-screen overflow-hidden bg-black px-6 py-28 sm:py-32"
+      aria-label="What I build"
+    >
+      <video
+        className="absolute inset-0 z-0 h-full w-full object-cover"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      >
+        <source src={VIDEO_SRC} type="video/mp4" />
+      </video>
 
-        <m.div
-          variants={stagger}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mt-14 grid gap-4 lg:grid-cols-3"
-        >
+      <div className="relative z-10 mx-auto w-full max-w-7xl">
+        <div className="mx-auto max-w-4xl text-center">
+          <p
+            className="mb-6 font-mono text-[11px] uppercase tracking-[0.35em] text-gold"
+            style={{ textShadow: "0 2px 18px rgba(0, 0, 0, 0.6)" }}
+          >
+            WHAT I BUILD
+          </p>
+          <AnimatedHeading
+            lines={[
+              { text: "Everything I build serves" },
+              { text: "one of three outcomes.", className: "text-gold" },
+            ]}
+          />
+          <FadeIn delay={800} duration={1000}>
+            <p
+              className="mx-auto mt-6 max-w-2xl text-center text-base leading-relaxed text-cream-dim md:text-lg"
+              style={{ textShadow: "0 2px 18px rgba(0, 0, 0, 0.65)" }}
+            >
+              Not a menu of twelve disconnected services — one connected system,
+              built in the order your business needs it.
+            </p>
+          </FadeIn>
+        </div>
+
+        <FadeIn delay={1100} duration={1000} className="mt-16 grid gap-4 lg:grid-cols-3">
           {OUTCOMES.map((outcome, index) => {
-            const Icon = OUTCOME_ICONS[index];
+            const Icon = OUTCOME_ICONS[index] ?? Workflow;
+
             return (
-              <m.article
+              <article
                 key={outcome.title}
-                variants={fadeUp}
-                className="glass glass-hover group relative flex flex-col overflow-hidden rounded-3xl p-6 sm:p-7"
+                className="liquid-glass liquid-glass-dark group relative flex min-h-[520px] flex-col overflow-hidden rounded-3xl border border-white/20 px-6 py-7 sm:p-7"
               >
-                <div
-                  aria-hidden
-                  className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-gold/45 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-                />
                 <div className="flex items-start justify-between gap-4">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gold/10 text-gold ring-1 ring-gold/20 transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-gold group-hover:text-ink">
+                  <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/40 text-gold ring-1 ring-gold/20 transition duration-300 group-hover:-translate-y-0.5 group-hover:bg-gold group-hover:text-ink">
                     <Icon size={22} strokeWidth={1.7} />
                   </span>
-                  <span className="font-mono text-xs text-muted-dark">{outcome.no}</span>
+                  <span className="font-mono text-xs text-cream-dim/70">{outcome.no}</span>
                 </div>
 
                 <h3 className="mt-6 text-2xl leading-tight text-cream sm:text-[1.7rem]">
@@ -58,21 +184,21 @@ export default function Services() {
                 <p className="mt-2 font-mono text-[11px] uppercase tracking-wider text-gold/80">
                   {outcome.promise}
                 </p>
-                <p className="mt-4 text-sm leading-relaxed text-muted">{outcome.body}</p>
+                <p className="mt-4 text-sm leading-relaxed text-cream-dim">{outcome.body}</p>
 
-                <ul className="mt-6 space-y-1 border-t border-cream/8 pt-4">
+                <ul className="mt-6 space-y-1 border-t border-white/10 pt-4">
                   {outcome.items.map((item) => (
                     <li key={item.label}>
                       <a
                         href={item.href}
                         data-cursor="link"
-                        className="group/item flex items-center justify-between gap-3 rounded-lg px-2 py-2 text-sm text-cream-dim transition-colors hover:bg-cream/[0.04] hover:text-gold"
+                        className="group/item flex items-center justify-between gap-3 rounded-lg px-2 py-2 text-sm text-cream-dim transition-colors hover:bg-white/[0.06] hover:text-gold"
                       >
                         {item.label}
                         <ArrowUpRight
                           size={14}
                           strokeWidth={2}
-                          className="shrink-0 text-muted-dark opacity-0 transition group-hover/item:-translate-y-0.5 group-hover/item:translate-x-0.5 group-hover/item:text-gold group-hover/item:opacity-100"
+                          className="shrink-0 text-cream-dim/60 opacity-0 transition group-hover/item:-translate-y-0.5 group-hover/item:translate-x-0.5 group-hover/item:text-gold group-hover/item:opacity-100"
                           aria-hidden
                         />
                       </a>
@@ -80,23 +206,20 @@ export default function Services() {
                   ))}
                 </ul>
 
-                <p className="mt-auto border-t border-cream/8 pt-4 font-mono text-xs text-gold">
+                <p className="mt-auto border-t border-white/10 pt-4 font-mono text-xs text-gold">
                   {OUTCOME_PRICES[index]}
                 </p>
-              </m.article>
+              </article>
             );
           })}
-        </m.div>
+        </FadeIn>
 
-        {/* Creative support — real capability, deliberately not equal-billed */}
-        <m.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mx-auto mt-4 flex max-w-3xl flex-wrap items-center justify-center gap-x-2 gap-y-2 text-center"
+        <FadeIn
+          delay={1300}
+          duration={1000}
+          className="mx-auto mt-6 flex max-w-3xl flex-wrap items-center justify-center gap-x-2 gap-y-2 text-center"
         >
-          <span className="font-mono text-[11px] uppercase tracking-wider text-muted-dark">
+          <span className="font-mono text-[11px] uppercase tracking-wider text-cream-dim">
             Backed by in-house creative:
           </span>
           {CREATIVE_SUPPORT.map((c) => (
@@ -104,34 +227,30 @@ export default function Services() {
               key={c.label}
               href={c.href}
               data-cursor="link"
-              className="rounded-full border border-cream/10 px-3.5 py-1.5 text-xs text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
+              className="rounded-full border border-white/15 bg-black/20 px-3.5 py-1.5 text-xs text-cream-dim backdrop-blur-sm transition-colors hover:border-gold/50 hover:text-gold"
             >
               {c.label}
             </a>
           ))}
-        </m.div>
+        </FadeIn>
 
-        <m.div
-          variants={fadeUp}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="mx-auto mt-10 flex max-w-3xl flex-col items-center gap-4 rounded-2xl border border-cream/10 bg-cream/[0.04] px-5 py-5 text-center sm:flex-row sm:justify-between sm:text-left"
-        >
-          <p className="text-sm text-muted-dark">
-            Indicative starting prices. You get one fixed quote after your free
-            systems audit, no surprises and no lock-in. Ad spend and software
-            licences are billed separately.
-          </p>
-          <a
-            href="#contact"
-            data-cursor="link"
-            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-gold/30 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
-          >
-            Start with the audit
-            <ArrowUpRight size={14} strokeWidth={2.4} />
-          </a>
-        </m.div>
+        <FadeIn delay={1500} duration={1000}>
+          <div className="liquid-glass liquid-glass-dark mx-auto mt-10 flex max-w-3xl flex-col items-center gap-4 rounded-2xl border border-white/20 px-5 py-5 text-center sm:flex-row sm:justify-between sm:text-left">
+            <p className="text-sm text-cream-dim">
+              Indicative starting prices. You get one fixed quote after your free
+              systems audit, no surprises and no lock-in. Ad spend and software
+              licences are billed separately.
+            </p>
+            <a
+              href="#contact"
+              data-cursor="link"
+              className="inline-flex shrink-0 items-center gap-2 rounded-full border border-gold/30 px-4 py-2.5 font-mono text-xs uppercase tracking-wider text-gold transition hover:border-gold hover:bg-gold hover:text-ink"
+            >
+              Start with the audit
+              <ArrowUpRight size={14} strokeWidth={2.4} />
+            </a>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );
