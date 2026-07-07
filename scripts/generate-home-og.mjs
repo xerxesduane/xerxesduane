@@ -10,7 +10,16 @@ const svg = readFileSync(join(root, "public", "og-image.svg"), "utf-8");
 
 const png = new Resvg(svg, {
   fitTo: { mode: "width", value: 1200 },
-  font: { loadSystemFonts: true },
+  font: {
+    loadSystemFonts: true,
+    fontFiles: [
+      join(root, "public", "fonts", "inter-400.woff2"),
+      join(root, "public", "fonts", "inter-600.woff2"),
+      join(root, "public", "fonts", "inter-700.woff2"),
+      join(root, "public", "fonts", "PPMondwest-Regular.otf"),
+      join(root, "public", "fonts", "PPNeueBit-Bold.otf"),
+    ],
+  },
 })
   .render()
   .asPng();

@@ -55,7 +55,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     icon: Boxes,
     metaTitle: "Odoo ERP Implementation in Dubai - Xerxes Duane",
     metaDescription:
-      "Odoo ERP setup, configuration, and support for small businesses in Dubai. One system for inventory, sales, invoicing, and CRM, run by a hands-on Odoo administrator. Book a free systems audit.",
+      "Odoo ERP setup and support in Dubai: inventory, sales, invoicing, CRM, and operations connected in one practical system. Book a free audit.",
     ogTitle: "Odoo ERP Implementation in Dubai",
     jsonLdName: "Odoo ERP Implementation & Administration",
     price: "from AED 12,000",
@@ -174,7 +174,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     icon: Bot,
     metaTitle: "AI Automation in Dubai - Xerxes Duane",
     metaDescription:
-      "AI automation in Dubai for small businesses: chatbots, AI workflows, and custom assistants that qualify leads, answer questions, and remove repetitive work. Book a free systems audit.",
+      "AI automation in Dubai for small businesses: chatbots, workflows, and assistants that qualify leads, answer questions, and remove busywork.",
     ogTitle: "AI Automation in Dubai",
     jsonLdName: "AI Automation & Custom AI Workflows",
     price: "from AED 6,000",
@@ -233,7 +233,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     icon: Search,
     metaTitle: "SEO Services in Dubai - Xerxes Duane",
     metaDescription:
-      "SEO in Dubai that targets keywords that convert, not vanity rankings. Technical SEO, local search, and content for small businesses, with transparent reporting. Book a free systems audit.",
+      "SEO in Dubai for keywords that convert: technical SEO, local search, and content for small businesses, with plain-English reporting.",
     ogTitle: "SEO Services in Dubai",
     jsonLdName: "Search Engine Optimisation (SEO)",
     price: "from AED 2,000/month",
@@ -293,7 +293,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     icon: ScanSearch,
     metaTitle: "Answer Engine Optimization (AEO) in Dubai - Xerxes Duane",
     metaDescription:
-      "AEO in Dubai: get your business quoted by Google AI Overviews, voice assistants, and featured snippets. Answer-first content, structured data, and FAQ schema. Book a free systems audit.",
+      "AEO in Dubai: get quoted by Google AI Overviews, voice assistants, and featured snippets with answer-first content and structured data.",
     ogTitle: "Answer Engine Optimization (AEO) in Dubai",
     jsonLdName: "Answer Engine Optimization (AEO)",
     price: "from AED 2,500/month",

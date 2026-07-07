@@ -23,9 +23,9 @@ export interface InsightPost {
 export const INSIGHTS: InsightPost[] = [
   {
     slug: "aeo-seo-geo-dubai",
-    title: "AEO vs SEO vs GEO: what actually gets you found in 2026 (Dubai)",
+    title: "AEO vs SEO vs GEO: how Dubai businesses get found",
     description:
-      "SEO, AEO, and GEO explained in plain English for Dubai businesses: how people actually search in 2026, what each one practically requires, where they overlap, and what an SME should do first.",
+      "SEO, AEO, and GEO explained in plain English for Dubai businesses: what each one does, where they overlap, and what an SME should do first.",
     date: "2026-06-14",
     author: "Xerxes Duane",
     readingMinutes: 8,
@@ -155,9 +155,9 @@ export const INSIGHTS: InsightPost[] = [
   },
   {
     slug: "get-cited-by-chatgpt-perplexity-dubai",
-    title: "How to get your business recommended by ChatGPT and Perplexity",
+    title: "How to get cited by ChatGPT and Perplexity",
     description:
-      "A practical, no-hype guide to how AI engines like ChatGPT and Perplexity decide what to cite, the concrete steps a Dubai business can take to get recommended, how to check if you're already showing up, and why you can't bribe your way in.",
+      "How AI engines decide what to cite, what Dubai businesses can do to get recommended, and how to check whether you already show up.",
     date: "2026-06-13",
     author: "Xerxes Duane",
     readingMinutes: 8,
@@ -265,7 +265,7 @@ export const INSIGHTS: InsightPost[] = [
     slug: "whatsapp-automation-not-spam-dubai",
     title: "WhatsApp lead automation that doesn't feel like spam",
     description:
-      "In Dubai, WhatsApp is where business actually happens. Here's the honest difference between blasting people and genuinely helpful automation: the compliant Cloud API setup, what to automate, what not to, and how AI keeps it human.",
+      "The difference between WhatsApp spam and helpful automation: opt-in, Cloud API setup, smart follow-up, and where AI should hand off to humans.",
     date: "2026-06-12",
     author: "Xerxes Duane",
     readingMinutes: 8,
@@ -372,7 +372,7 @@ export const INSIGHTS: InsightPost[] = [
     slug: "website-cost-dubai",
     title: "How much does a website really cost in Dubai? (2026)",
     description:
-      "An honest, no-spin breakdown of what a website actually costs in Dubai in 2026: real AED ranges by type, what drives the price, the costs people forget, and how to avoid overpaying.",
+      "An honest 2026 website cost guide for Dubai: AED ranges by type, what drives price, forgotten costs, and how to avoid overpaying.",
     date: "2026-06-06",
     author: "Xerxes Duane",
     readingMinutes: 7,
@@ -544,7 +544,7 @@ export const INSIGHTS: InsightPost[] = [
   },
   {
     slug: "choosing-a-web-developer-dubai",
-    title: "How to choose a web developer in Dubai (without getting burned)",
+    title: "How to choose a web developer in Dubai",
     description:
       "The questions to ask, the red flags to avoid, and what good looks like when hiring a web developer in Dubai, so you own your site and it actually performs.",
     date: "2026-05-28",
@@ -654,7 +654,7 @@ export const INSIGHTS: InsightPost[] = [
   },
   {
     slug: "odoo-vs-zoho-uae",
-    title: "Odoo vs Zoho for a UAE small business: which actually fits?",
+    title: "Odoo vs Zoho for UAE small businesses",
     description:
       "A practical comparison of Odoo and Zoho for small businesses in the UAE, where each one wins, where each one hurts, and how to choose without the sales spin.",
     date: "2026-05-26",

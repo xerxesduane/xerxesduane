@@ -16,6 +16,8 @@ export interface PageMeta {
   jsonLd?: Record<string, unknown>[];
   /** When true, emits robots noindex (e.g. 404). */
   noindex?: boolean;
+  /** Open Graph locale for the route. Defaults to English. */
+  locale?: "en_US" | "ar_AR";
   /** hreflang alternates (en/ar/x-default) for bilingual pages. */
   alternates?: { hreflang: string; href: string }[];
 }
@@ -43,6 +45,14 @@ const SERVICE_OG_IMAGES = new Set([
   "seo-dubai",
   "answer-engine-optimization-dubai",
   "generative-engine-optimization-dubai",
+  "custom-software-development-dubai",
+  "crm-development-dubai",
+  "mobile-app-development-dubai",
+  "ecommerce-development-dubai",
+  "landing-page-design-dubai",
+  "branding-graphic-design-dubai",
+  "videography-photography-dubai",
+  "video-editing-dubai",
 ]);
 
 function serviceOgImage(slug: string): string {
@@ -56,7 +66,7 @@ function serviceOgImage(slug: string): string {
  * OG image by URL for weeks, so a versioned query string forces them to fetch
  * the current image instead of serving a stale (or wrong) cached one.
  */
-const OG_IMAGE_VERSION = "6";
+const OG_IMAGE_VERSION = "7";
 
 /** Absolute, cache-busted share-image URL for a page. */
 function ogImageUrl(image?: string): string {
@@ -153,6 +163,7 @@ const AR_HOME_META: PageMeta = {
   canonical: `${SITE_ORIGIN}/ar`,
   ogTitle: "Xerxes Duane | استوديو تقني للأعمال الصغيرة في دبي",
   ogImage: `${SITE_ORIGIN}/brand/og/ar-home.png`,
+  locale: "ar_AR",
   alternates: HOME_ALTERNATES,
 };
 
@@ -311,6 +322,7 @@ export function getPageMeta(path: string): PageMeta {
         canonical: `${SITE_ORIGIN}/ar/${ar.slug}`,
         ogTitle: ar.metaTitle,
         ogImage: serviceOgImage(ar.slug),
+        locale: "ar_AR",
         alternates: serviceAlternates(ar.slug),
       };
     }
@@ -406,11 +418,20 @@ function esc(s: string): string {
 export function buildHeadTags(path: string): string {
   const m = getPageMeta(path);
   const ogImage = ogImageUrl(m.ogImage);
+  const locale = m.locale ?? "en_US";
+  const localeAlternates = new Set<string>();
+  if ((m.alternates ?? []).some((a) => a.hreflang === "ar") || locale === "ar_AR") {
+    localeAlternates.add(locale === "ar_AR" ? "en_US" : "ar_AR");
+  }
   const tags = [
     `<title>${esc(m.title)}</title>`,
     `<meta name="description" content="${esc(m.description)}" />`,
     `<link rel="canonical" href="${esc(m.canonical)}" />`,
+    `<meta name="robots" content="${m.noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}" />`,
+    `<meta name="googlebot" content="${m.noindex ? "noindex, follow" : "index, follow"}" />`,
     `<meta property="og:url" content="${esc(m.canonical)}" />`,
+    `<meta property="og:locale" content="${esc(locale)}" />`,
+    ...[...localeAlternates].map((alt) => `<meta property="og:locale:alternate" content="${esc(alt)}" />`),
     `<meta property="og:title" content="${esc(m.ogTitle)}" />`,
     `<meta property="og:description" content="${esc(m.description)}" />`,
     `<meta property="og:image" content="${esc(ogImage)}" />`,
