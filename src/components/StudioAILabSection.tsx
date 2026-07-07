@@ -11,26 +11,26 @@ export default function StudioAILabSection() {
       ref={ref}
       id="studio-ai-lab"
       aria-labelledby="studio-ai-lab-heading"
-      className="studio-reference-page w-full bg-[#FDFCFA] px-6 py-12 md:py-16"
+      className="studio-reference-page studio-reference-section studio-grain w-full overflow-hidden px-6 py-14 md:py-20"
     >
-      <div className="mx-auto max-w-[1200px]">
+      <div className="relative z-10 mx-auto max-w-[1200px]">
         <div className="mx-auto max-w-2xl text-center">
           <p
-            className={`font-studio-pixel text-2xl leading-none text-[#051A24] md:text-3xl ${fadeClass(inView)}`}
+            className={`studio-reference-eyebrow mx-auto ${fadeClass(inView)}`}
             style={{ animationDelay: "0.1s" }}
           >
-            AI LAB
+            AI LAB - 37 TOOLS
           </p>
           <h2
             id="studio-ai-lab-heading"
-            className={`font-studio-body mt-4 text-[32px] leading-[1.1] tracking-tight text-[#051A24] md:text-[40px] lg:text-[44px] ${fadeClass(inView)}`}
+            className={`font-studio-body mt-7 text-[38px] font-semibold leading-[0.98] tracking-tight text-[color:var(--studio-cream)] md:text-[56px] lg:text-[64px] ${fadeClass(inView)}`}
             style={{ animationDelay: "0.2s" }}
           >
-            Try the AI <span className="font-studio-serif">before</span> you buy the{" "}
-            <span className="font-studio-serif">system.</span>
+            Try the AI <span className="studio-accent">before</span> you buy the{" "}
+            <span className="studio-accent">system.</span>
           </h2>
           <p
-            className={`font-studio-body mt-5 text-sm leading-relaxed text-[#273C46] md:text-base ${fadeClass(inView)}`}
+            className={`font-studio-body mx-auto mt-6 max-w-xl text-sm leading-relaxed text-[color:var(--studio-cream-dim)] md:text-base ${fadeClass(inView)}`}
             style={{ animationDelay: "0.3s" }}
           >
             37 real working tools built around the same practical AI patterns I use in
@@ -45,7 +45,7 @@ export default function StudioAILabSection() {
             {AI_LAB_TRUST.map((t) => (
               <li
                 key={t}
-                className="font-studio-body rounded-full bg-white px-4 py-1.5 text-xs text-[#051A24] shadow-[0_0_0_0.5px_rgba(0,0,0,0.05),0_2px_8px_rgba(0,0,0,0.06)]"
+                className="font-studio-body rounded-full border border-[color:var(--studio-line)] bg-white/[0.055] px-4 py-1.5 text-xs text-[color:var(--studio-cream)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08)]"
               >
                 {t}
               </li>
@@ -58,28 +58,28 @@ export default function StudioAILabSection() {
             <a
               key={card.demoId}
               href={`/ai-lab#${card.demoId}`}
-              className={`group flex flex-col rounded-[32px] bg-white p-8 shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-transform duration-300 hover:-translate-y-1 ${fadeClass(inView)}`}
+              className={`studio-reference-card group flex flex-col rounded-[28px] p-8 transition-transform duration-300 hover:-translate-y-1 ${fadeClass(inView)}`}
               style={{ animationDelay: `${0.1 + (i % 3) * 0.1}s` }}
             >
               <div className="flex items-start justify-between">
-                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#051A24] text-white">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[color:var(--studio-gold)] text-[color:var(--studio-ink)]">
                   <card.icon aria-hidden className="h-5 w-5" />
                 </span>
                 <ArrowUpRight
                   aria-hidden
-                  className="h-5 w-5 text-[#051A24]/40 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#051A24]"
+                  className="h-5 w-5 text-[rgba(216,207,192,0.6)] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[color:var(--studio-gold)]"
                 />
               </div>
-              <h3 className="font-studio-serif mt-6 text-xl font-semibold text-[#051A24] md:text-2xl">
+              <h3 className="font-studio-serif mt-6 text-2xl text-[color:var(--studio-cream)] md:text-3xl">
                 {card.title}
               </h3>
-              <p className="font-studio-body mt-3 text-sm leading-relaxed text-[#051A24]/70">
+              <p className="font-studio-body mt-3 text-sm leading-relaxed text-[color:var(--studio-cream-dim)]">
                 {card.whatItDoes}
               </p>
-              <p className="font-studio-body mt-4 text-xs italic text-[#273C46]">
+              <p className="font-studio-body mt-4 text-xs italic text-[color:var(--studio-muted)]">
                 Try it: "{card.example}"
               </p>
-              <span className="font-studio-body mt-auto pt-6 text-sm font-medium text-[#051A24] underline-offset-4 group-hover:underline">
+              <span className="font-studio-body mt-auto pt-6 text-sm font-medium text-[color:var(--studio-gold)] underline-offset-4 group-hover:underline">
                 {card.cta}
               </span>
             </a>

@@ -18,7 +18,7 @@ export default function StudioFooter() {
   return (
     <footer
       aria-label="Homepage footer"
-      className="studio-reference-page w-full bg-[#FDFCFA]"
+      className="studio-reference-page studio-reference-section w-full"
     >
       <div className="mx-auto flex max-w-[1200px] flex-col gap-10 px-6 py-12 md:flex-row md:items-start md:justify-between">
         <Button variant="primary" href={CONTACT.calendar} target="_blank" rel="noopener">
@@ -26,13 +26,13 @@ export default function StudioFooter() {
         </Button>
 
         <div className="flex items-start gap-12">
-          <ArrowUpRight aria-hidden className="mt-1 h-5 w-5 text-[#051A24]" />
+          <ArrowUpRight aria-hidden className="mt-1 h-5 w-5 text-[color:var(--studio-gold)]" />
           <ul className="flex flex-col gap-3">
             {COLUMN_1.map((l) => (
               <li key={l.label}>
                 <a
                   href={l.href}
-                  className="font-studio-body text-base text-[#051A24] transition-opacity hover:opacity-70"
+                  className="font-studio-body text-base text-[color:var(--studio-cream)] transition-opacity hover:opacity-70"
                 >
                   {l.label}
                 </a>
@@ -46,7 +46,7 @@ export default function StudioFooter() {
                   href={l.href}
                   target="_blank"
                   rel="noopener"
-                  className="font-studio-body text-base text-[#051A24] transition-opacity hover:opacity-70"
+                  className="font-studio-body text-base text-[color:var(--studio-cream)] transition-opacity hover:opacity-70"
                 >
                   {l.label}
                 </a>

@@ -3,7 +3,6 @@ import { m } from "framer-motion";
 import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown, Building2, UtensilsCrossed, Split, FileText, Wand2, CalendarClock, Wrench, Mic, Camera, Workflow, BarChart3, ScanSearch, LayoutTemplate, Cpu, Route, GitBranch, Calculator, Recycle, MessageSquareReply, ClipboardList } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import Kinetic from "../components/fx/Kinetic";
 import Reveal from "../components/ui/Reveal";
 import Contact from "../components/Contact";
 import DemoChat from "../components/demos/DemoChat";
@@ -642,26 +641,29 @@ export default function Demos() {
 
   return (
     <>
-      <section id="top" className="relative overflow-hidden pt-36 pb-10 sm:pt-44 sm:pb-12">
+      <section id="top" className="studio-reference-page studio-reference-section studio-grain relative overflow-hidden pt-36 pb-12 sm:pt-44 sm:pb-16">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-10 -z-10 h-96 bg-[radial-gradient(ellipse_55%_45%_at_50%_0%,rgba(218,164,66,0.13),transparent_68%)]"
         />
-        <div className="container-bl">
+        <div className="container-bl relative z-10">
           <m.div variants={stagger} initial="hidden" animate="show" className="mx-auto max-w-3xl text-center">
             <m.span
               variants={fadeUp}
-              className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold"
+              className="studio-reference-eyebrow mx-auto"
             >
-              AI Lab - {DEMOS.length} tools
+              AI LAB - {DEMOS.length} TOOLS
             </m.span>
-            <Kinetic as="h1" className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl">
-              Try the AI. <span className="text-gradient-gold italic">Not just read about it.</span>
-            </Kinetic>
-            <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
+            <m.h1
+              variants={fadeUp}
+              className="mt-7 text-5xl font-semibold leading-[0.98] tracking-tight text-[color:var(--studio-cream)] sm:text-6xl md:text-7xl"
+            >
+              Try the AI. <span className="studio-accent">Not just read about it.</span>
+            </m.h1>
+            <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-[color:var(--studio-cream-dim)]">
               Practical AI tools for real business workflows. Type into them and see what useful AI can do inside sales, service, content, operations, and reporting work.
             </m.p>
-            <m.p variants={fadeUp} className="mx-auto mt-3 font-mono text-[11px] uppercase tracking-[0.18em] text-muted-dark">
+            <m.p variants={fadeUp} className="mx-auto mt-3 font-pixel text-[11px] uppercase text-[color:var(--studio-muted)]">
               Practical demos - No sign-up - Your input isn't stored
             </m.p>
           </m.div>

@@ -144,7 +144,7 @@ export default function DemoAeo() {
                   {copied ? "Copied" : "Copy"}
                 </button>
               </div>
-              <pre className="mt-1.5 max-h-52 overflow-auto rounded-xl bg-ink-deep/70 p-3 font-mono text-[11px] leading-relaxed text-cream-dim">
+              <pre className="mt-1.5 max-h-52 overflow-auto rounded-xl bg-ink-deep/70 p-3 font-technical text-[11px] leading-relaxed text-cream-dim">
                 {result.schema}
               </pre>
             </div>

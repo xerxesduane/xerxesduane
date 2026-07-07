@@ -314,7 +314,7 @@ export default function DemoWhatsApp() {
                 rows={5}
                 placeholder={"Paste rows from Google Sheets / Excel here…\nName, Company, Interest, City, Source, Consent"}
                 aria-label="Paste your leads"
-                className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 font-mono text-[12.5px] text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
+                className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 font-technical text-[12.5px] text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
               />
               <div className="flex flex-wrap items-center gap-2">
                 <button

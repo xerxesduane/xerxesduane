@@ -73,7 +73,7 @@ export default function TestimonialCarousel() {
     <section
       ref={ref}
       aria-labelledby="studio-proof"
-      className="studio-reference-page overflow-hidden bg-[#FDFCFA] px-6 py-12"
+      className="studio-reference-page studio-reference-section overflow-hidden px-6 py-12"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
@@ -83,19 +83,19 @@ export default function TestimonialCarousel() {
       >
         <h2
           id="studio-proof"
-          className="font-studio-body text-3xl tracking-tight text-[#0D212C] md:text-4xl"
+          className="font-studio-body text-3xl tracking-tight text-[color:var(--studio-cream)] md:text-4xl"
         >
           What <span className="font-studio-serif">builders</span> say
         </h2>
         <div className="flex items-center gap-4">
-          <p className="font-studio-body hidden text-sm text-[#273C46] sm:block">
+          <p className="font-studio-body hidden text-sm text-[color:var(--studio-muted)] sm:block">
             Real projects · plain results
           </p>
           <button
             type="button"
             aria-label="Previous proof card"
             onClick={() => setIndex((i) => i - 1)}
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-[#0D212C]/20 text-[#0D212C] transition-colors hover:bg-[#0D212C]/5"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-[color:var(--studio-line)] text-[color:var(--studio-cream)] transition-colors hover:bg-white/[0.08]"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -103,7 +103,7 @@ export default function TestimonialCarousel() {
             type="button"
             aria-label="Next proof card"
             onClick={() => setIndex((i) => i + 1)}
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-[#0D212C]/20 text-[#0D212C] transition-colors hover:bg-[#0D212C]/5"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-[color:var(--studio-line)] text-[color:var(--studio-cream)] transition-colors hover:bg-white/[0.08]"
           >
             <ChevronRight className="h-5 w-5" />
           </button>
@@ -121,7 +121,7 @@ export default function TestimonialCarousel() {
         {items.map((card, i) => (
           <article
             key={i}
-            className="shrink-0 rounded-[32px] bg-white px-6 py-8 shadow-[0_4px_16px_rgba(0,0,0,0.08)] md:rounded-[40px] md:pl-10 md:pr-24"
+            className="studio-reference-card shrink-0 rounded-[32px] px-6 py-8 md:rounded-[40px] md:pl-10 md:pr-24"
             style={{ width: cardWidth }}
             aria-hidden={i < CARDS.length || i >= CARDS.length * 2}
           >
@@ -130,22 +130,22 @@ export default function TestimonialCarousel() {
               width="28"
               height="22"
               viewBox="0 0 28 22"
-              className="mb-4 fill-[#051A24]"
+              className="mb-4 fill-[color:var(--studio-gold)]"
             >
               <path d="M0 22V12.4C0 5.8 3.9 1.3 10.5 0l1.6 3.4C7.9 4.7 5.8 7.2 5.6 10H12v12H0Zm16 0V12.4C16 5.8 19.9 1.3 26.5 0l1.5 3.4c-4.2 1.3-6.3 3.8-6.5 6.6H28v12H16Z" />
             </svg>
-            <p className="font-studio-body text-sm leading-relaxed text-[#051A24] md:text-base">
+            <p className="font-studio-body text-sm leading-relaxed text-[color:var(--studio-cream)] md:text-base">
               {card.quote}
             </p>
             <div className="mt-6 flex items-center gap-3">
-              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#051A24] text-[10px] font-semibold text-white">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[color:var(--studio-gold)] text-[10px] font-semibold text-[color:var(--studio-ink)]">
                 {card.badge}
               </span>
               <div>
-                <p className="font-studio-body text-sm font-medium text-[#051A24]">
+                <p className="font-studio-body text-sm font-medium text-[color:var(--studio-cream)]">
                   {card.name}
                 </p>
-                <p className="font-studio-body text-xs text-[#273C46]">{card.proof}</p>
+                <p className="font-studio-body text-xs text-[color:var(--studio-muted)]">{card.proof}</p>
               </div>
             </div>
           </article>

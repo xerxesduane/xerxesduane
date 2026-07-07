@@ -14,18 +14,18 @@ export default function StudioIntroSection() {
       ref={ref}
       id="services"
       aria-labelledby="studio-intro-heading"
-      className="studio-reference-page bg-[#FDFCFA] px-6 py-16 md:py-20"
+      className="studio-reference-page studio-reference-section px-6 py-16 md:py-20"
     >
       <div className="mx-auto flex max-w-[520px] flex-col items-center text-center">
         <p
-          className={`font-studio-serif mb-4 text-[32px] font-semibold tracking-tight text-[#051A24] md:text-[40px] lg:text-[44px] ${fadeClass(inView)}`}
+          className={`font-studio-serif mb-4 text-[38px] tracking-tight text-[color:var(--studio-gold)] md:text-[48px] lg:text-[56px] ${fadeClass(inView)}`}
           style={{ animationDelay: "0.1s" }}
         >
           Xerxes Duane
         </p>
 
         <p
-          className={`mb-2 font-mono text-xs text-[#051A24] md:text-sm ${fadeClass(inView)}`}
+          className={`mb-4 font-pixel text-xs uppercase text-[color:var(--studio-muted)] md:text-sm ${fadeClass(inView)}`}
           style={{ animationDelay: "0.2s" }}
         >
           Independent Systems Consultant in Dubai
@@ -33,7 +33,7 @@ export default function StudioIntroSection() {
 
         <h2
           id="studio-intro-heading"
-          className={`font-studio-body text-[32px] leading-[1.1] tracking-tight text-[#051A24] md:text-[40px] lg:text-[44px] ${fadeClass(inView)}`}
+          className={`font-studio-body text-[34px] font-semibold leading-[1.02] tracking-tight text-[color:var(--studio-cream)] md:text-[46px] lg:text-[54px] ${fadeClass(inView)}`}
           style={{ animationDelay: "0.3s" }}
         >
           Build the <span className="font-studio-serif">next system</span>,
@@ -42,7 +42,7 @@ export default function StudioIntroSection() {
         </h2>
 
         <div
-          className={`font-studio-body mt-5 flex flex-col gap-6 text-sm leading-relaxed text-[#051A24] md:mt-6 md:text-base ${fadeClass(inView)}`}
+          className={`font-studio-body mt-5 flex flex-col gap-6 text-sm leading-relaxed text-[color:var(--studio-cream-dim)] md:mt-6 md:text-base ${fadeClass(inView)}`}
           style={{ animationDelay: "0.4s" }}
         >
           <p>

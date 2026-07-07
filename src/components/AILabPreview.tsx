@@ -7,17 +7,17 @@ import Button from "./ui/Button";
 
 export default function AILabPreview() {
   return (
-    <section id="ai-lab" className="relative scroll-mt-24 overflow-hidden py-20 sm:py-28" aria-label="AI Labs — try working AI before you hire me">
+    <section id="ai-lab" className="studio-reference-page studio-reference-section studio-grain relative scroll-mt-24 overflow-hidden py-20 sm:py-28" aria-label="AI Labs - try working AI before you hire me">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-96 bg-[radial-gradient(ellipse_50%_45%_at_50%_0%,rgba(218,164,66,0.13),transparent_70%)]"
       />
-      <div className="container-bl">
+      <div className="container-bl relative z-10">
         <SectionHeading
           eyebrow="AI Labs"
           title={
             <>
-              Try working AI <span className="text-gradient-gold italic">before you hire me.</span>
+              Try working AI <span className="studio-accent">before you hire me.</span>
             </>
           }
           subtitle="Most Dubai businesses don't need AI as a buzzword. They need faster replies, cleaner quotes, fewer missed WhatsApp leads, better customer follow-up, and systems that finally talk to each other. The AI Lab shows what that looks like in practice."

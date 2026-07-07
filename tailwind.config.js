@@ -19,9 +19,9 @@ export default {
         },
         // Dubai golden-hour accent (brand spec exact)
         gold: {
-          DEFAULT: "#B8892F",
-          soft: "#EFE1BF",
-          deep: "#9B7227",
+          DEFAULT: "#DAA442",
+          soft: "#E8C173",
+          deep: "#B8892F",
         },
         sage: "#EFE7D8",
         cream: {
@@ -29,15 +29,17 @@ export default {
           dim: "#EFE7D8",
         },
         muted: {
-          DEFAULT: "#5F6673",
-          // Nudged lighter to clear WCAG AA (~5.9:1 on #0B0F0D) for small/secondary text.
-          dark: "#5F6673",
+          DEFAULT: "#A6B3BC",
+          dark: "#8B98A3",
         },
       },
       fontFamily: {
-        display: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ['"PP Mondwest"', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
+        mono: ['"PP NeueBit"', '"Space Mono"', "ui-monospace", "monospace"],
+        technical: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
+        pixel: ['"PP NeueBit"', '"Space Mono"', "ui-monospace", "monospace"],
+        mondwest: ['"PP Mondwest"', "Fraunces", "Georgia", "serif"],
       },
       maxWidth: {
         content: "1200px",

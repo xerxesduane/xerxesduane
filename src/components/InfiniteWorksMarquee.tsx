@@ -12,12 +12,12 @@ export default function InfiniteWorksMarquee() {
   return (
     <section
       aria-label="Interface directions we can build"
-      className="studio-reference-page w-full overflow-hidden bg-[#FDFCFA] py-16 md:py-20"
+      className="studio-reference-page studio-reference-section w-full overflow-hidden py-16 md:py-20"
     >
-      <p className="font-studio-body mb-6 px-6 text-center font-mono text-xs uppercase tracking-[0.2em] text-[#273C46]">
+      <p className="font-studio-pixel mb-6 px-6 text-center text-xs uppercase text-[color:var(--studio-muted)]">
         Interface directions we can build
       </p>
-      <div className="w-full overflow-hidden bg-[#FDFCFA]">
+      <div className="w-full overflow-hidden">
         <div className="flex w-max animate-studio-marquee">
           {items.map((src, i) => (
             <img

@@ -3,15 +3,15 @@ import type { AnchorHTMLAttributes, ReactNode } from "react";
 type Variant = "primary" | "secondary" | "tertiary";
 
 const BASE =
-  "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 text-sm md:text-base font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#051A24] focus-visible:ring-offset-2";
+  "inline-flex items-center justify-center gap-2 rounded-full px-7 py-3 text-sm md:text-base font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--studio-gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--studio-bg)]";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-[#051A24] text-white studio-shadow-primary hover:opacity-90 hover:-translate-y-0.5",
+    "bg-[color:var(--studio-gold)] text-[color:var(--studio-ink)] studio-shadow-primary hover:-translate-y-0.5 hover:bg-[color:var(--studio-gold-deep)]",
   secondary:
-    "bg-white text-[#051A24] studio-shadow-secondary hover:-translate-y-0.5",
+    "border border-[color:var(--studio-line)] bg-white/[0.075] text-[color:var(--studio-cream)] studio-shadow-secondary hover:-translate-y-0.5 hover:bg-white/[0.12]",
   tertiary:
-    "bg-white text-[#051A24] shadow-[0_0_0_0.5px_rgba(0,0,0,0.05),0_4px_16px_rgba(0,0,0,0.08)] hover:-translate-y-0.5",
+    "border border-[color:var(--studio-line)] bg-white/[0.055] text-[color:var(--studio-cream)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.08),0_14px_44px_-30px_rgba(0,0,0,0.9)] hover:-translate-y-0.5 hover:bg-white/[0.1]",
 };
 
 interface StudioButtonProps extends AnchorHTMLAttributes<HTMLAnchorElement> {

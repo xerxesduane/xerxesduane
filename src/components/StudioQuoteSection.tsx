@@ -71,17 +71,17 @@ export default function StudioQuoteSection() {
     <section
       ref={ref}
       aria-labelledby="studio-quote"
-      className="studio-reference-page bg-[#FDFCFA] px-6 py-12"
+      className="studio-reference-page studio-reference-section px-6 py-12"
     >
       <div className="mx-auto max-w-2xl text-center">
         <Quote
           aria-hidden
-          className={`mx-auto mb-6 h-6 w-6 text-slate-900 ${fadeClass(inView)}`}
+          className={`mx-auto mb-6 h-6 w-6 text-[color:var(--studio-gold)] ${fadeClass(inView)}`}
           style={{ animationDelay: "0.1s" }}
         />
         <blockquote
           id="studio-quote"
-          className={`font-studio-body text-[32px] leading-[1.1] tracking-tight text-[#0D212C] md:text-[40px] lg:text-[44px] ${fadeClass(inView)}`}
+          className={`font-studio-body text-[32px] leading-[1.08] tracking-tight text-[color:var(--studio-cream)] md:text-[40px] lg:text-[44px] ${fadeClass(inView)}`}
           style={{ animationDelay: "0.2s" }}
         >
           "I built this <span className="font-studio-serif">work</span> for businesses
@@ -89,7 +89,7 @@ export default function StudioQuoteSection() {
           unclear vendors, and systems that only one person understands.”
         </blockquote>
         <p
-          className={`font-studio-body mt-6 text-sm italic text-[#273C46] ${fadeClass(inView)}`}
+          className={`font-studio-body mt-6 text-sm italic text-[color:var(--studio-muted)] ${fadeClass(inView)}`}
           style={{ animationDelay: "0.3s" }}
         >
           Xerxes Duane
@@ -103,7 +103,7 @@ export default function StudioQuoteSection() {
           {CAPABILITIES.map((c) => (
             <li
               key={c}
-              className="font-studio-body min-w-[100px] text-[22px] font-medium text-slate-900 md:text-[24px]"
+              className="font-studio-serif min-w-[100px] text-[26px] text-[color:var(--studio-gold)] md:text-[30px]"
             >
               {c}
             </li>

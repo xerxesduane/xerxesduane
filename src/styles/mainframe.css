@@ -3,8 +3,8 @@
    both already self-hosted (see @font-face in index.css). Scoped to
    .mainframe-landing so inner pages keep the site's Inter stack. */
 :root {
-  --font-heading: 'Space Mono', ui-monospace, monospace;
-  --font-body: 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
+  --font-heading: 'PP NeueBit', 'Space Mono', ui-monospace, monospace;
+  --font-body: 'PP NeueBit', 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
 }
 
 .mainframe-landing,

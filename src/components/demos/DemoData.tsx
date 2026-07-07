@@ -19,7 +19,7 @@ May,142,51900
 Jun,175,64300`;
 
 const field =
-  "w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 font-mono text-[13px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40";
+  "w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 font-technical text-[13px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40";
 
 export default function DemoData() {
   const [csv, setCsv] = useState(EXAMPLE);

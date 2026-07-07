@@ -57,12 +57,12 @@ export default function PartnerSection() {
   return (
     <section
       aria-labelledby="partner-heading"
-      className="studio-reference-page w-full bg-[#FDFCFA] px-6 py-12"
+      className="studio-reference-page studio-reference-section w-full px-6 py-12"
     >
       <div
         ref={containerRef}
         onMouseMove={onMouseMove}
-        className="relative mx-auto max-w-7xl overflow-hidden rounded-[40px] bg-white py-48 shadow-[0_0_0_0.5px_rgba(0,0,0,0.05),0_4px_30px_rgba(0,0,0,0.08)]"
+        className="studio-reference-panel relative mx-auto max-w-7xl overflow-hidden rounded-[40px] py-48"
       >
         {thumbs.map((t) => (
           <img
@@ -82,7 +82,7 @@ export default function PartnerSection() {
         <div className="relative flex flex-col items-center px-6 text-center">
           <h2
             id="partner-heading"
-            className="font-studio-serif mb-12 text-[48px] leading-none text-[#0D212C] md:text-[64px] lg:text-[80px]"
+            className="font-studio-serif mb-12 text-[54px] leading-none text-[color:var(--studio-gold)] md:text-[72px] lg:text-[96px]"
           >
             Partner with Xerxes
           </h2>

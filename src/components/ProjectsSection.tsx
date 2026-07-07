@@ -42,10 +42,10 @@ function ProjectItem({
   return (
     <div ref={ref} className={fadeClass(inView)}>
       <div className="ml-20 md:ml-28">
-        <p className="font-studio-body mb-1 font-mono text-xs uppercase tracking-[0.2em] text-[#273C46]">
+        <p className="font-studio-pixel mb-2 text-xs uppercase text-[color:var(--studio-muted)]">
           {eyebrow}
         </p>
-        <h3 className="font-studio-serif text-2xl font-semibold text-[#051A24] md:text-3xl">
+        <h3 className="font-studio-serif text-3xl text-[color:var(--studio-gold)] md:text-4xl">
           {href ? (
             <a href={href} className="transition-opacity hover:opacity-70">
               {name}
@@ -54,7 +54,7 @@ function ProjectItem({
             name
           )}
         </h3>
-        <p className="font-studio-body mt-2 max-w-xl text-sm text-[#051A24]/70 md:text-base">
+        <p className="font-studio-body mt-2 max-w-xl text-sm text-[color:var(--studio-cream-dim)] md:text-base">
           {description}
         </p>
       </div>
@@ -75,7 +75,7 @@ export default function ProjectsSection() {
     <section
       id="work"
       aria-labelledby="studio-projects-heading"
-      className="studio-reference-page w-full bg-[#FDFCFA]"
+      className="studio-reference-page studio-reference-section w-full"
     >
       <h2 id="studio-projects-heading" className="sr-only">
         Projects
@@ -93,8 +93,8 @@ export default function ProjectsSection() {
         ))}
 
         {/* Real, delivered client work — clearly separated from the visuals above */}
-        <div className="ml-20 border-t border-[#051A24]/10 pt-12 md:ml-28">
-          <p className="font-studio-body font-mono text-xs uppercase tracking-[0.2em] text-[#273C46]">
+        <div className="ml-20 border-t border-[color:var(--studio-line)] pt-12 md:ml-28">
+          <p className="font-studio-pixel text-xs uppercase text-[color:var(--studio-muted)]">
             Real case studies · delivered work
           </p>
         </div>
