@@ -14,6 +14,10 @@ delegated click tracking + the contact form:
 | `generate_lead` | Contact form submitted successfully | `method` (`formspree`), `page` |
 | `cta_book_audit` | Any "Book a free audit" / `#contact` link clicked | `location`, `label` |
 | `whatsapp_click` | Any WhatsApp link/button tapped | `location`, `label` |
+| `demo_engage` | First interaction with an AI Lab demo widget | `demo` |
+| `demo_cta` | "Build this for my business" clicked on a demo card | `demo` |
+| `ai_lab_filter` | AI Lab category filter changed | `category` |
+| `email_copy` | Hero email address copied to clipboard | `location` |
 
 `generate_lead` is the real conversion. `cta_book_audit` and `whatsapp_click`
 are intent signals (top of the funnel).

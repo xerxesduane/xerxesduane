@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import "../styles/mainframe.css";
+import { TRUST } from "../data/trust";
+import { track } from "../lib/analytics";
 
 const VIDEO_SRC =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260530_042513_df96a13b-6155-4f6e-8b93-c9dee66fba08.mp4";
@@ -50,6 +52,7 @@ export default function MainframeHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [showButtons, setShowButtons] = useState(false);
+  const [copied, setCopied] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
 
   const { shown, typing } = useTypewriter(
@@ -286,17 +289,42 @@ export default function MainframeHero() {
             ))}
             <button
               type="button"
-              onClick={() => navigator.clipboard?.writeText(EMAIL).catch(() => {})}
+              onClick={() => {
+                navigator.clipboard
+                  ?.writeText(EMAIL)
+                  .then(() => {
+                    setCopied(true);
+                    track("email_copy", { location: "hero" });
+                    window.setTimeout(() => setCopied(false), 1800);
+                  })
+                  .catch(() => {});
+              }}
               className="mx-[0.2em] mb-[0.4em] inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-black/40 bg-transparent px-4 py-[0.3em] text-[13px] text-black transition-colors duration-200 hover:bg-black hover:text-white sm:gap-3 sm:px-5 sm:text-[15px]"
             >
-            Email:{" "}
-              <span className="underline underline-offset-1">{EMAIL}</span>
-              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                <rect x="3.5" y="3.5" width="7" height="7" rx="1" stroke="currentColor" />
-                <path d="M8.5 3.5V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5" stroke="currentColor" />
-              </svg>
+              {copied ? (
+                <span>Copied ✓</span>
+              ) : (
+                <>
+                  Email: <span className="underline underline-offset-1">{EMAIL}</span>
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
+                    <rect x="3.5" y="3.5" width="7" height="7" rx="1" stroke="currentColor" />
+                    <path d="M8.5 3.5V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5" stroke="currentColor" />
+                  </svg>
+                </>
+              )}
             </button>
+            <span aria-live="polite" className="sr-only">
+              {copied ? "Email address copied to clipboard" : ""}
+            </span>
           </div>
+
+          {/* real proof, from src/data/trust.ts — no invented numbers */}
+          {TRUST.enabled && TRUST.clientCount && (
+            <p className="mt-4 text-[13px] text-black/60 sm:text-sm">
+              {TRUST.clientCount}+ businesses helped since {TRUST.since} — websites, Odoo/ERP, CRM,
+              WhatsApp &amp; AI automation.
+            </p>
+          )}
         </div>
       </section>
     </div>

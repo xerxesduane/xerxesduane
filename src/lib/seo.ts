@@ -261,9 +261,9 @@ const SHOWREEL_META: PageMeta = {
 };
 
 const AI_LAB_META: PageMeta = {
-  title: "AI Lab - Xerxes Duane",
+  title: "AI Lab - Live AI Tools You Can Try - Xerxes Duane",
   description:
-    "A collection of practical AI tools and workflow experiments built for real business use cases.",
+    "Try live AI tools built for real business workflows: WhatsApp automation, bilingual Arabic/English assistants, lead qualification, invoices, content, and more. No sign-up.",
   canonical: `${SITE_ORIGIN}/ai-lab`,
   ogTitle: "AI Lab - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/demos.png`,

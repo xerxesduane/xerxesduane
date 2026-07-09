@@ -1,45 +1,50 @@
-import { useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { Bot, UserRoundCheck, FileSearch, Braces, Languages, Send, Star, Sparkles, CornerDownLeft, Search, ListChecks, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, Headset, ReceiptText, Megaphone, ShoppingBag, ChevronDown, Building2, UtensilsCrossed, Split, FileText, Wand2, CalendarClock, Wrench, Mic, Camera, Workflow, BarChart3, ScanSearch, LayoutTemplate, Cpu, Route, GitBranch, Calculator, Recycle, MessageSquareReply, ClipboardList } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Reveal from "../components/ui/Reveal";
 import Contact from "../components/Contact";
-import DemoChat from "../components/demos/DemoChat";
-import DemoAsk from "../components/demos/DemoAsk";
-import DemoExtract from "../components/demos/DemoExtract";
-import DemoTranslate from "../components/demos/DemoTranslate";
-import DemoWhatsApp from "../components/demos/DemoWhatsApp";
-import DemoReview from "../components/demos/DemoReview";
-import DemoReply from "../components/demos/DemoReply";
-import DemoSocial from "../components/demos/DemoSocial";
-import DemoSeo from "../components/demos/DemoSeo";
-import DemoSummarize from "../components/demos/DemoSummarize";
-import DemoLeadCapture from "../components/demos/DemoLeadCapture";
-import DemoQuote from "../components/demos/DemoQuote";
-import DemoAds from "../components/demos/DemoAds";
-import DemoProduct from "../components/demos/DemoProduct";
-import DemoProperty from "../components/demos/DemoProperty";
-import DemoMenu from "../components/demos/DemoMenu";
-import DemoBroadcast from "../components/demos/DemoBroadcast";
-import DemoTriage from "../components/demos/DemoTriage";
-import DemoInvoice from "../components/demos/DemoInvoice";
-import DemoTone from "../components/demos/DemoTone";
-import DemoAgent from "../components/demos/DemoAgent";
-import DemoVoice from "../components/demos/DemoVoice";
-import DemoReceipt from "../components/demos/DemoReceipt";
-import DemoVisionProduct from "../components/demos/DemoVisionProduct";
-import DemoOnDevice from "../components/demos/DemoOnDevice";
-import DemoData from "../components/demos/DemoData";
-import DemoAeo from "../components/demos/DemoAeo";
-import DemoSection from "../components/demos/DemoSection";
-import DemoProcess from "../components/demos/DemoProcess";
-import DemoPipeline from "../components/demos/DemoPipeline";
-import DemoRoi from "../components/demos/DemoRoi";
-import DemoRepurpose from "../components/demos/DemoRepurpose";
-import DemoLeadResponse from "../components/demos/DemoLeadResponse";
-import DemoCritique from "../components/demos/DemoCritique";
 import { fadeUp, stagger } from "../lib/motion";
+import { track } from "../lib/analytics";
+
+// Every demo widget is code-split and only fetched when its card scrolls into
+// view (see <LazyDemo/>), so landing on /ai-lab doesn't download ~35 tools'
+// worth of JS up front.
+const DemoChat = lazy(() => import("../components/demos/DemoChat"));
+const DemoAsk = lazy(() => import("../components/demos/DemoAsk"));
+const DemoExtract = lazy(() => import("../components/demos/DemoExtract"));
+const DemoTranslate = lazy(() => import("../components/demos/DemoTranslate"));
+const DemoWhatsApp = lazy(() => import("../components/demos/DemoWhatsApp"));
+const DemoReview = lazy(() => import("../components/demos/DemoReview"));
+const DemoReply = lazy(() => import("../components/demos/DemoReply"));
+const DemoSocial = lazy(() => import("../components/demos/DemoSocial"));
+const DemoSeo = lazy(() => import("../components/demos/DemoSeo"));
+const DemoSummarize = lazy(() => import("../components/demos/DemoSummarize"));
+const DemoLeadCapture = lazy(() => import("../components/demos/DemoLeadCapture"));
+const DemoQuote = lazy(() => import("../components/demos/DemoQuote"));
+const DemoAds = lazy(() => import("../components/demos/DemoAds"));
+const DemoProduct = lazy(() => import("../components/demos/DemoProduct"));
+const DemoProperty = lazy(() => import("../components/demos/DemoProperty"));
+const DemoMenu = lazy(() => import("../components/demos/DemoMenu"));
+const DemoBroadcast = lazy(() => import("../components/demos/DemoBroadcast"));
+const DemoTriage = lazy(() => import("../components/demos/DemoTriage"));
+const DemoInvoice = lazy(() => import("../components/demos/DemoInvoice"));
+const DemoTone = lazy(() => import("../components/demos/DemoTone"));
+const DemoAgent = lazy(() => import("../components/demos/DemoAgent"));
+const DemoVoice = lazy(() => import("../components/demos/DemoVoice"));
+const DemoReceipt = lazy(() => import("../components/demos/DemoReceipt"));
+const DemoVisionProduct = lazy(() => import("../components/demos/DemoVisionProduct"));
+const DemoOnDevice = lazy(() => import("../components/demos/DemoOnDevice"));
+const DemoData = lazy(() => import("../components/demos/DemoData"));
+const DemoAeo = lazy(() => import("../components/demos/DemoAeo"));
+const DemoSection = lazy(() => import("../components/demos/DemoSection"));
+const DemoProcess = lazy(() => import("../components/demos/DemoProcess"));
+const DemoPipeline = lazy(() => import("../components/demos/DemoPipeline"));
+const DemoRoi = lazy(() => import("../components/demos/DemoRoi"));
+const DemoRepurpose = lazy(() => import("../components/demos/DemoRepurpose"));
+const DemoLeadResponse = lazy(() => import("../components/demos/DemoLeadResponse"));
+const DemoCritique = lazy(() => import("../components/demos/DemoCritique"));
 
 type CatId = "frontier" | "convert" | "comms" | "create" | "automate";
 
@@ -463,6 +468,73 @@ function catLabel(id: CatId): string {
   return CATEGORIES.find((c) => c.id === id)?.label ?? "";
 }
 
+/** Neutral placeholder shown while a demo's chunk hasn't been fetched yet. */
+function DemoSkeleton() {
+  return (
+    <div
+      aria-hidden
+      className="min-h-[180px] animate-pulse rounded-2xl border border-cream/10 bg-ink-deep/40"
+    />
+  );
+}
+
+/**
+ * Mounts (and therefore downloads) a demo widget only once its card is within
+ * ~500px of the viewport. Keeps the initial /ai-lab payload small. Also fires
+ * a one-time `demo_engage` analytics event on the first interaction.
+ */
+function LazyDemo({ id, children }: { id: string; children: ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  // Deep links (#demo-id) land on the demo instantly; mount it right away.
+  const [show, setShow] = useState(
+    () => typeof window !== "undefined" && window.location.hash === `#${id}`,
+  );
+  const engaged = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShow(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "500px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [id]);
+
+  const onEngage = () => {
+    if (engaged.current) return;
+    engaged.current = true;
+    track("demo_engage", { demo: id });
+  };
+
+  return (
+    <div ref={ref} onPointerDown={onEngage} onKeyDown={onEngage}>
+      {show ? <Suspense fallback={<DemoSkeleton />}>{children}</Suspense> : <DemoSkeleton />}
+    </div>
+  );
+}
+
+/** Per-demo conversion link: "build this for my business". */
+function DemoCta({ demo }: { demo: Demo }) {
+  return (
+    <a
+      href="/#contact"
+      data-cursor="link"
+      onClick={() => track("demo_cta", { demo: demo.id })}
+      className="group mt-5 inline-flex items-center gap-2 text-sm font-medium text-gold transition-colors hover:text-gold-soft"
+    >
+      Build this for my business
+      <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
+    </a>
+  );
+}
+
 function DemoCard({ demo }: { demo: Demo }) {
   const Icon = demo.icon;
   return (
@@ -482,7 +554,10 @@ function DemoCard({ demo }: { demo: Demo }) {
           <p className="mt-2 text-sm text-muted">{demo.blurb}</p>
         </div>
       </div>
-      <div className="mt-6">{demo.node}</div>
+      <div className="mt-6">
+        <LazyDemo id={demo.id}>{demo.node}</LazyDemo>
+      </div>
+      <DemoCta demo={demo} />
     </div>
   );
 }
@@ -601,7 +676,9 @@ function FeaturedDemo({ demo }: { demo: Demo }) {
             <p className="mt-2.5 max-w-2xl text-[15px] leading-relaxed text-muted">{demo.blurb}</p>
           </div>
         </div>
-        <div className="relative mt-7">{demo.node}</div>
+        <div className="relative mt-7">
+          <LazyDemo id={demo.id}>{demo.node}</LazyDemo>
+        </div>
         <ProductionPipeline />
         <FlagshipFAQ />
         <div className="relative">
@@ -633,11 +710,41 @@ function FilterPill({ active, onClick, children }: { active: boolean; onClick: (
   );
 }
 
+const CAT_IDS = new Set<string>(CATEGORIES.map((c) => c.id));
+
+/** Initial filter from ?cat= so filtered views are shareable/deep-linkable. */
+function initialFilter(): CatId | "all" {
+  if (typeof window === "undefined") return "all";
+  const cat = new URLSearchParams(window.location.search).get("cat");
+  return cat && CAT_IDS.has(cat) ? (cat as CatId) : "all";
+}
+
 export default function Demos() {
-  const [filter, setFilter] = useState<CatId | "all">("all");
+  const [filter, setFilterState] = useState<CatId | "all">(initialFilter);
+  const [query, setQuery] = useState("");
   const featured = DEMOS.find((d) => d.featured);
   const rest = DEMOS.filter((d) => !d.featured);
-  const visible = filter === "all" ? rest : rest.filter((d) => d.category === filter);
+  const q = query.trim().toLowerCase();
+  const visible = rest.filter(
+    (d) =>
+      (filter === "all" || d.category === filter) &&
+      (q === "" ||
+        d.title.toLowerCase().includes(q) ||
+        d.blurb.toLowerCase().includes(q) ||
+        d.eyebrow.toLowerCase().includes(q)),
+  );
+
+  // Keep ?cat= in the URL in sync (shareable) and report filter usage.
+  const setFilter = (next: CatId | "all") => {
+    setFilterState(next);
+    track("ai_lab_filter", { category: next });
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      if (next === "all") url.searchParams.delete("cat");
+      else url.searchParams.set("cat", next);
+      window.history.replaceState(null, "", url);
+    }
+  };
 
   return (
     <>
@@ -700,11 +807,53 @@ export default function Demos() {
               );
             })}
           </div>
+          <div className="mx-auto mt-5 max-w-md">
+            <label htmlFor="ai-lab-search" className="sr-only">
+              Search the AI Lab tools
+            </label>
+            <div className="relative">
+              <Search
+                size={16}
+                aria-hidden
+                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-dark"
+              />
+              <input
+                id="ai-lab-search"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search tools — e.g. WhatsApp, Arabic, invoice…"
+                className="w-full rounded-full border border-cream/12 bg-cream/5 py-2.5 pl-11 pr-4 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none"
+              />
+            </div>
+          </div>
         </div>
       </section>
 
       <section className="pt-6 pb-8">
         <div className="container-bl">
+          {visible.length === 0 && (
+            <div className="mx-auto max-w-md rounded-3xl border border-cream/10 bg-ink-deep/40 p-8 text-center">
+              <p className="text-cream">No tools match “{query.trim()}”.</p>
+              <p className="mt-2 text-sm text-muted">
+                Try another word — or{" "}
+                <a href="/#contact" className="text-gold underline underline-offset-2 hover:text-gold-soft">
+                  tell me what you need
+                </a>{" "}
+                and I'll build it.
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setQuery("");
+                  setFilter("all");
+                }}
+                className="mt-5 rounded-full border border-cream/12 bg-cream/5 px-4 py-2 text-sm text-cream-dim transition-colors hover:border-gold/40 hover:text-gold"
+              >
+                Clear search
+              </button>
+            </div>
+          )}
           {/* keyed by filter so the list re-staggers in on each change */}
           <m.div
             key={filter}
