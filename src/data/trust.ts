@@ -30,12 +30,15 @@ export interface TrustConfig {
 
 export const TRUST: TrustConfig = {
   // Logos are real files in /public/brand/clients/, so the logo wall is on.
-  // `google` stays null until a real Google Business rating exists, so the
-  // <GoogleRating/> badge stays hidden (no invented rating).
+  // Google rating is live only because it now points to a real public profile.
   enabled: true,
   clientCount: 50,
   since: 2019,
-  google: null,
+  google: {
+    rating: 5,
+    reviewCount: 5,
+    url: "https://maps.app.goo.gl/NnSU1FNaZKF2EJE99",
+  },
   logos: [
     { name: "Gilani Mobility", src: "/brand/clients/gilani-mobility.png" },
     { name: "We Aspire", src: "/brand/clients/we-aspire.png" },
