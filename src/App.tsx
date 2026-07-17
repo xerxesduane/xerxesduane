@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { LazyMotion, domAnimation, MotionConfig } from "framer-motion";
 import Background from "./components/Background";
 import Nav from "./components/Nav";
@@ -91,6 +91,11 @@ export default function App({ path = "/" }: { path?: string }) {
   // The homepage renders the Mainframe landing hero with its own navbar and
   // CTAs — hide the global chrome there so the two don't stack.
   const isMainframeLanding = slug === "";
+  useEffect(() => {
+    document.documentElement.lang = isArabic ? "ar" : "en";
+    document.documentElement.dir = isArabic ? "rtl" : "ltr";
+  }, [isArabic]);
+
   const lang = altLanguage(path);
   return (
     <LazyMotion features={domAnimation} strict>
@@ -101,7 +106,7 @@ export default function App({ path = "/" }: { path?: string }) {
           data-lenis-ignore
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-deep"
         >
-          Skip to content
+          {isArabic ? "انتقل إلى المحتوى" : "Skip to content"}
         </a>
 
         <SmoothScroll />
@@ -128,7 +133,7 @@ export default function App({ path = "/" }: { path?: string }) {
         {!isMainframeLanding && <div className="h-16 md:hidden" aria-hidden />}
         {!isMainframeLanding && <WhatsAppButton locale={isArabic ? "ar" : "en"} />}
         {!isMainframeLanding && <MobileCTA locale={isArabic ? "ar" : "en"} />}
-        <ConsentBanner />
+        <ConsentBanner locale={isArabic ? "ar" : "en"} offsetForMobileCta={!isMainframeLanding} />
       </div>
       </MotionConfig>
     </LazyMotion>

@@ -1,330 +1,269 @@
 import { useEffect, useRef, useState } from "react";
+import { ArrowRight, Menu, Star, X } from "lucide-react";
 import "../styles/mainframe.css";
+import { NAV_LINKS } from "../data/content";
 import { TRUST } from "../data/trust";
-import { track } from "../lib/analytics";
+import { getLenis } from "../lib/lenisStore";
 
-const VIDEO_SRC =
-  "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260530_042513_df96a13b-6155-4f6e-8b93-c9dee66fba08.mp4";
+const VIDEO_SRC = "/hero/hero-1080.mp4";
 
-const EMAIL = "hi@xerxesduane.com";
-
-const NAV_LINKS = [
-  { label: "Home", href: "/" },
-  { label: "Services", href: "/#services" },
-  { label: "Work", href: "/#work" },
-  { label: "AI Lab", href: "/ai-lab" },
-  { label: "About", href: "/about" },
-];
-
-const PILL_LINKS = [
-  { label: "Book a free systems audit", href: "#contact" },
-  { label: "Try the AI Lab", href: "/ai-lab" },
-  { label: "See the work", href: "/#work" },
-];
-
-/** Typewriter: reveals `text` one character at a time after `startDelay` ms. */
-function useTypewriter(text: string, speed = 38, startDelay = 600) {
-  const [count, setCount] = useState(0);
-  const [started, setStarted] = useState(false);
-
-  useEffect(() => {
-    const t = window.setTimeout(() => setStarted(true), startDelay);
-    return () => window.clearTimeout(t);
-  }, [startDelay]);
-
-  useEffect(() => {
-    if (!started || count >= text.length) return;
-    const t = window.setTimeout(() => setCount((c) => c + 1), speed);
-    return () => window.clearTimeout(t);
-  }, [started, count, text.length, speed]);
-
-  return { shown: text.slice(0, count), typing: started && count < text.length };
-}
-
-/**
- * Full-screen landing hero (homepage only): a fixed background video scrubbed
- * by horizontal mouse movement (no autoplay — the visitor "plays" it by
- * moving), with a minimal black-text navbar, a blurred intro label, a
- * typewriter greeting, and pill CTAs. Adapted to the Xerxes Duane brand.
- */
 export default function MainframeHero() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [heroVisible, setHeroVisible] = useState(true);
 
-  const { shown, typing } = useTypewriter(
-    "Big-company systems for small businesses that can't afford a tech team.",
-  );
-
-  // Buttons slide in 400ms after load, independent of the typewriter.
   useEffect(() => {
-    const t = window.setTimeout(() => setShowButtons(true), 400);
-    return () => window.clearTimeout(t);
-  }, []);
-
-  // Mouse-scrub: horizontal movement seeks through the video. A `seeking` ref
-  // prevents seek flooding — while a seek is in flight, the target keeps
-  // updating and onSeeked issues the next seek if the target moved.
-  useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    let prevX: number | null = null;
-    let target = 0;
-    let seeking = false;
-
-    const seekTo = (t: number) => {
-      seeking = true;
-      v.currentTime = t;
+    const update = () => {
+      const bottom = sectionRef.current?.getBoundingClientRect().bottom ?? window.innerHeight;
+      const visible = bottom > 96;
+      setHeroVisible(visible);
+      if (!visible) setMenuOpen(false);
     };
 
-    const onMove = (e: MouseEvent) => {
-      if (prevX === null) {
-        prevX = e.clientX;
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => {
+      if (heroVisible && !media.matches) void video.play().catch(() => {});
+      else video.pause();
+    };
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, [heroVisible]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const trigger = menuButtonRef.current;
+
+    document.body.style.overflow = "hidden";
+    getLenis()?.stop();
+
+    const panel = menuRef.current;
+    const focusable = panel
+      ? Array.from(panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'))
+      : [];
+    window.requestAnimationFrame(() => focusable[0]?.focus());
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setMenuOpen(false);
         return;
       }
-      const delta = e.clientX - prevX;
-      prevX = e.clientX;
-      if (!v.duration || Number.isNaN(v.duration)) return;
-      const offset = (delta / window.innerWidth) * 0.8 * v.duration;
-      target = Math.min(v.duration, Math.max(0, (seeking ? target : v.currentTime) + offset));
-      if (!seeking) seekTo(target);
+      if (event.key !== "Tab" || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
 
-    const onSeeked = () => {
-      seeking = false;
-      if (Math.abs(v.currentTime - target) > 0.02) seekTo(target);
-    };
-
-    window.addEventListener("mousemove", onMove);
-    v.addEventListener("seeked", onSeeked);
+    document.addEventListener("keydown", onKeyDown);
     return () => {
-      window.removeEventListener("mousemove", onMove);
-      v.removeEventListener("seeked", onSeeked);
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
+      getLenis()?.start();
+      trigger?.focus();
     };
-  }, []);
+  }, [menuOpen]);
 
-  // Fade the fixed video out once the hero scrolls out of view, so it never
-  // sits visually behind the rest of the homepage.
-  useEffect(() => {
-    const el = sectionRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(([entry]) => setHeroVisible(entry.isIntersecting), {
-      threshold: 0.05,
-    });
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-
-  const bar = "block h-[2px] w-6 bg-black transition-transform duration-300";
+  const google = TRUST.enabled ? TRUST.google : null;
 
   return (
-    <div className="mainframe-landing">
-      {/* light underlay: guarantees the black hero text stays readable while
-          the video loads (or if it can't), instead of sitting on the site's
-          dark background */}
+    <div className="mainframe-landing light-focus-surface">
       <div
         aria-hidden
-        className={`fixed inset-0 z-0 bg-[#e3e0d8] transition-opacity duration-500 ${
+        className={`fixed inset-0 z-0 bg-[#e8e5de] transition-opacity duration-200 ${
           heroVisible ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       />
-      {/* fixed scrubbed background video */}
       <video
         ref={videoRef}
         src={VIDEO_SRC}
+        poster="/hero/poster.webp"
+        autoPlay
+        loop
         muted
         playsInline
         preload="metadata"
         aria-hidden
-        className={`fixed inset-0 z-0 h-full w-full object-cover transition-opacity duration-500 ${
+        className={`fixed inset-0 z-0 h-full w-full object-cover transition-opacity duration-200 ${
           heroVisible ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
         style={{ objectPosition: "70% center" }}
       />
+      <div
+        aria-hidden
+        className={`fixed inset-0 z-[1] bg-[linear-gradient(90deg,rgba(238,235,228,0.97)_0%,rgba(238,235,228,0.88)_44%,rgba(238,235,228,0.2)_76%,rgba(238,235,228,0.08)_100%)] transition-opacity duration-200 ${
+          heroVisible ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
 
-      {/* landing navbar — fades out with the hero so black text never sits
-          over the dark sections below */}
-      <nav
-        className={`fixed inset-x-0 top-0 z-[10] flex items-center justify-between px-5 py-4 transition-opacity duration-500 sm:px-8 sm:py-5 ${
+      <header
+        aria-hidden={!heroVisible}
+        inert={!heroVisible}
+        className={`fixed inset-x-0 top-0 z-30 transition-opacity duration-150 ${
           heroVisible ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <a href="/" className="flex items-center gap-3">
-          <span className="mainframe-logo-text text-[21px] tracking-tight text-black sm:text-[26px]">
-            Xerxes Duane<span aria-hidden>®</span>
-          </span>
-          <span aria-hidden className="mainframe-asterisk select-none text-[25px] text-black sm:text-[30px]">
-            ✳︎
-          </span>
-        </a>
-
-        <div className="hidden items-center text-[23px] text-black md:flex">
-          {NAV_LINKS.map((l, i) => (
-            <span key={l.href}>
-              <a href={l.href} className="transition-opacity hover:opacity-60">
-                {l.label}
-              </a>
-              {i < NAV_LINKS.length - 1 && <span aria-hidden>,&nbsp;</span>}
+        <nav className="mx-auto flex min-h-20 w-full max-w-[1440px] items-center justify-between px-5 sm:px-8" aria-label="Primary navigation">
+          <a href="/" className="inline-flex min-h-12 items-center gap-3 py-2 text-black">
+            <span className="mainframe-logo-text text-[20px] font-semibold tracking-[-0.02em] sm:text-[22px]">
+              Xerxes Duane
             </span>
-          ))}
-        </div>
-
-        <a
-          href="#contact"
-          className="hidden text-[23px] text-black underline underline-offset-2 transition-opacity hover:opacity-60 md:block"
-        >
-          Book a free systems audit
-        </a>
-
-        {/* mobile hamburger */}
-        <button
-          type="button"
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          onClick={() => setMenuOpen((o) => !o)}
-          className="flex flex-col gap-[5px] md:hidden"
-        >
-          <span className={`${bar} ${menuOpen ? "translate-y-[7px] rotate-45" : ""}`} />
-          <span className={`${bar} ${menuOpen ? "opacity-0" : ""}`} />
-          <span className={`${bar} ${menuOpen ? "translate-y-[-7px] -rotate-45" : ""}`} />
-        </button>
-      </nav>
-
-      {/* mobile overlay menu */}
-      <div
-        className={`fixed inset-0 z-[9] flex flex-col items-start justify-center gap-8 bg-white/95 px-8 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
-          menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-      >
-        {NAV_LINKS.map((l) => (
-          <a
-            key={l.href}
-            href={l.href}
-            onClick={() => setMenuOpen(false)}
-            className="text-[32px] font-medium text-black"
-          >
-            {l.label}
           </a>
-        ))}
-        <a
-          href="#contact"
-          onClick={() => setMenuOpen(false)}
-          className="text-[32px] font-medium text-black underline underline-offset-2"
-        >
-          Book a free systems audit
-        </a>
-      </div>
 
-      {/* hero */}
+          <ul className="hidden items-center gap-1 text-[15px] text-black lg:flex">
+            {NAV_LINKS.map((link) => (
+              <li key={link.href}>
+                <a href={link.href} className="inline-flex min-h-11 items-center rounded-full px-3.5 transition-colors hover:bg-black/5">
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href="#contact"
+            className="hidden min-h-12 items-center rounded-full bg-black px-5 text-sm font-semibold text-white transition-colors hover:bg-black/75 lg:inline-flex"
+          >
+            Book a free systems audit
+          </a>
+
+          <button
+            ref={menuButtonRef}
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mainframe-mobile-menu"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/20 bg-white/60 text-black backdrop-blur-sm lg:hidden"
+          >
+            {menuOpen ? <X size={22} aria-hidden /> : <Menu size={22} aria-hidden />}
+          </button>
+        </nav>
+      </header>
+
+      {menuOpen && (
+        <div
+          ref={menuRef}
+          id="mainframe-mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+          className="fixed inset-0 z-50 flex flex-col justify-start overflow-y-auto bg-[#efede7] px-6 pb-[calc(1.5rem+env(safe-area-inset-bottom))] pt-20 lg:hidden"
+        >
+          <button
+            type="button"
+            onClick={() => setMenuOpen(false)}
+            aria-label="Close menu"
+            className="absolute right-5 top-4 inline-flex h-12 w-12 items-center justify-center rounded-full border border-black/20 bg-white/60 text-black"
+          >
+            <X size={22} aria-hidden />
+          </button>
+
+          <nav aria-label="Mobile navigation">
+            <ul className="border-t border-black/20">
+              {NAV_LINKS.map((link) => (
+                <li key={link.href} className="border-b border-black/20">
+                  <a
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className="flex min-h-16 items-center justify-between text-2xl font-medium text-black"
+                  >
+                    {link.label}
+                    <ArrowRight size={20} aria-hidden />
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#contact"
+              onClick={() => setMenuOpen(false)}
+              className="mt-8 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-black px-6 text-base font-semibold text-white"
+            >
+              Book a free systems audit
+            </a>
+          </nav>
+        </div>
+      )}
+
       <section
         id="top"
         ref={sectionRef}
-        className="relative flex h-screen flex-col justify-end overflow-hidden px-5 pb-12 sm:px-8 md:justify-center md:px-10 md:pb-0"
+        className="relative z-10 flex min-h-[100svh] items-end px-5 pb-12 pt-28 sm:px-8 sm:pb-16 md:min-h-[760px] md:items-center md:pb-0 lg:h-[88svh]"
       >
-        <h1 className="sr-only">Xerxes Duane — big-company systems for small businesses in Dubai</h1>
-
-        <div className="relative z-10 max-w-xl">
-          {/* blurred intro label */}
-          <p
-            aria-hidden
-            className="pointer-events-none mb-5 select-none sm:mb-6"
-            style={{
-              fontSize: "clamp(18px, 4vw, 26px)",
-              lineHeight: 1.3,
-              fontWeight: 400,
-              color: "#000",
-              filter: "blur(4px)",
-            }}
-          >
-            Hey there, welcome to Xerxes Duane,
-            <br />
-            Independent Systems Consultant in Dubai
-          </p>
-
-          {/* typewriter greeting */}
-          <p
-            className="mb-5 text-black sm:mb-6"
-            style={{
-              fontSize: "clamp(18px, 4vw, 26px)",
-              lineHeight: 1.35,
-              fontWeight: 400,
-              minHeight: 54,
-            }}
-          >
-            {shown}
-            {typing && (
-              <span
-                aria-hidden
-                className="ml-[2px] inline-block h-[1.1em] w-[2px] translate-y-[0.15em] bg-black"
-                style={{ animation: "blink 1s step-end infinite" }}
-              />
-            )}
-          </p>
-          <p className="mb-5 max-w-lg text-sm leading-relaxed text-black/75 sm:mb-6 sm:text-base">
-            I help small businesses connect websites, CRM, Odoo/ERP, WhatsApp,
-            automation, ads, and AI into one practical operating system - built
-            clearly, priced honestly, and designed to save time, capture leads,
-            and support real growth.
-          </p>
-
-          {/* pill CTAs */}
-          <div
-            className="flex flex-wrap gap-y-1 transition-all duration-700"
-            style={{
-              opacity: showButtons ? 1 : 0,
-              transform: showButtons ? "translateY(0)" : "translateY(16px)",
-            }}
-          >
-            {PILL_LINKS.map((b) => (
-              <a
-                key={b.label}
-                href={b.href}
-                className="mx-[0.2em] mb-[0.4em] inline-flex items-center justify-center whitespace-nowrap rounded-full border border-black/10 bg-white px-4 py-[0.3em] text-[13px] text-black transition-colors duration-200 hover:bg-black hover:text-white sm:px-5 sm:text-[15px]"
-              >
-                {b.label}
-              </a>
-            ))}
-            <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard
-                  ?.writeText(EMAIL)
-                  .then(() => {
-                    setCopied(true);
-                    track("email_copy", { location: "hero" });
-                    window.setTimeout(() => setCopied(false), 1800);
-                  })
-                  .catch(() => {});
-              }}
-              className="mx-[0.2em] mb-[0.4em] inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full border border-black/40 bg-transparent px-4 py-[0.3em] text-[13px] text-black transition-colors duration-200 hover:bg-black hover:text-white sm:gap-3 sm:px-5 sm:text-[15px]"
-            >
-              {copied ? (
-                <span>Copied ✓</span>
-              ) : (
-                <>
-                  Email: <span className="underline underline-offset-1">{EMAIL}</span>
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                    <rect x="3.5" y="3.5" width="7" height="7" rx="1" stroke="currentColor" />
-                    <path d="M8.5 3.5V2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v5.5a1 1 0 0 0 1 1h1.5" stroke="currentColor" />
-                  </svg>
-                </>
-              )}
-            </button>
-            <span aria-live="polite" className="sr-only">
-              {copied ? "Email address copied to clipboard" : ""}
-            </span>
-          </div>
-
-          {/* real proof, from src/data/trust.ts — no invented numbers */}
-          {TRUST.enabled && TRUST.clientCount && (
-            <p className="mt-4 text-[13px] text-black/60 sm:text-sm">
-              {TRUST.clientCount}+ businesses helped since {TRUST.since} — websites, Odoo/ERP, CRM,
-              WhatsApp &amp; AI automation.
+        <div className="mx-auto w-full max-w-[1440px]">
+          <div className="max-w-[760px]">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.18em] text-black/60 sm:text-sm">
+              Independent Systems Consultant &mdash; Dubai
             </p>
-          )}
+            <h1 className="mainframe-display text-[clamp(2.9rem,7.4vw,7rem)] leading-[0.88] tracking-[-0.055em] text-black">
+              One connected system for your leads, sales and operations.
+            </h1>
+            <p className="mainframe-body mt-7 max-w-2xl text-base leading-relaxed text-black/70 sm:text-lg md:text-xl">
+              I connect your website, CRM, Odoo/ERP, WhatsApp, automation and AI so your team stops copying data between disconnected tools.
+            </p>
+
+            <div className="mt-8 flex flex-col items-start gap-3 sm:flex-row sm:flex-wrap sm:items-center">
+              <a
+                href="#contact"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full bg-black px-6 text-sm font-semibold text-white transition hover:bg-black/75 sm:w-auto"
+              >
+                Book a free systems audit
+                <ArrowRight size={16} aria-hidden />
+              </a>
+              <a
+                href="#results"
+                className="inline-flex min-h-12 w-full items-center justify-center rounded-full border border-black/25 bg-white/50 px-6 text-sm font-semibold text-black backdrop-blur-sm transition hover:bg-white/80 sm:w-auto"
+              >
+                See real results
+              </a>
+              <a
+                href="/ai-lab"
+                className="inline-flex min-h-12 items-center gap-2 px-1 text-sm font-semibold text-black underline decoration-black/30 underline-offset-4 transition hover:decoration-black"
+              >
+                Try a live AI tool
+                <ArrowRight size={15} aria-hidden />
+              </a>
+            </div>
+
+            {TRUST.enabled && (
+              <div className="mt-7 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-black/60 sm:text-sm">
+                <span>{TRUST.clientCount}+ businesses helped since {TRUST.since}</span>
+                {google && (
+                  <a
+                    href={google.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center gap-1.5 font-semibold text-black transition-opacity hover:opacity-60"
+                    aria-label={`${google.rating.toFixed(1)} out of 5 from ${google.reviewCount} Google reviews`}
+                  >
+                    <Star size={15} fill="currentColor" aria-hidden />
+                    {google.rating.toFixed(1)} from {google.reviewCount} Google reviews
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </section>
     </div>

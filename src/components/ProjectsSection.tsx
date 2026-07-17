@@ -1,112 +1,75 @@
-import useInViewAnimation, { fadeClass } from "../hooks/useInViewAnimation";
+import { ArrowRight, ArrowUpRight, Check } from "lucide-react";
 import { CASE_STUDIES } from "../data/content";
-
-/**
- * Reference vertical projects layout. Two clearly separated groups:
- *   1. "Interface directions" — reference visual works (not client projects)
- *   2. "Real case studies" — actual Xerxes client work from CASE_STUDIES
- */
-
-const REFERENCE_WORKS = [
-  {
-    name: "evr",
-    description: "From idea to millions raised for a web3 AI product",
-    image: "https://motionsites.ai/assets/hero-evr-ventures-preview-DZxeVFEX.gif",
-  },
-  {
-    name: "Automation Machines",
-    description: "Streamlining industrial automation processes",
-    image: "https://motionsites.ai/assets/hero-automation-machines-preview-DlTveRIN.gif",
-  },
-  {
-    name: "xPortfolio",
-    description: "Modern portfolio management platform",
-    image: "https://motionsites.ai/assets/hero-xportfolio-preview-D4A8maiC.gif",
-  },
-];
-
-function ProjectItem({
-  eyebrow,
-  name,
-  description,
-  image,
-  href,
-}: {
-  eyebrow: string;
-  name: string;
-  description: string;
-  image?: string;
-  href?: string;
-}) {
-  const { ref, inView } = useInViewAnimation<HTMLDivElement>();
-  return (
-    <div ref={ref} className={fadeClass(inView)}>
-      <div className="ml-20 md:ml-28">
-        <p className="font-studio-pixel mb-2 text-xs uppercase text-[color:var(--studio-muted)]">
-          {eyebrow}
-        </p>
-        <h3 className="font-studio-serif text-3xl text-[color:var(--studio-gold)] md:text-4xl">
-          {href ? (
-            <a href={href} className="transition-opacity hover:opacity-70">
-              {name}
-            </a>
-          ) : (
-            name
-          )}
-        </h3>
-        <p className="font-studio-body mt-2 max-w-xl text-sm text-[color:var(--studio-cream-dim)] md:text-base">
-          {description}
-        </p>
-      </div>
-      {image && (
-        <img
-          src={image}
-          alt={`${name} — interface preview`}
-          loading="lazy"
-          className="mt-6 aspect-video w-full rounded-2xl object-cover shadow-lg"
-        />
-      )}
-    </div>
-  );
-}
 
 export default function ProjectsSection() {
   return (
-    <section
-      id="work"
-      aria-labelledby="studio-projects-heading"
-      className="studio-reference-page studio-reference-section w-full"
-    >
-      <h2 id="studio-projects-heading" className="sr-only">
-        Projects
-      </h2>
-
-      <div className="mx-auto flex max-w-[1200px] flex-col gap-16 px-6 py-12 md:gap-20">
-        {REFERENCE_WORKS.map((w) => (
-          <ProjectItem
-            key={w.name}
-            eyebrow="Interface directions · reference build"
-            name={w.name}
-            description={w.description}
-            image={w.image}
-          />
-        ))}
-
-        {/* Real, delivered client work — clearly separated from the visuals above */}
-        <div className="ml-20 border-t border-[color:var(--studio-line)] pt-12 md:ml-28">
-          <p className="font-studio-pixel text-xs uppercase text-[color:var(--studio-muted)]">
-            Real case studies · delivered work
+    <section id="work" className="light-focus-surface scroll-mt-24 bg-[#e5e2db] px-5 py-20 text-[#101820] sm:px-8 sm:py-28" aria-labelledby="work-heading">
+      <div className="mx-auto w-full max-w-[1200px]">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[#866420]">Delivered work</p>
+            <h2 id="work-heading" className="editorial-serif mt-4 max-w-2xl text-4xl leading-[0.95] tracking-[-0.025em] sm:text-5xl">
+              Systems and campaigns with evidence behind them.
+            </h2>
+          </div>
+          <p className="max-w-md text-sm leading-relaxed text-black/60">
+            No interface references presented as client work. These are the businesses, scopes and tracked outcomes actually delivered.
           </p>
         </div>
-        {CASE_STUDIES.map((cs) => (
-          <ProjectItem
-            key={cs.slug}
-            eyebrow={`${cs.category} · ${cs.location}`}
-            name={cs.client}
-            description={cs.takeaway}
-            href={`/case-studies/${cs.slug}`}
-          />
-        ))}
+
+        <div className="mt-14 grid gap-5 lg:grid-cols-2">
+          {CASE_STUDIES.map((study) => (
+            <article key={study.slug} className="flex flex-col rounded-[28px] border border-black/10 bg-[#f3f1ec] p-6 sm:p-8">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <span className="rounded-full bg-[#0c2432] px-3 py-1.5 font-mono text-[11px] uppercase tracking-wider text-gold">
+                  {study.category}
+                </span>
+                <span className="text-xs text-black/50">{study.location}</span>
+              </div>
+
+              <h3 className="mt-6 text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">{study.client}</h3>
+              <p className="mt-4 text-sm leading-relaxed text-black/60">{study.summary}</p>
+
+              {study.stats && (
+                <dl className="mt-7 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-black/10 bg-black/10 sm:grid-cols-4">
+                  {study.stats.map((stat) => (
+                    <div key={stat.label} className="bg-[#f3f1ec] p-3 text-center">
+                      <dt className="text-[11px] leading-tight text-black/50">{stat.label}</dt>
+                      <dd className="editorial-serif order-first mb-1 text-2xl text-[#866420]">{stat.value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              )}
+
+              {study.scope && (
+                <ul className="mt-7 grid gap-2 border-t border-black/10 pt-5 sm:grid-cols-2">
+                  {study.scope.slice(0, 4).map((item) => (
+                    <li key={item} className="flex items-start gap-2 text-sm text-black/60">
+                      <Check size={15} className="mt-0.5 shrink-0 text-[#866420]" aria-hidden />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              )}
+
+              <p className="mt-7 border-l-2 border-[#b8892f] pl-4 text-sm italic leading-relaxed text-black/70">{study.takeaway}</p>
+              <a
+                href={`/case-studies/${study.slug}`}
+                className="group mt-auto inline-flex min-h-12 items-center gap-2 pt-7 text-sm font-semibold text-[#6f531b]"
+              >
+                Read the case study
+                <ArrowUpRight size={16} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" aria-hidden />
+              </a>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <a href="/case-studies" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-black/20 px-6 text-sm font-semibold transition-colors hover:bg-black hover:text-white">
+            See all case studies
+            <ArrowRight size={16} aria-hidden />
+          </a>
+        </div>
       </div>
     </section>
   );

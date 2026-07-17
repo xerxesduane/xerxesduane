@@ -25,7 +25,7 @@ export default function CaseStudies() {
             </Kinetic>
             <m.p variants={fadeUp} className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl">
               A closer look at the work, from full Odoo deployments to ad
-              campaigns that pay for themselves, across the UAE, the Philippines,
+              campaigns with tracked conversions, across the UAE, the Philippines,
               and beyond.
             </m.p>
             <m.div variants={fadeUp} className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">

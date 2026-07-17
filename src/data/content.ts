@@ -349,7 +349,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "blocktec-odoo-erp",
     client: "Blocktec Philippines",
-    location: "Philippines · Construction Materials",
+    location: "Philippines \u2014 Construction Materials",
     category: "Odoo ERP",
     challenge:
       "A construction materials and AAC wall-systems company ran on disconnected spreadsheets, manual tracking, and fragmented communication between departments. The goal: one platform for the whole operation.",
@@ -379,7 +379,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "saladmaster-crm-web",
     client: "Saladmaster UAE",
-    location: "UAE · Premium Cookware",
+    location: "UAE \u2014 Premium Cookware",
     category: "CRM & Web",
     challenge:
       "A premium cookware and direct-sales brand needed a smoother customer journey, from first inquiry through cooking demo to sale, with real visibility into follow-ups.",
@@ -423,7 +423,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "aya-home-spa-meta-ads",
     client: "AYA Home Spa",
-    location: "Dubai · Wellness",
+    location: "Dubai \u2014 Wellness",
     category: "Meta Ads",
     challenge:
       "A growing Dubai wellness brand needed real digital visibility in a crowded market.",
@@ -449,7 +449,7 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "wellington-cash-for-cars-google-ads",
     client: "Wellington Cash for Cars",
-    location: "New Zealand · Automotive",
+    location: "New Zealand \u2014 Automotive",
     category: "Google Ads",
     challenge:
       "A vehicle-removal service needed to dominate a competitive search market while keeping cost-per-acquisition low.",
@@ -469,7 +469,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: "8.28%", label: "Top-ad CTR" },
       { value: "$6.89", label: "Avg. CPC" },
     ],
-    takeaway: "Real ad spend, real ROI, managed internationally from Dubai.",
+    takeaway: "Tracked search performance, managed internationally from Dubai.",
     url: "https://wellingtoncashforcars.co.nz/",
   },
 ];
@@ -524,136 +524,6 @@ export const STATS: { value: number; suffix: string; label: string }[] = [
   { value: 4, suffix: "", label: "Countries served" },
 ];
 
-export interface Result {
-  /** Anonymous business category, e.g. "Wellness business · Dubai". */
-  category: string;
-  /** The initial problem, in one line. */
-  problem: string;
-  /** Headline figure, e.g. "791", "$6.89", "8 → 1". */
-  value: string;
-  /** What the figure measures. */
-  label: string;
-  /** Short, honest explanation of what changed — no over-claimed causation. */
-  whatChanged: string;
-  /** Credibility/context label, e.g. "Verified campaign data · Meta Ads". */
-  proof: string;
-  /** Relevant service page to deep-link to. */
-  serviceHref: string;
-}
-
-// REAL numbers from delivered projects, presented WITHOUT naming clients (the
-// named, permission-based attribution lives in the CLIENTS logo wall below).
-// Every figure is verified from CASE_STUDIES — nothing here is invented or
-// inflated, and no causation is claimed beyond what was measured.
-export const RESULTS: Result[] = [
-  {
-    category: "Wellness business · Dubai",
-    problem: "Needed real digital visibility in a crowded market.",
-    value: "791",
-    label: "customer conversations",
-    whatChanged:
-      "A focused paid-social campaign reached more than 54,000 people and produced 98,000 video plays. The goal wasn't passive engagement — it was starting real conversations with potential customers.",
-    proof: "Verified campaign data · Meta Ads",
-    serviceHref: "/landing-page-design-dubai",
-  },
-  {
-    category: "Automotive service · International campaign",
-    problem: "A competitive search market, with pressure to keep cost-per-acquisition low.",
-    value: "610",
-    label: "tracked conversions from 1,530+ clicks",
-    whatChanged:
-      "A disciplined search campaign focused budget on high-intent searches, holding an 8.28% top-ad click-through rate at an average cost per click of $6.89 — managed remotely from Dubai.",
-    proof: "Verified campaign data · Google Ads",
-    serviceHref: "/seo-dubai",
-  },
-  {
-    category: "Multi-location organization · Dubai",
-    problem: "Hard to find across locations, with an inconsistent presence on web, search, and social.",
-    value: "452",
-    label: "direction requests in one month",
-    whatChanged:
-      "Website improvements, local-search optimization, and better-managed business profiles helped more people discover locations and take a measurable next step — alongside 60,000+ monthly content views.",
-    proof: "Measured monthly activity · Web · GMB · Social",
-    serviceHref: "/web-development-dubai",
-  },
-  {
-    category: "Construction & manufacturing business",
-    problem: "Eight disconnected workflows on spreadsheets, manual tracking, and fragmented department communication.",
-    value: "8 → 1",
-    label: "workflows in one operating system",
-    whatChanged:
-      "CRM, quotations, purchasing, inventory, accounting, project management, e-commerce, and automation — connected through one structured Odoo ERP platform.",
-    proof: "Delivered scope · Odoo ERP",
-    serviceHref: "/odoo-erp-dubai",
-  },
-  {
-    category: "SEO campaign · UAE",
-    problem: "Low organic visibility in search.",
-    value: "800%",
-    label: "increase in organic visits",
-    whatChanged:
-      "A long-term SEO campaign — technical fixes, content, and targeted keywords — also grew new users by 270%, page views by 200%, and put 115 keywords on page one.",
-    proof: "Campaign result · SEO",
-    serviceHref: "/seo-dubai",
-  },
-  {
-    category: "Lead generation · Dubai",
-    problem: "Not enough inbound enquiries and leads coming in.",
-    value: "300%",
-    label: "increase in leads",
-    whatChanged:
-      "A focused ads-and-social push tripled inbound leads — including a 300% rise in daily Facebook enquiries.",
-    proof: "Campaign result · Growth",
-    serviceHref: "/crm-development-dubai",
-  },
-  {
-    category: "Growth campaign · UAE",
-    problem: "Sales had plateaued.",
-    value: "50%+",
-    label: "increase in overall sales",
-    whatChanged:
-      "A connected marketing-and-systems push lifted overall sales by more than half.",
-    proof: "Campaign result · Growth",
-    serviceHref: "/landing-page-design-dubai",
-  },
-];
-
-export interface Testimonial {
-  quote: string;
-  name: string;
-  business: string;
-  sector: string;
-  /** Visibly-marked slot Xerxes fills with a real, attributable quote. */
-  placeholder?: boolean;
-}
-
-// Placeholders only — replace with REAL, attributable client quotes (with
-// permission) before production. DO NOT invent quotes. Rendered as visibly
-// marked placeholders so the section can be reviewed and filled in.
-export const TESTIMONIALS: Testimonial[] = [
-  {
-    quote: "Add a real client quote here — ideally what changed for their business, in their own words.",
-    name: "[Client name]",
-    business: "[Business]",
-    sector: "[Sector · Dubai]",
-    placeholder: true,
-  },
-  {
-    quote: "A second short, specific quote — the more concrete the result, the more it persuades.",
-    name: "[Client name]",
-    business: "[Business]",
-    sector: "[Sector · UAE]",
-    placeholder: true,
-  },
-  {
-    quote: "A third quote, ideally from a different sector, to show range across the GCC.",
-    name: "[Client name]",
-    business: "[Business]",
-    sector: "[Sector · GCC]",
-    placeholder: true,
-  },
-];
-
 export const PROMISE = {
   never: [
     "Upsells you don't need",
@@ -674,7 +544,7 @@ export const PACKAGES = [
   {
     name: "The Systems Audit",
     price: "Free",
-    note: "for a limited time",
+    note: "no obligation",
     pitch: "Start here",
     body: "A 60-minute diagnostic of your whole stack — website, leads, CRM, WhatsApp, spreadsheets, automation. You leave with a plain-English map of what's disconnected and a prioritised roadmap of what to fix first. No pressure, no lock-in.",
     cta: "Book your free systems audit",
@@ -754,7 +624,7 @@ export const CLIENTS: Client[] = [
 export const FAQS: { q: string; a: string }[] = [
   {
     q: "Is the audit really free?",
-    a: "Yes, for now. I'm keeping it free while I onboard my founding clients. Eventually it'll be AED 750–1,500, but you're early.",
+    a: "The audit is currently free and comes with no obligation. After the 60-minute session, you receive a plain-English systems map, three practical quick wins, and a prioritised next-step plan—whether we work together afterward or not.",
   },
   {
     q: "Do you sign long contracts?",

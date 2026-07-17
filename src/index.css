@@ -630,3 +630,22 @@
 .studio-thumb-fade {
   animation: studio-thumb-out 1000ms ease-out forwards;
 }
+
+/* Preserve every AI Lab card in prerendered HTML while allowing the browser to
+   skip layout and paint work for cards far below the viewport. */
+.demo-card-shell {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 520px;
+}
+
+/* Editorial display face for the conversion-focused homepage. */
+.editorial-serif {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 400;
+}
+
+/* Gold focus works on the dark site; light conversion surfaces need ink. */
+.light-focus-surface :focus-visible {
+  outline-color: #0c2432;
+  outline-offset: 3px;
+}

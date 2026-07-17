@@ -1,28 +1,29 @@
-/* Mainframe-style landing hero (homepage only). Developer/terminal type:
-   Space Mono for the wordmark, JetBrains Mono for the typed greeting and UI —
-   both already self-hosted (see @font-face in index.css). Scoped to
-   .mainframe-landing so inner pages keep the site's Inter stack. */
-:root {
-  --font-heading: 'PP NeueBit', 'Space Mono', ui-monospace, monospace;
-  --font-body: 'PP NeueBit', 'JetBrains Mono', 'Space Mono', ui-monospace, monospace;
-}
-
 .mainframe-landing,
-.mainframe-landing p,
 .mainframe-landing button,
 .mainframe-landing a {
-  font-family: var(--font-body);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 .mainframe-logo-text {
-  font-family: var(--font-heading);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.mainframe-display {
+  font-family: Fraunces, Georgia, serif;
+  font-weight: 400;
+  text-wrap: balance;
+}
+
+.mainframe-body {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
 }
 
 .mainframe-asterisk {
   letter-spacing: -0.02em;
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+@media (max-width: 767px) {
+  .mainframe-landing video {
+    object-position: 78% center !important;
+  }
 }

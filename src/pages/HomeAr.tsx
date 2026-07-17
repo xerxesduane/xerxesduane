@@ -12,7 +12,7 @@ const waHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
 const FAQ_AR = [
   {
     q: "ماذا يحدث إذا لم أستطع الوصول إليك، أو كنت مشغولًا أو مسافرًا؟",
-    a: "تتعامل مع رقمٍ واحدٍ موثوق طوال الوقت، وكل نظامٍ نبنيه يكون موثّقًا بوضوح. حتى لو تأخّرت في الردّ، يبقى عملك في يدك ولا تعلق يومًا في انتظار أحد.",
+    a: "تتعامل مع رقمٍ واحدٍ موثوق طوال الوقت، وكل نظامٍ أبنيه يكون موثّقًا بوضوح. حتى لو تأخّرت في الردّ، يبقى عملك في يدك ولا تعلق يومًا في انتظار أحد.",
   },
   {
     q: "هل أملك كل شيء فعلًا؟ الموقع والنطاق والحسابات؟",
@@ -46,15 +46,14 @@ export default function HomeAr() {
               variants={fadeUp}
               className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.15em] text-gold"
             >
-              استوديو تقني متكامل · دبي
+              مستشار أنظمة مستقل · دبي
             </m.span>
             <m.h1 variants={fadeUp} className="mt-7 text-3xl leading-[1.4] sm:text-4xl md:text-5xl">
-              أنظمة الشركات الكبرى، للأعمال الصغيرة التي لا تملك فريقًا تقنيًا.
+              نظام واحد متصل للعملاء المحتملين والمبيعات والعمليات.
             </m.h1>
             <m.p variants={fadeUp} className="mx-auto mt-7 max-w-2xl text-lg leading-loose text-muted">
-              معظم الأعمال الصغيرة في دبي تجمع بين موقع وجداول بيانات وعدّة تطبيقات لا تتحدث مع بعضها.
-              نبني المواقع والتطبيقات وأنظمة أودو والأتمتة والذكاء الاصطناعي التي تعمل معًا فعلًا،
-              بصدق، تحت سقف واحد، لتتوقف عن إدارة الأدوات وتعود إلى تنمية عملك.
+              أربط موقعك ونظام إدارة العملاء وأودو وواتساب والأتمتة والذكاء الاصطناعي،
+              حتى يتوقف فريقك عن نسخ البيانات بين أدوات منفصلة وتصبح رحلة العميل وعملياتك في نظام واحد.
             </m.p>
             <m.div variants={fadeUp} className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
@@ -85,7 +84,7 @@ export default function HomeAr() {
         <div className="container-bl">
           <Reveal className="mx-auto max-w-2xl text-center">
             <h2 className="text-2xl sm:text-3xl">
-              خدماتنا في <span className="text-gradient-gold">دبي</span>
+              خدماتي في <span className="text-gradient-gold">دبي</span>
             </h2>
           </Reveal>
           <m.div

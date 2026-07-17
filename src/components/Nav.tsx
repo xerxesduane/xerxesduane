@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Menu,
   X,
@@ -79,6 +79,8 @@ export default function Nav({
   const [scrolled, setScrolled] = useState(false);
   const [revealed, setRevealed] = useState(!revealOnScroll);
   const [open, setOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
+  const menuPanelRef = useRef<HTMLDivElement>(null);
 
   const ar = locale === "ar";
   const links = ar ? AR_NAV_LINKS : NAV_LINKS;
@@ -97,28 +99,66 @@ export default function Nav({
   useEffect(() => {
     const onScroll = () => {
       setScrolled(window.scrollY > 24);
-      if (revealOnScroll) setRevealed(window.scrollY > window.innerHeight * 0.6);
+      if (!revealOnScroll) return;
+      const hero = document.getElementById("top");
+      const visible = hero ? hero.getBoundingClientRect().bottom <= 96 : false;
+      setRevealed(visible);
+      if (!visible) setOpen(false);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [revealOnScroll]);
 
   useEffect(() => {
-    // body overflow alone doesn't halt Lenis's rAF scrolling — stop it too.
-    document.body.style.overflow = open ? "hidden" : "";
-    const lenis = getLenis();
-    if (open) lenis?.stop();
-    else lenis?.start();
+    if (!open) return;
+    const trigger = menuButtonRef.current;
+
+    document.body.style.overflow = "hidden";
+    getLenis()?.stop();
+
+    const panel = menuPanelRef.current;
+    const focusable = panel
+      ? Array.from(panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'))
+      : [];
+    window.requestAnimationFrame(() => focusable[0]?.focus());
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", onKeyDown);
     return () => {
+      document.removeEventListener("keydown", onKeyDown);
       document.body.style.overflow = "";
       getLenis()?.start();
+      trigger?.focus();
     };
   }, [open]);
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+      aria-hidden={!revealed}
+      inert={!revealed}
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         revealed ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-full opacity-0"
       }`}
     >
@@ -133,7 +173,7 @@ export default function Nav({
         >
           <m.a
             href={homeHref}
-            className="py-1"
+            className="inline-flex min-h-11 flex-col justify-center py-1"
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
             transition={{ duration: 0.2, ease: EASE }}
@@ -141,7 +181,7 @@ export default function Nav({
             <Wordmark />
             {!ar && (
               <span className="mt-0.5 hidden font-mono text-[9px] uppercase tracking-[0.18em] text-muted-dark xl:block">
-                Independent systems support.
+                Independent Systems Consultant.
               </span>
             )}
             {/* name comes from the visible wordmark; suffix gives context */}
@@ -154,7 +194,7 @@ export default function Nav({
                 <Magnetic strength={0.18}>
                   <a
                     href={l.href}
-                    className={`inline-flex min-h-9 items-center gap-1 rounded-full px-3.5 text-xs font-medium transition-colors duration-200 ${
+                    className={`inline-flex min-h-11 items-center gap-1 rounded-full px-3.5 text-xs font-medium transition-colors duration-200 ${
                       l.label === "AI Lab"
                         ? "bg-gold/10 text-gold ring-1 ring-gold/20 hover:bg-gold hover:text-ink"
                         : "text-cream-dim/80 hover:bg-cream/[0.06] hover:text-gold"
@@ -230,7 +270,7 @@ export default function Nav({
               href={langHref}
               lang={langLabel === "عربي" ? "ar" : "en"}
               aria-label={`Switch language to ${langLabel}`}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 text-cream-dim transition-colors hover:border-gold/50 hover:text-gold sm:h-auto sm:w-auto sm:gap-1.5 sm:px-3 sm:py-2 sm:text-sm"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/15 text-cream-dim transition-colors hover:border-gold/50 hover:text-gold sm:min-h-11 sm:w-auto sm:gap-1.5 sm:px-3 sm:py-2 sm:text-sm"
               whileHover={{ y: -2 }}
               whileTap={{ scale: 0.96 }}
               transition={{ duration: 0.2, ease: EASE }}
@@ -255,11 +295,13 @@ export default function Nav({
               </m.a>
             </Magnetic>
             <m.button
+              ref={menuButtonRef}
               type="button"
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? (ar ? AR_CHROME.closeMenu : "Close menu") : (ar ? AR_CHROME.openMenu : "Open menu")}
               aria-expanded={open}
-              className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-cream/15 text-cream transition-colors hover:border-gold/50 hover:text-gold lg:hidden"
+              aria-controls="site-mobile-menu"
+              className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-cream/15 text-cream transition-colors hover:border-gold/50 hover:text-gold lg:hidden"
               whileTap={{ scale: 0.9 }}
             >
               <AnimatePresence mode="wait" initial={false}>
@@ -271,7 +313,7 @@ export default function Nav({
                   transition={{ duration: 0.2, ease: EASE }}
                   className="absolute inset-0 flex items-center justify-center"
                 >
-                  {open ? <X size={18} /> : <Menu size={18} />}
+                  {open ? <X size={18} aria-hidden /> : <Menu size={18} aria-hidden />}
                 </m.span>
               </AnimatePresence>
             </m.button>
@@ -289,9 +331,14 @@ export default function Nav({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.25, ease: EASE }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 -z-10 bg-ink-deep/70 backdrop-blur-sm lg:hidden"
+              className="fixed inset-0 -z-10 bg-ink-deep/95 backdrop-blur-md lg:hidden"
             />
             <m.div
+              ref={menuPanelRef}
+              id="site-mobile-menu"
+              role="dialog"
+              aria-modal="true"
+              aria-label={ar ? "قائمة التنقل" : "Navigation menu"}
               key="nav-panel"
               initial={{ opacity: 0, y: -14, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -305,7 +352,14 @@ export default function Nav({
                     <p className="font-mono text-[10px] uppercase tracking-wider text-gold">{ar ? "Xerxes Duane" : "Dubai · Available for new projects"}</p>
                     <p className="mt-1 text-xs text-cream-dim">{ar ? AR_CHROME.bookAudit : "One clear operating system for your business."}</p>
                   </div>
-                  <span className="h-2 w-2 rounded-full bg-gold shadow-[0_0_18px_rgba(218,164,66,0.9)]" aria-hidden />
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    aria-label={ar ? AR_CHROME.closeMenu : "Close menu"}
+                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cream/20 text-cream transition-colors hover:border-gold/60 hover:text-gold"
+                  >
+                    <X size={18} aria-hidden />
+                  </button>
                 </div>
                 <m.ul
                   className="grid grid-cols-2 gap-1"
@@ -342,7 +396,7 @@ export default function Nav({
                                   key={service.slug}
                                   href={`/${service.slug}`}
                                   onClick={() => setOpen(false)}
-                                  className="rounded-xl px-2 py-2.5 text-xs leading-tight text-cream-dim transition-colors hover:bg-gold/10 hover:text-gold"
+                                  className="flex min-h-11 items-center rounded-xl px-2 py-2.5 text-xs leading-tight text-cream-dim transition-colors hover:bg-gold/10 hover:text-gold"
                                 >
                                   {service.navLabel}
                                 </a>
@@ -361,7 +415,7 @@ export default function Nav({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8, transition: { duration: 0.15 } }}
                   transition={{ duration: 0.35, ease: EASE, delay: 0.08 + links.length * 0.055 }}
-                  className="mt-2 flex items-center justify-center gap-1.5 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink-deep shadow-[0_10px_30px_-12px_rgba(218,164,66,0.8)]"
+                  className="mt-2 flex min-h-12 items-center justify-center gap-1.5 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink-deep shadow-[0_10px_30px_-12px_rgba(218,164,66,0.8)]"
                 >
                   {mobileBookLabel}
                   <ArrowUpRight size={16} strokeWidth={2.5} />

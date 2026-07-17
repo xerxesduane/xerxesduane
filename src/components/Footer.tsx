@@ -1,7 +1,7 @@
 import Wordmark from "./ui/Wordmark";
 import { CONTACT, NAV_LINKS } from "../data/content";
 import { SERVICE_PAGES } from "../data/servicePages";
-import { SERVICE_PAGES_AR, AR_CHROME } from "../data/servicePagesAr";
+import { SERVICE_PAGES_AR, AR_CHROME, AR_NAV_LINKS } from "../data/servicePagesAr";
 
 function LinkedinIcon() {
   return (
@@ -22,14 +22,19 @@ function InstagramIcon() {
 export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
   const ar = locale === "ar";
   const tagline = ar
-    ? AR_CHROME.footerTagline
-    : "Independent systems support for small businesses in Dubai.";
+    ? "مستشار أنظمة مستقل للأعمال الصغيرة في دبي."
+    : "Independent Systems Consultant for small businesses in Dubai.";
   const serviceItems = ar
     ? SERVICE_PAGES_AR.map((p) => ({ href: `/ar/${p.slug}`, label: p.navLabel }))
     : SERVICE_PAGES.map((p) => ({ href: `/${p.slug}`, label: p.navLabel }));
-  const gridCols = ar
-    ? "sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]"
-    : "sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_1.55fr_1fr]";
+  const navItems = ar
+    ? [
+        { label: "الرئيسية", href: "/ar" },
+        ...AR_NAV_LINKS,
+        { label: "مختبر الذكاء الاصطناعي (بالإنجليزية)", href: "/ai-lab" },
+      ]
+    : NAV_LINKS;
+  const gridCols = "sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_1.55fr_1fr]";
   const linkCls = "link-grow text-cream-dim transition-colors hover:text-gold";
 
   return (
@@ -57,7 +62,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
                 target="_blank"
                 rel="noopener"
                 aria-label={ar ? AR_CHROME.linkedinAria : "Xerxes Duane on LinkedIn"}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/10 text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/10 text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
               >
                 <LinkedinIcon />
               </a>
@@ -66,41 +71,34 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
                 target="_blank"
                 rel="noopener"
                 aria-label={ar ? AR_CHROME.instagramAria : "Xerxes Duane on Instagram"}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-cream/10 text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-cream/10 text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
               >
                 <InstagramIcon />
               </a>
             </div>
           </div>
 
-          {/* Studio column (English only — no Arabic equivalents yet) */}
-          {!ar && (
-            <div>
-              <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
-                Navigate
-              </h3>
-              <ul className="mt-4 space-y-2.5 text-sm">
-                {NAV_LINKS.map((l) => (
-                  <li key={l.href}>
-                    <a href={l.href} className={linkCls}>
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
+          <div>
+            <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
+              {ar ? "تصفّح" : "Navigate"}
+            </h3>
+            <ul className="mt-4 space-y-2.5 text-sm">
+              {navItems.map((link) => (
+                <li key={link.href + link.label}>
+                  <a href={link.href} className={linkCls}>
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+              {!ar && (
                 <li>
                   <a href="/case-studies" className={linkCls}>
                     Case studies
                   </a>
                 </li>
-                <li>
-                  <a href="/ai-lab" className="inline-flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
-                    AI Lab
-                    <span aria-hidden>→</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          )}
+              )}
+            </ul>
+          </div>
 
           <div>
             <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">

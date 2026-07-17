@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const STORAGE_KEY = "tw-consent"; // "granted" | "denied"
+const STORAGE_KEY = "tw-consent";
 
 type GtagFn = (...args: unknown[]) => void;
 interface ClarityWindow extends Window {
@@ -10,7 +10,6 @@ interface ClarityWindow extends Window {
   __clarityLoaded__?: boolean;
 }
 
-/** Load Microsoft Clarity on demand (only after consent). */
 function loadClarity() {
   const w = window as ClarityWindow;
   const id = w.__CLARITY_ID__;
@@ -21,33 +20,38 @@ function loadClarity() {
     function (...args: unknown[]) {
       (w.clarity!.q = w.clarity!.q || []).push(args);
     };
-  const s = document.createElement("script");
-  s.async = true;
-  s.src = "https://www.clarity.ms/tag/" + id;
-  document.head.appendChild(s);
+  const script = document.createElement("script");
+  script.async = true;
+  script.src = "https://www.clarity.ms/tag/" + id;
+  document.head.appendChild(script);
 }
 
-/** Turn analytics on: update Google Consent Mode + start Clarity. */
 function grantConsent() {
   const w = window as ClarityWindow;
   w.gtag?.("consent", "update", { analytics_storage: "granted" });
   loadClarity();
 }
 
-export default function ConsentBanner() {
+export default function ConsentBanner({
+  locale = "en",
+  offsetForMobileCta = false,
+}: {
+  locale?: "en" | "ar";
+  offsetForMobileCta?: boolean;
+}) {
   const [show, setShow] = useState(false);
+  const ar = locale === "ar";
 
   useEffect(() => {
     let saved: string | null = null;
     try {
       saved = localStorage.getItem(STORAGE_KEY);
     } catch {
-      /* storage blocked — treat as no decision */
+      // Storage can be unavailable in strict privacy modes.
     }
-    if (saved === "granted") {
-      grantConsent();
-    } else if (saved !== "denied") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot client-only init; intentional SSR-safe pattern
+    if (saved === "granted") grantConsent();
+    else if (saved !== "denied") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot client-only consent initialization
       setShow(true);
     }
   }, []);
@@ -56,7 +60,7 @@ export default function ConsentBanner() {
     try {
       localStorage.setItem(STORAGE_KEY, granted ? "granted" : "denied");
     } catch {
-      /* ignore */
+      // The choice still applies for the current page.
     }
     if (granted) grantConsent();
     setShow(false);
@@ -65,38 +69,40 @@ export default function ConsentBanner() {
   if (!show) return null;
 
   return (
-    <div
-      role="dialog"
-      aria-label="Cookie consent"
-      aria-live="polite"
-      className="fixed inset-x-3 bottom-24 z-[60] sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-md"
+    <aside
+      role="dialog" aria-modal="false" aria-live="polite" aria-atomic="true" aria-label={ar ? "خيارات التحليلات" : "Analytics choices"}
+      dir={ar ? "rtl" : "ltr"}
+      className={`fixed inset-x-3 z-40 sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-md ${
+        offsetForMobileCta ? "bottom-40" : "bottom-3"
+      }`}
     >
-      <div className="nav-surface flex flex-col gap-3 rounded-2xl p-3.5 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.85)] sm:p-4">
+      <div className="nav-surface flex flex-col gap-4 rounded-2xl p-4 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.85)]">
         <p className="text-xs leading-relaxed text-cream-dim sm:text-sm">
-          I use anonymous analytics to improve the site. Nothing is shared or
-          sold. See the{" "}
-          <a href="/privacy" className="text-gold underline-offset-2 hover:underline">
-            Privacy Policy
+          {ar
+            ? "أستخدم Google Analytics وMicrosoft Clarity لفهم كيفية استخدام الموقع. يمكنك قبول التحليلات الاختيارية أو رفضها."
+            : "I use Google Analytics and Microsoft Clarity to understand site usage. You can accept or decline optional analytics."}{" "}
+          <a href="/privacy" className="text-gold underline underline-offset-2">
+            {ar ? "سياسة الخصوصية" : "Privacy Policy"}
           </a>
           .
         </p>
-        <div className="flex shrink-0 items-center justify-end gap-2">
+        <div className="flex items-center justify-end gap-2">
           <button
             type="button"
             onClick={() => decide(false)}
-            className="rounded-full border border-cream/15 px-4 py-2 text-xs font-semibold text-cream transition-colors hover:border-cream/40"
+            className="inline-flex min-h-11 items-center rounded-full border border-cream/20 px-5 text-xs font-semibold text-cream transition-colors hover:border-cream/50"
           >
-            Decline
+            {ar ? "رفض" : "Decline"}
           </button>
           <button
             type="button"
             onClick={() => decide(true)}
-            className="rounded-full bg-gold px-5 py-2 text-xs font-semibold text-ink-deep transition-colors hover:bg-gold-soft"
+            className="inline-flex min-h-11 items-center rounded-full bg-gold px-5 text-xs font-semibold text-ink-deep transition-colors hover:bg-gold-soft"
           >
-            Accept
+            {ar ? "قبول" : "Accept"}
           </button>
         </div>
       </div>
-    </div>
+    </aside>
   );
 }

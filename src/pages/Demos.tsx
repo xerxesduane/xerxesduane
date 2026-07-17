@@ -538,7 +538,7 @@ function DemoCta({ demo }: { demo: Demo }) {
 function DemoCard({ demo }: { demo: Demo }) {
   const Icon = demo.icon;
   return (
-    <div id={demo.id} className="scroll-mt-28 glass border-glow rounded-3xl p-6 sm:p-8">
+    <div id={demo.id} className="demo-card-shell scroll-mt-28 glass border-glow rounded-3xl p-6 sm:p-8">
       <div className="flex items-start gap-4">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-gold/10 text-gold ring-1 ring-gold/20">
           <Icon size={22} strokeWidth={1.7} />

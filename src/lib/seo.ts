@@ -101,11 +101,11 @@ const FAQ_SCHEMA = {
 };
 
 const HOME_META: PageMeta = {
-  title: "Xerxes Duane - Independent Systems Consultant in Dubai",
+  title: "Xerxes Duane | Independent Systems Consultant in Dubai",
   description:
-    "Websites, CRM, Odoo/ERP, WhatsApp, automation, ads, and AI connected into one practical operating system for small businesses.",
+    "Connect your website, CRM, Odoo/ERP, WhatsApp, automation and AI into one practical operating system for leads, sales and operations.",
   canonical: `${SITE_ORIGIN}/`,
-  ogTitle: "Xerxes Duane - Independent Systems Consultant in Dubai",
+  ogTitle: "One Connected System for Leads, Sales and Operations",
   alternates: [
     { hreflang: "en", href: `${SITE_ORIGIN}/` },
     { hreflang: "ar", href: `${SITE_ORIGIN}/ar` },
@@ -157,11 +157,11 @@ const HOME_ALTERNATES = [
 ];
 
 const AR_HOME_META: PageMeta = {
-  title: "Xerxes Duane | استوديو تقني للأعمال الصغيرة في دبي",
+  title: "Xerxes Duane | مستشار أنظمة مستقل في دبي",
   description:
-    "استوديو تقني متكامل في دبي للأعمال الصغيرة: مواقع وتطبيقات وأنظمة أودو ERP وأتمتة وذكاء اصطناعي وتحسين محركات البحث. احجز تدقيقًا مجانيًا لأنظمتك.",
+    "مستشار أنظمة مستقل في دبي يربط موقعك ونظام إدارة العملاء وأودو وواتساب والأتمتة والذكاء الاصطناعي في نظام واحد.",
   canonical: `${SITE_ORIGIN}/ar`,
-  ogTitle: "Xerxes Duane | استوديو تقني للأعمال الصغيرة في دبي",
+  ogTitle: "Xerxes Duane | مستشار أنظمة مستقل في دبي",
   ogImage: `${SITE_ORIGIN}/brand/og/ar-home.png`,
   locale: "ar_AR",
   alternates: HOME_ALTERNATES,

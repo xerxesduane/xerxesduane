@@ -15,7 +15,7 @@ export default function Work() {
               Real businesses. <span className="text-gradient-gold">Quiet wins.</span>
             </>
           }
-          subtitle="From full Odoo deployments to ad campaigns that pay for themselves, a sample of recent work across the UAE, the Philippines, and beyond."
+          subtitle="From full Odoo deployments to campaigns with tracked conversions, a sample of recent work across the UAE, the Philippines, and beyond."
         />
 
         <m.div
