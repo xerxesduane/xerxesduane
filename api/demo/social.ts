@@ -1,8 +1,6 @@
 // Social-caption demo — turns a one-line idea into a platform-tuned caption with
 // hashtags. Showcases the content/marketing side. Streams plain text.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -38,14 +36,11 @@ export default async function handler(req: Request): Promise<Response> {
   if (topic.length < 3) return errorResponse("Describe what you want to post about.");
   const platform = PLATFORM[body.platform ?? "instagram"] ?? PLATFORM.instagram;
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "social",
     system: `${SYSTEM}\nPlatform style — ${platform}`,
     messages: [{ role: "user", content: `Post idea: ${topic}` }],
     maxOutputTokens: 400,
     temperature: 0.9,
-    onError: ({ error }) => logAiError("social", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

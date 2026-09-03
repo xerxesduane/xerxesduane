@@ -2,9 +2,7 @@
 // to text) or pasted copy and streams a prioritized CRO critique: unclear
 // messaging, missing trust signals, weak/missing CTAs, and friction. Streams
 // plain text tokens back to the browser (see src/lib/demoClient.ts).
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 import { isFetchableUrl, fetchUrlText } from "../_fetchUrl";
 
 export const config = { runtime: "edge" };
@@ -53,8 +51,8 @@ export default async function handler(req: Request): Promise<Response> {
     return errorResponse("Add some landing-page copy (or a readable URL) to critique.");
   }
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "critique",
     system:
       "You are a conversion-rate-optimization (CRO) reviewer auditing landing-page copy for a small business. " +
       "Review ONLY the page copy provided — do not invent features, prices, or claims that aren't in it. " +
@@ -68,8 +66,5 @@ export default async function handler(req: Request): Promise<Response> {
     ],
     maxOutputTokens: 700,
     temperature: 0.3,
-    onError: ({ error }) => logAiError("critique", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

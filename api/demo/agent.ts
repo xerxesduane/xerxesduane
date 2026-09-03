@@ -5,9 +5,7 @@
 // simulation for the demo; the qualification + reply are real LLM output. One
 // model call powers the whole run (cheap + rate-limit friendly); the steps are
 // then executed and streamed. Nothing is stored.
-import { generateText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, parseLooseJson, logAiError } from "../_shared";
+import { generateDemoText, preflight, errorResponse, clamp, parseLooseJson, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -38,17 +36,21 @@ export default async function handler(req: Request): Promise<Response> {
 
   let raw: string;
   try {
-    const { text } = await generateText({
-      model: groq(MODEL_FAST),
+    raw = await generateDemoText({
+      where: "agent",
       maxOutputTokens: 700,
       temperature: 0.4,
-      prompt:
-        "You are a sales-ops AI agent for a Dubai tech studio. Read this inbound lead and return ONLY minified JSON, no prose: " +
-        '{"name":string,"company":string,"industry":string,"intent":string,"score":number,"scoreReason":string,"reply":string,"suggestedSlot":string}. ' +
-        "score is 0-100 fit. scoreReason is one short clause. reply is a warm WhatsApp-style message (<55 words) that answers them and proposes the slot. suggestedSlot is a concrete day+time in GST.\n\n" +
-        `LEAD:\n"""\n${lead}\n"""`,
+      messages: [
+        {
+          role: "user",
+          content:
+            "You are a sales-ops AI agent for a Dubai tech studio. Read this inbound lead and return ONLY minified JSON, no prose: " +
+            '{"name":string,"company":string,"industry":string,"intent":string,"score":number,"scoreReason":string,"reply":string,"suggestedSlot":string}. ' +
+            "score is 0-100 fit. scoreReason is one short clause. reply is a warm WhatsApp-style message (<55 words) that answers them and proposes the slot. suggestedSlot is a concrete day+time in GST.\n\n" +
+            `LEAD:\n"""\n${lead}\n"""`,
+        },
+      ],
     });
-    raw = text;
   } catch (e) {
     logAiError("agent", e);
     return errorResponse("The agent couldn't process that lead — please try again.", 502);

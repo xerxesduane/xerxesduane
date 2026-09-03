@@ -1,14 +1,13 @@
 // Vision / multimodal demo: an uploaded photo -> a structured result. Two modes:
 //   "receipt" -> an itemized expense line (merchant, date, total, 5% VAT, category)
 //   "product" -> a store-ready description + SEO + a suggested AED price
-// Uses Llama 4 Scout image input. Llama models lack
-// json_schema in this runtime, so we prompt for strict JSON and recover it with
-// parseLooseJson rather than generateObject. Images are processed in memory
-// and never stored.
-import { generateText } from "ai";
-import { groq } from "@ai-sdk/groq";
+// Runs on the vision model chain (see MODELS_VISION). The prompt asks for strict
+// JSON and parseLooseJson recovers it, rather than generateObject — that keeps
+// the endpoint working across the whole chain regardless of whether a given
+// model supports json_schema. Images are processed in memory and never stored.
 import {
-  MODEL_VISION,
+  generateDemoText,
+  MODELS_VISION,
   preflight,
   errorResponse,
   json,
@@ -52,8 +51,9 @@ export default async function handler(req: Request): Promise<Response> {
   const mode = body.mode === "product" ? "product" : "receipt";
 
   try {
-    const { text } = await generateText({
-      model: groq(MODEL_VISION),
+    const text = await generateDemoText({
+      where: "vision",
+      models: MODELS_VISION,
       maxOutputTokens: 900,
       temperature: 0.2,
       messages: [

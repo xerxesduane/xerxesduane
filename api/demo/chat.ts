@@ -2,9 +2,7 @@
 //   "assistant" — a generic small-business support/sales bot (the kind I deploy)
 //   "lead"      — a lead-qualifying assistant for Xerxes Duane
 // Streams plain text tokens back to the browser (see src/lib/demoClient.ts).
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -67,14 +65,11 @@ export default async function handler(req: Request): Promise<Response> {
   const totalChars = messages.reduce((n, m) => n + m.content.length, 0);
   if (totalChars > 6000) return errorResponse("That conversation is too long for the demo.");
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "chat",
     system,
     messages,
     maxOutputTokens: 500,
     temperature: 0.5,
-    onError: ({ error }) => logAiError("chat", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

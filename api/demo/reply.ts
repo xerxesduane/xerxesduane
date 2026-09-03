@@ -1,8 +1,6 @@
 // Reply-drafter demo — paste an inbound email or message, pick a tone, get a
 // ready-to-send draft. Showcases inbox/support automation. Streams plain text.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -33,14 +31,11 @@ export default async function handler(req: Request): Promise<Response> {
   if (message.length < 5) return errorResponse("Paste the message you want to reply to.");
   const tone = TONES[body.tone ?? "friendly"] ?? TONES.friendly;
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "reply",
     system: `${SYSTEM}\nTone: ${tone}`,
     messages: [{ role: "user", content: `Draft a reply to this message:\n"""\n${message}\n"""` }],
     maxOutputTokens: 500,
     temperature: 0.6,
-    onError: ({ error }) => logAiError("reply", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

@@ -50,9 +50,10 @@ export async function streamDemo(
     full += tail;
     onToken(full, tail);
   }
-  // The endpoint commits a 200 before the model runs, so a mid-stream provider
-  // failure (429/500) closes the stream with no body and no error. Surface
-  // it instead of silently showing nothing — the page's whole pitch is "real AI".
+  // The endpoints now wait for the model's first token before committing a 200,
+  // so a dead model or a bad key arrives here as a real error status (handled
+  // above) rather than an empty stream. This stays as the last resort for a
+  // stream that dies after the response is committed but before any token.
   if (!full) throw new Error("The AI didn't respond — please try again in a moment.");
   return full;
 }

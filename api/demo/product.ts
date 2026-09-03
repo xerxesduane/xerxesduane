@@ -1,8 +1,6 @@
 // Product-description writer — turns a few notes into a polished e-commerce
 // description with highlight bullets. Showcases the e-commerce service. Streams.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -33,14 +31,11 @@ export default async function handler(req: Request): Promise<Response> {
   if (product.length < 4) return errorResponse("Describe the product.");
   const tone = TONES[body.tone ?? "friendly"] ?? TONES.friendly;
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "product",
     system: `${SYSTEM}\nTone: ${tone}`,
     messages: [{ role: "user", content: `Product notes: ${product}` }],
     maxOutputTokens: 450,
     temperature: 0.8,
-    onError: ({ error }) => logAiError("product", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

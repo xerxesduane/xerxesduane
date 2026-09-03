@@ -1,9 +1,7 @@
 // WhatsApp outreach demo — writes a short, warm first-contact WhatsApp message
 // personalized to a single lead, then streams it back as plain text. This is the
 // generation step behind an automation that reaches out to many leads at once.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -57,14 +55,11 @@ export default async function handler(req: Request): Promise<Response> {
     .filter(Boolean)
     .join("\n");
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "whatsapp",
     system: SYSTEM,
     messages: [{ role: "user", content: `Write the outreach message for this lead.\n\n${lead}` }],
     maxOutputTokens: 160,
     temperature: 0.8,
-    onError: ({ error }) => logAiError("whatsapp", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }
