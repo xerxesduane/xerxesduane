@@ -303,7 +303,7 @@ export const INDUSTRIES: Industry[] = [
     icon: PartyPopper,
     name: "Events & Hospitality",
     blurb: "Event-ready websites, social media, and professional video that turn attendees into repeat clients.",
-    // HIDDEN (re-add later): worked: "Keystone Events Dubai",
+    worked: "Keystone Events Dubai",
   },
   {
     icon: Store,
@@ -315,7 +315,8 @@ export const INDUSTRIES: Industry[] = [
     icon: Church,
     name: "Churches & Faith-Based",
     blurb: "Websites, Google Business Profile and local search, digital marketing, and social content, built with care for the mission.",
-    // HIDDEN (re-add later): worked: "Fellowship Dubai", workedUrl: "https://fellowshipdubai.com/",
+    worked: "Fellowship Dubai",
+    workedUrl: "https://fellowshipdubai.com/",
     mission: true,
   },
   {
@@ -377,6 +378,38 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Customer inquiries, quotations, inventory, purchasing, and online operations, run from one unified Odoo platform.",
   },
   {
+    slug: "keystone-fellowship-dubai-dashboards",
+    client: "Keystone Events Dubai & Fellowship Dubai",
+    location: "Dubai · Events & Multi-Site Operations",
+    category: "Dashboards & Systems",
+    challenge:
+      "A multinational, multi-site organisation of around 6,000 members ran its operations, scheduling, and reporting across disconnected tools and spreadsheets. Team leads across two sites could not see the same picture at the same time, so coordinating people, rosters, and events meant chasing information rather than reading it.",
+    summary:
+      "Dashboards and the digital infrastructure underneath them, built so operations, scheduling, and data coordination across both sites read from one shared source rather than a dozen separate files.",
+    approach: [
+      "Mapped how scheduling and reporting actually moved between sites and teams before building anything",
+      "Built dashboards around the decisions leads make weekly, not around whatever the tools could export",
+      "Connected scheduling and volunteer data through Planning Center Online so records stay current at the source",
+      "Set up reporting that supports large outreach cycles of 100-150 participants across multiple sites",
+      "Trained team leads to run their own cycles from the dashboards without needing a technical hand",
+    ],
+    relatedServices: [
+      "crm-development-dubai",
+      "custom-software-development-dubai",
+      "web-development-dubai",
+    ],
+    scope: [
+      "Operations & scheduling dashboards",
+      "Cross-site data coordination",
+      "Planning Center Online administration",
+      "Website design & maintenance",
+      "Event & outreach reporting",
+      "Social, video & photo content",
+    ],
+    takeaway:
+      "One shared view of operations across two sites, so coordinating around 6,000 members is a matter of reading the dashboard instead of chasing the answer.",
+  },
+  {
     slug: "saladmaster-crm-web",
     client: "Saladmaster UAE",
     location: "UAE · Premium Cookware",
@@ -403,13 +436,27 @@ export const CASE_STUDIES: CaseStudy[] = [
     takeaway:
       "Centralized lead management and a clearer path from inquiry to demo to conversion across sales and engagement.",
   },
-  /* HIDDEN (re-add later): Fellowship Dubai case study
   {
+    slug: "fellowship-dubai-web-search-social",
     client: "Fellowship Dubai",
     location: "Dubai · Church & Non-Profit",
-    category: "Web · GMB · Social",
+    category: "Web · Local Search · Social",
     challenge:
       "A multi-site church in Dubai needed to grow its reach and be easy to find, across a redesigned website, Google Business Profile and local search for both campuses, and a consistent content engine on Facebook and Instagram, working alongside their Communications Director.",
+    summary:
+      "A redesigned website, both campuses properly set up in local search, and a steady content engine across Facebook and Instagram, run as one connected presence rather than three separate efforts.",
+    approach: [
+      "Rebuilt the website around what a first-time visitor actually needs to find",
+      "Set up and maintained Google Business Profile and local search for both campuses",
+      "Ran a consistent weekly content cycle across Facebook and Instagram",
+      "Produced the video and photography the content engine runs on",
+      "Worked alongside their Communications Director rather than around them",
+    ],
+    relatedServices: [
+      "web-development-dubai",
+      "seo-dubai",
+      "videography-photography-dubai",
+    ],
     stats: [
       { value: "16.8K", label: "Community followers" },
       { value: "60K+", label: "Monthly content views" },
@@ -419,7 +466,6 @@ export const CASE_STUDIES: CaseStudy[] = [
     takeaway: "A growing, easy-to-find digital presence, run end to end across web, search, and social.",
     url: "https://fellowshipdubai.com/",
   },
-  */
   {
     slug: "aya-home-spa-meta-ads",
     client: "AYA Home Spa",
@@ -712,7 +758,6 @@ export interface Client {
 }
 
 export const CLIENTS: Client[] = [
-  /* HIDDEN (re-add later): Fellowship Dubai client card
   {
     name: "Fellowship Dubai",
     sector: "Church & Non-Profit · Dubai",
@@ -720,7 +765,6 @@ export const CLIENTS: Client[] = [
     facebook: "https://www.facebook.com/fellowshipdubai",
     instagram: "https://www.instagram.com/fellowshipdubai",
   },
-  */
   {
     name: "AYA Home Spa",
     sector: "Wellness & Spa · Dubai",

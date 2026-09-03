@@ -15,10 +15,12 @@ const FOCUS = [
 const PROJECTS = [
   "Construction and manufacturing workflows",
   "E-commerce and lead-management systems",
+  "Operations and scheduling dashboards",
   "Inventory operations",
   "Website builds and integrations",
   "Marketing automation",
   "Customer-management platforms",
+  "Multi-site data coordination",
 ];
 
 export default function About() {
@@ -111,9 +113,9 @@ export default function About() {
                 </li>
               ))}
             </ul>
-            {/* HIDDEN (re-add later): Fellowship Dubai engagement paragraph
             <p className="mt-8 text-[17px] leading-relaxed text-muted">
-              Alongside client work, I lead digital for{" "}
+              Alongside client work, I am the digital media and systems
+              specialist for Keystone Events Dubai and{" "}
               <a
                 href="https://fellowshipdubai.com/"
                 target="_blank"
@@ -122,11 +124,13 @@ export default function About() {
               >
                 Fellowship Dubai
               </a>
-              , a multi-site church in Dubai, looking after their website design
-              and development, their Google Business Profile and local search,
-              and the content and digital marketing across Facebook and Instagram.
+              . Most recently I built the dashboards and digital infrastructure
+              behind their operations, scheduling, and data coordination across
+              two sites and around 6,000 members. I also look after their website
+              design and development, their Google Business Profile and local
+              search, and the content, video, and photography across Facebook
+              and Instagram.
             </p>
-            */}
             <p className="mt-6 font-display text-xl italic text-gold">
               I don't just create things. I help your business run, and I stay
               for the parts of your life it touches. Serving comes first; the

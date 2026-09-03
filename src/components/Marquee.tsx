@@ -5,7 +5,7 @@ const CLIENTS = [
   "We Aspire",
   "Caronic",
   "AYA Home Spa",
-  // HIDDEN (re-add later): "Keystone Events",
+  "Keystone Events",
   "Wellington Cash for Cars",
   "Al Mumtaz Kitchen Equipment",
   "Blocktec",
