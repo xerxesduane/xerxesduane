@@ -621,24 +621,9 @@
     animation: none;
   }
 
-  /* Every looping decorative animation stops. These run forever, so under a
-     reduced-motion preference they are the ones that actually cause harm.
-     Each is left in its final readable state rather than mid-cycle. */
-  .animate-marquee,
-  .animate-marquee-slow,
-  .animate-float-blob,
-  .animate-float-blob-slow,
-  .animate-shimmer,
-  .animate-pulse-glow,
-  .animate-scroll-cue,
-  /* impeccable-disable-next-line bounce-easing -- disables it, does not apply it */
-  .animate-bounce,
-  .animate-typing-dot,
-  .animate-ping,
-  .animate-spin,
-  .animate-pulse {
-    animation: none !important;
-  }
+  /* The global reduced-motion reset in @layer base snaps every animation to
+     its final keyframe (animation-iteration-count: 1). scrollCue ends at
+     opacity: 0, so the scroll cue would vanish entirely. Hold these visible. */
   .animate-scroll-cue,
   .animate-pulse-glow {
     opacity: 1;
