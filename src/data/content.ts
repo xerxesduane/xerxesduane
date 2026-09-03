@@ -257,9 +257,11 @@ export interface Industry {
   icon: LucideIcon;
   name: string;
   blurb: string;
-  worked?: string;
-  /** Public client site for the `worked` reference, if any. */
-  workedUrl?: string;
+  /**
+   * What was delivered in this sector, or the measured result — never a client
+   * name. Sector proof is stated by the work, not by named attribution.
+   */
+  proof?: string;
   mission?: boolean;
 }
 
@@ -268,55 +270,49 @@ export const INDUSTRIES: Industry[] = [
     icon: Languages,
     name: "Translation & Language",
     blurb: "Client portals, multilingual sites, and the admin systems that let your team stay focused on the work.",
-    worked: "Lessan Translation",
-    workedUrl: "https://lessantranslation.com/",
+    proof: "Multilingual site & client portal delivered",
   },
   {
     icon: Accessibility,
     name: "Healthcare Mobility",
     blurb: "E-commerce for assistive products, CRM for patient relationships, and integrations built for real-world care.",
-    worked: "Gilani Mobility",
-    workedUrl: "https://www.gilanimobility.ae/",
+    proof: "E-commerce store & product catalogue delivered",
   },
   {
     icon: GraduationCap,
     name: "Education & Training",
     blurb: "Custom e-learning platforms, automated registration, and QuickBooks-integrated invoicing, end to end.",
-    worked: "We Aspire",
-    workedUrl: "https://www.weaspire.ae/",
+    proof: "E-learning platform & invoicing integration delivered",
   },
   {
     icon: Car,
     name: "Automotive",
     blurb: "SEO that ranks for keywords that convert and Google Ads architectures that don't waste budget.",
-    worked: "Wellington Cash for Cars",
-    workedUrl: "https://wellingtoncashforcars.co.nz/",
+    proof: "610 conversions from 1,530+ clicks",
   },
   {
     icon: Sparkles,
     name: "Wellness, Spa & Beauty",
     blurb: "Meta Ads that drive real conversations, booking systems that reduce no-shows, and brand visuals that match the experience.",
-    worked: "AYA Home Spa",
-    workedUrl: "https://www.ayahomespa.ae/",
+    proof: "791 customer conversations from paid social",
   },
   {
     icon: PartyPopper,
     name: "Events & Hospitality",
     blurb: "Event-ready websites, social media, and professional video that turn attendees into repeat clients.",
-    worked: "Keystone Events Dubai",
+    proof: "Operations dashboards across two sites",
   },
   {
     icon: Store,
     name: "E-Commerce & Retail",
     blurb: "Conversion-optimized stores, automated invoicing, and upsell flows that actually work.",
-    worked: "Multiple clients",
+    proof: "Multiple stores delivered",
   },
   {
     icon: Church,
     name: "Churches & Faith-Based",
     blurb: "Websites, Google Business Profile and local search, digital marketing, and social content, built with care for the mission.",
-    worked: "Fellowship Dubai",
-    workedUrl: "https://fellowshipdubai.com/",
+    proof: "60K+ monthly content views",
     mission: true,
   },
   {
@@ -337,20 +333,18 @@ export interface CaseStudy {
   approach: string[];
   relatedServices: string[];
   image?: string;
-  /** Metric-based proof (ad campaigns). Mutually exclusive with `scope`. */
+  /** Headline KPI tiles. Every figure must be measured, never estimated. */
   stats?: { value: string; label: string }[];
-  /** Scope-based proof (implementations) when there aren't vanity metrics. */
+  /** Delivered scope — what was actually built, alongside or instead of KPIs. */
   scope?: string[];
   takeaway: string;
-  /** Public client site to link out to, if any. */
-  url?: string;
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
   {
-    slug: "blocktec-odoo-erp",
-    client: "Blocktec Philippines",
-    location: "Philippines · Construction Materials",
+    slug: "construction-manufacturer-odoo-erp",
+    client: "Construction Materials Manufacturer",
+    location: "Philippines · Construction & Manufacturing",
     category: "Odoo ERP",
     challenge:
       "A construction materials and AAC wall-systems company ran on disconnected spreadsheets, manual tracking, and fragmented communication between departments. The goal: one platform for the whole operation.",
@@ -363,7 +357,12 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Built a foundation that can expand without replacing the system again",
     ],
     relatedServices: ["odoo-erp-dubai", "custom-software-development-dubai", "crm-development-dubai"],
-    image: "/brand/clients/blocktec.png",
+    stats: [
+      { value: "8 → 1", label: "Workflows consolidated" },
+      { value: "8", label: "Departments on one platform" },
+      { value: "1", label: "Source of truth" },
+      { value: "0", label: "Spreadsheet handoffs left" },
+    ],
     scope: [
       "CRM & lead management",
       "Sales & quotation workflows",
@@ -378,8 +377,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Customer inquiries, quotations, inventory, purchasing, and online operations, run from one unified Odoo platform.",
   },
   {
-    slug: "keystone-fellowship-dubai-dashboards",
-    client: "Keystone Events Dubai & Fellowship Dubai",
+    slug: "multi-site-operations-dashboards",
+    client: "Multi-Site Events & Operations Group",
     location: "Dubai · Events & Multi-Site Operations",
     category: "Dashboards & Systems",
     challenge:
@@ -398,6 +397,12 @@ export const CASE_STUDIES: CaseStudy[] = [
       "custom-software-development-dubai",
       "web-development-dubai",
     ],
+    stats: [
+      { value: "~6,000", label: "Members supported" },
+      { value: "2", label: "Sites on one shared view" },
+      { value: "100-150", label: "Participants per outreach cycle" },
+      { value: "1", label: "Source of truth for scheduling" },
+    ],
     scope: [
       "Operations & scheduling dashboards",
       "Cross-site data coordination",
@@ -410,8 +415,8 @@ export const CASE_STUDIES: CaseStudy[] = [
       "One shared view of operations across two sites, so coordinating around 6,000 members is a matter of reading the dashboard instead of chasing the answer.",
   },
   {
-    slug: "saladmaster-crm-web",
-    client: "Saladmaster UAE",
+    slug: "cookware-brand-crm-web",
+    client: "Premium Cookware & Direct-Sales Brand",
     location: "UAE · Premium Cookware",
     category: "CRM & Web",
     challenge:
@@ -437,9 +442,9 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Centralized lead management and a clearer path from inquiry to demo to conversion across sales and engagement.",
   },
   {
-    slug: "fellowship-dubai-web-search-social",
-    client: "Fellowship Dubai",
-    location: "Dubai · Church & Non-Profit",
+    slug: "community-organisation-web-search-social",
+    client: "Multi-Site Community Organisation",
+    location: "Dubai · Community & Non-Profit",
     category: "Web · Local Search · Social",
     challenge:
       "A multi-site church in Dubai needed to grow its reach and be easy to find, across a redesigned website, Google Business Profile and local search for both campuses, and a consistent content engine on Facebook and Instagram, working alongside their Communications Director.",
@@ -464,12 +469,11 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: "452", label: "Directions to campuses / mo" },
     ],
     takeaway: "A growing, easy-to-find digital presence, run end to end across web, search, and social.",
-    url: "https://fellowshipdubai.com/",
   },
   {
-    slug: "aya-home-spa-meta-ads",
-    client: "AYA Home Spa",
-    location: "Dubai · Wellness",
+    slug: "wellness-brand-meta-ads",
+    client: "Home-Service Wellness Brand",
+    location: "Dubai · Wellness & Beauty",
     category: "Meta Ads",
     challenge:
       "A growing Dubai wellness brand needed real digital visibility in a crowded market.",
@@ -482,7 +486,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Used campaign learning to improve the next creative cycle",
     ],
     relatedServices: ["landing-page-design-dubai", "videography-photography-dubai", "video-editing-dubai"],
-    image: "/work/web/web-03-thumb.webp",
     stats: [
       { value: "54K", label: "People reached" },
       { value: "98K", label: "Video plays" },
@@ -490,11 +493,10 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: "117K", label: "Ad views" },
     ],
     takeaway: "Real visibility. Real conversations. Real growth.",
-    url: "https://www.ayahomespa.ae/",
   },
   {
-    slug: "wellington-cash-for-cars-google-ads",
-    client: "Wellington Cash for Cars",
+    slug: "vehicle-removal-google-ads",
+    client: "Vehicle-Removal Service",
     location: "New Zealand · Automotive",
     category: "Google Ads",
     challenge:
@@ -508,7 +510,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Managed performance remotely with clear reporting and decisions",
     ],
     relatedServices: ["landing-page-design-dubai", "seo-dubai", "answer-engine-optimization-dubai"],
-    image: "/brand/clients/wellington.png",
     stats: [
       { value: "1,530+", label: "Clicks" },
       { value: "610", label: "Conversions" },
@@ -516,7 +517,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       { value: "$6.89", label: "Avg. CPC" },
     ],
     takeaway: "Real ad spend, real ROI, managed internationally from Dubai.",
-    url: "https://wellingtoncashforcars.co.nz/",
   },
 ];
 
@@ -587,10 +587,10 @@ export interface Result {
   serviceHref: string;
 }
 
-// REAL numbers from delivered projects, presented WITHOUT naming clients (the
-// named, permission-based attribution lives in the CLIENTS logo wall below).
-// Every figure is verified from CASE_STUDIES — nothing here is invented or
-// inflated, and no causation is claimed beyond what was measured.
+// REAL numbers from delivered projects, presented WITHOUT naming clients —
+// which is now how the whole site works, so there is no named counterpart
+// anywhere. Every figure is verified from CASE_STUDIES; nothing here is
+// invented or inflated, and no causation is claimed beyond what was measured.
 export const RESULTS: Result[] = [
   {
     category: "Wellness business · Dubai",
@@ -749,49 +749,56 @@ export const PACKAGES = [
 // Testimonials intentionally removed until real, attributable client quotes
 // exist (see ProofBand.tsx, which points to the live AI Lab as proof instead).
 
-export interface Client {
-  name: string;
+/** One delivered engagement, described by sector and work — never by name. */
+export interface Engagement {
+  /** Anonymous sector + market, e.g. "Wellness & spa · Dubai". */
   sector: string;
-  url: string;
-  instagram?: string;
-  facebook?: string;
+  /** What was actually built or run for them. */
+  delivered: string;
+  /** A measured result, where one exists. Omit rather than estimate. */
+  kpi?: string;
 }
 
-export const CLIENTS: Client[] = [
+// Client names are deliberately absent site-wide. What a prospect needs to know
+// is the sector, the work, and the measured outcome — all of which are here.
+// Named attribution only ever goes out with written permission, case by case.
+export const ENGAGEMENTS: Engagement[] = [
   {
-    name: "Fellowship Dubai",
-    sector: "Church & Non-Profit · Dubai",
-    url: "https://fellowshipdubai.com/",
-    facebook: "https://www.facebook.com/fellowshipdubai",
-    instagram: "https://www.instagram.com/fellowshipdubai",
+    sector: "Community & non-profit · Dubai",
+    delivered: "Website rebuild, local search for two sites, and a weekly content engine",
+    kpi: "60K+ monthly content views · 452 direction requests / mo",
   },
   {
-    name: "AYA Home Spa",
-    sector: "Wellness & Spa · Dubai",
-    url: "https://www.ayahomespa.ae/",
-    instagram: "https://www.instagram.com/aya.homespa.uae/",
+    sector: "Events & multi-site operations · Dubai",
+    delivered: "Operations and scheduling dashboards with cross-site data coordination",
+    kpi: "~6,000 members supported across 2 sites",
   },
   {
-    name: "Gilani Mobility",
-    sector: "Healthcare Mobility · Dubai",
-    url: "https://www.gilanimobility.ae/",
-    instagram: "https://www.instagram.com/gilanimobilitydubai/",
+    sector: "Wellness & spa · Dubai",
+    delivered: "Paid-social campaign, landing pages, and brand video",
+    kpi: "791 customer conversations from 54K reach",
   },
   {
-    name: "We Aspire",
-    sector: "Education & Training · Dubai",
-    url: "https://www.weaspire.ae/",
-    instagram: "https://www.instagram.com/weaspiredubai/",
+    sector: "Healthcare mobility · Dubai",
+    delivered: "E-commerce store, product catalogue, and customer management",
   },
   {
-    name: "Lessan Translation",
-    sector: "Translation & Language · Dubai",
-    url: "https://lessantranslation.com/",
+    sector: "Education & training · Dubai",
+    delivered: "E-learning platform, automated registration, and invoicing integration",
   },
   {
-    name: "Wellington Cash for Cars",
+    sector: "Translation & language · Dubai",
+    delivered: "Multilingual website and client portal",
+  },
+  {
     sector: "Automotive · New Zealand",
-    url: "https://wellingtoncashforcars.co.nz/",
+    delivered: "Google Ads architecture and conversion tracking, managed from Dubai",
+    kpi: "610 conversions at $6.89 avg. CPC",
+  },
+  {
+    sector: "Construction & manufacturing · Philippines",
+    delivered: "Full Odoo ERP across sales, purchasing, inventory, accounting, and e-commerce",
+    kpi: "8 disconnected workflows → 1 platform",
   },
 ];
 

@@ -1,5 +1,5 @@
 import { m } from "framer-motion";
-import { ArrowLeft, ArrowUpRight, Check, ExternalLink } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import type { CaseStudy } from "../data/content";
 import { SERVICE_PAGES } from "../data/servicePages";
 import { fadeUp, stagger } from "../lib/motion";
@@ -93,11 +93,6 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
                     ))}
                   </ul>
                 </div>
-              )}
-              {study.url && (
-                <a href={study.url} target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-gold hover:text-gold-soft">
-                  Visit live site <ExternalLink size={15} />
-                </a>
               )}
             </Reveal>
           </div>

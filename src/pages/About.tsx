@@ -115,21 +115,13 @@ export default function About() {
             </ul>
             <p className="mt-8 text-[17px] leading-relaxed text-muted">
               Alongside client work, I am the digital media and systems
-              specialist for Keystone Events Dubai and{" "}
-              <a
-                href="https://fellowshipdubai.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cream-dim underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold"
-              >
-                Fellowship Dubai
-              </a>
-              . Most recently I built the dashboards and digital infrastructure
-              behind their operations, scheduling, and data coordination across
-              two sites and around 6,000 members. I also look after their website
-              design and development, their Google Business Profile and local
-              search, and the content, video, and photography across Facebook
-              and Instagram.
+              specialist for a multinational events and membership organisation
+              in Dubai. Most recently I built the dashboards and digital
+              infrastructure behind their operations, scheduling, and data
+              coordination across two sites and around 6,000 members. I also
+              look after their website design and development, their local
+              search presence, and the content, video, and photography across
+              their social channels.
             </p>
             <p className="mt-6 font-display text-xl italic text-gold">
               I don't just create things. I help your business run, and I stay

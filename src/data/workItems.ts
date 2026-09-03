@@ -15,8 +15,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "We Aspire — E-learning platform, Dubai",
-    "href": "https://www.weaspire.ae/",
+    "title": "E-learning platform — Education & training, Dubai",
     "src": "/work/web/web-01.webp",
     "thumb": "/work/web/web-01-thumb.webp",
     "w": 1600,
@@ -26,8 +25,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Gilani Mobility — E-commerce, Dubai",
-    "href": "https://www.gilanimobility.ae/",
+    "title": "E-commerce store — Healthcare mobility, Dubai",
     "src": "/work/web/web-02.webp",
     "thumb": "/work/web/web-02-thumb.webp",
     "w": 1600,
@@ -37,8 +35,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "AYA Home Spa — Dubai",
-    "href": "https://www.ayahomespa.ae/",
+    "title": "Brand site — Wellness & beauty, Dubai",
     "src": "/work/web/web-03.webp",
     "thumb": "/work/web/web-03-thumb.webp",
     "w": 1600,

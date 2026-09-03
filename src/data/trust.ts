@@ -24,13 +24,20 @@ export interface TrustConfig {
     reviewCount: number; // e.g. 27
     url: string; // public reviews link (share.google/… already in schema)
   } | null;
-  /** Client logo files placed in /public/brand/clients/. */
+  /**
+   * Client logos for the logo wall.
+   *
+   * Deliberately empty: a logo IS the client's name, so the wall is off
+   * site-wide and the image files have been removed. Proof is carried by
+   * RESULTS and CASE_STUDIES instead. Only add entries here for a client who
+   * has given written permission to be named.
+   */
   logos: { name: string; src: string }[];
 }
 
 export const TRUST: TrustConfig = {
-  // Logos are real files in /public/brand/clients/, so the logo wall is on.
-  // Google rating is live only because it now points to a real public profile.
+  // The logo wall is off — the site names no clients. The Google rating is live
+  // only because it points to a real public profile.
   enabled: true,
   clientCount: 50,
   since: 2019,
@@ -39,14 +46,5 @@ export const TRUST: TrustConfig = {
     reviewCount: 5,
     url: "https://maps.app.goo.gl/NnSU1FNaZKF2EJE99",
   },
-  logos: [
-    { name: "Gilani Mobility", src: "/brand/clients/gilani-mobility.png" },
-    { name: "We Aspire", src: "/brand/clients/we-aspire.png" },
-    { name: "AYA Home Spa", src: "/brand/clients/aya-home-spa.png" },
-    { name: "Caronic", src: "/brand/clients/caronic.png" },
-    { name: "Blocktec", src: "/brand/clients/blocktec.png" },
-    { name: "Wellington Cash for Cars", src: "/brand/clients/wellington.png" },
-    { name: "Gilani Motors", src: "/brand/clients/gilani-motors.png" },
-    { name: "Al Mumtaz", src: "/brand/clients/al-mumtaz.png" },
-  ],
+  logos: [],
 };

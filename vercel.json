@@ -7,6 +7,36 @@
       "source": "/demos",
       "destination": "/ai-lab",
       "permanent": true
+    },
+    {
+      "source": "/case-studies/blocktec-odoo-erp",
+      "destination": "/case-studies/construction-manufacturer-odoo-erp",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/saladmaster-crm-web",
+      "destination": "/case-studies/cookware-brand-crm-web",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/aya-home-spa-meta-ads",
+      "destination": "/case-studies/wellness-brand-meta-ads",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/wellington-cash-for-cars-google-ads",
+      "destination": "/case-studies/vehicle-removal-google-ads",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/keystone-fellowship-dubai-dashboards",
+      "destination": "/case-studies/multi-site-operations-dashboards",
+      "permanent": true
+    },
+    {
+      "source": "/case-studies/fellowship-dubai-web-search-social",
+      "destination": "/case-studies/community-organisation-web-search-social",
+      "permanent": true
     }
   ],
   "headers": [

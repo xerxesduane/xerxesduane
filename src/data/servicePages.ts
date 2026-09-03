@@ -89,7 +89,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Teams that need inventory, invoicing, and CRM in one place",
       "Owners who want Odoo run for them, not dumped on them",
     ],
-    caseStudyClient: "Blocktec Philippines",
+    caseStudyClient: "Construction Materials Manufacturer",
     faqs: [
       {
         q: "How long does an Odoo implementation take?",
@@ -267,7 +267,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Sites that look fine but never get found",
       "Anyone burned by SEO agencies that promised page one",
     ],
-    caseStudyClient: "Wellington Cash for Cars",
+    caseStudyClient: "Vehicle-Removal Service",
     faqs: [
       {
         q: "How long until SEO shows results?",
@@ -622,7 +622,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Teams manually processing online orders",
       "Brands that need better checkout conversion and reporting",
     ],
-    caseStudyClient: "Gilani Mobility",
     faqs: [
       {
         q: "Which e-commerce platform should I use?",
