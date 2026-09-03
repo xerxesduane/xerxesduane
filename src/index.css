@@ -620,6 +620,50 @@
   .animate-studio-marquee {
     animation: none;
   }
+
+  /* Every looping decorative animation stops. These run forever, so under a
+     reduced-motion preference they are the ones that actually cause harm.
+     Each is left in its final readable state rather than mid-cycle. */
+  .animate-marquee,
+  .animate-marquee-slow,
+  .animate-float-blob,
+  .animate-float-blob-slow,
+  .animate-shimmer,
+  .animate-pulse-glow,
+  .animate-scroll-cue,
+  /* impeccable-disable-next-line bounce-easing -- disables it, does not apply it */
+  .animate-bounce,
+  .animate-typing-dot,
+  .animate-ping,
+  .animate-spin,
+  .animate-pulse {
+    animation: none !important;
+  }
+  .animate-scroll-cue,
+  .animate-pulse-glow {
+    opacity: 1;
+  }
+}
+
+/* Typing indicator: dots rise and settle with a decelerating curve rather than
+   Tailwind's animate-bounce, whose elastic easing reads as dated. */
+@keyframes typing-dot {
+  0%, 100% { transform: translateY(0); opacity: 0.45; }
+  40%      { transform: translateY(-4px); opacity: 1; }
+}
+.animate-typing-dot {
+  animation: typing-dot 1.1s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* Windows High Contrast / forced-colors: gradient-clipped text paints its
+   background through transparent glyphs, so the gradient is dropped and the
+   text falls back to a system color instead of disappearing. */
+@media (forced-colors: active) {
+  .text-gradient-gold {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: CanvasText;
+  }
 }
 
 /* Partner-section cursor thumbnails: fade out + scale down over 1s */

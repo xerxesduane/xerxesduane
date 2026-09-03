@@ -434,7 +434,7 @@ export default function DemoWhatsApp() {
                         onClick={(e) => e.stopPropagation()}
                         disabled={running}
                         aria-label={`Interest for ${lead.name}`}
-                        className="w-full bg-transparent text-[12.5px] text-cream-dim outline-none placeholder:text-muted-dark focus:text-cream disabled:opacity-70"
+                        className="w-full rounded-sm bg-transparent text-[12.5px] text-cream-dim outline-none placeholder:text-muted-dark focus:text-cream focus-visible:ring-2 focus-visible:ring-gold disabled:opacity-70"
                       />
                     </span>
                   </span>

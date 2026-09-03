@@ -823,7 +823,7 @@ export default function Demos() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search tools — e.g. WhatsApp, Arabic, invoice…"
-                className="w-full rounded-full border border-cream/12 bg-cream/5 py-2.5 pl-11 pr-4 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none"
+                className="w-full rounded-full border border-cream/12 bg-cream/5 py-2.5 pl-11 pr-4 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold/70"
               />
             </div>
           </div>
