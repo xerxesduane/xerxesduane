@@ -48,3 +48,15 @@ export const TRUST: TrustConfig = {
   },
   logos: [],
 };
+
+/**
+ * One-line trust statement plus the live Google rating, derived from TRUST so
+ * the two can never drift apart. Used above the fold, where a visitor decides
+ * whether to keep reading.
+ */
+export const TRUST_SUMMARY = {
+  line: TRUST.clientCount
+    ? `${TRUST.clientCount}+ businesses served since ${TRUST.since}, across the UAE, New Zealand and the Philippines.`
+    : `Delivering since ${TRUST.since}, across the UAE, New Zealand and the Philippines.`,
+  google: TRUST.enabled ? TRUST.google : null,
+};

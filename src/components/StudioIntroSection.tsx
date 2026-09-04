@@ -14,7 +14,7 @@ export default function StudioIntroSection() {
       ref={ref}
       id="services"
       aria-labelledby="studio-intro-heading"
-      className="studio-reference-page studio-reference-section px-6 py-16 md:py-20"
+      className="studio-reference-page studio-reference-section scroll-mt-24 px-6 py-16 md:py-20"
     >
       <div className="mx-auto flex max-w-[520px] flex-col items-center text-center">
         <p
