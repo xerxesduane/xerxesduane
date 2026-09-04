@@ -114,7 +114,7 @@ export default function ConnectedSystems() {
                   onBlur={() => setActive(null)}
                   onClick={() => setActive((cur) => (cur === n.id ? null : n.id))}
                   aria-pressed={isActive}
-                  className="absolute z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1.5 rounded-2xl outline-none"
+                  className="absolute z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1.5 rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink-deep"
                   style={{ left: pct(n.x, 800), top: pct(n.y, 600) }}
                 >
                   <span

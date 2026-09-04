@@ -179,6 +179,7 @@ export default function Contact() {
                   id="name"
                   name="name"
                   required
+                  autoComplete="name"
                   value={form.name}
                   onChange={update("name")}
                   className={field}
@@ -192,6 +193,7 @@ export default function Contact() {
                 <input
                   id="business"
                   name="business"
+                  autoComplete="organization"
                   value={form.business}
                   onChange={update("business")}
                   className={field}
@@ -207,6 +209,7 @@ export default function Contact() {
                   name="phone"
                   type="tel"
                   required
+                  autoComplete="tel"
                   value={form.phone}
                   onChange={update("phone")}
                   className={field}
