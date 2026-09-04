@@ -1,9 +1,7 @@
 // Grounded Q&A demo — answers a question strictly from pasted text or a fetched
 // URL. Demonstrates the "answers from your own content" capability. Streams
 // plain text tokens back to the browser.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_SMART, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, MODELS_SMART, preflight, errorResponse, clamp } from "../_shared";
 import { isFetchableUrl, fetchUrlText } from "../_fetchUrl";
 
 export const config = { runtime: "edge" };
@@ -54,8 +52,8 @@ export default async function handler(req: Request): Promise<Response> {
     return errorResponse("Add some text (or a readable URL) to ask about.");
   }
 
-  const result = streamText({
-    model: groq(MODEL_SMART),
+  return streamDemoText({
+    where: "ask",
     system:
       "You answer questions strictly from the provided CONTEXT. " +
       "If the answer isn't in the context, say so plainly — do not use outside knowledge or guess. " +
@@ -65,8 +63,6 @@ export default async function handler(req: Request): Promise<Response> {
     ],
     maxOutputTokens: 500,
     temperature: 0.2,
-    onError: ({ error }) => logAiError("ask", error),
+    models: MODELS_SMART,
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

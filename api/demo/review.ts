@@ -1,9 +1,7 @@
 // Review-responder demo — turns a customer review (good, bad, or mixed) into a
 // warm, professional public reply. Showcases reputation management you can
 // automate. Streams plain text back to the browser.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -37,14 +35,11 @@ export default async function handler(req: Request): Promise<Response> {
   if (review.length < 5) return errorResponse("Paste a review to respond to.");
   const tone = TONES[body.tone ?? "warm"] ?? TONES.warm;
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "review",
     system: `${SYSTEM}\nTone: ${tone}`,
     messages: [{ role: "user", content: `Write a reply to this review:\n"""\n${review}\n"""` }],
     maxOutputTokens: 320,
     temperature: 0.7,
-    onError: ({ error }) => logAiError("review", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

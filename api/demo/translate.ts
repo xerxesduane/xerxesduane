@@ -1,8 +1,6 @@
 // Arabic <-> English translator demo. On-brand for a bilingual Dubai audience.
 // Streams the translation back as plain text.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -35,14 +33,11 @@ export default async function handler(req: Request): Promise<Response> {
   if (text.length < 1) return errorResponse("Enter some text to translate.");
   const system = SYSTEM[body.direction ?? "auto"] ?? SYSTEM.auto;
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "translate",
     system,
     messages: [{ role: "user", content: text }],
     maxOutputTokens: 700,
     temperature: 0.2,
-    onError: ({ error }) => logAiError("translate", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

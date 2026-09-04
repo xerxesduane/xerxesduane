@@ -1,14 +1,16 @@
 import { TRUST } from "../data/trust";
 
-const CLIENTS = [
-  "Gilani Mobility",
-  "We Aspire",
-  "Caronic",
-  "AYA Home Spa",
-  // HIDDEN (re-add later): "Keystone Events",
-  "Wellington Cash for Cars",
-  "Al Mumtaz Kitchen Equipment",
-  "Blocktec",
+// The strip names no clients. It carries verified figures from delivered work
+// instead — every one traceable to a CASE_STUDIES entry.
+const PROOF = [
+  "800% organic traffic growth",
+  "610 tracked conversions",
+  "791 customer conversations",
+  "8 workflows → 1 platform",
+  "300% more inbound leads",
+  "~6,000 members supported",
+  "115 keywords on page one",
+  "60K+ monthly content views",
 ];
 
 function Strip({
@@ -47,10 +49,11 @@ function Strip({
 }
 
 export default function Marquee() {
-  // Once real client logos are added to src/data/trust.ts (files in
-  // /public/brand/clients/), the strip shows logos; until then, client names.
+  // TRUST.logos is empty by design (the site names no clients), so this always
+  // renders the proof figures. It still supports logos should a client ever
+  // give written permission to be named.
   const useLogos = TRUST.logos.length > 0;
-  const items = useLogos ? TRUST.logos : CLIENTS.map((name) => ({ name, src: "" }));
+  const items = useLogos ? TRUST.logos : PROOF.map((name) => ({ name, src: "" }));
 
   return (
     <section
@@ -62,7 +65,7 @@ export default function Marquee() {
           useLogos ? "text-ink/70" : "text-muted-dark"
         }`}
       >
-        Quietly trusted from Dubai to New Zealand
+        Measured results, from Dubai to New Zealand
       </p>
       <div className="mask-fade-x overflow-hidden">
         {/* duplicate strip (aria-hidden) so the -50% translate loops seamlessly;

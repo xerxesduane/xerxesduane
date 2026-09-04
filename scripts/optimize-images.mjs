@@ -17,11 +17,13 @@ const EXTS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 // Optional per-image metadata, keyed by raw filename stem (without extension).
 // Items with an href render a "Live site" link in the portfolio.
 const META = {
-  "01-we-aspire": { title: "We Aspire — E-learning platform, Dubai", href: "https://www.weaspire.ae/" },
-  "02-gilani-mobility": { title: "Gilani Mobility — E-commerce, Dubai", href: "https://www.gilanimobility.ae/" },
-  "03-aya-home-spa": { title: "AYA Home Spa — Dubai", href: "https://www.ayahomespa.ae/" },
-  // HIDDEN (re-add later): move 04-fellowship-dubai.png back into _raw/web and restore this line:
-  // "04-fellowship-dubai": { title: "Fellowship Dubai — Church website, Dubai", href: "https://fellowshipdubai.com/" },
+  // Titles describe the WORK, not the client. Client names and outbound links
+  // to client sites are deliberately absent — the site presents delivered work
+  // and measured results instead of named attribution.
+  "01-we-aspire": { title: "E-learning platform — Education & training, Dubai" },
+  "02-gilani-mobility": { title: "E-commerce store — Healthcare mobility, Dubai" },
+  "03-aya-home-spa": { title: "Brand site — Wellness & beauty, Dubai" },
+  // 04-fellowship-dubai.png sits outside _raw/web; add a title here if it returns.
 };
 
 const items = [];

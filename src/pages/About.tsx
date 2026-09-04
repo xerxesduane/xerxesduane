@@ -15,10 +15,12 @@ const FOCUS = [
 const PROJECTS = [
   "Construction and manufacturing workflows",
   "E-commerce and lead-management systems",
+  "Operations and scheduling dashboards",
   "Inventory operations",
   "Website builds and integrations",
   "Marketing automation",
   "Customer-management platforms",
+  "Multi-site data coordination",
 ];
 
 export default function About() {
@@ -111,22 +113,16 @@ export default function About() {
                 </li>
               ))}
             </ul>
-            {/* HIDDEN (re-add later): Fellowship Dubai engagement paragraph
             <p className="mt-8 text-[17px] leading-relaxed text-muted">
-              Alongside client work, I lead digital for{" "}
-              <a
-                href="https://fellowshipdubai.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-cream-dim underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold"
-              >
-                Fellowship Dubai
-              </a>
-              , a multi-site church in Dubai, looking after their website design
-              and development, their Google Business Profile and local search,
-              and the content and digital marketing across Facebook and Instagram.
+              Alongside client work, I am the digital media and systems
+              specialist for a multinational events and membership organisation
+              in Dubai. Most recently I built the dashboards and digital
+              infrastructure behind their operations, scheduling, and data
+              coordination across two sites and around 6,000 members. I also
+              look after their website design and development, their local
+              search presence, and the content, video, and photography across
+              their social channels.
             </p>
-            */}
             <p className="mt-6 font-display text-xl italic text-gold">
               I don't just create things. I help your business run, and I stay
               for the parts of your life it touches. Serving comes first; the

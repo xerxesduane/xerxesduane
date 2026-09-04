@@ -1,8 +1,6 @@
 // Ad-copy generator — turns a product/offer into ready-to-paste ad copy for
 // Google or Meta. Showcases the paid-ads service. Streams plain text.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -36,14 +34,11 @@ export default async function handler(req: Request): Promise<Response> {
   if (product.length < 4) return errorResponse("Describe what you're advertising.");
   const platform = PLATFORM[body.platform ?? "google"] ?? PLATFORM.google;
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "ads",
     system: `${SYSTEM}\nPlatform — ${platform}`,
     messages: [{ role: "user", content: `Offer / product: ${product}` }],
     maxOutputTokens: 500,
     temperature: 0.85,
-    onError: ({ error }) => logAiError("ads", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

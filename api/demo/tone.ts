@@ -1,8 +1,6 @@
 // Tone & brand-voice rewriter — takes a block of text and rewrites it in a
 // chosen brand voice. Showcases the copywriting / brand-voice service. Streams.
-import { streamText } from "ai";
-import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { streamDemoText, preflight, errorResponse, clamp } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -33,14 +31,11 @@ export default async function handler(req: Request): Promise<Response> {
   if (text.length < 4) return errorResponse("Add some text to rewrite.");
   const voice = VOICES[body.voice ?? "luxury"] ?? VOICES.luxury;
 
-  const result = streamText({
-    model: groq(MODEL_FAST),
+  return streamDemoText({
+    where: "tone",
     system: `${SYSTEM}\nVoice: ${voice}`,
     messages: [{ role: "user", content: `Text to rewrite: ${text}` }],
     maxOutputTokens: 600,
     temperature: 0.8,
-    onError: ({ error }) => logAiError("tone", error),
   });
-
-  return result.toTextStreamResponse({ headers: { "cache-control": "no-store" } });
 }

@@ -16,10 +16,13 @@ const NAV_LINKS = [
   { label: "About", href: "/about" },
 ];
 
+// One primary action, then supporting ones. Previously all four hero pills
+// shared the same white treatment, so the booking CTA carried no more weight
+// than "See the work" — the visitor had no signal about what to do next.
 const PILL_LINKS = [
-  { label: "Book a free systems audit", href: "#contact" },
+  { label: "Book a free systems audit", href: "#contact", primary: true },
+  { label: "See measured results", href: "/#proof" },
   { label: "Try the AI Lab", href: "/ai-lab" },
-  { label: "See the work", href: "/#work" },
 ];
 
 /** Typewriter: reveals `text` one character at a time after `startDelay` ms. */
@@ -282,9 +285,14 @@ export default function MainframeHero() {
               <a
                 key={b.label}
                 href={b.href}
-                className="mx-[0.2em] mb-[0.4em] inline-flex items-center justify-center whitespace-nowrap rounded-full border border-black/10 bg-white px-4 py-[0.3em] text-[13px] text-black transition-colors duration-200 hover:bg-black hover:text-white sm:px-5 sm:text-[15px]"
+                className={
+                  b.primary
+                    ? "mx-[0.2em] mb-[0.4em] inline-flex items-center justify-center gap-1.5 whitespace-nowrap rounded-full bg-black px-5 py-[0.42em] text-[14px] font-semibold text-white shadow-[0_10px_30px_-12px_rgba(0,0,0,0.6)] transition-transform duration-200 hover:-translate-y-[1px] sm:px-6 sm:text-[16px]"
+                    : "mx-[0.2em] mb-[0.4em] inline-flex items-center justify-center whitespace-nowrap rounded-full border border-black/10 bg-white px-4 py-[0.3em] text-[13px] text-black transition-colors duration-200 hover:bg-black hover:text-white sm:px-5 sm:text-[15px]"
+                }
               >
                 {b.label}
+                {b.primary && <span aria-hidden>&rarr;</span>}
               </a>
             ))}
             <button
@@ -323,6 +331,23 @@ export default function MainframeHero() {
             <p className="mt-4 text-[13px] text-black/60 sm:text-sm">
               {TRUST.clientCount}+ businesses helped since {TRUST.since} — websites, Odoo/ERP, CRM,
               WhatsApp &amp; AI automation.
+            </p>
+          )}
+          {TRUST.enabled && TRUST.google && (
+            <p className="mt-2 flex flex-wrap items-center gap-x-2 gap-y-1 text-[13px] text-black/60 sm:text-sm">
+              <a
+                href={TRUST.google.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 underline decoration-black/25 underline-offset-2 transition-colors hover:text-black"
+              >
+                <span aria-hidden className="tracking-tight text-black/80">
+                  {"\u2605\u2605\u2605\u2605\u2605"}
+                </span>
+                {TRUST.google.rating.toFixed(1)} on Google
+              </a>
+              <span aria-hidden>·</span>
+              <span>60-minute audit, no cost and no obligation.</span>
             </p>
           )}
         </div>

@@ -60,6 +60,7 @@ export default function LeadMagnet() {
                   id="lm-email"
                   type="email"
                   name="email"
+                  autoComplete="email"
                   required
                   placeholder="you@yourbusiness.com"
                   className="w-full rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
