@@ -52,10 +52,10 @@ export default function Portfolio() {
           className="group mb-5 flex flex-col justify-between gap-4 rounded-card border border-accent/25 bg-accent/[0.07] p-5 transition-colors hover:border-accent/50 sm:flex-row sm:items-center"
         >
           <div>
-            <span className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">Looking for outcomes, not only visuals?</span>
+            <span className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">Looking for outcomes, not only visuals?</span>
             <p className="mt-2 text-sm text-fg-soft">Read the challenge, approach, delivery scope, and results behind selected projects.</p>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">
+          <span className="inline-flex shrink-0 items-center gap-2 text-sm font-bold text-accent-deep">
             View case studies <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
         </a>
@@ -85,7 +85,7 @@ export default function Portfolio() {
                   }}
                   className={`flex min-h-12 items-center justify-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold transition duration-300 ${
                     active
-                      ? "bg-gold text-ink shadow-[0_10px_30px_-12px_rgba(218,164,66,0.8)]"
+                      ? "bg-navy text-fg-onSolid shadow-solid"
                       : "text-muted hover:bg-cream/5 hover:text-cream"
                   }`}
                 >
@@ -145,7 +145,7 @@ export default function Portfolio() {
         <div className="mt-6 flex justify-center">
           <a
             href="#contact"
-            className="group inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-12px_rgba(218,164,66,0.8)] transition duration-300 hover:bg-gold-soft"
+            className="group inline-flex items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-fg-onSolid shadow-solid transition duration-300 hover:bg-navy-hover"
           >
             Like what you see? Let's talk
             <ArrowUpRight size={17} strokeWidth={2.5} />

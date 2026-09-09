@@ -98,7 +98,7 @@ export default function InsightPost({ post }: { post: Post }) {
 
             {related.length > 0 && (
               <div className="mt-14">
-                <h2 className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
+                <h2 className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
                   Related services
                 </h2>
                 <ul className="mt-4 space-y-3">
@@ -106,7 +106,7 @@ export default function InsightPost({ post }: { post: Post }) {
                     <li key={s.slug}>
                       <a
                         href={`/${s.slug}`}
-                        className="text-fg-soft transition-colors hover:text-accent"
+                        className="text-fg-soft transition-colors hover:text-accent-deep"
                       >
                         {s.navLabel} in Dubai
                       </a>
@@ -118,7 +118,7 @@ export default function InsightPost({ post }: { post: Post }) {
 
             {others.length > 0 && (
               <div className="mt-14">
-                <h2 className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
+                <h2 className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
                   Keep reading
                 </h2>
                 <ul className="mt-4 space-y-3">
@@ -126,7 +126,7 @@ export default function InsightPost({ post }: { post: Post }) {
                     <li key={p.slug}>
                       <a
                         href={`/insights/${p.slug}`}
-                        className="text-fg-soft transition-colors hover:text-accent"
+                        className="text-fg-soft transition-colors hover:text-accent-deep"
                       >
                         {p.title}
                       </a>

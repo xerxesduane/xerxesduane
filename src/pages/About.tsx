@@ -50,7 +50,7 @@ export default function About() {
             decoding="async"
             className="h-28 w-28 rounded-2xl border border-line object-cover object-top"
           />
-          <p className="font-technical text-[0.68rem] font-bold uppercase tracking-[0.14em] text-accent">
+          <p className="font-technical text-[0.68rem] font-bold uppercase tracking-[0.14em] text-accent-deep">
             Founder &amp; Lead Consultant
           </p>
           <p className="inline-flex w-fit items-center gap-2 rounded-full border border-line bg-panel-alt px-3 py-1.5 text-xs text-fg-soft">

@@ -6,7 +6,7 @@ import type { CaseStudy } from "../data/content";
 /** Small uppercase section label, in the technical face. */
 function Label({ children }: { children: string }) {
   return (
-    <p className="mt-4 font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
+    <p className="mt-4 font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
       {children}
     </p>
   );
@@ -23,7 +23,7 @@ export default function CaseStudyCard({ c }: { c: CaseStudy }) {
       className="flex flex-col rounded-card border border-line bg-panel p-5 shadow-card transition duration-300 ease-smooth hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-card-hover sm:p-6"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="rounded-full bg-accent/12 px-3 py-1 font-technical text-[0.62rem] font-bold uppercase tracking-[0.14em] text-accent">
+        <span className="rounded-full bg-accent/12 px-3 py-1 font-technical text-[0.62rem] font-bold uppercase tracking-[0.14em] text-accent-deep">
           {c.category}
         </span>
         <span className="font-technical text-xs text-fg-faint">{c.location}</span>
@@ -46,7 +46,7 @@ export default function CaseStudyCard({ c }: { c: CaseStudy }) {
             >
               <dt className="sr-only">{s.label}</dt>
               <dd>
-                <span className="font-display text-xl font-semibold text-accent">
+                <span className="font-display text-xl font-extrabold text-accent-deep">
                   {s.value}
                 </span>
                 <span className="mt-1 block text-[0.68rem] leading-tight text-fg-soft">
@@ -71,7 +71,7 @@ export default function CaseStudyCard({ c }: { c: CaseStudy }) {
 
       <div className="mt-auto pt-5">
         <div className="border-t border-line pt-4">
-          <p className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
+          <p className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
             What changed
           </p>
           <p className="mt-1.5 font-display text-base italic text-fg">{c.takeaway}</p>

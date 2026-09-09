@@ -37,7 +37,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
         <Panel icon={Target} label="What needed to change" span="lg:col-span-7">
           <p className="text-[0.95rem] leading-relaxed text-fg-soft">{study.challenge}</p>
           <div className="mt-2 border-t border-line pt-4">
-            <p className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
+            <p className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
               What changed
             </p>
             <ul className="mt-3 grid gap-2.5 sm:grid-cols-2">
@@ -78,7 +78,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
                   <div key={stat.label} className="rounded-xl border border-line bg-panel-alt p-3">
                     <dt className="sr-only">{stat.label}</dt>
                     <dd>
-                      <span className="font-display text-2xl font-semibold text-accent">
+                      <span className="font-display text-2xl font-extrabold text-accent-deep">
                         {stat.value}
                       </span>
                       <span className="mt-1 block text-[0.7rem] leading-tight text-fg-soft">

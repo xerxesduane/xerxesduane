@@ -53,6 +53,7 @@ export default {
           DEFAULT: token("--c-accent"),
           soft: token("--c-accent-soft"),
           deep: token("--c-accent-deep"),
+          hover: token("--c-accent-hover"),
           ink: token("--c-accent-ink"),
         },
 
@@ -79,9 +80,15 @@ export default {
           DEFAULT: token("--c-fg"),
           dim: token("--c-fg-soft"),
         },
+        /* Legacy `gold` is the accent seen as *text* on the pre-existing
+           pages, so it resolves to the readable orange; `gold-soft` (only
+           ever used as a hover) resolves to the bright fill orange. */
         gold: {
-          DEFAULT: token("--c-accent"),
-          soft: token("--c-accent-soft"),
+          DEFAULT: token("--c-accent-deep"),
+          /* `gold-soft` only ever appears as a hover, so it resolves to the
+             darker hover orange — a *lighter* hover would drop the label
+             below AA on a cream page. */
+          soft: token("--c-accent-hover"),
           deep: token("--c-accent-deep"),
         },
         muted: {
@@ -97,26 +104,28 @@ export default {
       },
 
       fontFamily: {
-        /* Display: Fraunces. A high-contrast serif already in the brand's
-           self-hosted set — it carries an oversized headline far better than a
-           geometric sans, and the warmth suits the golden-hour palette. */
-        display: ["Fraunces", "Georgia", "ui-serif", "serif"],
-        /* Body and UI: Inter, for legibility at small sizes. */
-        body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        /* Eyebrows, counters and labels keep the technical face. */
-        technical: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
+        /* One voice across the site: Plus Jakarta Sans, a rounded geometric
+           sans that holds an oversized headline and still sets a 12px label
+           cleanly. Inter stays as the metric-compatible fallback. */
+        display: ['"Plus Jakarta Sans"', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        body: ['"Plus Jakarta Sans"', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ['"Plus Jakarta Sans"', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        /* Eyebrows, counters and small labels — same family, tracked out. */
+        technical: ['"Plus Jakarta Sans"', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        /* Genuinely monospaced contexts only (code, tabular demo output). */
         mono: ['"JetBrains Mono"', '"Space Mono"', "ui-monospace", "monospace"],
         /* Brand moments (wordmark, logo lockups). */
-        mondwest: ['"PP Mondwest"', "Fraunces", "Georgia", "serif"],
+        mondwest: ['"PP Mondwest"', "Georgia", "serif"],
         pixel: ['"PP NeueBit"', '"Space Mono"', "ui-monospace", "monospace"],
       },
 
       fontSize: {
         /* Oversized hero headline — clamps so it never overflows the shell. */
-        hero: ["clamp(2.1rem, 3.6vw, 3.5rem)", { lineHeight: "1.06", letterSpacing: "-0.015em" }],
-        "hero-sm": ["clamp(1.8rem, 3vw, 2.6rem)", { lineHeight: "1.1", letterSpacing: "-0.012em" }],
-        eyebrow: ["0.688rem", { lineHeight: "1", letterSpacing: "0.14em" }],
+        hero: ["clamp(2.35rem, 4.3vw, 4.15rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+        "hero-sm": ["clamp(2rem, 3.2vw, 3rem)", { lineHeight: "1.06", letterSpacing: "-0.025em" }],
+        /* Bento card heading — uppercase, set solid. */
+        card: ["1.06rem", { lineHeight: "1.15", letterSpacing: "0.005em" }],
+        eyebrow: ["0.72rem", { lineHeight: "1", letterSpacing: "0.16em" }],
       },
 
       maxWidth: {
@@ -129,6 +138,11 @@ export default {
         rail: "20rem",
       },
 
+      screens: {
+        /* The width at which the bento board can carry four real columns. */
+        board: "1500px",
+      },
+
       borderRadius: {
         card: "1.25rem",
         panel: "1.75rem",
@@ -138,11 +152,11 @@ export default {
       },
 
       boxShadow: {
-        /* Restrained — the reference leans on borders, not drop shadows. */
-        card: "0 1px 2px rgb(16 27 51 / 0.04), 0 8px 24px -16px rgb(16 27 51 / 0.16)",
-        "card-hover": "0 2px 4px rgb(16 27 51 / 0.05), 0 18px 40px -22px rgb(16 27 51 / 0.24)",
-        pill: "0 1px 2px rgb(16 27 51 / 0.06), 0 4px 12px -6px rgb(16 27 51 / 0.14)",
-        solid: "0 8px 24px -12px rgb(16 27 51 / 0.45)",
+        /* Restrained, and theme-aware — the reference leans on borders. */
+        card: "var(--panel-shadow)",
+        "card-hover": "var(--panel-shadow-lift)",
+        pill: "var(--panel-shadow)",
+        solid: "var(--panel-shadow-lift)",
       },
 
       transitionTimingFunction: {
@@ -153,6 +167,16 @@ export default {
         marquee: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
+        },
+        /* Magic UI Marquee semantics: each repeated copy travels its own
+           width plus one gap, which is what makes N copies loop seamlessly. */
+        marqueeX: {
+          from: { transform: "translateX(0)" },
+          to: { transform: "translateX(calc(-100% - var(--gap)))" },
+        },
+        marqueeY: {
+          from: { transform: "translateY(0)" },
+          to: { transform: "translateY(calc(-100% - var(--gap)))" },
         },
         floatBlob: {
           "0%, 100%": { transform: "translate(0, 0) scale(1)" },
@@ -176,6 +200,8 @@ export default {
 
       animation: {
         marquee: "marquee 38s linear infinite",
+        "marquee-x": "marqueeX var(--duration) linear infinite",
+        "marquee-y": "marqueeY var(--duration) linear infinite",
         "marquee-slow": "marquee 60s linear infinite",
         "float-blob": "floatBlob 22s ease-in-out infinite",
         "float-blob-slow": "floatBlob 30s ease-in-out infinite",

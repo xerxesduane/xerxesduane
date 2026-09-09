@@ -39,7 +39,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         meta={
           page.price ? (
             <>
-              <span className="text-accent">{page.price}</span>
+              <span className="font-bold text-accent-deep">{page.price}</span>
               <span>· fixed quote after your free audit</span>
             </>
           ) : undefined
@@ -70,7 +70,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                 className="group flex flex-col justify-between gap-5 rounded-card border border-accent/25 bg-accent/[0.07] p-6 transition-colors hover:border-accent/50 sm:flex-row sm:items-center"
               >
                 <div>
-                  <span className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">Live AI Lab</span>
+                  <span className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">Live AI Lab</span>
                   <h2 className="mt-3 font-display text-2xl font-semibold text-fg sm:text-3xl">Try working AI before we talk about building yours.</h2>
                   <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
                     Test a business assistant, lead qualifier, document Q&amp;A, and structured extraction tool. No sign-up and nothing canned.
@@ -178,7 +178,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
 
       <section className="py-12 sm:py-16">
         <div className="container-bl">
-          <Reveal className="mx-auto max-w-4xl rounded-3xl border border-gold/25 bg-gold p-7 text-ink shadow-[0_24px_90px_-45px_rgba(218,164,66,0.95)] sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
+          <Reveal className="mx-auto max-w-4xl rounded-3xl border border-gold/25 bg-gold p-7 text-ink shadow-solid sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
             <div>
               <span className="font-mono text-[10px] uppercase tracking-wider text-ink/55">Before you spend</span>
               <h2 className="mt-3 max-w-2xl text-2xl !text-ink sm:text-3xl">Let’s find the smallest build that creates the biggest useful change.</h2>

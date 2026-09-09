@@ -8,7 +8,7 @@ import Reveal from "./ui/Reveal";
 import GoogleRating from "./GoogleRating";
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", business: "", phone: "", note: "" });
+  const [form, setForm] = useState({ name: "", business: "", email: "", phone: "", note: "" });
   const [source, setSource] = useState({ page: "", referrer: "" });
   const [state, handleSubmit] = useForm(CONTACT.formspreeId);
 
@@ -35,6 +35,7 @@ export default function Contact() {
     ``,
     `Name: ${form.name}`,
     `Business: ${form.business}`,
+    form.email ? `Email: ${form.email}` : "",
     `Phone: ${form.phone}`,
     form.note ? `On my mind: ${form.note}` : "",
   ]
@@ -64,11 +65,11 @@ export default function Contact() {
               systems and three quick wins you can use right away.
             </p>
 
-            <p className="mt-8 font-mono text-[10px] uppercase tracking-[0.18em] text-gold/80">What happens next</p>
+            <p className="mt-8 font-display text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">What happens next</p>
             <ol className="mt-3 space-y-4">
               {AUDIT_STEPS.map((s, i) => (
                 <li key={s} className="flex gap-3 text-sm text-cream-dim">
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gold/15 font-mono text-xs text-gold">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-ink">
                     {i + 1}
                   </span>
                   {s}
@@ -77,7 +78,7 @@ export default function Contact() {
             </ol>
 
             <div className="mt-6 rounded-2xl border border-cream/10 bg-ink-deep/40 p-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold/80">You walk away with</p>
+              <p className="font-display text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">You walk away with</p>
               <ul className="mt-2.5 space-y-1.5">
                 {AUDIT_DELIVERABLES.map((d) => (
                   <li key={d} className="flex items-start gap-2 text-sm text-cream-dim">
@@ -127,7 +128,7 @@ export default function Contact() {
           {/* Right: form, or success state */}
           {state.succeeded ? (
             <div className="flex flex-col justify-center rounded-2xl bg-ink-deep/40 p-8 text-center">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-gold/15 text-gold">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent-soft text-accent-deep">
                 <CalendarCheck size={24} />
               </div>
               <h3 className="mt-5 font-display text-2xl text-cream">
@@ -141,7 +142,7 @@ export default function Contact() {
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener"
-                className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep transition duration-300 hover:bg-gold-soft"
+                className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-fg-onSolid transition duration-300 hover:bg-navy-hover"
               >
                 <MessageCircle size={17} />
                 Continue on WhatsApp now
@@ -199,6 +200,31 @@ export default function Contact() {
                 />
               </div>
               <div>
+                <label htmlFor="email" className="mb-1.5 block text-xs text-muted">
+                  Your email <span className="text-muted-dark">(optional)</span>
+                </label>
+                {/* Named `email` on purpose: Formspree uses a field with that
+                    name as the notification's Reply-To, so a reply from the
+                    inbox goes straight back to the sender. Optional, because
+                    the promised reply channel is still WhatsApp. */}
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={update("email")}
+                  className={field}
+                  placeholder="you@yourbusiness.ae"
+                />
+                <ValidationError
+                  field="email"
+                  prefix="Email"
+                  errors={state.errors}
+                  className="mt-1 text-xs text-gold"
+                />
+              </div>
+              <div>
                 <label htmlFor="phone" className="mb-1.5 block text-xs text-muted">
                   WhatsApp or phone
                 </label>
@@ -232,7 +258,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={state.submitting}
-                className="group mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-12px_rgba(217,164,65,0.7)] transition duration-300 hover:bg-gold-soft disabled:cursor-not-allowed disabled:opacity-60"
+                className="group mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-fg-onSolid shadow-solid transition duration-300 hover:bg-navy-hover disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {state.submitting ? "Sending…" : "Book my free systems audit"}
                 {!state.submitting && <ArrowUpRight size={17} strokeWidth={2.5} />}

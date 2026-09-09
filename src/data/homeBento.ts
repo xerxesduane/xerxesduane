@@ -10,6 +10,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { CASE_STUDIES, SERVICES } from "./content";
+import { WEB_DESIGNS } from "./workItems";
 
 /* ---------------------------------------------------------------------------
  * Homepage data.
@@ -49,7 +50,15 @@ export const CORE_SERVICES = SERVICES.slice(0, 5).map((s) => s.title);
  * measured numbers. Case studies without metrics are represented by scope
  * instead, so nothing is inflated into a statistic it never was.
  */
-export const FEATURED_RESULTS = CASE_STUDIES.filter(
+export interface FeaturedResult {
+  slug: string;
+  client: string;
+  category: string;
+  location: string;
+  stats: { value: string; label: string }[];
+}
+
+export const FEATURED_RESULTS: FeaturedResult[] = CASE_STUDIES.filter(
   (study) => study.stats && study.stats.length > 0,
 ).map((study) => ({
   slug: study.slug,
@@ -59,13 +68,29 @@ export const FEATURED_RESULTS = CASE_STUDIES.filter(
   stats: study.stats!.slice(0, 3),
 }));
 
-/** Builds shown in the Projects card — real client work with real imagery. */
-export const FEATURED_PROJECTS = CASE_STUDIES.slice(0, 4).map((study) => ({
-  slug: study.slug,
-  client: study.client,
-  category: study.category,
-  image: study.image,
-}));
+/**
+ * Previews shown in the Projects card.
+ *
+ * Drawn from the portfolio's own screenshot set, filtered to the builds whose
+ * client is identified (they carry the live site's URL), so every image is a
+ * real screenshot of the site it is captioned with — no logo stands in for a
+ * screenshot, and no screenshot is captioned with the wrong client.
+ *
+ * `title` is "Client — descriptor" in workItems.ts; the split keeps the client
+ * name on its own line and the descriptor beneath it.
+ */
+export const FEATURED_PROJECTS = WEB_DESIGNS.filter((item) => item.href)
+  .slice(0, 3)
+  .map((item) => {
+    const [client, ...restOfTitle] = item.title.split("—");
+    return {
+      client: client.trim(),
+      descriptor: restOfTitle.join("—").trim(),
+      image: item.thumb,
+      /** Full original title, for the image's alt text. */
+      title: item.title,
+    };
+  });
 
 export const HERO = {
   headline: "One system. Not twelve tools.",
