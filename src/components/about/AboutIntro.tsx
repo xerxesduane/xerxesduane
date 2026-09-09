@@ -17,6 +17,7 @@ import {
   Workflow,
   type LucideIcon,
 } from "lucide-react";
+import DeskIllustration from "./DeskIllustration";
 import { BOARD_WASH } from "../page/PanelBoard";
 import { SHELL_IDENTITY } from "../../data/shell";
 import { TRUST } from "../../data/trust";
@@ -189,22 +190,12 @@ export default function AboutIntro() {
           </m.div>
         </div>
 
-        {/* ---- the portrait ---- */}
+        {/* ---- the illustration ---- */}
         <m.div
           variants={fadeUp}
-          className="relative order-1 min-h-[15rem] overflow-hidden border-b border-line bg-gradient-to-br from-wash/70 to-wash-strong/80 lg:order-2 lg:min-h-full lg:border-b-0 lg:border-s"
+          className="order-1 flex items-end justify-center overflow-hidden border-b border-line bg-gradient-to-br from-wash/60 to-wash-strong/75 px-4 pt-6 lg:order-2 lg:border-b-0 lg:border-s lg:px-5 lg:pt-10"
         >
-          <img
-            src="/brand/founder-xerxes.jpg"
-            alt={`${SHELL_IDENTITY.name}, founder and lead consultant`}
-            width={880}
-            height={973}
-            loading="lazy"
-            decoding="async"
-            // The phone crops this to a short band, so aim it at the face; the tall
-            // desktop column shows most of the frame and wants the top.
-            className="absolute inset-0 h-full w-full object-cover object-[center_28%] lg:object-top"
-          />
+          <DeskIllustration className="w-full max-w-[24rem] lg:max-w-none" />
         </m.div>
       </div>
     </m.section>
