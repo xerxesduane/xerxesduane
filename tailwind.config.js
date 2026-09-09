@@ -91,22 +91,25 @@ export default {
       },
 
       fontFamily: {
-        /* Poppins is the reference's display face — geometric, heavy at 700/800.
-           Self-hosted (latin subset) because the CSP is `font-src 'self'`. */
-        display: ["Poppins", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        sans: ["Poppins", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        /* Display: Fraunces. A high-contrast serif already in the brand's
+           self-hosted set — it carries an oversized headline far better than a
+           geometric sans, and the warmth suits the golden-hour palette. */
+        display: ["Fraunces", "Georgia", "ui-serif", "serif"],
+        /* Body and UI: Inter, for legibility at small sizes. */
         body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        mono: ['"JetBrains Mono"', '"Space Mono"', "ui-monospace", "monospace"],
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        /* Eyebrows, counters and labels keep the technical face. */
         technical: ['"Space Mono"', '"JetBrains Mono"', "ui-monospace", "monospace"],
-        /* Retained so the pre-existing pages keep their faces until restyled. */
+        mono: ['"JetBrains Mono"', '"Space Mono"', "ui-monospace", "monospace"],
+        /* Brand moments (wordmark, logo lockups). */
+        mondwest: ['"PP Mondwest"', "Fraunces", "Georgia", "serif"],
         pixel: ['"PP NeueBit"', '"Space Mono"', "ui-monospace", "monospace"],
-        mondwest: ["Poppins", "Inter", "ui-sans-serif", "sans-serif"],
       },
 
       fontSize: {
         /* Oversized hero headline — clamps so it never overflows the shell. */
-        hero: ["clamp(2.1rem, 3.5vw, 3.35rem)", { lineHeight: "1.04", letterSpacing: "-0.03em" }],
-        "hero-sm": ["clamp(2rem, 4vw, 3rem)", { lineHeight: "1.06", letterSpacing: "-0.025em" }],
+        hero: ["clamp(2.1rem, 3.6vw, 3.5rem)", { lineHeight: "1.06", letterSpacing: "-0.015em" }],
+        "hero-sm": ["clamp(1.8rem, 3vw, 2.6rem)", { lineHeight: "1.1", letterSpacing: "-0.012em" }],
         eyebrow: ["0.688rem", { lineHeight: "1", letterSpacing: "0.14em" }],
       },
 

@@ -48,7 +48,7 @@ export default function MobileNav({
             className="h-10 w-10 shrink-0 rounded-full border border-line object-cover object-top"
           />
           <div className="min-w-0 flex-1">
-            <p className="truncate font-display text-sm font-bold text-fg">
+            <p className="truncate font-display text-sm font-semibold text-fg">
               {SHELL_IDENTITY.name}
             </p>
             <p className="truncate text-xs text-fg-soft">{SHELL_IDENTITY.tagline}</p>

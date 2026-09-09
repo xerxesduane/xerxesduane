@@ -23,18 +23,18 @@ function subscribe(onChange: () => void) {
 
 /** Read from the DOM, which the pre-paint script has already resolved. */
 function getSnapshot(): Theme {
-  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
 }
 
-/** Prerender always emits the light palette — it is the default. */
+/** Prerender always emits the dark palette — it is the brand default. */
 function getServerSnapshot(): Theme {
-  return "light";
+  return "dark";
 }
 
 /** Keeps the browser chrome in step with the palette. */
 function syncThemeColor(theme: Theme) {
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", theme === "dark" ? "#0e1626" : "#f4f2ec");
+  if (meta) meta.setAttribute("content", theme === "light" ? "#f7f3ea" : "#081827");
 }
 
 export function applyTheme(theme: Theme) {

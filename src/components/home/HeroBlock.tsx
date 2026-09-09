@@ -13,7 +13,7 @@ export default function HeroBlock() {
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
         <m.h1
           variants={fadeUp}
-          className="max-w-[16ch] text-balance font-display text-hero font-extrabold text-fg"
+          className="max-w-[16ch] text-balance font-display text-hero font-semibold text-fg"
         >
           {HERO.headline}
         </m.h1>

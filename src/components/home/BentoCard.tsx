@@ -42,7 +42,7 @@ export default function BentoCard({
       <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-accent text-accent-ink">
         <Icon size={18} strokeWidth={2.1} aria-hidden />
       </span>
-      <h3 className="min-w-0 flex-1 pt-1.5 font-display text-sm font-bold uppercase tracking-[0.06em] text-fg">
+      <h3 className="min-w-0 flex-1 pt-1.5 font-technical text-xs font-bold uppercase tracking-[0.14em] text-fg">
         {label}
       </h3>
       {href && (

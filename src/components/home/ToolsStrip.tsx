@@ -44,10 +44,10 @@ export default function ToolsStrip() {
     >
       {/* Fixed label */}
       <div className="flex shrink-0 flex-col justify-center border-r border-line px-3 py-3 sm:px-5">
-        <span className="font-display text-eyebrow font-bold uppercase text-accent">
+        <span className="font-technical text-eyebrow font-bold uppercase text-accent">
           Daily drivers
         </span>
-        <span className="mt-0.5 hidden whitespace-nowrap font-display text-sm font-bold text-fg sm:block">
+        <span className="mt-0.5 hidden whitespace-nowrap font-display text-sm font-semibold text-fg sm:block">
           Tools I work with
         </span>
       </div>

@@ -54,7 +54,7 @@ export default function BentoBoard() {
                       className="max-h-full max-w-full object-contain"
                     />
                   ) : (
-                    <span className="font-display text-lg font-extrabold text-fg-faint">
+                    <span className="font-display text-lg font-semibold text-fg-faint">
                       {project.client.slice(0, 2).toUpperCase()}
                     </span>
                   )}
@@ -138,7 +138,7 @@ export default function BentoBoard() {
               <div key={stat.label}>
                 <dt className="sr-only">{stat.label}</dt>
                 <dd>
-                  <span className="font-display text-xl font-extrabold text-accent">
+                  <span className="font-display text-2xl font-semibold text-accent">
                     <Counter value={stat.value} suffix={stat.suffix} />
                   </span>
                   <span className="mt-0.5 block text-[0.68rem] leading-tight text-fg-soft">
@@ -189,7 +189,7 @@ export default function BentoBoard() {
                     {result.stats.map((stat) => (
                       <div key={stat.label} className="flex items-baseline gap-1.5">
                         <dt className="sr-only">{stat.label}</dt>
-                        <dd className="font-display text-sm font-extrabold text-accent">
+                        <dd className="font-display text-base font-semibold text-accent">
                           {stat.value}
                         </dd>
                         <span className="truncate text-[0.65rem] text-fg-soft">

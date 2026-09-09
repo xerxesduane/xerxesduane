@@ -22,7 +22,7 @@ export default function ServicesSection() {
     >
       <m.header variants={fadeUp} className="mb-6 max-w-2xl">
         <span className="eyebrow">Services</span>
-        <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+        <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-fg sm:text-4xl">
           What I build
         </h2>
       </m.header>
@@ -39,7 +39,7 @@ export default function ServicesSection() {
               <span className="grid h-9 w-9 place-items-center rounded-xl bg-accent text-accent-ink">
                 <Icon size={18} strokeWidth={2.1} aria-hidden />
               </span>
-              <h3 className="mt-1 font-display text-base font-bold text-fg">
+              <h3 className="mt-1 font-display text-base font-semibold text-fg">
                 {service.title}
               </h3>
               <p className="text-sm leading-snug text-fg-soft">{service.description}</p>

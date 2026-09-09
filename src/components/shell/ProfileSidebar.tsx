@@ -2,6 +2,7 @@ import { m } from "framer-motion";
 import { Languages } from "lucide-react";
 import SocialLinks from "./SocialLinks";
 import ThemeToggle from "../ui/ThemeToggle";
+import Wordmark from "../ui/Wordmark";
 import { SHELL_IDENTITY, SHELL_NAV, isNavActive } from "../../data/shell";
 import { fadeUp, stagger } from "../../lib/motion";
 
@@ -29,7 +30,17 @@ export default function ProfileSidebar({ path, lang }: ProfileSidebarProps) {
       aria-label="Profile and site navigation"
       className="hidden shrink-0 lg:block lg:w-[19rem] xl:w-[21rem]"
     >
-      <div className="sticky top-8 flex max-h-[calc(100dvh-4rem)] flex-col gap-6 overflow-y-auto pb-2">
+      <div className="sticky top-8 flex max-h-[calc(100dvh-4rem)] flex-col gap-5 overflow-y-auto pb-2">
+        {/* Brand lockup */}
+        <m.a
+          variants={fadeUp}
+          href="/"
+          aria-label="Xerxes Duane — home"
+          className="w-fit rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+        >
+          <Wordmark size={26} />
+        </m.a>
+
         {/* Portrait, with the decorative ring echoing the canvas arcs. */}
         <m.div variants={fadeUp} className="relative w-fit">
           <span
@@ -44,16 +55,16 @@ export default function ProfileSidebar({ path, lang }: ProfileSidebarProps) {
             loading="eager"
             decoding="async"
             fetchPriority="high"
-            className="relative h-36 w-36 rounded-full border border-line object-cover object-top shadow-card xl:h-40 xl:w-40"
+            className="relative h-32 w-32 rounded-full border border-line object-cover object-top shadow-card xl:h-36 xl:w-36"
           />
         </m.div>
 
         {/* Identity */}
         <m.div variants={fadeUp}>
-          <h2 className="font-display text-2xl font-bold tracking-tight text-fg">
+          <h2 className="font-display text-2xl font-semibold tracking-tight text-fg">
             {SHELL_IDENTITY.name}
           </h2>
-          <p className="mt-1 text-sm text-fg-soft">{SHELL_IDENTITY.handle}</p>
+          <p className="mt-1 font-technical text-xs tracking-wide text-accent">{SHELL_IDENTITY.handle}</p>
           <p className="mt-2 text-sm leading-snug text-fg-soft">
             {SHELL_IDENTITY.tagline}
             <span className="block text-fg-faint">{SHELL_IDENTITY.location}</span>
