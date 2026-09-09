@@ -27,11 +27,11 @@ export default function Insights() {
               <span aria-hidden>·</span>
               <span>{post.readingMinutes} min read</span>
             </div>
-            <h2 className="font-display text-lg font-semibold leading-snug text-fg transition-colors group-hover:text-accent">
+            <h2 className="font-display text-lg font-semibold leading-snug text-fg transition-colors group-hover:text-accent-deep">
               {post.title}
             </h2>
             <p className="flex-1 text-sm leading-snug text-fg-soft">{post.description}</p>
-            <span className="mt-1 inline-flex items-center gap-1.5 font-technical text-[0.68rem] font-bold uppercase tracking-[0.12em] text-accent">
+            <span className="mt-1 inline-flex items-center gap-1.5 font-technical text-[0.68rem] font-bold uppercase tracking-[0.12em] text-accent-deep">
               Read
               <ArrowUpRight size={13} strokeWidth={2.4} aria-hidden />
             </span>

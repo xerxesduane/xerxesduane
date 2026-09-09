@@ -43,6 +43,18 @@ interface PanelProps {
 export const PANEL_HOVER =
   "transition duration-300 ease-smooth hover:-translate-y-[3px] hover:border-accent/45 hover:shadow-card-hover focus-visible:-translate-y-[3px] focus-visible:border-accent/45 focus-visible:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas";
 
+/**
+ * The lift, as a framer gesture rather than a Tailwind `hover:` class.
+ *
+ * The panels are `m.*` elements whose entrance variant animates `y`, so
+ * framer owns their inline `transform` and a CSS hover translate on the same
+ * element never lands. `MotionConfig reducedMotion="user"` (App.tsx) drops the
+ * transform for anyone who asked for less motion, and the colour and shadow
+ * changes in PANEL_HOVER still carry the state.
+ */
+const LIFT = { y: -3 };
+const LIFT_TRANSITION = { duration: 0.28, ease: [0.16, 1, 0.3, 1] as const };
+
 /** The orange tile. Lifts and tilts with the card. */
 export function IconTile({ children }: { children: ReactNode }) {
   return (
@@ -103,6 +115,9 @@ export default function Panel({
     return (
       <m.a
         variants={fadeUp}
+        whileHover={LIFT}
+        whileFocus={LIFT}
+        transition={LIFT_TRANSITION}
         href={href}
         className={`${shell} ${PANEL_HOVER} ${span} ${className}`}
       >
@@ -113,6 +128,8 @@ export default function Panel({
   return (
     <m.section
       variants={fadeUp}
+      whileHover={LIFT}
+      transition={LIFT_TRANSITION}
       aria-label={label}
       className={`${shell} ${tone === "card" ? "transition duration-300 ease-smooth hover:border-accent/45 hover:shadow-card-hover" : ""} ${span} ${className}`}
     >

@@ -382,6 +382,9 @@ export const CASE_STUDIES: CaseStudy[] = [
     client: "Saladmaster UAE",
     location: "UAE · Premium Cookware",
     category: "CRM, Web & Brand",
+    // Not a mismatch: Saladmaster UAE trades as Al Mumtaz, and this is their
+    // mark — the same pairing the portfolio uses for the brand-identity piece
+    // ("Saladmaster UAE (Al Mumtaz)", saladmasteruae.me) in data/workItems.ts.
     image: "/brand/clients/al-mumtaz.png",
     challenge:
       "A premium cookware and direct-sales brand needed a smoother customer journey, from first inquiry through cooking demo to sale, with real visibility into follow-ups.",

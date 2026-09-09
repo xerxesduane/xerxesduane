@@ -49,8 +49,11 @@ export function Marquee({
     vertical ? "animate-marquee-y flex-col" : "animate-marquee-x flex-row",
     reverse ? "[animation-direction:reverse]" : "",
     // Paused states, most specific last.
+    // The unnamed `group-*` pair is deliberate: it lets the surrounding card
+    // (any ancestor with `group`) start the track, so hovering or tabbing to
+    // the card — not just to the strip itself — sets it moving.
     startOnHover
-      ? "[animation-play-state:paused] group-hover/marquee:[animation-play-state:running] group-focus-within/marquee:[animation-play-state:running]"
+      ? "[animation-play-state:paused] group-hover/marquee:[animation-play-state:running] group-focus-within/marquee:[animation-play-state:running] group-hover:[animation-play-state:running] group-focus-visible:[animation-play-state:running] group-focus-within:[animation-play-state:running]"
       : "",
     pauseOnHover
       ? "group-hover/marquee:[animation-play-state:paused] group-focus-within/marquee:[animation-play-state:paused]"

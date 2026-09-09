@@ -52,10 +52,10 @@ export default function Portfolio() {
           className="group mb-5 flex flex-col justify-between gap-4 rounded-card border border-accent/25 bg-accent/[0.07] p-5 transition-colors hover:border-accent/50 sm:flex-row sm:items-center"
         >
           <div>
-            <span className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">Looking for outcomes, not only visuals?</span>
+            <span className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">Looking for outcomes, not only visuals?</span>
             <p className="mt-2 text-sm text-fg-soft">Read the challenge, approach, delivery scope, and results behind selected projects.</p>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">
+          <span className="inline-flex shrink-0 items-center gap-2 text-sm font-bold text-accent-deep">
             View case studies <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
         </a>

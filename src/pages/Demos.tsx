@@ -452,7 +452,7 @@ export default function Demos() {
       <section className="pb-2">
         <div>
           <Reveal>
-            <p className="mb-4 font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
+            <p className="mb-4 font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
               And {rest.length} more live tools
             </p>
           </Reveal>
