@@ -1,6 +1,6 @@
-import { m } from "framer-motion";
 import { Bot, ChartNoAxesColumn, FolderOpen, Layers, Trophy, User } from "lucide-react";
-import BentoCard from "./BentoCard";
+import Panel from "../page/Panel";
+import PanelBoard from "../page/PanelBoard";
 import Counter from "../ui/Counter";
 import { AI_LAB_CARDS, AI_LAB_TRUST } from "../../data/aiLabHome";
 import { STATS } from "../../data/content";
@@ -10,7 +10,6 @@ import {
   FEATURED_RESULTS,
 } from "../../data/homeBento";
 import { SHELL_IDENTITY } from "../../data/shell";
-import { stagger, VIEWPORT } from "../../lib/motion";
 
 /**
  * The bento board: a pale-blue washed container holding the six entry points.
@@ -20,16 +19,9 @@ import { stagger, VIEWPORT } from "../../lib/motion";
  */
 export default function BentoBoard() {
   return (
-    <m.div
-      variants={stagger}
-      initial="hidden"
-      whileInView="show"
-      viewport={VIEWPORT}
-      className="rounded-panel bg-gradient-to-r from-canvas-sunk/40 via-wash/50 to-wash-strong/80 p-3 sm:p-4"
-    >
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-12">
+    <PanelBoard>
         {/* ---- Projects: real client work, real imagery ---- */}
-        <BentoCard
+        <Panel
           icon={FolderOpen}
           label="Projects"
           blurb="Websites, ERP rollouts and campaigns built for real businesses."
@@ -66,10 +58,10 @@ export default function BentoBoard() {
               </li>
             ))}
           </ul>
-        </BentoCard>
+        </Panel>
 
         {/* ---- About ---- */}
-        <BentoCard
+        <Panel
           icon={User}
           label="About"
           blurb="Who I am and how I work."
@@ -94,10 +86,10 @@ export default function BentoBoard() {
           <p className="text-xs text-fg-faint">
             {SHELL_IDENTITY.location} · Serving the wider GCC
           </p>
-        </BentoCard>
+        </Panel>
 
         {/* ---- AI Lab: links to demos that actually run ---- */}
-        <BentoCard
+        <Panel
           icon={Bot}
           label="AI Lab"
           blurb="Live demos you can run in the browser — no sign-up."
@@ -124,10 +116,10 @@ export default function BentoBoard() {
               </li>
             ))}
           </ul>
-        </BentoCard>
+        </Panel>
 
         {/* ---- Experience: figures already published on the site ---- */}
-        <BentoCard
+        <Panel
           icon={ChartNoAxesColumn}
           label="Experience"
           href="/about"
@@ -148,10 +140,10 @@ export default function BentoBoard() {
               </div>
             ))}
           </dl>
-        </BentoCard>
+        </Panel>
 
         {/* ---- Services ---- */}
-        <BentoCard
+        <Panel
           icon={Layers}
           label="Services"
           href="/#services"
@@ -167,10 +159,10 @@ export default function BentoBoard() {
               </li>
             ))}
           </ul>
-        </BentoCard>
+        </Panel>
 
         {/* ---- Featured results: measured outcomes, not testimonials ---- */}
-        <BentoCard
+        <Panel
           icon={Trophy}
           label="Featured results"
           blurb="Measured outcomes from published case studies."
@@ -202,8 +194,7 @@ export default function BentoBoard() {
               </li>
             ))}
           </ul>
-        </BentoCard>
-      </div>
-    </m.div>
+        </Panel>
+    </PanelBoard>
   );
 }

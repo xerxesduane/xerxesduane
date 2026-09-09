@@ -10,6 +10,8 @@ import Process from "../components/Process";
 import Promise from "../components/Promise";
 import FaqList from "../components/FaqList";
 import Contact from "../components/Contact";
+import PageHeader from "../components/page/PageHeader";
+import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 import ServiceVisual from "../components/ServiceVisual";
 import ServicePackages from "../components/ServicePackages";
 
@@ -25,101 +27,56 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
 
   return (
     <>
-      {/* Header */}
-      <section id="top" className="relative overflow-hidden pb-16 sm:pb-20">
-        <div className="container-bl">
-          {hasArabicPage && <div className="mx-auto mb-6 flex max-w-3xl justify-center">
-            <a
-              href={`/ar/${page.slug}`}
-              lang="ar"
-              className="inline-flex items-center gap-1.5 rounded-full border border-cream/10 bg-cream/5 px-3 py-1.5 font-mono text-xs text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
-            >
-              العربية
-            </a>
-          </div>}
-          <m.div
-            variants={stagger}
-            initial="hidden"
-            animate="show"
-            className="mx-auto max-w-3xl text-center"
-          >
-            <m.span
-              variants={fadeUp}
-              className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold"
-            >
-              <Icon size={14} strokeWidth={1.8} />
-              {page.eyebrow}
-            </m.span>
-
-            <m.h1
-              variants={fadeUp}
-              className="mt-7 text-4xl leading-[1.06] sm:text-5xl md:text-6xl"
-            >
-              {page.h1Lead}{" "}
-              <span className="text-gradient-gold italic">{page.h1Accent}</span>
-            </m.h1>
-
-            <m.p
-              variants={fadeUp}
-              className="mx-auto mt-7 max-w-2xl text-lg text-muted sm:text-xl"
-            >
-              {page.lede}
-            </m.p>
-
-            {page.price && (
-              <m.p
-                variants={fadeUp}
-                className="mt-6 font-mono text-sm text-gold"
-              >
-                {page.price}
-                <span className="text-muted-dark">
-                  {" "}
-                  · fixed quote after your free audit
-                </span>
-              </m.p>
+      <PageHeader
+        eyebrow={page.eyebrow}
+        icon={Icon}
+        title={
+          <>
+            {page.h1Lead} <span className="italic text-accent">{page.h1Accent}</span>
+          </>
+        }
+        lede={page.lede}
+        meta={
+          page.price ? (
+            <>
+              <span className="text-accent">{page.price}</span>
+              <span>· fixed quote after your free audit</span>
+            </>
+          ) : undefined
+        }
+        actions={
+          <>
+            <PrimaryAction href="#contact">Book a free audit</PrimaryAction>
+            {hasArabicPage && (
+              <GhostAction href={`/ar/${page.slug}`}>
+                <span lang="ar">العربية</span>
+              </GhostAction>
             )}
-
-            <m.div
-              variants={fadeUp}
-              className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            >
-              <a
-                href="#contact"
-                className="group relative inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-12px_rgba(217,164,65,0.8)] transition duration-300 hover:bg-gold-soft sm:w-auto"
-              >
-                Book your free systems audit
-                <ArrowUpRight size={17} strokeWidth={2.5} />
-              </a>
-              <a
-                href="/"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-cream/15 px-7 py-3.5 text-sm font-semibold text-cream transition duration-300 hover:border-gold/50 hover:text-gold sm:w-auto"
-              >
-                <ArrowLeft size={16} strokeWidth={2.2} />
-                Back to everything I do
-              </a>
-            </m.div>
-          </m.div>
-        </div>
-      </section>
+            <GhostAction href="/" icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}>
+              Home
+            </GhostAction>
+          </>
+        }
+      />
 
       <ServiceVisual page={page} />
 
       {page.slug === "ai-automation-dubai" && (
-        <section className="pb-16 sm:pb-24">
+        <section className="pb-10 sm:pb-14">
           <div className="container-bl">
             <Reveal className="mx-auto max-w-4xl">
               <a
                 href="/ai-lab"
-                className="group flex flex-col justify-between gap-6 rounded-3xl border border-gold/25 bg-gold/[0.09] p-7 transition-colors hover:border-gold/50 sm:flex-row sm:items-center sm:p-9"
+                className="group flex flex-col justify-between gap-5 rounded-card border border-accent/25 bg-accent/[0.07] p-6 transition-colors hover:border-accent/50 sm:flex-row sm:items-center"
               >
                 <div>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-gold">Live AI Lab</span>
-                  <h2 className="mt-3 text-2xl text-cream sm:text-3xl">Try working AI before we talk about building yours.</h2>
+                  <span className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">Live AI Lab</span>
+                  <h2 className="mt-3 font-display text-2xl font-semibold text-fg sm:text-3xl">Try working AI before we talk about building yours.</h2>
                   <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
                     Test a business assistant, lead qualifier, document Q&amp;A, and structured extraction tool. No sign-up and nothing canned.
                   </p>
                 </div>
-                <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-gold px-5 py-3 text-sm font-semibold text-ink">
+                <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-navy px-5 py-3 text-sm font-semibold text-fg-onSolid">
                   Enter AI Lab
                   <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </span>
@@ -130,10 +87,10 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       )}
 
       {/* What you get */}
-      <section className="py-16 sm:py-24">
+      <section className="py-10 sm:py-14">
         <div className="container-bl">
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl sm:text-4xl">{page.bulletsHeading}</h2>
+          <Reveal className="max-w-3xl">
+            <h2 className="font-display text-3xl font-semibold text-fg sm:text-4xl">{page.bulletsHeading}</h2>
           </Reveal>
 
           <m.div
