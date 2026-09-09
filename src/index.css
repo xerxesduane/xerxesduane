@@ -83,6 +83,11 @@
     /* Brand olive, kept for the surfaces that used it. */
     --c-olive: 61 74 54;
 
+    /* Plate for third-party logos. Deliberately light in both themes: client
+       marks are dark-ink artwork on transparency and vanish on the navy. */
+    --c-plate: 247 243 234;
+    --c-plate-ink: 16 42 67;
+
     /* legacy hex vars for the components still reading them directly */
     --bg: #081827;
     --surface: #102a43;
@@ -140,6 +145,8 @@
     --c-navy-hover: 8 24 39;
 
     --c-olive: 61 74 54;
+    --c-plate: 255 255 255;
+    --c-plate-ink: 16 42 67;
 
     --bg: #f7f3ea;
     --surface: #ffffff;

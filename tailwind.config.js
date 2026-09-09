@@ -56,6 +56,12 @@ export default {
           ink: token("--c-accent-ink"),
         },
 
+        /** Light ground for third-party logos, in both themes. */
+        plate: {
+          DEFAULT: token("--c-plate"),
+          ink: token("--c-plate-ink"),
+        },
+
         /** Solid navy for primary buttons — stays navy in both themes. */
         navy: {
           DEFAULT: token("--c-navy"),

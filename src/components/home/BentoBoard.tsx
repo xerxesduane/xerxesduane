@@ -36,7 +36,7 @@ export default function BentoBoard() {
               >
                 {/* `contain`, not `cover`: these are a mix of client logos and
                     site screenshots, and cropping a logo cuts the wordmark. */}
-                <div className="flex h-16 w-full items-center justify-center overflow-hidden bg-canvas-sunk p-2">
+                <div className="flex h-16 w-full items-center justify-center overflow-hidden bg-plate p-2">
                   {project.image ? (
                     <img
                       src={project.image}
@@ -46,7 +46,7 @@ export default function BentoBoard() {
                       className="max-h-full max-w-full object-contain"
                     />
                   ) : (
-                    <span className="font-display text-lg font-semibold text-fg-faint">
+                    <span className="font-display text-lg font-semibold text-plate-ink/50">
                       {project.client.slice(0, 2).toUpperCase()}
                     </span>
                   )}

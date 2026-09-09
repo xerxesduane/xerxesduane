@@ -59,7 +59,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
         <div className="flex flex-col gap-3 sm:gap-4 lg:col-span-5">
           {study.image && (
             <Panel tone="plain">
-              <div className="flex items-center justify-center rounded-card border border-line bg-panel px-5 py-5 shadow-card">
+              <div className="flex items-center justify-center rounded-card border border-line bg-plate px-5 py-5 shadow-card">
                 <img
                   src={study.image}
                   alt={`${study.client} project`}

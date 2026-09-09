@@ -381,6 +381,7 @@ export const CASE_STUDIES: CaseStudy[] = [
     client: "Saladmaster UAE",
     location: "UAE · Premium Cookware",
     category: "CRM & Web",
+    image: "/brand/clients/al-mumtaz.png",
     challenge:
       "A premium cookware and direct-sales brand needed a smoother customer journey, from first inquiry through cooking demo to sale, with real visibility into follow-ups.",
     summary:
