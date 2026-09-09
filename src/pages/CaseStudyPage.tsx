@@ -51,55 +51,59 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
           </div>
         </Panel>
 
-        {/* Client mark */}
-        {study.image && (
-          <Panel span="lg:col-span-5" tone="plain">
-            <div className="flex h-full min-h-32 items-center justify-center rounded-card border border-line bg-panel p-6 shadow-card">
-              <img
-                src={study.image}
-                alt={`${study.client} project`}
-                loading="lazy"
-                decoding="async"
-                className="max-h-24 max-w-full object-contain"
-              />
-            </div>
-          </Panel>
-        )}
+        {/* Client mark and the proof panel share the right column.
+            `stats` and `scope` are mutually exclusive in the data, so exactly
+            one of them lands here — together with the mark they fill the
+            column beside the tall problem/approach panel, instead of one
+            stretched card holding a small logo in a lot of empty space. */}
+        <div className="flex flex-col gap-3 sm:gap-4 lg:col-span-5">
+          {study.image && (
+            <Panel tone="plain">
+              <div className="flex items-center justify-center rounded-card border border-line bg-panel px-5 py-5 shadow-card">
+                <img
+                  src={study.image}
+                  alt={`${study.client} project`}
+                  loading="lazy"
+                  decoding="async"
+                  className="max-h-20 w-auto max-w-full object-contain"
+                />
+              </div>
+            </Panel>
+          )}
 
-        {/* Measured numbers */}
-        {study.stats && (
-          <Panel icon={TrendingUp} label="Measured result" span="lg:col-span-5">
-            <dl className="grid grid-cols-2 gap-2">
-              {study.stats.map((stat) => (
-                <div key={stat.label} className="rounded-xl border border-line bg-panel-alt p-3">
-                  <dt className="sr-only">{stat.label}</dt>
-                  <dd>
-                    <span className="font-display text-2xl font-semibold text-accent">
-                      {stat.value}
-                    </span>
-                    <span className="mt-1 block text-[0.7rem] leading-tight text-fg-soft">
-                      {stat.label}
-                    </span>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </Panel>
-        )}
+          {study.stats && (
+            <Panel icon={TrendingUp} label="Measured result">
+              <dl className="grid grid-cols-2 gap-2">
+                {study.stats.map((stat) => (
+                  <div key={stat.label} className="rounded-xl border border-line bg-panel-alt p-3">
+                    <dt className="sr-only">{stat.label}</dt>
+                    <dd>
+                      <span className="font-display text-2xl font-semibold text-accent">
+                        {stat.value}
+                      </span>
+                      <span className="mt-1 block text-[0.7rem] leading-tight text-fg-soft">
+                        {stat.label}
+                      </span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </Panel>
+          )}
 
-        {/* Scope */}
-        {study.scope && (
-          <Panel icon={Wrench} label="Delivered" span="lg:col-span-5">
-            <ul className="space-y-2">
-              {study.scope.map((item) => (
-                <li key={item} className="flex items-start gap-2.5 text-sm text-fg-soft">
-                  <Check size={15} className="mt-0.5 shrink-0 text-accent" aria-hidden />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </Panel>
-        )}
+          {study.scope && (
+            <Panel icon={Wrench} label="Delivered">
+              <ul className="space-y-2">
+                {study.scope.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-sm text-fg-soft">
+                    <Check size={15} className="mt-0.5 shrink-0 text-accent" aria-hidden />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Panel>
+          )}
+        </div>
 
         {/* Outcome */}
         <Panel icon={Quote} label="The outcome" span="lg:col-span-12">
