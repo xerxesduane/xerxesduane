@@ -8,7 +8,7 @@ import Reveal from "./ui/Reveal";
 import GoogleRating from "./GoogleRating";
 
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", business: "", phone: "", note: "" });
+  const [form, setForm] = useState({ name: "", business: "", email: "", phone: "", note: "" });
   const [source, setSource] = useState({ page: "", referrer: "" });
   const [state, handleSubmit] = useForm(CONTACT.formspreeId);
 
@@ -35,6 +35,7 @@ export default function Contact() {
     ``,
     `Name: ${form.name}`,
     `Business: ${form.business}`,
+    form.email ? `Email: ${form.email}` : "",
     `Phone: ${form.phone}`,
     form.note ? `On my mind: ${form.note}` : "",
   ]
@@ -196,6 +197,31 @@ export default function Contact() {
                   onChange={update("business")}
                   className={field}
                   placeholder="Acme Translation, Arabic/English legal docs"
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="mb-1.5 block text-xs text-muted">
+                  Your email <span className="text-muted-dark">(optional)</span>
+                </label>
+                {/* Named `email` on purpose: Formspree uses a field with that
+                    name as the notification's Reply-To, so a reply from the
+                    inbox goes straight back to the sender. Optional, because
+                    the promised reply channel is still WhatsApp. */}
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  value={form.email}
+                  onChange={update("email")}
+                  className={field}
+                  placeholder="you@yourbusiness.ae"
+                />
+                <ValidationError
+                  field="email"
+                  prefix="Email"
+                  errors={state.errors}
+                  className="mt-1 text-xs text-gold"
                 />
               </div>
               <div>
