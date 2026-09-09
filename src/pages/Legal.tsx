@@ -5,7 +5,7 @@ const LAST_UPDATED = "2 June 2026";
 
 function LegalLayout({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="container-bl max-w-prose scroll-mt-24 pt-32 pb-24 sm:pt-40">
+    <section className="container-bl max-w-prose scroll-mt-24 pb-20">
       <h1 className="text-4xl sm:text-5xl">{title}</h1>
       <p className="mt-3 font-mono text-xs uppercase tracking-wider text-muted-dark">
         Last updated: {LAST_UPDATED}

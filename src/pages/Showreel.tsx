@@ -8,7 +8,7 @@ import { fadeUp, stagger } from "../lib/motion";
 export default function Showreel() {
   return (
     <>
-      <section className="container-bl scroll-mt-24 pt-32 pb-12 sm:pt-40">
+      <section className="container-bl scroll-mt-24 pb-12">
         <m.div
           variants={stagger}
           initial="hidden"

@@ -15,7 +15,7 @@ export default function ServicePageAr({ page }: { page: ArPage }) {
   return (
     <>
       {/* Header */}
-      <section id="top" className="relative overflow-hidden pt-32 pb-14 sm:pt-40 sm:pb-20">
+      <section id="top" className="relative overflow-hidden pb-14 sm:pb-20">
         <div className="container-bl">
           <div className="mx-auto mb-6 flex max-w-3xl justify-center">
             <a

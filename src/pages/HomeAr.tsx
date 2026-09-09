@@ -31,7 +31,7 @@ const FAQ_AR = [
 export default function HomeAr() {
   return (
     <>
-      <section id="top" className="relative overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-24">
+      <section id="top" className="relative overflow-hidden pb-16 sm:pb-24">
         <div className="container-bl">
           <div className="mx-auto mb-6 flex max-w-3xl justify-center">
             <a

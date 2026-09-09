@@ -748,7 +748,7 @@ export default function Demos() {
 
   return (
     <>
-      <section id="top" className="studio-reference-page studio-reference-section studio-grain relative overflow-hidden pt-36 pb-12 sm:pt-44 sm:pb-16">
+      <section id="top" className="studio-reference-page studio-reference-section studio-grain relative overflow-hidden pb-12 sm:pb-16">
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 top-10 -z-10 h-96 bg-[radial-gradient(ellipse_55%_45%_at_50%_0%,rgba(218,164,66,0.13),transparent_68%)]"

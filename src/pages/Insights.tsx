@@ -5,7 +5,7 @@ import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 
 export default function Insights() {
   return (
-    <section id="top" className="relative overflow-hidden pt-36 pb-24 sm:pt-44 sm:pb-32">
+    <section id="top" className="relative overflow-hidden pb-20 sm:pb-28">
       <div className="container-bl">
         <div className="mx-auto max-w-3xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold">

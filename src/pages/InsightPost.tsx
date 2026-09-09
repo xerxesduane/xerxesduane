@@ -55,7 +55,7 @@ export default function InsightPost({ post }: { post: Post }) {
 
   return (
     <>
-      <article className="pt-36 pb-16 sm:pt-44">
+      <article className="pb-16">
         <div className="container-bl">
           <div className="mx-auto max-w-2xl">
             <a

@@ -24,7 +24,7 @@ const PROJECTS = [
 export default function About() {
   return (
     <>
-      <section id="top" className="relative overflow-hidden pt-36 pb-12 sm:pt-44 sm:pb-16">
+      <section id="top" className="relative overflow-hidden pb-12 sm:pb-16">
         <div className="container-bl">
           <m.div
             variants={stagger}

@@ -11,6 +11,11 @@
 @font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 500; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
 @font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 600; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
 @font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 700; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/poppins-400.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/poppins-500.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/poppins-600.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/poppins-700.woff2') format('woff2'); }
+@font-face { font-family: 'Poppins'; font-style: normal; font-weight: 800; font-display: swap; src: url('/fonts/poppins-800.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-400.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-500.woff2') format('woff2'); }
 @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/inter-600.woff2') format('woff2'); }
@@ -41,32 +46,117 @@
 }
 
 @layer base {
+  /* -------------------------------------------------------------------
+   * Design tokens. Values are `R G B` triplets so Tailwind can apply opacity
+   * modifiers (see tailwind.config.js). Light is the default; `data-theme`
+   * on <html> swaps the set. Anything not listed here is derived in Tailwind.
+   * ----------------------------------------------------------------- */
   :root {
-    color-scheme: dark;
+    color-scheme: light;
     scroll-behavior: smooth;
-    --bg: #081827;
+
+    /* surfaces — warm off-white canvas, white cards, pale-blue bento wash */
+    --c-canvas: 244 242 236;
+    --c-canvas-sunk: 237 234 226;
+    --c-panel: 255 255 255;
+    --c-panel-alt: 251 250 246;
+    --c-wash: 233 240 252;
+    --c-wash-strong: 219 231 250;
+
+    /* foreground — deep navy ink, muted blue-gray secondary */
+    --c-fg: 16 27 51;
+    --c-fg-soft: 91 100 120;
+    --c-fg-faint: 98 108 133;
+    --c-fg-on-solid: 255 255 255;
+
+    /* hairlines */
+    --c-line: 228 233 241;
+    --c-line-soft: 239 242 247;
+
+    /* accent — bright orange */
+    --c-accent: 233 112 42;
+    --c-accent-soft: 253 238 228;
+    --c-accent-deep: 196 85 26;
+    --c-accent-ink: 255 255 255;
+
+    /* solid navy (primary button) */
+    --c-navy: 16 27 51;
+    --c-navy-hover: 26 41 74;
+
+    /* legacy hex vars kept for the components still reading them directly */
+    --bg: #f4f2ec;
     --surface: #ffffff;
-    --surface-alt: #efe7d8;
-    --ink: #111827;
-    --muted: #a6b3bc;
-    --line: #e2d8c8;
-    --navy: #102a43;
-    --navy-dark: #081827;
-    --gold: #daa442;
-    --gold-soft: #e8c173;
-    --success: #1f7a5a;
+    --surface-alt: #fbfaf6;
+    --ink: #101b33;
+    --muted: #5b6478;
+    --line: #e4e9f1;
+    --navy: #101b33;
+    --navy-dark: #0b1424;
+    --gold: #e9702a;
+    --gold-soft: #fdeee4;
+    --success: #17a34a;
     --danger: #b94242;
-    --studio-bg: #0c2432;
-    --studio-bg-deep: #071724;
-    --studio-panel: rgba(255, 255, 255, 0.055);
-    --studio-panel-strong: rgba(255, 255, 255, 0.085);
-    --studio-line: rgba(244, 239, 230, 0.14);
-    --studio-cream: #f4efe6;
-    --studio-cream-dim: #d8cfc0;
-    --studio-muted: #9fb0b8;
-    --studio-ink: #061321;
-    --studio-gold: #e8c173;
-    --studio-gold-deep: #daa442;
+    --studio-bg: #f4f2ec;
+    --studio-bg-deep: #edeae2;
+    --studio-panel: rgba(16, 27, 51, 0.035);
+    --studio-panel-strong: rgba(16, 27, 51, 0.06);
+    --studio-line: rgba(16, 27, 51, 0.1);
+    --studio-cream: #101b33;
+    --studio-cream-dim: #5b6478;
+    --studio-muted: #5b6478;
+    --studio-ink: #101b33;
+    --studio-gold: #e9702a;
+    --studio-gold-deep: #c4551a;
+  }
+
+  /* Dark theme — same token names, darker assignments. */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --c-canvas: 14 22 38;
+    --c-canvas-sunk: 10 16 29;
+    --c-panel: 23 34 54;
+    --c-panel-alt: 28 40 62;
+    --c-wash: 24 37 62;
+    --c-wash-strong: 30 46 76;
+
+    --c-fg: 241 244 249;
+    --c-fg-soft: 154 166 188;
+    --c-fg-faint: 122 134 156;
+    --c-fg-on-solid: 20 12 6;
+
+    --c-line: 38 50 74;
+    --c-line-soft: 31 42 64;
+
+    --c-accent: 255 138 76;
+    --c-accent-soft: 58 36 22;
+    --c-accent-deep: 255 165 115;
+    --c-accent-ink: 20 12 6;
+
+    --c-navy: 255 138 76;
+    /* solid buttons are orange in dark mode: ink on orange, not white */
+    --c-navy-hover: 255 160 108;
+
+    --bg: #0e1626;
+    --surface: #172236;
+    --surface-alt: #1c283e;
+    --ink: #f1f4f9;
+    --muted: #9aa6bc;
+    --line: #26324a;
+    --navy: #ff8a4c;
+    --gold: #ff8a4c;
+    --gold-soft: #ffa573;
+    --studio-bg: #0e1626;
+    --studio-bg-deep: #0a101d;
+    --studio-panel: rgba(255, 255, 255, 0.05);
+    --studio-panel-strong: rgba(255, 255, 255, 0.08);
+    --studio-line: rgba(255, 255, 255, 0.12);
+    --studio-cream: #f1f4f9;
+    --studio-cream-dim: #9aa6bc;
+    --studio-muted: #9aa6bc;
+    --studio-ink: #0a101d;
+    --studio-gold: #ff8a4c;
+    --studio-gold-deep: #ffa573;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -94,11 +184,11 @@
 
   body {
     margin: 0;
-    background-color: var(--bg);
-    color: theme("colors.cream.DEFAULT");
-    font-family: theme("fontFamily.sans");
-    font-size: 17px;
-    line-height: 1.65;
+    background-color: rgb(var(--c-canvas));
+    color: rgb(var(--c-fg));
+    font-family: theme("fontFamily.display");
+    font-size: 16px;
+    line-height: 1.6;
     overflow-x: hidden;
   }
 
@@ -168,133 +258,57 @@
   }
 
   /* Liquid-glass surface: near-transparent luminosity fill, soft blur, inset
-     top sheen, and a gradient hairline ring drawn via a masked ::before so it
-     follows any border-radius. Used on cards, pills, nav, forms, badges. */
+     restrained shadow. Used on cards, pills, nav, forms, badges. */
   .liquid-glass {
-    background: rgba(255, 255, 255, 0.01);
-    background-blend-mode: luminosity;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: none;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    background: rgb(var(--c-panel));
+    border: 1px solid rgb(var(--c-line));
+    box-shadow:
+      0 1px 2px rgb(16 27 51 / 0.04),
+      0 8px 24px -16px rgb(16 27 51 / 0.16);
     position: relative;
     overflow: hidden;
-  }
-  .liquid-glass::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.45) 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0) 60%,
-      rgba(255, 255, 255, 0.15) 80%,
-      rgba(255, 255, 255, 0.45) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
   }
 
   /* Frosted glass surface — now the liquid-glass treatment. Kept under the
      original `.glass` name so every existing card/pill upgrades in one place.
      A whisper of warm fill keeps content legible over the animated background. */
   .glass {
-    background:
-      linear-gradient(180deg, rgba(244, 239, 230, 0.035) 0%, rgba(244, 239, 230, 0.012) 100%);
-    background-blend-mode: luminosity;
-    border: none;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgb(var(--c-panel));
+    border: 1px solid rgb(var(--c-line));
+    box-shadow:
+      0 1px 2px rgb(16 27 51 / 0.04),
+      0 8px 24px -16px rgb(16 27 51 / 0.16);
     position: relative;
     overflow: hidden;
-  }
-  .glass::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.4) 0%,
-      rgba(255, 255, 255, 0.13) 20%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0) 60%,
-      rgba(255, 255, 255, 0.13) 80%,
-      rgba(255, 255, 255, 0.4) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
   }
 
   /* Edge-faded hairline divider for section rhythm */
   .hairline {
     height: 1px;
     width: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(244, 239, 230, 0.12) 50%,
-      transparent 100%
-    );
+    background: rgb(var(--c-line));
   }
 
   /* Solid navigation surface — opaque, premium, never see-through */
   /* Nav pill + dropdown surface — liquid glass over the page, with enough
      dark fill that links stay legible over bright hero footage. The gradient
-     hairline ring is drawn by a masked ::before (follows the pill radius). */
+     ring is a plain 1px hairline. */
   .nav-surface {
-    background:
-      linear-gradient(180deg, rgba(17, 24, 19, 0.72) 0%, rgba(11, 15, 13, 0.78) 100%);
-    background-blend-mode: luminosity, normal;
-    border: none;
+    background: rgb(var(--c-panel));
+    border: 1px solid rgb(var(--c-line));
     box-shadow:
-      inset 0 1px 1px rgba(255, 255, 255, 0.1),
-      0 18px 50px -26px rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(16px) saturate(140%);
-    -webkit-backdrop-filter: blur(16px) saturate(140%);
+      0 1px 2px rgb(16 27 51 / 0.05),
+      0 12px 32px -20px rgb(16 27 51 / 0.28);
     position: relative;
     transition:
       box-shadow 360ms cubic-bezier(0.16, 1, 0.3, 1),
       background 360ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .nav-surface::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.45) 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0) 60%,
-      rgba(255, 255, 255, 0.15) 80%,
-      rgba(255, 255, 255, 0.45) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-  }
   /* Scrolled: tighten the canvas + bring in the golden-hour accent */
   .nav-surface--scrolled {
-    background:
-      linear-gradient(180deg, rgba(17, 24, 19, 0.92) 0%, rgba(7, 9, 10, 0.94) 100%);
     box-shadow:
-      inset 0 1px 1px rgba(255, 255, 255, 0.12),
-      0 24px 64px -22px rgba(0, 0, 0, 0.92),
-      0 0 28px -10px rgba(218, 164, 66, 0.18);
+      0 1px 2px rgb(16 27 51 / 0.06),
+      0 18px 44px -22px rgb(16 27 51 / 0.34);
   }
 
   /* Growing gold underline for body/footer links (background-size sweep). */
@@ -341,8 +355,9 @@
 
   .glass-hover {
     transition:
-      transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1);
+      border-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-hover:hover {
     transform: translateY(-4px);
@@ -353,12 +368,7 @@
 
   /* Gold gradient text */
   .text-gradient-gold {
-    background: linear-gradient(100deg, #f7e7b0 0%, #e8c173 48%, #daa442 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-family: 'PP Mondwest', 'Fraunces', Georgia, serif;
-    font-weight: 400;
+    color: rgb(var(--c-accent));
   }
 
   .font-pixel {
@@ -378,65 +388,23 @@
   }
 
   .liquid-glass-dark {
-    background: rgba(0, 0, 0, 0.52);
-    background-blend-mode: luminosity;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: none;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    background: rgb(var(--c-canvas-sunk));
+    border: 1px solid rgb(var(--c-line));
     position: relative;
     overflow: hidden;
   }
-  .liquid-glass-dark::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.1) 20%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0) 60%,
-      rgba(255, 255, 255, 0.1) 80%,
-      rgba(255, 255, 255, 0.3) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-  }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs uppercase text-gold;
-    font-family: 'PP NeueBit', 'Space Mono', ui-monospace, monospace;
+    @apply inline-flex items-center gap-2 uppercase text-accent-deep;
+    font-family: theme("fontFamily.display");
+    font-size: 0.688rem;
     font-weight: 700;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.14em;
   }
 
   /* Animated gradient hairline border for featured cards */
   .border-glow {
-    position: relative;
-  }
-  .border-glow::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    border-radius: inherit;
-    background: linear-gradient(
-      130deg,
-      rgba(217, 164, 65, 0.6),
-      rgba(244, 239, 230, 0.05) 40%,
-      rgba(92, 111, 82, 0.4)
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+    border: 1px solid rgb(var(--c-accent) / 0.35);
   }
 }
 
@@ -448,7 +416,7 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.018;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 

@@ -3,7 +3,7 @@ import { SERVICE_PAGES } from "../data/servicePages";
 
 export default function NotFound() {
   return (
-    <section id="top" className="relative overflow-hidden pt-40 pb-28 sm:pt-48">
+    <section id="top" className="relative overflow-hidden pb-24">
       <div className="container-bl">
         <div className="mx-auto max-w-2xl text-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.2em] text-gold">

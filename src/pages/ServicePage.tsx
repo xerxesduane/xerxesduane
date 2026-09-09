@@ -26,7 +26,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
   return (
     <>
       {/* Header */}
-      <section id="top" className="relative overflow-hidden pt-36 pb-16 sm:pt-44 sm:pb-20">
+      <section id="top" className="relative overflow-hidden pb-16 sm:pb-20">
         <div className="container-bl">
           {hasArabicPage && <div className="mx-auto mb-6 flex max-w-3xl justify-center">
             <a

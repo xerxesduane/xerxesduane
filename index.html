@@ -8,7 +8,26 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/brand/favicon/icon-192.png" />
     <link rel="apple-touch-icon" href="/brand/favicon/icon-180.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#0C2432" />
+    <meta name="theme-color" content="#f4f2ec" />
+
+    <!-- Resolve the palette before first paint so there is no flash of the
+         wrong theme. Light is the default; dark is the visitor's opt-in and is
+         persisted in localStorage under the key used by src/lib/useTheme.ts. -->
+    <script>
+      (function () {
+        try {
+          var saved = localStorage.getItem("xd-theme");
+          var theme = saved === "dark" || saved === "light" ? saved : "light";
+          document.documentElement.dataset.theme = theme;
+          if (theme === "dark") {
+            var m = document.querySelector('meta[name="theme-color"]');
+            if (m) m.setAttribute("content", "#0e1626");
+          }
+        } catch (e) {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
 
     <!-- Google tag (gtag.js) — Consent Mode v2: analytics denied until the
          visitor accepts (see ConsentBanner). Search Console verification still
