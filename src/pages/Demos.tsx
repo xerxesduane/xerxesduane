@@ -5,6 +5,8 @@ import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Reveal from "../components/ui/Reveal";
 import Contact from "../components/Contact";
+import PageHeader from "../components/page/PageHeader";
+import { PrimaryAction } from "../components/page/PageActions";
 import { fadeUp, stagger } from "../lib/motion";
 import { track } from "../lib/analytics";
 
@@ -748,53 +750,30 @@ export default function Demos() {
 
   return (
     <>
-      <section id="top" className="studio-reference-page studio-reference-section studio-grain relative overflow-hidden pt-36 pb-12 sm:pt-44 sm:pb-16">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 top-10 -z-10 h-96 bg-[radial-gradient(ellipse_55%_45%_at_50%_0%,rgba(218,164,66,0.13),transparent_68%)]"
-        />
-        <div className="container-bl relative z-10">
-          <m.div variants={stagger} initial="hidden" animate="show" className="mx-auto max-w-3xl text-center">
-            <m.span
-              variants={fadeUp}
-              className="studio-reference-eyebrow mx-auto"
-            >
-              AI LAB - {DEMOS.length} TOOLS
-            </m.span>
-            <m.h1
-              variants={fadeUp}
-              className="mt-7 text-5xl font-semibold leading-[0.98] tracking-tight text-[color:var(--studio-cream)] sm:text-6xl md:text-7xl"
-            >
-              Try the AI. <span className="studio-accent">Not just read about it.</span>
-            </m.h1>
-            <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-[color:var(--studio-cream-dim)]">
-              Practical AI tools for real business workflows. Type into them and see what useful AI can do inside sales, service, content, operations, and reporting work.
-            </m.p>
-            <m.p variants={fadeUp} className="mx-auto mt-3 font-pixel text-[11px] uppercase text-[color:var(--studio-muted)]">
-              Practical demos - No sign-up - Your input isn't stored
-            </m.p>
-          </m.div>
-        </div>
-      </section>
+      <PageHeader
+        eyebrow={`AI Lab · ${DEMOS.length} tools`}
+        title={<>Try the AI. Not just read about it.</>}
+        lede="Practical AI tools for real business workflows. Type into them and see what useful AI can do inside sales, service, content, operations and reporting work."
+        meta={<span>Practical demos · No sign-up · Your input isn't stored</span>}
+        actions={<PrimaryAction href="/#contact">Book a free audit</PrimaryAction>}
+      />
 
       {/* flagship offer */}
       {featured && (
-        <section className="pb-12">
-          <div className="container-bl">
-            <FeaturedDemo demo={featured} />
-          </div>
+        <section className="pb-8">
+          <FeaturedDemo demo={featured} />
         </section>
       )}
 
       {/* category filter */}
       <section className="pb-2">
-        <div className="container-bl">
+        <div>
           <Reveal>
-            <p className="mb-5 text-center font-mono text-[11px] uppercase tracking-[0.2em] text-muted-dark">
+            <p className="mb-4 font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
               And {rest.length} more live tools
             </p>
           </Reveal>
-          <div className="flex flex-wrap items-center justify-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <FilterPill active={filter === "all"} onClick={() => setFilter("all")}>
               All <span className="opacity-50">{rest.length}</span>
             </FilterPill>

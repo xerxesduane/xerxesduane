@@ -41,15 +41,60 @@
 }
 
 @layer base {
+  /* -------------------------------------------------------------------
+   * Design tokens. Values are `R G B` triplets so Tailwind can apply opacity
+   * modifiers (see tailwind.config.js). Light is the default; `data-theme`
+   * on <html> swaps the set. Anything not listed here is derived in Tailwind.
+   * ----------------------------------------------------------------- */
   :root {
     color-scheme: dark;
     scroll-behavior: smooth;
+
+    /* Brand dark — the golden-hour canvas. Never pure black. */
+    --c-canvas: 8 24 39;
+    --c-canvas-sunk: 5 18 32;
+    --c-panel: 16 42 67;
+    --c-panel-alt: 20 49 76;
+    --c-wash: 16 42 67;
+    --c-wash-strong: 24 56 86;
+    /* Alpha for the frosted panel treatment (see .glass). */
+    --panel-alpha: 0.55;
+    --panel-blur: 6px;
+
+    /* Cream on navy */
+    --c-fg: 247 243 234;
+    --c-fg-soft: 166 179 188;
+    --c-fg-faint: 139 152 163;
+    --c-fg-on-solid: 8 24 39;
+
+    --c-line: 62 82 103;
+    --c-line-soft: 43 61 80;
+
+    /* Dubai gold */
+    --c-accent: 218 164 66;
+    --c-accent-soft: 232 193 115;
+    --c-accent-deep: 232 193 115;
+    --c-accent-ink: 8 24 39;
+
+    /* Primary solid = gold with ink on it, as the brand button always was. */
+    --c-navy: 218 164 66;
+    --c-navy-hover: 232 193 115;
+
+    /* Brand olive, kept for the surfaces that used it. */
+    --c-olive: 61 74 54;
+
+    /* Plate for third-party logos. Deliberately light in both themes: client
+       marks are dark-ink artwork on transparency and vanish on the navy. */
+    --c-plate: 247 243 234;
+    --c-plate-ink: 16 42 67;
+
+    /* legacy hex vars for the components still reading them directly */
     --bg: #081827;
-    --surface: #ffffff;
-    --surface-alt: #efe7d8;
-    --ink: #111827;
+    --surface: #102a43;
+    --surface-alt: #14314c;
+    --ink: #f7f3ea;
     --muted: #a6b3bc;
-    --line: #e2d8c8;
+    --line: #3e5267;
     --navy: #102a43;
     --navy-dark: #081827;
     --gold: #daa442;
@@ -67,6 +112,62 @@
     --studio-ink: #061321;
     --studio-gold: #e8c173;
     --studio-gold-deep: #daa442;
+  }
+
+  /* Light — the same brand, on cream rather than navy. Sand canvas, navy ink,
+     the deeper gold so small text still clears AA on a light ground. */
+  :root[data-theme="light"] {
+    color-scheme: light;
+
+    --c-canvas: 247 243 234;
+    --c-canvas-sunk: 239 231 216;
+    --c-panel: 255 255 255;
+    --c-panel-alt: 251 248 242;
+    --c-wash: 239 231 216;
+    --c-wash-strong: 232 220 198;
+    --panel-alpha: 1;
+    --panel-blur: 0px;
+
+    --c-fg: 16 42 67;
+    --c-fg-soft: 74 92 110;
+    --c-fg-faint: 94 110 128;
+    --c-fg-on-solid: 247 243 234;
+
+    --c-line: 226 216 200;
+    --c-line-soft: 237 230 218;
+
+    --c-accent: 143 105 30;
+    --c-accent-soft: 245 233 208;
+    --c-accent-deep: 124 90 24;
+    --c-accent-ink: 255 255 255;
+
+    --c-navy: 16 42 67;
+    --c-navy-hover: 8 24 39;
+
+    --c-olive: 61 74 54;
+    --c-plate: 255 255 255;
+    --c-plate-ink: 16 42 67;
+
+    --bg: #f7f3ea;
+    --surface: #ffffff;
+    --surface-alt: #fbf8f2;
+    --ink: #102a43;
+    --muted: #4a5c6e;
+    --line: #e2d8c8;
+    --navy: #102a43;
+    --gold: #8f691e;
+    --gold-soft: #7c5a18;
+    --studio-bg: #f7f3ea;
+    --studio-bg-deep: #efe7d8;
+    --studio-panel: rgba(16, 42, 67, 0.04);
+    --studio-panel-strong: rgba(16, 42, 67, 0.07);
+    --studio-line: rgba(16, 42, 67, 0.12);
+    --studio-cream: #102a43;
+    --studio-cream-dim: #4a5c6e;
+    --studio-muted: #4a5c6e;
+    --studio-ink: #102a43;
+    --studio-gold: #9a7121;
+    --studio-gold-deep: #7c5a18;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -94,10 +195,10 @@
 
   body {
     margin: 0;
-    background-color: var(--bg);
-    color: theme("colors.cream.DEFAULT");
-    font-family: theme("fontFamily.sans");
-    font-size: 17px;
+    background-color: rgb(var(--c-canvas));
+    color: rgb(var(--c-fg));
+    font-family: theme("fontFamily.body");
+    font-size: 16px;
     line-height: 1.65;
     overflow-x: hidden;
   }
@@ -168,133 +269,97 @@
   }
 
   /* Liquid-glass surface: near-transparent luminosity fill, soft blur, inset
-     top sheen, and a gradient hairline ring drawn via a masked ::before so it
-     follows any border-radius. Used on cards, pills, nav, forms, badges. */
+     restrained shadow. Used on cards, pills, nav, forms, badges. */
   .liquid-glass {
-    background: rgba(255, 255, 255, 0.01);
-    background-blend-mode: luminosity;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: none;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    background: rgb(var(--c-panel) / var(--panel-alpha));
+    border: 1px solid rgb(var(--c-line));
+    backdrop-filter: blur(var(--panel-blur));
+    -webkit-backdrop-filter: blur(var(--panel-blur));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 12px 32px -20px rgb(0 0 0 / 0.55);
     position: relative;
     overflow: hidden;
-  }
-  .liquid-glass::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.45) 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0) 60%,
-      rgba(255, 255, 255, 0.15) 80%,
-      rgba(255, 255, 255, 0.45) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
   }
 
   /* Frosted glass surface — now the liquid-glass treatment. Kept under the
      original `.glass` name so every existing card/pill upgrades in one place.
      A whisper of warm fill keeps content legible over the animated background. */
   .glass {
-    background:
-      linear-gradient(180deg, rgba(244, 239, 230, 0.035) 0%, rgba(244, 239, 230, 0.012) 100%);
-    background-blend-mode: luminosity;
-    border: none;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    background: rgb(var(--c-panel) / var(--panel-alpha));
+    border: 1px solid rgb(var(--c-line));
+    backdrop-filter: blur(var(--panel-blur));
+    -webkit-backdrop-filter: blur(var(--panel-blur));
+    box-shadow:
+      inset 0 1px 0 rgb(255 255 255 / 0.05),
+      0 12px 32px -20px rgb(0 0 0 / 0.55);
     position: relative;
     overflow: hidden;
   }
-  .glass::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.4) 0%,
-      rgba(255, 255, 255, 0.13) 20%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0) 60%,
-      rgba(255, 255, 255, 0.13) 80%,
-      rgba(255, 255, 255, 0.4) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+
+  /* Skip link.
+     Not `sr-only`: that positions absolutely with `margin: -1px`, so the 1px
+     box sits at its static position and hangs a pixel past the inline edge —
+     which under RTL is the right edge, putting the whole document into
+     horizontal overflow. `position: fixed` keeps it out of the scroll extent
+     entirely, and a logical inset puts it on the correct side in both
+     directions. */
+  .skip-link {
+    position: fixed;
+    inset-inline-start: 1rem;
+    top: 1rem;
+    z-index: 60;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    opacity: 0;
+  }
+  .skip-link:focus {
+    width: auto;
+    height: auto;
+    padding: 0.5rem 1rem;
+    overflow: visible;
+    clip-path: none;
+    opacity: 1;
+    border-radius: 9999px;
+    background: rgb(var(--c-accent));
+    color: rgb(var(--c-accent-ink));
+    font-size: 0.875rem;
+    font-weight: 600;
+    outline: 2px solid rgb(var(--c-fg));
+    outline-offset: 2px;
   }
 
   /* Edge-faded hairline divider for section rhythm */
   .hairline {
     height: 1px;
     width: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(244, 239, 230, 0.12) 50%,
-      transparent 100%
-    );
+    background: rgb(var(--c-line));
   }
 
   /* Solid navigation surface — opaque, premium, never see-through */
   /* Nav pill + dropdown surface — liquid glass over the page, with enough
      dark fill that links stay legible over bright hero footage. The gradient
-     hairline ring is drawn by a masked ::before (follows the pill radius). */
+     ring is a plain 1px hairline. */
   .nav-surface {
-    background:
-      linear-gradient(180deg, rgba(17, 24, 19, 0.72) 0%, rgba(11, 15, 13, 0.78) 100%);
-    background-blend-mode: luminosity, normal;
-    border: none;
-    box-shadow:
-      inset 0 1px 1px rgba(255, 255, 255, 0.1),
-      0 18px 50px -26px rgba(0, 0, 0, 0.85);
+    background: rgb(var(--c-panel) / var(--panel-alpha));
+    border: 1px solid rgb(var(--c-line));
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
+    box-shadow: 0 18px 50px -26px rgb(0 0 0 / 0.7);
     position: relative;
     transition:
       box-shadow 360ms cubic-bezier(0.16, 1, 0.3, 1),
       background 360ms cubic-bezier(0.16, 1, 0.3, 1);
   }
-  .nav-surface::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.45) 0%,
-      rgba(255, 255, 255, 0.15) 20%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0) 60%,
-      rgba(255, 255, 255, 0.15) 80%,
-      rgba(255, 255, 255, 0.45) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-  }
   /* Scrolled: tighten the canvas + bring in the golden-hour accent */
   .nav-surface--scrolled {
-    background:
-      linear-gradient(180deg, rgba(17, 24, 19, 0.92) 0%, rgba(7, 9, 10, 0.94) 100%);
     box-shadow:
-      inset 0 1px 1px rgba(255, 255, 255, 0.12),
-      0 24px 64px -22px rgba(0, 0, 0, 0.92),
-      0 0 28px -10px rgba(218, 164, 66, 0.18);
+      0 1px 2px rgb(16 27 51 / 0.06),
+      0 18px 44px -22px rgb(16 27 51 / 0.34);
   }
 
   /* Growing gold underline for body/footer links (background-size sweep). */
@@ -341,8 +406,9 @@
 
   .glass-hover {
     transition:
-      transform 240ms cubic-bezier(0.16, 1, 0.3, 1),
-      box-shadow 240ms cubic-bezier(0.16, 1, 0.3, 1);
+      border-color 300ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 300ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-hover:hover {
     transform: translateY(-4px);
@@ -353,12 +419,7 @@
 
   /* Gold gradient text */
   .text-gradient-gold {
-    background: linear-gradient(100deg, #f7e7b0 0%, #e8c173 48%, #daa442 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    font-family: 'PP Mondwest', 'Fraunces', Georgia, serif;
-    font-weight: 400;
+    color: rgb(var(--c-accent));
   }
 
   .font-pixel {
@@ -378,65 +439,23 @@
   }
 
   .liquid-glass-dark {
-    background: rgba(0, 0, 0, 0.52);
-    background-blend-mode: luminosity;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: none;
-    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    background: rgb(var(--c-canvas-sunk));
+    border: 1px solid rgb(var(--c-line));
     position: relative;
     overflow: hidden;
   }
-  .liquid-glass-dark::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.4px;
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.3) 0%,
-      rgba(255, 255, 255, 0.1) 20%,
-      rgba(255, 255, 255, 0) 40%,
-      rgba(255, 255, 255, 0) 60%,
-      rgba(255, 255, 255, 0.1) 80%,
-      rgba(255, 255, 255, 0.3) 100%
-    );
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-  }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs uppercase text-gold;
-    font-family: 'PP NeueBit', 'Space Mono', ui-monospace, monospace;
+    @apply inline-flex items-center gap-2 uppercase text-accent;
+    font-family: theme("fontFamily.technical");
+    font-size: 0.688rem;
     font-weight: 700;
-    letter-spacing: 0.22em;
+    letter-spacing: 0.2em;
   }
 
   /* Animated gradient hairline border for featured cards */
   .border-glow {
-    position: relative;
-  }
-  .border-glow::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    padding: 1px;
-    border-radius: inherit;
-    background: linear-gradient(
-      130deg,
-      rgba(217, 164, 65, 0.6),
-      rgba(244, 239, 230, 0.05) 40%,
-      rgba(92, 111, 82, 0.4)
-    );
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+    border: 1px solid rgb(var(--c-accent) / 0.35);
   }
 }
 
@@ -448,7 +467,7 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.04;
+    opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 

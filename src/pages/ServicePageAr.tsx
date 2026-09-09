@@ -1,6 +1,8 @@
 import { m } from "framer-motion";
 import { ArrowUpRight, Check, CalendarCheck, MessageCircle } from "lucide-react";
 import type { ServicePageAr as ArPage } from "../data/servicePagesAr";
+import PageHeader from "../components/page/PageHeader";
+import { GhostAction } from "../components/page/PageActions";
 import { AR_UI } from "../data/servicePagesAr";
 import { CONTACT } from "../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -14,64 +16,46 @@ const waHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
 export default function ServicePageAr({ page }: { page: ArPage }) {
   return (
     <>
-      {/* Header */}
-      <section id="top" className="relative overflow-hidden pt-32 pb-14 sm:pt-40 sm:pb-20">
-        <div className="container-bl">
-          <div className="mx-auto mb-6 flex max-w-3xl justify-center">
-            <a
-              href={`/${page.slug}`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-cream/10 bg-cream/5 px-3 py-1.5 font-mono text-xs text-cream-dim transition-colors hover:border-gold/50 hover:text-gold"
-            >
-              {AR_UI.english}
-            </a>
-          </div>
-          <m.div
-            variants={stagger}
-            initial="hidden"
-            animate="show"
-            className="mx-auto max-w-3xl text-center"
+      <PageHeader
+        eyebrow={page.eyebrow}
+        title={page.h1}
+        titleClass="text-3xl leading-[1.45] sm:text-4xl"
+        lede={page.lede}
+        actions={
+          <GhostAction href={`/${page.slug}`}>
+            <span lang="en">{AR_UI.english}</span>
+          </GhostAction>
+        }
+      />
+
+      <section className="pb-8">
+        <div className="flex flex-wrap items-center gap-3">
+          <a
+            href={waHref}
+            target="_blank"
+            rel="noopener"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-fg-onSolid shadow-solid transition duration-300 hover:bg-navy-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
           >
-            <m.span
-              variants={fadeUp}
-              className="inline-flex items-center gap-2 rounded-full border border-cream/10 bg-cream/5 px-4 py-1.5 font-mono text-xs uppercase tracking-[0.15em] text-gold"
-            >
-              {page.eyebrow}
-            </m.span>
-            <m.h1 variants={fadeUp} className="mt-7 text-3xl leading-[1.4] sm:text-4xl md:text-5xl">
-              {page.h1}
-            </m.h1>
-            <m.p variants={fadeUp} className="mx-auto mt-7 max-w-2xl text-lg leading-loose text-muted">
-              {page.lede}
-            </m.p>
-            <m.div variants={fadeUp} className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep transition duration-300 hover:bg-gold-soft sm:w-auto"
-              >
-                <MessageCircle size={17} />
-                {AR_UI.bookAudit}
-              </a>
-              <a
-                href={CONTACT.calendar}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-cream/15 px-7 py-3.5 text-sm font-semibold text-cream transition duration-300 hover:border-gold/50 hover:text-gold sm:w-auto"
-              >
-                <CalendarCheck size={16} />
-                {AR_UI.bookInstantly}
-              </a>
-            </m.div>
-          </m.div>
+            <MessageCircle size={17} aria-hidden />
+            {AR_UI.bookAudit}
+          </a>
+          <a
+            href={CONTACT.calendar}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-panel px-6 py-3 text-sm font-semibold text-fg transition duration-300 hover:border-accent/40 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+          >
+            <CalendarCheck size={16} aria-hidden />
+            {AR_UI.bookInstantly}
+          </a>
         </div>
       </section>
 
       {/* What you get */}
-      <section className="py-14 sm:py-20">
-        <div className="container-bl">
-          <Reveal className="mx-auto max-w-2xl text-center">
-            <h2 className="text-2xl sm:text-3xl">{page.bulletsHeading}</h2>
+      <section className="py-10 sm:py-14">
+        <div>
+          <Reveal className="max-w-3xl">
+            <h2 className="font-display text-2xl font-semibold text-fg sm:text-3xl">{page.bulletsHeading}</h2>
           </Reveal>
           <m.div
             variants={stagger}
@@ -111,7 +95,7 @@ export default function ServicePageAr({ page }: { page: ArPage }) {
 
       {/* Contact CTA */}
       <section id="contact" className="scroll-mt-24 py-16 sm:py-24">
-        <div className="container-bl">
+        <div>
           <div className="glass border-glow mx-auto max-w-2xl rounded-3xl p-8 text-center sm:p-10">
             <h2 className="text-2xl sm:text-3xl">
               مستعد للبدء؟ <span className="text-gradient-gold">احجز تدقيقك المجاني.</span>

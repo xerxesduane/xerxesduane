@@ -1,14 +1,11 @@
 import { lazy, Suspense } from "react";
 import { LazyMotion, domAnimation, MotionConfig } from "framer-motion";
-import Background from "./components/Background";
-import Nav from "./components/Nav";
+import ShellLayout from "./components/shell/ShellLayout";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
 import MobileCTA from "./components/MobileCTA";
 import ConsentBanner from "./components/ConsentBanner";
 import SmoothScroll from "./components/fx/SmoothScroll";
-import Cursor from "./components/fx/Cursor";
-import Preloader from "./components/fx/Preloader";
 import PageTransition from "./components/fx/PageTransition";
 
 // Route-level code splitting: each page ships as its own chunk, so a visitor
@@ -88,9 +85,6 @@ function Route({ path }: { path: string }) {
 export default function App({ path = "/" }: { path?: string }) {
   const slug = pathToSlug(path);
   const isArabic = slug === "ar" || slug.startsWith("ar/");
-  // The homepage renders the Mainframe landing hero with its own navbar and
-  // CTAs — hide the global chrome there so the two don't stack.
-  const isMainframeLanding = slug === "";
   const lang = altLanguage(path);
   return (
     <LazyMotion features={domAnimation} strict>
@@ -99,35 +93,27 @@ export default function App({ path = "/" }: { path?: string }) {
         <a
           href="#top"
           data-lenis-ignore
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gold focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink-deep"
+          className="skip-link"
         >
           Skip to content
         </a>
 
         <SmoothScroll />
-        <Cursor />
-        <Preloader />
         <PageTransition />
 
-        <Background />
-        <Nav
-          langHref={lang.href}
-          langLabel={lang.label}
-          locale={isArabic ? "ar" : "en"}
-          revealOnScroll={isMainframeLanding}
-        />
-
-        <main className="relative z-10">
-          <Suspense fallback={null}>
-            <Route path={path} />
-          </Suspense>
-        </main>
+        <ShellLayout path={path} lang={lang}>
+          <main className="relative z-10">
+            <Suspense fallback={null}>
+              <Route path={path} />
+            </Suspense>
+          </main>
+        </ShellLayout>
 
         <Footer locale={isArabic ? "ar" : "en"} />
         {/* mobile bar height, so the footer is never hidden behind it */}
-        {!isMainframeLanding && <div className="h-16 md:hidden" aria-hidden />}
-        {!isMainframeLanding && <WhatsAppButton locale={isArabic ? "ar" : "en"} />}
-        {!isMainframeLanding && <MobileCTA locale={isArabic ? "ar" : "en"} />}
+        <div className="h-16 md:hidden" aria-hidden />
+        <WhatsAppButton locale={isArabic ? "ar" : "en"} />
+        <MobileCTA locale={isArabic ? "ar" : "en"} />
         <ConsentBanner />
       </div>
       </MotionConfig>

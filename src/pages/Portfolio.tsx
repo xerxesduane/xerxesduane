@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { m } from "framer-motion";
 import { ArrowUpRight, Clapperboard, Grid2X2, LayoutTemplate, Palette, Star } from "lucide-react";
-import Kinetic from "../components/fx/Kinetic";
 import WorkGallery from "../components/WorkGallery";
 import Contact from "../components/Contact";
-import { fadeUp, stagger } from "../lib/motion";
+import PageHeader from "../components/page/PageHeader";
+import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 import { WORK_ITEMS } from "../data/workItems";
 
 type PortfolioFilter = "all" | "web" | "graphic" | "featured";
@@ -33,51 +32,34 @@ export default function Portfolio() {
 
   return (
     <>
-      <section className="container-bl scroll-mt-24 pt-32 pb-12 sm:pt-40">
-        <m.div
-          variants={stagger}
-          initial="hidden"
-          animate="show"
-          className="mx-auto max-w-3xl text-center"
-        >
-          <m.span variants={fadeUp} className="eyebrow justify-center">
-            <span className="h-px w-6 bg-gold/60" aria-hidden />
-            Portfolio · web &amp; design
-          </m.span>
-          <Kinetic as="h1" className="mt-5 text-4xl sm:text-5xl md:text-6xl">
-            Work that looks the part{" "}
-            <span className="text-gradient-gold italic">and does the job.</span>
-          </Kinetic>
-          <m.p variants={fadeUp} className="mx-auto mt-6 max-w-2xl text-lg text-muted">
-            A selection of websites and brand &amp; graphic design for businesses
-            across the UAE and beyond. Tap any piece to view it full size.
-          </m.p>
-          <m.div variants={fadeUp} className="mt-7 flex justify-center">
-            <a
-              href="/showreel"
-              className="inline-flex items-center gap-2 rounded-full border border-cream/15 px-5 py-2.5 text-sm font-semibold text-cream transition-colors hover:border-gold/50 hover:text-gold"
-            >
-              <Clapperboard size={16} />
-              Watch the video showreel
-            </a>
-          </m.div>
-        </m.div>
-      </section>
+      <PageHeader
+        eyebrow="Portfolio · web & design"
+        title={<>Work that looks the part and does the job.</>}
+        lede="Websites and brand &amp; graphic design for businesses across the UAE and beyond. Tap any piece to view it full size."
+        actions={
+          <>
+            <PrimaryAction href="/case-studies">Case studies</PrimaryAction>
+            <GhostAction href="/showreel" icon={<Clapperboard size={15} aria-hidden />}>
+              Showreel
+            </GhostAction>
+          </>
+        }
+      />
 
-      <section id="work" className="container-bl scroll-mt-24 py-12 sm:py-16">
+      <section id="work" className="scroll-mt-24 py-8">
         <a
           href="/case-studies"
-          className="group mb-6 flex flex-col justify-between gap-4 rounded-2xl border border-gold/20 bg-gold/[0.08] p-5 transition-colors hover:border-gold/45 sm:flex-row sm:items-center"
+          className="group mb-5 flex flex-col justify-between gap-4 rounded-card border border-accent/25 bg-accent/[0.07] p-5 transition-colors hover:border-accent/50 sm:flex-row sm:items-center"
         >
           <div>
-            <span className="font-mono text-[10px] uppercase tracking-wider text-gold">Looking for outcomes, not only visuals?</span>
-            <p className="mt-2 text-sm text-cream-dim">Read the challenge, approach, delivery scope, and results behind selected projects.</p>
+            <span className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">Looking for outcomes, not only visuals?</span>
+            <p className="mt-2 text-sm text-fg-soft">Read the challenge, approach, delivery scope, and results behind selected projects.</p>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-gold">
+          <span className="inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-accent">
             View case studies <ArrowUpRight size={15} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
         </a>
-        <div className="sticky top-24 z-20 mb-9 rounded-2xl border border-cream/10 bg-ink/95 p-2 shadow-[0_20px_70px_-35px_rgba(0,0,0,0.9)] backdrop-blur-sm">
+        <div className="sticky top-4 z-20 mb-6 rounded-card border border-line bg-panel/95 p-2 shadow-card backdrop-blur-sm">
           <div
             className="grid grid-cols-2 gap-2 sm:grid-cols-4"
             role="group"

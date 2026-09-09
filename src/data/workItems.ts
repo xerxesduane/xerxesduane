@@ -294,6 +294,17 @@ export const WORK_ITEMS: WorkItem[] = [
     "w": 1200,
     "h": 746,
     "featured": false
+  },
+  {
+    "category": "graphic",
+    "label": "Graphic Design",
+    "title": "Saladmaster UAE (Al Mumtaz) \u2014 Logo & brand identity",
+    "href": "https://saladmasteruae.me/",
+    "src": "/work/graphic/graphic-10.webp",
+    "thumb": "/work/graphic/graphic-10-thumb.webp",
+    "w": 1024,
+    "h": 1024,
+    "featured": false
   }
 ];
 

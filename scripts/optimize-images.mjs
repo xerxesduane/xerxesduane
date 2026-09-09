@@ -1,11 +1,12 @@
 import sharp from "sharp";
-import { readdirSync, mkdirSync, writeFileSync, existsSync, rmSync } from "node:fs";
+import { readdirSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync } from "node:fs";
 import { join, dirname, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const RAW = join(root, "work-raw");
 const OUT = join(root, "public/work");
+const MANIFEST = join(root, "src/data/workItems.ts");
 
 // Drop raw originals here (gitignored). Run: npm run images
 const CATS = [
@@ -22,7 +23,41 @@ const META = {
   "03-aya-home-spa": { title: "AYA Home Spa — Dubai", href: "https://www.ayahomespa.ae/" },
   // HIDDEN (re-add later): move 04-fellowship-dubai.png back into _raw/web and restore this line:
   // "04-fellowship-dubai": { title: "Fellowship Dubai — Church website, Dubai", href: "https://fellowshipdubai.com/" },
+  "10-saladmaster-al-mumtaz": {
+    title: "Saladmaster UAE (Al Mumtaz) — Logo & brand identity",
+    href: "https://saladmasteruae.me/",
+  },
 };
+
+// Pre-flight. work-raw/ is gitignored, so it is absent or incomplete in a
+// fresh clone. The loop below cleans each category's output directory and the
+// manifest is rewritten wholesale, so running against a partial source set
+// deletes the images and entries it has no sources for. Check before touching
+// anything — a guard after the loop would fire too late.
+const force = process.argv.includes("--force");
+const previous = existsSync(MANIFEST)
+  ? (readFileSync(MANIFEST, "utf8").match(/"category":/g) || []).length
+  : 0;
+const missing = CATS.filter((c) => !existsSync(join(RAW, c.key))).map((c) => c.key);
+const sourceCount = CATS.reduce((n, c) => {
+  const dir = join(RAW, c.key);
+  if (!existsSync(dir)) return n;
+  return n + readdirSync(dir).filter((f) => EXTS.has(extname(f).toLowerCase())).length;
+}, 0);
+
+if (!force && (sourceCount === 0 || missing.length > 0 || sourceCount < previous)) {
+  const why = [];
+  if (sourceCount === 0) why.push("no source images found under work-raw/");
+  if (missing.length > 0) why.push(`no source directory for: ${missing.join(", ")}`);
+  else if (sourceCount < previous)
+    why.push(`only ${sourceCount} source image(s) for a manifest of ${previous} item(s)`);
+  console.error(
+    `Refusing to run: ${why.join("; ")}.\n` +
+      "Nothing was changed. Put the full set of originals in work-raw/<category>/ " +
+      "and run again, or pass --force if you really mean to shrink the portfolio.",
+  );
+  process.exit(1);
+}
 
 const items = [];
 
@@ -101,5 +136,5 @@ export const WEB_DESIGNS = WORK_ITEMS.filter((i) => i.category === "web");
 export const GRAPHIC_DESIGNS = WORK_ITEMS.filter((i) => i.category === "graphic");
 export const FEATURED_WORK = WORK_ITEMS.filter((i) => i.featured);
 `;
-writeFileSync(join(root, "src/data/workItems.ts"), ts);
+writeFileSync(MANIFEST, ts);
 console.log(`\nWork manifest written: ${items.length} items -> src/data/workItems.ts`);

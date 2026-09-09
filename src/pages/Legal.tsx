@@ -1,27 +1,40 @@
 import type { ReactNode } from "react";
+import { ArrowLeft } from "lucide-react";
+import PageHeader from "../components/page/PageHeader";
+import { GhostAction } from "../components/page/PageActions";
 import { CONTACT } from "../data/content";
 
 const LAST_UPDATED = "2 June 2026";
 
 function LegalLayout({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <section className="container-bl max-w-prose scroll-mt-24 pt-32 pb-24 sm:pt-40">
-      <h1 className="text-4xl sm:text-5xl">{title}</h1>
-      <p className="mt-3 font-mono text-xs uppercase tracking-wider text-muted-dark">
-        Last updated: {LAST_UPDATED}
-      </p>
-      <div className="legal mt-10 space-y-6 text-[15px] leading-relaxed text-muted">
-        {children}
+    <section className="pb-16">
+      <PageHeader
+        eyebrow="Legal"
+        title={title}
+        meta={<span>Last updated: {LAST_UPDATED}</span>}
+        actions={
+          <GhostAction href="/" icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}>
+            Home
+          </GhostAction>
+        }
+      />
+      <div className="rounded-panel bg-gradient-to-r from-canvas-sunk/30 via-wash/40 to-wash-strong/60 p-3 sm:p-4">
+        <div className="rounded-card border border-line bg-panel p-5 shadow-card sm:p-8">
+          <div className="legal max-w-prose space-y-6 text-[0.95rem] leading-relaxed text-fg-soft">
+            {children}
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
 function H2({ children }: { children: ReactNode }) {
-  return <h2 className="pt-4 text-xl text-cream">{children}</h2>;
+  return <h2 className="pt-4 font-display text-xl font-semibold text-fg">{children}</h2>;
 }
 
-const linkCls = "text-gold underline-offset-2 hover:underline";
+const linkCls = "text-accent underline-offset-2 hover:underline";
 
 export function Privacy() {
   return (

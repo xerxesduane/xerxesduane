@@ -1,8 +1,10 @@
-import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
+import { ArrowLeft, Check } from "lucide-react";
 import { type InsightPost as Post, formatDate } from "../data/insights";
 import { INSIGHTS } from "../data/insights";
 import { getServicePage } from "../data/servicePages";
 import Contact from "../components/Contact";
+import PageHeader from "../components/page/PageHeader";
+import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 
 function Body({ blocks }: { blocks: Post["body"] }) {
   return (
@@ -10,7 +12,7 @@ function Body({ blocks }: { blocks: Post["body"] }) {
       {blocks.map((b, i) => {
         if (b.type === "h2") {
           return (
-            <h2 key={i} className="pt-2 font-display text-2xl text-cream sm:text-3xl">
+            <h2 key={i} className="pt-2 font-display text-2xl font-semibold text-fg sm:text-3xl">
               {b.text}
             </h2>
           );
@@ -55,48 +57,48 @@ export default function InsightPost({ post }: { post: Post }) {
 
   return (
     <>
-      <article className="pt-36 pb-16 sm:pt-44">
-        <div className="container-bl">
-          <div className="mx-auto max-w-2xl">
-            <a
-              href="/insights"
-              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-gold transition-colors hover:text-gold-soft"
-            >
-              <ArrowLeft size={14} strokeWidth={2.4} />
-              All insights
-            </a>
-
-            <h1 className="mt-6 font-display text-3xl leading-tight text-cream sm:text-4xl md:text-[2.75rem]">
-              {post.title}
-            </h1>
-            <div className="mt-5 flex items-center gap-3 font-mono text-xs text-muted-dark">
+      <article className="pb-12">
+        <PageHeader
+          eyebrow="Insights"
+          title={post.title}
+          meta={
+            <>
               <span>{post.author}</span>
               <span aria-hidden>·</span>
               <span>{formatDate(post.date)}</span>
               <span aria-hidden>·</span>
               <span>{post.readingMinutes} min read</span>
-            </div>
+            </>
+          }
+          actions={
+            <GhostAction
+              href="/insights"
+              icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}
+            >
+              All insights
+            </GhostAction>
+          }
+        />
 
-            <hr className="my-9 border-cream/8" />
+        <div className="rounded-panel bg-gradient-to-r from-canvas-sunk/30 via-wash/40 to-wash-strong/60 p-3 sm:p-4">
+          <div className="rounded-card border border-line bg-panel p-5 shadow-card sm:p-8">
+            <div className="max-w-prose">
+            
 
             <Body blocks={post.body} />
 
-            <div className="mt-12 rounded-2xl glass border-glow p-7 text-center">
-              <p className="font-display text-xl text-cream">
+            <div className="mt-10 rounded-card border border-accent/25 bg-accent/[0.07] p-6">
+              <p className="font-display text-xl font-semibold text-fg">
                 Want this mapped for your business?
               </p>
-              <a
-                href="/#contact"
-                className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep shadow-[0_14px_50px_-12px_rgba(217,164,65,0.7)] transition duration-300 hover:bg-gold-soft"
-              >
-                Book your free systems audit
-                <ArrowUpRight size={17} strokeWidth={2.5} />
-              </a>
+              <div className="mt-4">
+                <PrimaryAction href="/#contact">Book your free audit</PrimaryAction>
+              </div>
             </div>
 
             {related.length > 0 && (
               <div className="mt-14">
-                <h2 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
+                <h2 className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
                   Related services
                 </h2>
                 <ul className="mt-4 space-y-3">
@@ -104,7 +106,7 @@ export default function InsightPost({ post }: { post: Post }) {
                     <li key={s.slug}>
                       <a
                         href={`/${s.slug}`}
-                        className="text-cream-dim transition-colors hover:text-gold"
+                        className="text-fg-soft transition-colors hover:text-accent"
                       >
                         {s.navLabel} in Dubai
                       </a>
@@ -116,7 +118,7 @@ export default function InsightPost({ post }: { post: Post }) {
 
             {others.length > 0 && (
               <div className="mt-14">
-                <h2 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
+                <h2 className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent">
                   Keep reading
                 </h2>
                 <ul className="mt-4 space-y-3">
@@ -124,7 +126,7 @@ export default function InsightPost({ post }: { post: Post }) {
                     <li key={p.slug}>
                       <a
                         href={`/insights/${p.slug}`}
-                        className="text-cream-dim transition-colors hover:text-gold"
+                        className="text-fg-soft transition-colors hover:text-accent"
                       >
                         {p.title}
                       </a>
@@ -133,6 +135,7 @@ export default function InsightPost({ post }: { post: Post }) {
                 </ul>
               </div>
             )}
+            </div>
           </div>
         </div>
       </article>
