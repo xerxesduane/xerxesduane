@@ -1,13 +1,13 @@
-import {
-  Bot,
-  FolderOpen,
-  House,
-  Layers,
-  MessageCircleQuestion,
-  User,
-  type LucideIcon,
-} from "lucide-react";
+import { Bot, User } from "lucide-react";
+import type { ComponentType } from "react";
+import { ChatGlyph, FolderGlyph, HomeGlyph, LayersGlyph } from "../components/ui/NavIcons";
 import { CONTACT } from "./content";
+
+/**
+ * Nav glyphs are either a lucide icon or one of the local multi-part glyphs
+ * that animate on hover — both take the same two props.
+ */
+export type NavGlyph = ComponentType<{ size?: number; className?: string }>;
 
 /* ---------------------------------------------------------------------------
  * Shell data — the profile sidebar's identity and the site's primary
@@ -18,32 +18,86 @@ import { CONTACT } from "./content";
 
 export interface ShellNavItem {
   label: string;
+  /** Shorter label for the mobile bottom bar. */
+  shortLabel?: string;
+  /** Arabic label, and a shorter one for the bottom bar. */
+  labelAr: string;
+  shortLabelAr?: string;
   href: string;
-  icon: LucideIcon;
+  /**
+   * Where this item points on the Arabic side. Only set where an Arabic page
+   * or section actually exists — the rest deliberately fall through to the
+   * English route rather than 404 on a translation that was never written.
+   */
+  hrefAr?: string;
+  icon: NavGlyph;
   /** Extra paths that should light this item up (e.g. detail routes). */
   matches?: string[];
 }
 
+/** The label and href for `item` in the current language. */
+export function navLabel(item: ShellNavItem, locale: "en" | "ar", short = false): string {
+  if (locale === "ar") return (short && item.shortLabelAr) || item.labelAr;
+  return (short && item.shortLabel) || item.label;
+}
+
+export function navHref(item: ShellNavItem, locale: "en" | "ar"): string {
+  return locale === "ar" ? (item.hrefAr ?? item.href) : item.href;
+}
+
 export const SHELL_NAV: ShellNavItem[] = [
-  { label: "Home", href: "/", icon: House },
+  { label: "Home", labelAr: "الرئيسية", href: "/", hrefAr: "/ar", icon: HomeGlyph, matches: ["/", "/ar"] },
   {
     label: "Projects",
+    labelAr: "المشاريع",
     href: "/case-studies",
-    icon: FolderOpen,
+    icon: FolderGlyph,
     matches: ["/case-studies", "/portfolio", "/showreel"],
   },
-  { label: "Services", href: "/#services", icon: Layers },
-  { label: "AI Lab", href: "/ai-lab", icon: Bot },
-  { label: "About", href: "/about", icon: User, matches: ["/about", "/insights"] },
-  { label: "FAQs / Contact", href: "/#contact", icon: MessageCircleQuestion },
+  {
+    label: "Services",
+    labelAr: "الخدمات",
+    href: "/#services",
+    hrefAr: "/ar#services",
+    icon: LayersGlyph,
+  },
+  { label: "AI Lab", labelAr: "مختبر الذكاء الاصطناعي", shortLabelAr: "المختبر", href: "/ai-lab", icon: Bot },
+  {
+    label: "About",
+    labelAr: "نبذة عني",
+    href: "/about",
+    icon: User,
+    matches: ["/about", "/insights"],
+  },
+  {
+    label: "FAQs / Contact",
+    shortLabel: "Contact",
+    labelAr: "الأسئلة والتواصل",
+    shortLabelAr: "تواصل",
+    href: "/#contact",
+    hrefAr: "/ar#contact",
+    icon: ChatGlyph,
+  },
 ];
+
+/**
+ * The five destinations in the phone's bottom bar, in bar order. Contact sits
+ * in the middle because it is the raised primary action; AI Lab is not here —
+ * it stays one tap away through the Explore rail on the homepage and the rail
+ * nav on every other viewport, so the bar keeps thumb-sized targets.
+ */
+export const MOBILE_BAR_NAV: ShellNavItem[] = ["/", "/case-studies", "/#contact", "/#services", "/about"]
+  .map((href) => SHELL_NAV.find((item) => item.href === href))
+  .filter((item): item is ShellNavItem => Boolean(item));
 
 export const SHELL_IDENTITY = {
   name: "Xerxes Duane",
   handle: "@xerxesduane",
   /** Positioning line — kept factual, no metrics or availability claims. */
   tagline: "Independent systems consultant",
+  taglineAr: "استشاري أنظمة مستقل",
   location: "Dubai & the UAE",
+  locationAr: "دبي والإمارات",
   portrait: "/brand/portrait-560.webp",
   portraitFallback: "/brand/founder-xerxes.jpg",
 };
@@ -70,7 +124,7 @@ export const SHELL_SOCIALS: ShellSocial[] = [
 export function isNavActive(item: ShellNavItem, path: string): boolean {
   const clean = path.split("#")[0].replace(/\/+$/, "") || "/";
   if (item.href.startsWith("/#")) return false;
-  if (item.href === "/") return clean === "/";
+  if (item.href === "/") return clean === "/" || clean === "/ar";
   const candidates = item.matches ?? [item.href];
   return candidates.some((c) => clean === c || clean.startsWith(c + "/"));
 }

@@ -1,0 +1,169 @@
+import { useCallback, useEffect, useId, useRef, type ReactNode } from "react";
+import { createPortal } from "react-dom";
+import { X } from "lucide-react";
+import { getLenis } from "../../lib/lenisStore";
+
+interface OverlayProps {
+  open: boolean;
+  onClose: () => void;
+  /** Accessible name for the dialog. */
+  title: string;
+  /** Optional supporting line, announced with the title. */
+  description?: string;
+  /** Show the title visually as well as to assistive tech. */
+  showTitle?: boolean;
+  children: ReactNode;
+}
+
+const FOCUSABLE =
+  'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+/**
+ * A modal overlay: dimmed, blurred backdrop, one close control, and the
+ * keyboard behaviour a dialog owes its user.
+ *
+ * Written here rather than pulled from Aceternity UI's Animated Modal —
+ * `ui.aceternity.com` is unreachable from this build environment, and the
+ * pieces that matter for this use (a real focus trap, Escape, restoring focus
+ * and the page's scroll position, and stopping the Lenis inertia loop while
+ * open) are the parts a decorative modal usually leaves out.
+ *
+ * Scroll is locked by pinning `<body>` at its current offset rather than with
+ * `overflow: hidden`, because the latter loses the scroll position on iOS.
+ */
+export default function Overlay({
+  open,
+  onClose,
+  title,
+  description,
+  showTitle = false,
+  children,
+}: OverlayProps) {
+  const panelRef = useRef<HTMLDivElement>(null);
+  const restoreTo = useRef<HTMLElement | null>(null);
+  const id = useId();
+
+  const onKeyDown = useCallback(
+    (event: React.KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.stopPropagation();
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const panel = panelRef.current;
+      if (!panel) return;
+      const items = Array.from(panel.querySelectorAll<HTMLElement>(FOCUSABLE)).filter(
+        (el) => el.offsetParent !== null || el === document.activeElement,
+      );
+      if (items.length === 0) {
+        event.preventDefault();
+        return;
+      }
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    },
+    [onClose],
+  );
+
+  useEffect(() => {
+    if (!open) return;
+
+    restoreTo.current = document.activeElement as HTMLElement | null;
+    const lenis = getLenis();
+    lenis?.stop();
+
+    const scrollY = window.scrollY;
+    const body = document.body;
+    const previous = {
+      position: body.style.position,
+      top: body.style.top,
+      width: body.style.width,
+      overflowY: body.style.overflowY,
+    };
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.width = "100%";
+    body.style.overflowY = "scroll";
+
+    // Move focus in once the panel exists.
+    const panel = panelRef.current;
+    const target = panel?.querySelector<HTMLElement>(FOCUSABLE) ?? panel;
+    target?.focus({ preventScroll: true });
+
+    // Escape is also bound on the document: React only sees keydown that
+    // happens inside the portal, and focus can legitimately sit on <body>
+    // (after a click on a non-focusable element, say).
+    const onDocumentKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onDocumentKey);
+
+    return () => {
+      document.removeEventListener("keydown", onDocumentKey);
+      body.style.position = previous.position;
+      body.style.top = previous.top;
+      body.style.width = previous.width;
+      body.style.overflowY = previous.overflowY;
+      window.scrollTo(0, scrollY);
+      lenis?.start();
+      restoreTo.current?.focus({ preventScroll: true });
+    };
+  }, [open, onClose]);
+
+  if (!open || typeof document === "undefined") return null;
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-6"
+      onKeyDown={onKeyDown}
+    >
+      <button
+        type="button"
+        aria-label="Close"
+        tabIndex={-1}
+        onClick={onClose}
+        className="absolute inset-0 cursor-default bg-canvas-sunk/80 backdrop-blur-md"
+      />
+      <div
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={`${id}-title`}
+        aria-describedby={description ? `${id}-desc` : undefined}
+        tabIndex={-1}
+        className="relative flex max-h-full w-full max-w-6xl flex-col overflow-hidden rounded-panel border border-line bg-panel shadow-card-hover"
+      >
+        <div className="flex items-start justify-between gap-4 border-b border-line px-4 py-3 sm:px-6 sm:py-4">
+          <div className={showTitle ? "" : "sr-only"}>
+            <h2 id={`${id}-title`} className="font-display text-lg font-extrabold text-fg">
+              {title}
+            </h2>
+            {description && (
+              <p id={`${id}-desc`} className="mt-0.5 text-[0.85rem] text-fg-soft">
+                {description}
+              </p>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="ms-auto grid h-10 w-10 shrink-0 place-items-center rounded-full border border-line bg-panel text-fg-soft transition hover:border-accent/45 hover:text-accent-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-panel"
+          >
+            <X size={18} strokeWidth={2.2} aria-hidden />
+            <span className="sr-only">Close</span>
+          </button>
+        </div>
+        <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
+      </div>
+    </div>,
+    document.body,
+  );
+}

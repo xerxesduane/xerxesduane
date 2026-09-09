@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { AR_CHROME } from "../data/servicePagesAr";
 
 const STORAGE_KEY = "tw-consent"; // "granted" | "denied"
 
@@ -34,7 +35,8 @@ function grantConsent() {
   loadClarity();
 }
 
-export default function ConsentBanner() {
+export default function ConsentBanner({ locale = "en" }: { locale?: "en" | "ar" }) {
+  const ar = locale === "ar";
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -67,16 +69,17 @@ export default function ConsentBanner() {
   return (
     <div
       role="dialog"
-      aria-label="Cookie consent"
+      aria-label={ar ? AR_CHROME.consentAria : "Cookie consent"}
       aria-live="polite"
-      className="fixed inset-x-3 bottom-24 z-[60] sm:bottom-5 sm:left-5 sm:right-auto sm:max-w-md"
+      className="fixed inset-x-3 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-[60] lg:bottom-5 lg:left-1/2 lg:right-auto lg:w-[min(54rem,calc(100vw-13rem))] lg:-translate-x-1/2"
     >
-      <div className="nav-surface flex flex-col gap-3 rounded-2xl p-3.5 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.85)] sm:p-4">
+      <div className="nav-surface flex flex-col gap-3 rounded-2xl p-3.5 shadow-card-hover sm:flex-row sm:items-center sm:gap-4 sm:p-4">
         <p className="text-xs leading-relaxed text-cream-dim sm:text-sm">
-          I use anonymous analytics to improve the site. Nothing is shared or
-          sold. See the{" "}
-          <a href="/privacy" className="text-gold underline-offset-2 hover:underline">
-            Privacy Policy
+          {ar
+            ? AR_CHROME.consentBody
+            : "I use anonymous analytics to improve the site. Nothing is shared or sold. See the"}{" "}
+          <a href="/privacy" className="font-semibold text-gold underline-offset-2 hover:underline">
+            {ar ? AR_CHROME.consentPolicy : "Privacy Policy"}
           </a>
           .
         </p>
@@ -84,16 +87,16 @@ export default function ConsentBanner() {
           <button
             type="button"
             onClick={() => decide(false)}
-            className="rounded-full border border-cream/15 px-4 py-2 text-xs font-semibold text-cream transition-colors hover:border-cream/40"
+            className="rounded-full border border-line px-4 py-2 text-xs font-semibold text-fg transition-colors hover:border-fg/40"
           >
-            Decline
+            {ar ? AR_CHROME.consentDecline : "Decline"}
           </button>
           <button
             type="button"
             onClick={() => decide(true)}
-            className="rounded-full bg-gold px-5 py-2 text-xs font-semibold text-ink-deep transition-colors hover:bg-gold-soft"
+            className="rounded-full bg-navy px-5 py-2 text-xs font-semibold text-fg-onSolid transition-colors hover:bg-navy-hover"
           >
-            Accept
+            {ar ? AR_CHROME.consentAccept : "Accept"}
           </button>
         </div>
       </div>

@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { ArrowLeft } from "lucide-react";
 import PageHeader from "../components/page/PageHeader";
 import { GhostAction } from "../components/page/PageActions";
+import { BOARD_WASH } from "../components/page/PanelBoard";
 import { CONTACT } from "../data/content";
 
 const LAST_UPDATED = "2 June 2026";
@@ -19,9 +20,12 @@ function LegalLayout({ title, children }: { title: string; children: ReactNode }
           </GhostAction>
         }
       />
-      <div className="rounded-panel bg-gradient-to-r from-canvas-sunk/30 via-wash/40 to-wash-strong/60 p-3 sm:p-4">
+      <div
+        className="max-w-4xl rounded-panel p-3 sm:p-4"
+        style={{ background: BOARD_WASH }}
+      >
         <div className="rounded-card border border-line bg-panel p-5 shadow-card sm:p-8">
-          <div className="legal max-w-prose space-y-6 text-[0.95rem] leading-relaxed text-fg-soft">
+          <div className="legal space-y-6 text-[0.95rem] leading-relaxed text-fg-soft">
             {children}
           </div>
         </div>
@@ -31,7 +35,7 @@ function LegalLayout({ title, children }: { title: string; children: ReactNode }
 }
 
 function H2({ children }: { children: ReactNode }) {
-  return <h2 className="pt-4 font-display text-xl font-semibold text-fg">{children}</h2>;
+  return <h2 className="pt-4 font-display text-xl font-bold text-fg">{children}</h2>;
 }
 
 const linkCls = "text-accent underline-offset-2 hover:underline";
@@ -58,14 +62,14 @@ export function Privacy() {
 
       <H2>What we collect and why</H2>
       <p>
-        <strong className="text-cream-dim">Enquiries.</strong> When you submit
+        <strong className="font-bold text-fg">Enquiries.</strong> When you submit
         the contact form or message us, we collect the details you provide (such
         as your name, business, email, phone number, and message) so we can
         respond and follow up. The form is handled by Formspree, which delivers
         it to us by email.
       </p>
       <p>
-        <strong className="text-cream-dim">Analytics.</strong> With your consent,
+        <strong className="font-bold text-fg">Analytics.</strong> With your consent,
         we use Google Analytics 4 and Microsoft Clarity to understand how the
         site is used (pages viewed, rough location, device, and aggregated
         heatmaps or anonymized session replays) so we can improve it. Analytics
@@ -74,7 +78,7 @@ export function Privacy() {
         exactly the same.
       </p>
       <p>
-        <strong className="text-cream-dim">Cookies &amp; local storage.</strong>{" "}
+        <strong className="font-bold text-fg">Cookies &amp; local storage.</strong>{" "}
         We store your cookie choice on your device so we don't ask again.
         Analytics providers set their own cookies only after you accept.
       </p>

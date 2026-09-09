@@ -108,7 +108,7 @@ export default function ServicePageAr({ page }: { page: ArPage }) {
                 href={waHref}
                 target="_blank"
                 rel="noopener"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep transition duration-300 hover:bg-gold-soft sm:w-auto"
+                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-navy px-7 py-3.5 text-sm font-bold text-fg-onSolid transition duration-300 hover:bg-gold-soft sm:w-auto"
               >
                 <MessageCircle size={17} />
                 {CONTACT.whatsappDisplay}

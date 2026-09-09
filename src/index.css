@@ -1,4 +1,5 @@
 /* Self-hosted fonts (latin subset) — removes the Google Fonts round-trip */
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('/fonts/plus-jakarta-sans-var.woff2') format('woff2'); }
 @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/fraunces-400.woff2') format('woff2'); }
 @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/fraunces-500.woff2') format('woff2'); }
 @font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/fraunces-600.woff2') format('woff2'); }
@@ -40,6 +41,24 @@
   }
 }
 
+/* Theme reveal (ThemeToggle). Scoped to `data-theme-vt` so it never touches
+   the cross-document navigation transition above: the outgoing snapshot holds
+   still while the incoming one is wiped in from a collapsed circle, which the
+   Web Animations call in ThemeToggle then expands. The `clip-path` here pins
+   the start state so nothing paints unclipped between snapshot and script. */
+html[data-theme-vt="active"]::view-transition-old(root),
+html[data-theme-vt="active"]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+html[data-theme-vt="active"]::view-transition-old(root) {
+  z-index: 1;
+}
+html[data-theme-vt="active"]::view-transition-new(root) {
+  z-index: 2;
+  clip-path: var(--theme-vt-clip-from, circle(0% at 50% 50%));
+}
+
 @layer base {
   /* -------------------------------------------------------------------
    * Design tokens. Values are `R G B` triplets so Tailwind can apply opacity
@@ -47,127 +66,135 @@
    * on <html> swaps the set. Anything not listed here is derived in Tailwind.
    * ----------------------------------------------------------------- */
   :root {
-    color-scheme: dark;
+    color-scheme: light;
     scroll-behavior: smooth;
 
-    /* Brand dark — the golden-hour canvas. Never pure black. */
-    --c-canvas: 8 24 39;
-    --c-canvas-sunk: 5 18 32;
-    --c-panel: 16 42 67;
-    --c-panel-alt: 20 49 76;
-    --c-wash: 16 42 67;
-    --c-wash-strong: 24 56 86;
-    /* Alpha for the frosted panel treatment (see .glass). */
-    --panel-alpha: 0.55;
-    --panel-blur: 6px;
-
-    /* Cream on navy */
-    --c-fg: 247 243 234;
-    --c-fg-soft: 166 179 188;
-    --c-fg-faint: 139 152 163;
-    --c-fg-on-solid: 8 24 39;
-
-    --c-line: 62 82 103;
-    --c-line-soft: 43 61 80;
-
-    /* Dubai gold */
-    --c-accent: 218 164 66;
-    --c-accent-soft: 232 193 115;
-    --c-accent-deep: 232 193 115;
-    --c-accent-ink: 8 24 39;
-
-    /* Primary solid = gold with ink on it, as the brand button always was. */
-    --c-navy: 218 164 66;
-    --c-navy-hover: 232 193 115;
-
-    /* Brand olive, kept for the surfaces that used it. */
-    --c-olive: 61 74 54;
-
-    /* Plate for third-party logos. Deliberately light in both themes: client
-       marks are dark-ink artwork on transparency and vanish on the navy. */
-    --c-plate: 247 243 234;
-    --c-plate-ink: 16 42 67;
-
-    /* legacy hex vars for the components still reading them directly */
-    --bg: #081827;
-    --surface: #102a43;
-    --surface-alt: #14314c;
-    --ink: #f7f3ea;
-    --muted: #a6b3bc;
-    --line: #3e5267;
-    --navy: #102a43;
-    --navy-dark: #081827;
-    --gold: #daa442;
-    --gold-soft: #e8c173;
-    --success: #1f7a5a;
-    --danger: #b94242;
-    --studio-bg: #0c2432;
-    --studio-bg-deep: #071724;
-    --studio-panel: rgba(255, 255, 255, 0.055);
-    --studio-panel-strong: rgba(255, 255, 255, 0.085);
-    --studio-line: rgba(244, 239, 230, 0.14);
-    --studio-cream: #f4efe6;
-    --studio-cream-dim: #d8cfc0;
-    --studio-muted: #9fb0b8;
-    --studio-ink: #061321;
-    --studio-gold: #e8c173;
-    --studio-gold-deep: #daa442;
-  }
-
-  /* Light — the same brand, on cream rather than navy. Sand canvas, navy ink,
-     the deeper gold so small text still clears AA on a light ground. */
-  :root[data-theme="light"] {
-    color-scheme: light;
-
-    --c-canvas: 247 243 234;
-    --c-canvas-sunk: 239 231 216;
+    /* ---- surfaces: warm cream page, white/ivory cards ---- */
+    --c-canvas: 245 243 236;
+    --c-canvas-sunk: 237 234 225;
     --c-panel: 255 255 255;
-    --c-panel-alt: 251 248 242;
-    --c-wash: 239 231 216;
-    --c-wash-strong: 232 220 198;
+    --c-panel-alt: 250 249 245;
+    /* Pale blue wash behind the bento board. */
+    --c-wash: 223 233 248;
+    --c-wash-strong: 200 218 245;
+    /* Cards are opaque in light: the reference leans on borders, not glass. */
     --panel-alpha: 1;
     --panel-blur: 0px;
+    --panel-shadow: 0 1px 2px rgb(17 34 68 / 0.04), 0 10px 30px -20px rgb(17 34 68 / 0.22);
+    --panel-shadow-lift: 0 2px 6px rgb(17 34 68 / 0.05), 0 22px 46px -26px rgb(17 34 68 / 0.3);
 
-    --c-fg: 16 42 67;
-    --c-fg-soft: 74 92 110;
-    --c-fg-faint: 94 110 128;
-    --c-fg-on-solid: 247 243 234;
+    /* ---- ink: deep navy headings, muted blue-grey body ---- */
+    --c-fg: 17 34 68;
+    --c-fg-soft: 74 90 116;
+    --c-fg-faint: 94 109 135;
+    --c-fg-on-solid: 255 255 255;
 
-    --c-line: 226 216 200;
-    --c-line-soft: 237 230 218;
+    /* ---- hairlines ---- */
+    --c-line: 229 226 217;
+    --c-line-soft: 239 237 230;
 
-    --c-accent: 143 105 30;
-    --c-accent-soft: 245 233 208;
-    --c-accent-deep: 124 90 24;
+    /* ---- accent: bright orange for tiles, a deeper orange for text ---- */
+    --c-accent: 234 88 12;
+    --c-accent-soft: 253 236 225;
+    --c-accent-deep: 180 83 9;
+    /* Hover for a filled accent button: darker, so text on it stays AA. */
+    --c-accent-hover: 154 71 8;
     --c-accent-ink: 255 255 255;
 
-    --c-navy: 16 42 67;
-    --c-navy-hover: 8 24 39;
+    /* Primary solid: deep navy, white on it. */
+    --c-navy: 17 34 68;
+    --c-navy-hover: 10 22 48;
 
-    --c-olive: 61 74 54;
+    /* Plate for third-party logos — light in both themes, because client
+       marks are dark-ink artwork on transparency. */
     --c-plate: 255 255 255;
-    --c-plate-ink: 16 42 67;
+    --c-plate-ink: 17 34 68;
 
-    --bg: #f7f3ea;
+    /* legacy hex vars for the components still reading them directly */
+    --bg: #f5f3ec;
     --surface: #ffffff;
-    --surface-alt: #fbf8f2;
-    --ink: #102a43;
-    --muted: #4a5c6e;
-    --line: #e2d8c8;
-    --navy: #102a43;
-    --gold: #8f691e;
-    --gold-soft: #7c5a18;
-    --studio-bg: #f7f3ea;
-    --studio-bg-deep: #efe7d8;
-    --studio-panel: rgba(16, 42, 67, 0.04);
-    --studio-panel-strong: rgba(16, 42, 67, 0.07);
-    --studio-line: rgba(16, 42, 67, 0.12);
-    --studio-cream: #102a43;
-    --studio-cream-dim: #4a5c6e;
-    --studio-muted: #4a5c6e;
-    --studio-ink: #102a43;
-    --studio-gold: #9a7121;
-    --studio-gold-deep: #7c5a18;
+    --surface-alt: #faf9f5;
+    --ink: #112244;
+    --muted: #4a5a74;
+    --line: #e5e2d9;
+    --navy: #112244;
+    --navy-dark: #0a1630;
+    --gold: #b45309;
+    --gold-soft: #ea580c;
+    --success: #1f7a5a;
+    --danger: #b94242;
+    --studio-bg: #f5f3ec;
+    --studio-bg-deep: #edeae1;
+    --studio-panel: rgba(17, 34, 68, 0.04);
+    --studio-panel-strong: rgba(17, 34, 68, 0.07);
+    --studio-line: rgba(17, 34, 68, 0.1);
+    --studio-cream: #112244;
+    --studio-cream-dim: #4a5a74;
+    --studio-muted: #4a5a74;
+    --studio-ink: #112244;
+    --studio-gold: #b45309;
+    --studio-gold-deep: #9a4708;
+  }
+
+  /* Dark — the same system after dark: deep navy ground, the orange kept
+     bright enough to carry the icon tiles, accent *text* lightened so it
+     clears AA on the navy. */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --c-canvas: 12 21 38;
+    --c-canvas-sunk: 8 15 28;
+    --c-panel: 20 32 53;
+    --c-panel-alt: 26 40 65;
+    --c-wash: 22 38 66;
+    --c-wash-strong: 30 52 88;
+    --panel-alpha: 1;
+    --panel-blur: 0px;
+    --panel-shadow: 0 1px 2px rgb(0 0 0 / 0.28), 0 14px 34px -22px rgb(0 0 0 / 0.7);
+    --panel-shadow-lift: 0 2px 6px rgb(0 0 0 / 0.3), 0 26px 52px -28px rgb(0 0 0 / 0.8);
+
+    --c-fg: 237 242 249;
+    --c-fg-soft: 172 187 208;
+    --c-fg-faint: 143 159 183;
+    --c-fg-on-solid: 12 21 38;
+
+    --c-line: 40 55 82;
+    --c-line-soft: 30 43 66;
+
+    --c-accent: 240 100 20;
+    --c-accent-soft: 58 34 18;
+    --c-accent-deep: 253 186 116;
+    --c-accent-hover: 240 100 20;
+    --c-accent-ink: 255 255 255;
+
+    /* Primary solid inverts: a light slab with navy on it. */
+    --c-navy: 237 242 249;
+    --c-navy-hover: 255 255 255;
+
+    --c-plate: 247 247 244;
+    --c-plate-ink: 17 34 68;
+
+    --bg: #0c1526;
+    --surface: #142035;
+    --surface-alt: #1a2841;
+    --ink: #edf2f9;
+    --muted: #acbbd0;
+    --line: #283752;
+    --navy: #edf2f9;
+    --navy-dark: #ffffff;
+    --gold: #fdba74;
+    --gold-soft: #f06414;
+    --studio-bg: #0c1526;
+    --studio-bg-deep: #080f1c;
+    --studio-panel: rgba(255, 255, 255, 0.05);
+    --studio-panel-strong: rgba(255, 255, 255, 0.08);
+    --studio-line: rgba(237, 242, 249, 0.14);
+    --studio-cream: #edf2f9;
+    --studio-cream-dim: #acbbd0;
+    --studio-muted: #8f9fb7;
+    --studio-ink: #0c1526;
+    --studio-gold: #fdba74;
+    --studio-gold-deep: #f06414;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -184,7 +211,7 @@
   }
 
   * {
-    border-color: theme("colors.cream.DEFAULT" / 8%);
+    border-color: rgb(var(--c-line));
   }
 
   html {
@@ -207,23 +234,23 @@
   h2,
   h3,
   h4 {
-    font-family: theme("fontFamily.sans");
+    font-family: theme("fontFamily.display");
     color: inherit;
-    font-weight: 650;
-    letter-spacing: 0;
-    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.1;
   }
 
   ::selection {
-    background: theme("colors.gold.DEFAULT" / 30%);
-    color: theme("colors.cream.DEFAULT");
+    background: rgb(var(--c-accent) / 0.22);
+    color: rgb(var(--c-fg));
   }
 
   /* Visible, on-brand focus ring */
   :focus-visible {
-    outline: 2px solid theme("colors.gold.DEFAULT");
+    outline: 2px solid rgb(var(--c-accent));
     outline-offset: 3px;
-    border-radius: 4px;
+    border-radius: 6px;
   }
 
   ::-webkit-scrollbar {
@@ -231,15 +258,15 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: theme("colors.ink.deep");
+    background: rgb(var(--c-canvas));
   }
   ::-webkit-scrollbar-thumb {
-    background: theme("colors.olive.DEFAULT");
+    background: rgb(var(--c-fg) / 0.22);
     border-radius: 99px;
-    border: 2px solid theme("colors.ink.deep");
+    border: 2px solid rgb(var(--c-canvas));
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: theme("colors.olive.light");
+    background: rgb(var(--c-fg) / 0.36);
   }
 
   /* Lenis inertia scrolling (mounted client-only on fine pointers).
@@ -275,9 +302,7 @@
     border: 1px solid rgb(var(--c-line));
     backdrop-filter: blur(var(--panel-blur));
     -webkit-backdrop-filter: blur(var(--panel-blur));
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.05),
-      0 12px 32px -20px rgb(0 0 0 / 0.55);
+    box-shadow: var(--panel-shadow);
     position: relative;
     overflow: hidden;
   }
@@ -290,9 +315,7 @@
     border: 1px solid rgb(var(--c-line));
     backdrop-filter: blur(var(--panel-blur));
     -webkit-backdrop-filter: blur(var(--panel-blur));
-    box-shadow:
-      inset 0 1px 0 rgb(255 255 255 / 0.05),
-      0 12px 32px -20px rgb(0 0 0 / 0.55);
+    box-shadow: var(--panel-shadow);
     position: relative;
     overflow: hidden;
   }
@@ -325,8 +348,8 @@
     clip-path: none;
     opacity: 1;
     border-radius: 9999px;
-    background: rgb(var(--c-accent));
-    color: rgb(var(--c-accent-ink));
+    background: rgb(var(--c-navy));
+    color: rgb(var(--c-fg-on-solid));
     font-size: 0.875rem;
     font-weight: 600;
     outline: 2px solid rgb(var(--c-fg));
@@ -349,7 +372,7 @@
     border: 1px solid rgb(var(--c-line));
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
-    box-shadow: 0 18px 50px -26px rgb(0 0 0 / 0.7);
+    box-shadow: var(--panel-shadow);
     position: relative;
     transition:
       box-shadow 360ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -357,14 +380,12 @@
   }
   /* Scrolled: tighten the canvas + bring in the golden-hour accent */
   .nav-surface--scrolled {
-    box-shadow:
-      0 1px 2px rgb(16 27 51 / 0.06),
-      0 18px 44px -22px rgb(16 27 51 / 0.34);
+    box-shadow: var(--panel-shadow-lift);
   }
 
   /* Growing gold underline for body/footer links (background-size sweep). */
   .link-grow {
-    background-image: linear-gradient(90deg, #daa442, #e8c173);
+    background-image: linear-gradient(90deg, rgb(var(--c-accent)), rgb(var(--c-accent-deep)));
     background-repeat: no-repeat;
     background-position: left bottom;
     background-size: 0% 1px;
@@ -393,7 +414,7 @@
     transform: scaleX(0);
     transform-origin: left center;
     border-radius: 2px;
-    background: linear-gradient(90deg, #daa442 0%, #e8c173 100%);
+    background: linear-gradient(90deg, rgb(var(--c-accent)) 0%, rgb(var(--c-accent-deep)) 100%);
     transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .nav-link:hover::after,
@@ -411,15 +432,13 @@
       transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   .glass-hover:hover {
-    transform: translateY(-4px);
-    box-shadow:
-      inset 0 1px 1px rgba(255, 255, 255, 0.18),
-      0 24px 60px -28px rgba(217, 164, 65, 0.35);
+    transform: translateY(-3px);
+    box-shadow: var(--panel-shadow-lift);
   }
 
   /* Gold gradient text */
   .text-gradient-gold {
-    color: rgb(var(--c-accent));
+    color: rgb(var(--c-accent-deep));
   }
 
   .font-pixel {
@@ -434,8 +453,8 @@
   }
 
   .font-technical {
-    font-family: 'Space Mono', 'JetBrains Mono', ui-monospace, monospace;
-    letter-spacing: 0;
+    font-family: theme("fontFamily.display");
+    letter-spacing: 0.02em;
   }
 
   .liquid-glass-dark {
@@ -446,11 +465,11 @@
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 uppercase text-accent;
-    font-family: theme("fontFamily.technical");
-    font-size: 0.688rem;
+    @apply inline-flex items-center gap-2 uppercase text-accent-deep;
+    font-family: theme("fontFamily.display");
+    font-size: 0.72rem;
     font-weight: 700;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.16em;
   }
 
   /* Animated gradient hairline border for featured cards */
@@ -467,7 +486,7 @@
     inset: 0;
     z-index: 1;
     pointer-events: none;
-    opacity: 0.035;
+    opacity: 0.02;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
@@ -475,16 +494,35 @@
     -webkit-mask-image: linear-gradient(
       to right,
       transparent,
-      #000 12%,
-      #000 88%,
+      #000 6%,
+      #000 94%,
       transparent
     );
     mask-image: linear-gradient(
       to right,
       transparent,
-      #000 12%,
-      #000 88%,
+      #000 6%,
+      #000 94%,
       transparent
+    );
+  }
+
+  /* Tight edge fade for a marquee inside a narrow card: the track is wider
+     than its box on purpose, and a hard cut mid-word reads as a bug. */
+  .mask-fade-edges {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 14px,
+      #000 calc(100% - 22px),
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent 0,
+      #000 14px,
+      #000 calc(100% - 22px),
+      transparent 100%
     );
   }
 
@@ -508,7 +546,7 @@
    PP Mondwest supplies the distinctive accent words used across every page. */
 
 .font-studio-body {
-  font-family: Inter, system-ui, sans-serif;
+  font-family: theme("fontFamily.body");
 }
 
 .font-studio-serif {

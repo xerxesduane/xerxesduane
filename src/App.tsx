@@ -3,7 +3,7 @@ import { LazyMotion, domAnimation, MotionConfig } from "framer-motion";
 import ShellLayout from "./components/shell/ShellLayout";
 import Footer from "./components/Footer";
 import WhatsAppButton from "./components/WhatsAppButton";
-import MobileCTA from "./components/MobileCTA";
+import MobileTabBar from "./components/shell/MobileTabBar";
 import ConsentBanner from "./components/ConsentBanner";
 import SmoothScroll from "./components/fx/SmoothScroll";
 import PageTransition from "./components/fx/PageTransition";
@@ -101,7 +101,7 @@ export default function App({ path = "/" }: { path?: string }) {
         <SmoothScroll />
         <PageTransition />
 
-        <ShellLayout path={path} lang={lang}>
+        <ShellLayout path={path} lang={lang} locale={isArabic ? "ar" : "en"}>
           <main className="relative z-10">
             <Suspense fallback={null}>
               <Route path={path} />
@@ -110,11 +110,15 @@ export default function App({ path = "/" }: { path?: string }) {
         </ShellLayout>
 
         <Footer locale={isArabic ? "ar" : "en"} />
-        {/* mobile bar height, so the footer is never hidden behind it */}
-        <div className="h-16 md:hidden" aria-hidden />
+        {/* Reserve the bottom bar's height (plus the iOS home indicator) so
+            the end of the footer is never trapped underneath it. */}
+        <div
+          className="h-[calc(5rem+env(safe-area-inset-bottom))] lg:hidden"
+          aria-hidden
+        />
         <WhatsAppButton locale={isArabic ? "ar" : "en"} />
-        <MobileCTA locale={isArabic ? "ar" : "en"} />
-        <ConsentBanner />
+        <MobileTabBar path={path} locale={isArabic ? "ar" : "en"} />
+        <ConsentBanner locale={isArabic ? "ar" : "en"} />
       </div>
       </MotionConfig>
     </LazyMotion>

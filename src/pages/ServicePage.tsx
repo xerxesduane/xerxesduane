@@ -178,7 +178,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
 
       <section className="py-12 sm:py-16">
         <div className="container-bl">
-          <Reveal className="mx-auto max-w-4xl rounded-3xl border border-gold/25 bg-gold p-7 text-ink shadow-[0_24px_90px_-45px_rgba(218,164,66,0.95)] sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
+          <Reveal className="mx-auto max-w-4xl rounded-3xl border border-gold/25 bg-gold p-7 text-ink shadow-solid sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
             <div>
               <span className="font-mono text-[10px] uppercase tracking-wider text-ink/55">Before you spend</span>
               <h2 className="mt-3 max-w-2xl text-2xl !text-ink sm:text-3xl">Let’s find the smallest build that creates the biggest useful change.</h2>

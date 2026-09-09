@@ -1,8 +1,9 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { Languages, Menu, X } from "lucide-react";
 import SocialLinks from "./SocialLinks";
+import { AR_CHROME } from "../../data/servicePagesAr";
 import ThemeToggle from "../ui/ThemeToggle";
-import { SHELL_IDENTITY, SHELL_NAV, isNavActive } from "../../data/shell";
+import { SHELL_IDENTITY, SHELL_NAV, isNavActive, navHref, navLabel } from "../../data/shell";
 
 /**
  * Compact navigation for narrow viewports: a sticky identity bar plus a
@@ -15,10 +16,13 @@ import { SHELL_IDENTITY, SHELL_NAV, isNavActive } from "../../data/shell";
 export default function MobileNav({
   path,
   lang,
+  locale = "en",
 }: {
   path: string;
   lang: { href: string; label: string };
+  locale?: "en" | "ar";
 }) {
+  const ar = locale === "ar";
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -51,7 +55,9 @@ export default function MobileNav({
             <p className="truncate font-display text-sm font-semibold text-fg">
               {SHELL_IDENTITY.name}
             </p>
-            <p className="truncate text-xs text-fg-soft">{SHELL_IDENTITY.tagline}</p>
+            <p className="truncate text-xs text-fg-soft">
+              {ar ? SHELL_IDENTITY.taglineAr : SHELL_IDENTITY.tagline}
+            </p>
           </div>
           <ThemeToggle />
           <button
@@ -60,7 +66,7 @@ export default function MobileNav({
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
             aria-controls={panelId}
-            aria-label={open ? "Close menu" : "Open menu"}
+            aria-label={open ? (ar ? AR_CHROME.closeMenu : "Close menu") : ar ? AR_CHROME.openMenu : "Open menu"}
             className="grid h-10 w-10 place-items-center rounded-full border border-line bg-panel text-fg shadow-pill transition hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
           >
             {open ? <X size={18} strokeWidth={2} /> : <Menu size={18} strokeWidth={2} />}
@@ -75,7 +81,7 @@ export default function MobileNav({
               return (
                 <a
                   key={item.href}
-                  href={item.href}
+                  href={navHref(item, locale)}
                   aria-current={active ? "page" : undefined}
                   onClick={() => setOpen(false)}
                   className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-[0.95rem] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas ${
@@ -84,13 +90,8 @@ export default function MobileNav({
                       : "border border-transparent text-fg-soft"
                   }`}
                 >
-                  <Icon
-                    size={19}
-                    strokeWidth={1.9}
-                    aria-hidden
-                    className={active ? "text-accent" : "text-fg-faint"}
-                  />
-                  {item.label}
+                  <Icon size={19} className={active ? "text-accent" : "text-fg-faint"} />
+                  {navLabel(item, locale)}
                 </a>
               );
             })}

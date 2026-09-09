@@ -21,6 +21,7 @@ import {
   ScanSearch,
   type LucideIcon,
 } from "lucide-react";
+import { AI_LAB_TOOL_COUNT } from "./aiLab";
 
 export const CONTACT = {
   whatsapp: "971543281995",
@@ -526,7 +527,8 @@ export const COMPARISON: { agency: string; bayt: string }[] = [
 export const STATS: { value: number; suffix: string; label: string }[] = [
   { value: 6, suffix: "+", label: "Years building for Dubai businesses" },
   { value: 117, suffix: "K+", label: "Ad impressions delivered" },
-  { value: 30, suffix: "+", label: "Live AI tools you can try" },
+  // Counted from the lab itself, so it can never fall behind the real total.
+  { value: AI_LAB_TOOL_COUNT, suffix: "", label: "Live AI tools you can try" },
   { value: 4, suffix: "", label: "Countries served" },
 ];
 

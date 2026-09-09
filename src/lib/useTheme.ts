@@ -23,18 +23,20 @@ function subscribe(onChange: () => void) {
 
 /** Read from the DOM, which the pre-paint script has already resolved. */
 function getSnapshot(): Theme {
-  return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
-/** Prerender always emits the dark palette — it is the brand default. */
+/** Prerender always emits the light palette — it is what a new visitor gets,
+ *  and it matches the `data-theme` the pre-paint script writes by default, so
+ *  hydration never disagrees with the server HTML. */
 function getServerSnapshot(): Theme {
-  return "dark";
+  return "light";
 }
 
 /** Keeps the browser chrome in step with the palette. */
 function syncThemeColor(theme: Theme) {
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", theme === "light" ? "#f7f3ea" : "#081827");
+  if (meta) meta.setAttribute("content", theme === "light" ? "#f5f3ec" : "#0c1526");
 }
 
 export function applyTheme(theme: Theme) {

@@ -8,23 +8,23 @@
     <link rel="icon" type="image/png" sizes="192x192" href="/brand/favicon/icon-192.png" />
     <link rel="apple-touch-icon" href="/brand/favicon/icon-180.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#081827" />
+    <meta name="theme-color" content="#f5f3ec" />
 
     <!-- Resolve the palette before first paint so there is no flash of the
-         wrong theme. Dark is the brand default; light is the visitor's opt-in and is
-         persisted in localStorage under the key used by src/lib/useTheme.ts. -->
+         wrong theme. Light is what a new visitor gets; an explicitly saved
+         preference always wins, under the key used by src/lib/useTheme.ts. -->
     <script>
       (function () {
         try {
           var saved = localStorage.getItem("xd-theme");
-          var theme = saved === "light" || saved === "dark" ? saved : "dark";
+          var theme = saved === "light" || saved === "dark" ? saved : "light";
           document.documentElement.dataset.theme = theme;
-          if (theme === "light") {
+          if (theme === "dark") {
             var m = document.querySelector('meta[name="theme-color"]');
-            if (m) m.setAttribute("content", "#f7f3ea");
+            if (m) m.setAttribute("content", "#0c1526");
           }
         } catch (e) {
-          document.documentElement.dataset.theme = "dark";
+          document.documentElement.dataset.theme = "light";
         }
       })();
     </script>
@@ -111,10 +111,7 @@
 
     <!-- Self-hosted fonts (declared via @font-face in the bundled CSS).
          Preload the render-critical body and display faces used above the fold. -->
-    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/PPNeueBit-Bold.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/PPMondwest-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/plus-jakarta-sans-var.woff2" as="font" type="font/woff2" crossorigin />
 
     <!-- Structured data: organisation, site, founder -->
     <script type="application/ld+json">

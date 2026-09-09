@@ -4,6 +4,7 @@ import CaseStudyCard from "../components/CaseStudyCard";
 import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import PanelBoard from "../components/page/PanelBoard";
+import ProjectShowcase from "../components/showcase/ProjectShowcase";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 
 export default function CaseStudies() {
@@ -22,6 +23,8 @@ export default function CaseStudies() {
           </>
         }
       />
+
+      <ProjectShowcase className="mb-4" />
 
       <PanelBoard cols="lg:grid-cols-2">
         {CASE_STUDIES.map((c) => (

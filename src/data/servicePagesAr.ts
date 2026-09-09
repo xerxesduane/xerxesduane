@@ -175,4 +175,9 @@ export const AR_CHROME = {
   footerSince: "موثوق بهدوء منذ ٢٠١٩.",
   linkedinAria: "Xerxes Duane على LinkedIn",
   instagramAria: "Xerxes Duane على Instagram",
+  consentBody: "أستخدم تحليلات مجهولة لتحسين الموقع. لا تُشارَك أي بيانات ولا تُباع. راجع",
+  consentPolicy: "سياسة الخصوصية",
+  consentAccept: "أوافق",
+  consentDecline: "أرفض",
+  consentAria: "الموافقة على ملفات تعريف الارتباط",
 };
