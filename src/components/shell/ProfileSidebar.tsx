@@ -28,9 +28,9 @@ export default function ProfileSidebar({ path, lang }: ProfileSidebarProps) {
       initial="hidden"
       animate="show"
       aria-label="Profile and site navigation"
-      className="hidden shrink-0 lg:block lg:w-[19rem] xl:w-[21rem]"
+      className="hidden shrink-0 lg:block lg:h-full lg:w-[19rem] xl:w-[21rem]"
     >
-      <div className="sticky top-8 flex max-h-[calc(100dvh-4rem)] flex-col gap-5 overflow-y-auto pb-2">
+      <div className="flex h-full flex-col gap-5 overflow-y-auto py-8 pr-1">
         {/* Brand lockup */}
         <m.a
           variants={fadeUp}

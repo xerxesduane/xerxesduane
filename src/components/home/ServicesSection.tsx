@@ -6,8 +6,8 @@ import { fadeUp, stagger, VIEWPORT } from "../../lib/motion";
  * Light, compact services list for the homepage.
  *
  * Replaces the previous full-bleed black video section, which could not sit on
- * the warm canvas. Keeps `id="services"` so the existing /#services links —
- * nav, footer, and inbound links — still land in the right place.
+ * the warm canvas. Keeps `id="services"` so in-page links still resolve; the
+ * section now lives on /services rather than under the homepage bento.
  */
 export default function ServicesSection() {
   return (

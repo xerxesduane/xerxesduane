@@ -9,7 +9,7 @@ import { fadeUp, stagger } from "../../lib/motion";
  */
 export default function HeroBlock() {
   return (
-    <m.header variants={stagger} initial="hidden" animate="show" className="mb-4">
+    <m.header variants={stagger} initial="hidden" animate="show" className="mb-2">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
         <m.h1
           variants={fadeUp}
@@ -35,7 +35,7 @@ export default function HeroBlock() {
 
       <m.p
         variants={fadeUp}
-        className="mt-3 max-w-[62ch] text-[0.95rem] leading-relaxed text-fg-soft"
+        className="mt-2 max-w-[62ch] text-[0.92rem] leading-snug text-fg-soft"
       >
         {HERO.subhead}
       </m.p>

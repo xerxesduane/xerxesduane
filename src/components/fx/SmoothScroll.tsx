@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import type Lenis from "lenis";
-import { useFinePointer, useReducedMotionPref } from "../../lib/usePrefs";
+import { useDashboardFrame, useFinePointer, useReducedMotionPref } from "../../lib/usePrefs";
 import { getLenis, setLenis } from "../../lib/lenisStore";
 
 /** Matches the site's scroll-mt-24 (6rem) anchor offset. */
@@ -15,9 +15,13 @@ const ANCHOR_OFFSET = -96;
 export default function SmoothScroll() {
   const reduced = useReducedMotionPref();
   const fine = useFinePointer();
+  const framed = useDashboardFrame();
 
   useEffect(() => {
-    if (reduced || !fine) return;
+    // Lenis drives window scroll. Inside the dashboard frame the window does
+    // not scroll at all — the panel does — so running it there would hijack
+    // wheel events and move nothing. Native scrolling in the panel instead.
+    if (reduced || !fine || framed) return;
 
     let lenis: Lenis | null = null;
     let raf = 0;
@@ -38,7 +42,7 @@ export default function SmoothScroll() {
       raf = requestAnimationFrame(loop);
     });
 
-    // Smooth same-page anchor scrolling (#contact, /#contact on home), with
+    // Smooth same-page anchor scrolling (#contact on pages that render it), with
     // the scroll-mt offset. Skip-link and any data-lenis-ignore links keep
     // native jump behavior (better for keyboard users).
     const onClick = (e: MouseEvent) => {
@@ -72,7 +76,7 @@ export default function SmoothScroll() {
       lenis?.destroy();
       setLenis(null);
     };
-  }, [reduced, fine]);
+  }, [reduced, fine, framed]);
 
   return null;
 }

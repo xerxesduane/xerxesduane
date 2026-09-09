@@ -33,3 +33,12 @@ export function useReducedMotionPref(): boolean {
 export function useFinePointer(): boolean {
   return useMediaQuery("(pointer: fine)");
 }
+
+/**
+ * True at the `lg` breakpoint and up, where ShellLayout locks the frame to the
+ * viewport and the panel — not the window — is the scroll container. Server
+ * default false, so the prerendered markup assumes document flow.
+ */
+export function useDashboardFrame(): boolean {
+  return useMediaQuery("(min-width: 1024px)");
+}

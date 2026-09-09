@@ -92,7 +92,7 @@ export default function InsightPost({ post }: { post: Post }) {
                 Want this mapped for your business?
               </p>
               <div className="mt-4">
-                <PrimaryAction href="/#contact">Book your free audit</PrimaryAction>
+                <PrimaryAction href="/contact">Book your free audit</PrimaryAction>
               </div>
             </div>
 

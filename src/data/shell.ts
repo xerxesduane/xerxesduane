@@ -32,10 +32,10 @@ export const SHELL_NAV: ShellNavItem[] = [
     icon: FolderOpen,
     matches: ["/case-studies", "/portfolio", "/showreel"],
   },
-  { label: "Services", href: "/#services", icon: Layers },
+  { label: "Services", href: "/services", icon: Layers },
   { label: "AI Lab", href: "/ai-lab", icon: Bot },
   { label: "About", href: "/about", icon: User, matches: ["/about", "/insights"] },
-  { label: "FAQs / Contact", href: "/#contact", icon: MessageCircleQuestion },
+  { label: "FAQs / Contact", href: "/contact", icon: MessageCircleQuestion },
 ];
 
 export const SHELL_IDENTITY = {

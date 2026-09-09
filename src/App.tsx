@@ -30,6 +30,8 @@ const Terms = lazy(() =>
 const Showreel = lazy(() => import("./pages/Showreel"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
 const Demos = lazy(() => import("./pages/Demos"));
+const Services = lazy(() => import("./pages/Services"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
 import { getServicePage } from "./data/servicePages";
 import { getServicePageAr } from "./data/servicePagesAr";
 import { getInsight } from "./data/insights";
@@ -56,6 +58,8 @@ function Route({ path }: { path: string }) {
     if (study) return <CaseStudyPage study={study} />;
   }
   if (slug === "about") return <About />;
+  if (slug === "services") return <Services />;
+  if (slug === "contact") return <ContactPage />;
   if (slug === "insights") return <Insights />;
   if (slug === "privacy") return <Privacy />;
   if (slug === "terms") return <Terms />;
@@ -101,17 +105,27 @@ export default function App({ path = "/" }: { path?: string }) {
         <SmoothScroll />
         <PageTransition />
 
-        <ShellLayout path={path} lang={lang}>
+        <ShellLayout
+          path={path}
+          lang={lang}
+          footer={
+            <>
+              {/* Redundant inside the frame — the rail carries the same
+                  wordmark, socials, navigation and copyright. */}
+              <div className="lg:hidden">
+                <Footer locale={isArabic ? "ar" : "en"} />
+                {/* mobile bar height, so the footer is never hidden behind it */}
+                <div className="h-16 md:hidden" aria-hidden />
+              </div>
+            </>
+          }
+        >
           <main className="relative z-10">
             <Suspense fallback={null}>
               <Route path={path} />
             </Suspense>
           </main>
         </ShellLayout>
-
-        <Footer locale={isArabic ? "ar" : "en"} />
-        {/* mobile bar height, so the footer is never hidden behind it */}
-        <div className="h-16 md:hidden" aria-hidden />
         <WhatsAppButton locale={isArabic ? "ar" : "en"} />
         <MobileCTA locale={isArabic ? "ar" : "en"} />
         <ConsentBanner />

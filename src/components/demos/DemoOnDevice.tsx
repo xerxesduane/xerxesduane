@@ -159,7 +159,7 @@ export default function DemoOnDevice() {
       )}
 
       <a
-        href="/#contact"
+        href="/contact"
         data-cursor="link"
         className="inline-flex items-center gap-1.5 self-start text-sm font-semibold text-gold transition-colors hover:text-gold-soft"
       >

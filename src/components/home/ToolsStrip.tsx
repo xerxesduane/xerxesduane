@@ -40,10 +40,10 @@ export default function ToolsStrip() {
   return (
     <section
       aria-label="Tools and platforms I work with"
-      className="mb-4 flex items-stretch gap-0 overflow-hidden rounded-panel border border-line bg-panel shadow-card"
+      className="mb-2.5 flex items-stretch gap-0 overflow-hidden rounded-panel border border-line bg-panel shadow-card"
     >
       {/* Fixed label */}
-      <div className="flex shrink-0 flex-col justify-center border-r border-line px-3 py-3 sm:px-5">
+      <div className="flex shrink-0 flex-col justify-center border-r border-line px-3 py-2.5 sm:px-5">
         <span className="font-technical text-eyebrow font-bold uppercase text-accent">
           Daily drivers
         </span>
@@ -55,7 +55,7 @@ export default function ToolsStrip() {
       {/* Clipped, scrolling track */}
       <div className="relative min-w-0 flex-1 overflow-hidden">
         <div
-          className="flex w-max animate-marquee-slow items-center py-3 pl-6"
+          className="flex w-max animate-marquee-slow items-center py-2.5 pl-6"
           style={still ? { animationPlayState: "paused" } : undefined}
         >
           {row(false)}

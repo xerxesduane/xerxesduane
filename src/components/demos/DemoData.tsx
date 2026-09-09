@@ -123,7 +123,7 @@ export default function DemoData() {
           </div>
 
           <a
-            href="/#contact"
+            href="/contact"
             data-cursor="link"
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-gold transition-colors hover:text-gold-soft"
           >

@@ -135,6 +135,8 @@ export function allRoutes(): string[] {
   return [
     "/",
     "/about",
+    "/services",
+    "/contact",
     "/case-studies",
     ...CASE_STUDIES.map((study) => `/case-studies/${study.slug}`),
     "/portfolio",
@@ -198,6 +200,22 @@ const ABOUT_META: PageMeta = {
     },
     breadcrumb([HOME_CRUMB, { name: "About", url: `${SITE_ORIGIN}/about` }]),
   ],
+};
+
+const SERVICES_META: PageMeta = {
+  title: "Services - Xerxes Duane",
+  description:
+    "Websites, Odoo/ERP, automation, CRM and AI for small businesses in Dubai and the UAE — built as one connected system, with indicative pricing.",
+  canonical: `${SITE_ORIGIN}/services`,
+  ogTitle: "Services - Xerxes Duane",
+};
+
+const CONTACT_META: PageMeta = {
+  title: "FAQs & Contact - Xerxes Duane",
+  description:
+    "Common questions answered plainly, and a free business systems audit for small businesses in Dubai and the UAE.",
+  canonical: `${SITE_ORIGIN}/contact`,
+  ogTitle: "FAQs & Contact - Xerxes Duane",
 };
 
 const CASE_STUDIES_META: PageMeta = {
@@ -274,6 +292,8 @@ export function getPageMeta(path: string): PageMeta {
   const slug = pathToSlug(path);
   if (slug === "") return HOME_META;
   if (slug === "about") return ABOUT_META;
+  if (slug === "services") return SERVICES_META;
+  if (slug === "contact") return CONTACT_META;
   if (slug === "ai-lab" || slug === "demos") return AI_LAB_META;
   if (slug === "case-studies") return CASE_STUDIES_META;
   if (slug.startsWith("case-studies/")) {

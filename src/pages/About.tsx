@@ -30,7 +30,7 @@ export default function About() {
         lede="Independent systems consultant in Dubai, building the setups small businesses actually run on."
         actions={
           <>
-            <PrimaryAction href="/#contact">Book a free audit</PrimaryAction>
+            <PrimaryAction href="/contact">Book a free audit</PrimaryAction>
             <GhostAction href="/" icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}>
               Home
             </GhostAction>

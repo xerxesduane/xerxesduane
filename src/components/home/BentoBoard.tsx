@@ -28,7 +28,7 @@ export default function BentoBoard() {
           href="/case-studies"
           span="lg:col-span-5"
         >
-          <ul className="mt-1 grid grid-cols-2 gap-2">
+          <ul className="grid grid-cols-4 gap-2">
             {FEATURED_PROJECTS.map((project) => (
               <li
                 key={project.slug}
@@ -36,7 +36,7 @@ export default function BentoBoard() {
               >
                 {/* `contain`, not `cover`: these are a mix of client logos and
                     site screenshots, and cropping a logo cuts the wordmark. */}
-                <div className="flex h-16 w-full items-center justify-center overflow-hidden bg-plate p-2">
+                <div className="flex h-14 w-full items-center justify-center overflow-hidden bg-plate p-2">
                   {project.image ? (
                     <img
                       src={project.image}
@@ -51,9 +51,10 @@ export default function BentoBoard() {
                     </span>
                   )}
                 </div>
-                <div className="px-2.5 py-1.5">
-                  <p className="truncate text-xs font-semibold text-fg">{project.client}</p>
-                  <p className="truncate text-[0.7rem] text-fg-faint">{project.category}</p>
+                <div className="px-2 py-1.5">
+                  <p className="truncate text-[0.68rem] font-semibold leading-tight text-fg">
+                    {project.client}
+                  </p>
                 </div>
               </li>
             ))}
@@ -76,7 +77,7 @@ export default function BentoBoard() {
               height={56}
               loading="lazy"
               decoding="async"
-              className="h-14 w-14 shrink-0 rounded-full border border-line object-cover object-top"
+              className="h-12 w-12 shrink-0 rounded-full border border-line object-cover object-top"
             />
             <p className="text-xs leading-snug text-fg-soft">
               Independent consultant wiring websites, CRM, Odoo and AI into one
@@ -108,14 +109,9 @@ export default function BentoBoard() {
               </li>
             ))}
           </ul>
-          <ul className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-fg-faint">
-            {AI_LAB_TRUST.map((item) => (
-              <li key={item} className="flex items-center gap-1.5">
-                <span aria-hidden className="h-1 w-1 rounded-full bg-accent" />
-                {item}
-              </li>
-            ))}
-          </ul>
+          <p className="truncate text-[0.68rem] text-fg-faint">
+            {AI_LAB_TRUST.join(" · ")}
+          </p>
         </Panel>
 
         {/* ---- Experience: figures already published on the site ---- */}
@@ -146,7 +142,7 @@ export default function BentoBoard() {
         <Panel
           icon={Layers}
           label="Services"
-          href="/#services"
+          href="/services"
           span="lg:col-span-3"
         >
           <ul className="divide-y divide-line-soft">

@@ -72,5 +72,5 @@ export const HERO = {
   subhead:
     "Websites, CRM, Odoo, automation and AI — wired into one setup that runs your business instead of adding to your admin.",
   ctaLabel: "Get in touch",
-  ctaHref: "/#contact",
+  ctaHref: "/contact",
 };

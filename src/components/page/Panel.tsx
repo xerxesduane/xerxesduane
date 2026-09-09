@@ -38,7 +38,7 @@ export default function Panel({
 }: PanelProps) {
   const shell =
     tone === "card"
-      ? "group relative flex flex-col gap-2.5 rounded-card border border-line bg-panel p-4 shadow-card transition duration-300 ease-smooth sm:p-5"
+      ? "group relative flex flex-col gap-2 rounded-card border border-line bg-panel p-3.5 shadow-card transition duration-300 ease-smooth"
       : "group relative flex flex-col gap-2.5";
   const interactive =
     "hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas";

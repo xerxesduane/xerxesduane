@@ -21,7 +21,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
         meta={<span>{study.location}</span>}
         actions={
           <>
-            <PrimaryAction href="/#contact">Book a free audit</PrimaryAction>
+            <PrimaryAction href="/contact">Book a free audit</PrimaryAction>
             <GhostAction
               href="/case-studies"
               icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}
@@ -112,7 +112,7 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
           </p>
           <div className="mt-2 flex flex-wrap items-center gap-4">
             <a
-              href="/#contact"
+              href="/contact"
               className="inline-flex items-center gap-1.5 text-sm font-semibold text-accent transition hover:text-accent-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-panel"
             >
               Want a result like this? Book your free audit

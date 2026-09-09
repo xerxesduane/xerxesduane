@@ -33,11 +33,11 @@ export default function PanelBoard({
       viewport={VIEWPORT}
       className={
         washed
-          ? `rounded-panel bg-gradient-to-r from-canvas-sunk/30 via-wash/40 to-wash-strong/60 p-3 sm:p-4 ${className}`
+          ? `rounded-panel bg-gradient-to-r from-canvas-sunk/30 via-wash/40 to-wash-strong/60 p-2 ${className}`
           : className
       }
     >
-      <div className={`grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 ${cols}`}>
+      <div className={`grid grid-cols-1 gap-2 sm:grid-cols-2 ${cols}`}>
         {children}
       </div>
     </m.div>
