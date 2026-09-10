@@ -22,6 +22,12 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AI_LAB_TOOL_COUNT } from "./aiLab";
+// The pricing stance lives in its own module so `api/assistant.ts` can import
+// it without pulling this file's lucide icons into the Edge bundle. Re-exported
+// here so every existing `from "../data/content"` import keeps working.
+import { PRICING } from "./pricing";
+
+export { PRICING };
 
 export const CONTACT = {
   whatsapp: "971543281995",
@@ -31,6 +37,7 @@ export const CONTACT = {
   calendar: "https://zcal.co/xerxesduane/audit",
   formspreeId: "xrednbek",
 };
+
 
 // The free-audit journey + what you actually receive — shared by the Contact
 // section and the Packages "Audit" card so the promise never drifts between them.
@@ -58,8 +65,6 @@ export interface Service {
   title: string;
   tagline: string;
   description: string;
-  /** Indicative starting price, e.g. "from AED 4,500". */
-  price?: string;
   featured?: boolean;
 }
 
@@ -70,7 +75,6 @@ export const SERVICES: Service[] = [
     tagline: "The new advantage.",
     description:
       "AI workflows, chatbots, and custom assistants that quietly run your business in the background, answering questions, qualifying leads, and giving you back the hours you've been losing.",
-    price: "from AED 6,000",
     featured: true,
   },
   {
@@ -79,7 +83,6 @@ export const SERVICES: Service[] = [
     tagline: "The foundation, built for you.",
     description:
       "Software tailored to how your business actually works, client portals, internal tools, and systems built around the way you run. No templates, no limitations.",
-    price: "from AED 9,000",
   },
   {
     icon: Boxes,
@@ -87,7 +90,6 @@ export const SERVICES: Service[] = [
     tagline: "One system to run on.",
     description:
       "Odoo ERP setup, administration, and support, wiring inventory, sales, purchasing, and accounting into a single source of truth. Configured and run for real businesses in the UAE and the Philippines.",
-    price: "from AED 12,000",
   },
   {
     icon: LayoutDashboard,
@@ -95,7 +97,6 @@ export const SERVICES: Service[] = [
     tagline: "See your business clearly.",
     description:
       "Real-time dashboards, customer databases, and integrations that finally talk: HubSpot, QuickBooks, Zoho, all in one place.",
-    price: "from AED 4,000",
   },
   {
     icon: Smartphone,
@@ -103,7 +104,6 @@ export const SERVICES: Service[] = [
     tagline: "Sleek, scalable, built to grow.",
     description:
       "Custom iOS, Android, and web apps, booking platforms, member portals, internal tools, fast and ready for what's next.",
-    price: "from AED 25,000",
   },
   {
     icon: ShoppingBag,
@@ -111,7 +111,6 @@ export const SERVICES: Service[] = [
     tagline: "Sell online without the headaches.",
     description:
       "Secure checkout, payment gateways, order tracking, and upsell flows, tailored to your products and your customers.",
-    price: "from AED 9,000",
   },
   {
     icon: Target,
@@ -119,7 +118,6 @@ export const SERVICES: Service[] = [
     tagline: "Turn clicks into customers.",
     description:
       "Conversion-optimized pages and complete sales funnels, integrated with analytics, lead capture, and your CRM.",
-    price: "from AED 2,500",
   },
   {
     icon: ScanSearch,
@@ -127,7 +125,6 @@ export const SERVICES: Service[] = [
     tagline: "Be the answer, not a blue link.",
     description:
       "Optimize your content so voice assistants and Google's AI Overviews quote you directly, with structured data, concise answers, and FAQ schema that win featured snippets and 'position zero'.",
-    price: "from AED 2,500/month",
   },
   {
     icon: Sparkles,
@@ -135,7 +132,6 @@ export const SERVICES: Service[] = [
     tagline: "Get cited by ChatGPT & Perplexity.",
     description:
       "Make your business the source AI engines recommend. I shape your content, entities, and citations so ChatGPT, Gemini, and Perplexity surface and recommend you when buyers ask.",
-    price: "from AED 3,000/month",
   },
   {
     icon: Video,
@@ -143,7 +139,6 @@ export const SERVICES: Service[] = [
     tagline: "Stories that sell.",
     description:
       "Professional video, product photography, reels, and brand films, created with the storytelling instincts of someone who's run real ad campaigns.",
-    price: "from AED 1,500/day",
   },
   {
     icon: Film,
@@ -151,7 +146,6 @@ export const SERVICES: Service[] = [
     tagline: "Footage into scroll-stoppers.",
     description:
       "Reels, social clips, brand films, and ad cuts edited to hold attention, with captions, motion graphics, and platform-tuned pacing. Fast turnaround and clean revisions.",
-    price: "from AED 750 per video",
   },
   {
     icon: Palette,
@@ -159,7 +153,6 @@ export const SERVICES: Service[] = [
     tagline: "Look like the brand you are.",
     description:
       "Logos, brand identity, social graphics, and marketing collateral, designed to match the quality of the work behind it.",
-    price: "from AED 1,500",
   },
 ];
 
@@ -524,7 +517,7 @@ export const COMPARISON: { agency: string; bayt: string }[] = [
   { agency: "Disappears after launch", bayt: "Picks up the phone five years later" },
   { agency: "Upsells everything", bayt: "Tells you when you don't need me" },
   { agency: "One service, one expert", bayt: "One consultant, the whole stack" },
-  { agency: "Hides pricing", bayt: 'Transparent "from AED X" pricing' },
+  { agency: "Quotes a number before understanding the job", bayt: "Scopes the job, then quotes it, in writing" },
 ];
 
 export const STATS: { value: number; suffix: string; label: string }[] = [
@@ -685,7 +678,7 @@ export const PACKAGES = [
   {
     name: "The Systems Audit",
     price: "Free",
-    note: "for a limited time",
+    note: "60 minutes",
     pitch: "Start here",
     body: "A 60-minute diagnostic of your whole stack — website, leads, CRM, WhatsApp, spreadsheets, automation. You leave with a plain-English map of what's disconnected and a prioritised roadmap of what to fix first. No pressure, no lock-in.",
     cta: "Book your free systems audit",
@@ -693,8 +686,8 @@ export const PACKAGES = [
   },
   {
     name: "The Build",
-    price: "from AED 5,000",
-    note: "project-based",
+    price: "Scoped, then quoted",
+    note: "one fixed proposal",
     pitch: "Fix what's broken",
     body: "A defined-scope project. Website rebuild, CRM setup, automation, SEO overhaul, or a tech-stack consolidation. I scope it, build it, ship it.",
     cta: "See if we're a fit",
@@ -702,8 +695,8 @@ export const PACKAGES = [
   },
   {
     name: "The Partner",
-    price: "from AED 2,500",
-    note: "per month",
+    price: "Monthly retainer",
+    note: "month to month, cancel anytime",
     pitch: "Your long-term tech partner",
     body: "I become your practical systems partner. Ongoing IT, maintenance, SEO, ads, and automation, one trusted number to call for everything.",
     cta: "Talk to me",
@@ -764,8 +757,12 @@ export const CLIENTS: Client[] = [
 
 export const FAQS: { q: string; a: string }[] = [
   {
+    q: "How much does a project cost?",
+    a: PRICING.answer,
+  },
+  {
     q: "Is the audit really free?",
-    a: "Yes, for now. I'm keeping it free while I onboard my founding clients. Eventually it'll be AED 750–1,500, but you're early.",
+    a: "Yes. Sixty minutes, no charge, nothing owed at the end of it. If you don't need me, I'll tell you.",
   },
   {
     q: "Do you sign long contracts?",

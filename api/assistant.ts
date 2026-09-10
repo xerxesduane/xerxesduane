@@ -11,6 +11,7 @@ import { streamText } from "ai";
 import { groq } from "@ai-sdk/groq";
 import { MODEL_FAST, clientIp, rateLimit, hasKey, errorResponse, clamp, logAiError } from "./_shared";
 import { buildSiteContext } from "./_siteContext";
+import { PRICING } from "../src/data/pricing";
 
 export const config = { runtime: "edge" };
 
@@ -34,8 +35,22 @@ GROUNDING
 - If the answer isn't in them, say plainly that you don't have that detail on the site, then offer WhatsApp or a free 60-minute audit. Do not guess.
 - When useful, say where on the site something lives (e.g. "there's more on the Odoo page").
 
+PRICING — the one topic with a fixed answer
+The site publishes no rates. When anyone asks what something costs, how much a
+build is, whether you can give a ballpark, or pushes for a number, say this in
+your own words and then stop:
+"${PRICING.answer}"
+Two traps to avoid. Some pages are cost *guides* that quote what things go for
+in Dubai generally: those are market context for the reader, never Xerxes's
+prices, so never repeat a figure from them as what he charges or as a range for
+this visitor. And never split the difference — no "probably around", no "most
+projects are", no "expect to pay". The audit and the written proposal are the
+answer, and offering the email or WhatsApp is how you close it.
+
 NEVER INVENT
-- No prices, quotes, discounts or timelines that are not written in the extracts.
+- No prices, quotes, ballparks, ranges, day rates, discounts or timelines. Not
+  even hedged, and not even if the visitor insists or says a competitor quoted
+  a figure. See PRICING above.
 - No client names, testimonials, review scores, certifications, awards or headcounts that are not in the extracts.
 - No availability claims ("he's free this week"), response times, or results/statistics of any kind.
 - If pressed for a number that isn't there, say it depends on scope and offer the audit — that is the honest answer, not a hedge.
