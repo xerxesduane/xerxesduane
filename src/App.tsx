@@ -113,7 +113,10 @@ export default function App({ path = "/" }: { path?: string }) {
           </main>
         </ShellLayout>
 
-        <Footer locale={isArabic ? "ar" : "en"} />
+        {/* The English home is deliberately one screen with nothing below it,
+            so it carries no footer. Every other route still does — a footer is
+            navigation, and only this page has none left to offer. */}
+        {slug !== "" && <Footer locale={isArabic ? "ar" : "en"} />}
         <ConsentBanner locale={isArabic ? "ar" : "en"} />
         {/* Reserve the bottom bar's height (plus the iOS home indicator) so
             the end of the footer is never trapped underneath it. */}

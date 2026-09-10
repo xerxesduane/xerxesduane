@@ -140,7 +140,7 @@ export default {
 
       screens: {
         /* The width at which the bento board can carry four real columns. */
-        board: "1500px",
+        board: "1180px",
       },
 
       borderRadius: {

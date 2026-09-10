@@ -1,19 +1,13 @@
 import type { ReactNode } from "react";
-import { ArrowRight, Bot, ChartNoAxesColumn, Trophy, User } from "lucide-react";
+import { ArrowRight, Bot, BadgeCheck, Star, User } from "lucide-react";
 import Panel from "../page/Panel";
 import PanelBoard from "../page/PanelBoard";
-import Counter from "../ui/Counter";
-import ResultCard from "./ResultCard";
 import { FolderGlyph, LayersGlyph } from "../ui/NavIcons";
 import { Marquee } from "../vendor/Marquee";
 import { AI_LAB_COUNT, AI_LAB_HOME_ROWS, AI_LAB_TRUST } from "../../data/aiLabHome";
-import { STATS } from "../../data/content";
-import {
-  CORE_SERVICES,
-  FEATURED_PROJECTS,
-  FEATURED_RESULTS,
-} from "../../data/homeBento";
-import { SHELL_IDENTITY } from "../../data/shell";
+import { CREDENTIALS } from "../../data/credentials";
+import { TRUST } from "../../data/trust";
+import { CORE_SERVICES, FEATURED_PROJECTS } from "../../data/homeBento";
 
 /** Shared "go deeper" link, used by the panels that can't be links themselves. */
 function MoreLink({ href, children }: { href: string; children: ReactNode }) {
@@ -34,7 +28,7 @@ function MoreLink({ href, children }: { href: string; children: ReactNode }) {
 }
 
 /**
- * The bento board: a pale-blue washed container holding the six entry points.
+ * The bento board: a pale-blue washed container holding the entry points.
  *
  * Four real columns once there's the width for them (the `board` breakpoint),
  * two below that, one on a phone. Spans are chosen so both rows fill the track
@@ -49,6 +43,10 @@ function MoreLink({ href, children }: { href: string; children: ReactNode }) {
  * rather than snapping back to the start.
  */
 export default function BentoBoard() {
+  // Narrowed once here: TRUST.google is nullable, and reading it inside the
+  // JSX callbacks below would lose the narrowing on every access.
+  const google = TRUST.google;
+
   return (
     <PanelBoard rail cols="board:grid-cols-4" className="home-board">
       {/* ---- Projects: a clipped reel of real client-site screenshots ---- */}
@@ -101,31 +99,20 @@ export default function BentoBoard() {
       </Panel>
 
       {/* ---- About: the portrait on a small fan of cards ---- */}
-      <Panel icon={User} label="About" blurb="The person behind the systems." href="/about">
-        {/* Two blank card backs behind the one real photograph — a photo stack
-            without pretending there are three different photographs. */}
-        <div className="relative mx-auto my-1 h-[6.75rem] w-[6rem]">
-          <span
-            aria-hidden
-            className="absolute inset-0 -translate-x-3 -rotate-12 rounded-xl border border-line bg-wash transition duration-500 ease-smooth group-hover:-translate-x-5 group-hover:-rotate-[18deg] group-focus-visible:-translate-x-5"
-          />
-          <span
-            aria-hidden
-            className="absolute inset-0 translate-x-2 rotate-6 rounded-xl border border-line bg-panel-alt transition duration-500 ease-smooth group-hover:translate-x-4 group-hover:rotate-12 group-focus-visible:translate-x-4"
-          />
-          <img
-            src={SHELL_IDENTITY.portrait}
-            alt=""
-            width={560}
-            height={560}
-            loading="lazy"
-            decoding="async"
-            className="relative h-full w-full rounded-xl border border-line object-cover object-[center_22%] shadow-card transition duration-500 ease-smooth group-hover:-translate-y-0.5 group-hover:-rotate-[1.5deg] group-focus-visible:-translate-y-0.5"
-          />
-        </div>
-        <p className="text-[0.85rem] leading-snug text-fg-soft">
-          Independent systems consultant, based in Dubai.
-        </p>
+      <Panel icon={User} label="About" blurb="Who I am, and how the work runs." href="/about">
+        {/* The desk illustration rather than the portrait: the same face is
+            already in the rail two inches away, and a second copy of it read
+            as a duplicate rather than a second thing to look at. */}
+        <img
+          src="/brand/about-desk.webp"
+          alt=""
+          width={1200}
+          height={851}
+          loading="lazy"
+          decoding="async"
+          className="mx-auto my-1 block w-full max-w-[11rem] select-none transition duration-500 ease-smooth group-hover:-translate-y-1 group-focus-visible:-translate-y-1"
+          draggable={false}
+        />
       </Panel>
 
       {/* ---- AI Lab: two rows that slide apart on hover ---- */}
@@ -163,31 +150,53 @@ export default function BentoBoard() {
         <p className="text-[0.72rem] text-fg-faint">{AI_LAB_TRUST.join(" · ")}</p>
       </Panel>
 
-      {/* ---- Experience: figures already published on the site ---- */}
-      <Panel icon={ChartNoAxesColumn} label="Experience" href="/about" className="max-sm:hidden">
-        <dl className="my-auto grid grid-cols-2 gap-x-3 gap-y-5">
-          {STATS.map((stat, i) => (
-            <div
-              key={stat.label}
-              className="origin-left transition duration-500 ease-smooth group-hover:rotate-[-0.8deg] group-hover:scale-[1.04] group-focus-visible:scale-[1.04]"
-              style={{ transitionDelay: `${i * 45}ms` }}
-            >
-              <dt className="sr-only">{stat.label}</dt>
-              <dd>
-                <span className="block font-display text-[1.7rem] font-extrabold leading-none tracking-tight text-fg transition-colors duration-300 group-hover:text-accent-deep">
-                  <Counter value={stat.value} suffix={stat.suffix} />
+      {/* ---- Credentials: real, verifiable, or absent ----
+             CREDENTIALS ships empty (see src/data/credentials.ts). While it
+             is, this tile doesn't render at all and Reviews widens to fill the
+             row — an empty claim slot is worse than a shorter board. */}
+      {CREDENTIALS.length > 0 && (
+        <Panel
+          icon={BadgeCheck}
+          label="Credentials"
+          blurb="Certified and verifiable."
+          href="/about"
+          className="max-sm:hidden"
+        >
+          <ul className="my-auto space-y-2.5">
+            {CREDENTIALS.slice(0, 3).map((item, i) => (
+              <li
+                key={item.name}
+                className="flex items-start gap-2.5 transition-transform duration-500 ease-smooth group-hover:translate-x-1 group-focus-visible:translate-x-1"
+                style={{ transitionDelay: `${i * 45}ms` }}
+              >
+                <BadgeCheck
+                  size={15}
+                  strokeWidth={2.4}
+                  aria-hidden
+                  className="mt-0.5 shrink-0 text-accent"
+                />
+                <span className="min-w-0">
+                  <span className="block text-[0.82rem] font-bold leading-tight text-fg">
+                    {item.name}
+                  </span>
+                  <span className="block text-[0.7rem] leading-tight text-fg-faint">
+                    {item.issuer}
+                    {item.year ? ` · ${item.year}` : ""}
+                  </span>
                 </span>
-                <span className="mt-1 block text-[0.72rem] leading-tight text-fg-soft">
-                  {stat.label}
-                </span>
-              </dd>
-            </div>
-          ))}
-        </dl>
-      </Panel>
+              </li>
+            ))}
+          </ul>
+        </Panel>
+      )}
 
       {/* ---- Services ---- */}
-      <Panel iconNode={<LayersGlyph size={20} />} label="Services" href="/services">
+      <Panel
+        iconNode={<LayersGlyph size={20} />}
+        label="Services"
+        href="/services"
+        span={CREDENTIALS.length > 0 ? "" : "board:col-span-2"}
+      >
         <ol className="divide-y divide-line-soft">
           {CORE_SERVICES.map((title, i) => (
             <li
@@ -206,23 +215,69 @@ export default function BentoBoard() {
         </ol>
       </Panel>
 
-      {/* ---- Featured results: measured outcomes, not testimonials ---- */}
+      {/* ---- Reviews: the real Google profile, not written testimonials ----
+             There are no client quotes on this site because there are no real
+             attributable ones (see the note in data/content.ts). What there
+             IS: a genuine Google Business Profile. So this shows that rating,
+             its real review count, and a link a visitor can check — rather
+             than prose nobody said. Widens when Credentials is absent. */}
       <Panel
-        icon={Trophy}
-        label="Featured results"
-        blurb="Measured outcomes from published case studies."
+        icon={Star}
+        label="Reviews"
+        blurb="What clients rated the work, on Google."
         span="sm:col-span-2"
         className="max-sm:hidden"
-        footer={<MoreLink href="/case-studies">All case studies</MoreLink>}
+        footer={
+          google ? (
+            <MoreLink href={google.url}>Read them on Google</MoreLink>
+          ) : (
+            <MoreLink href="/case-studies">See the work instead</MoreLink>
+          )
+        }
       >
-        <ul className="grid gap-2.5 sm:grid-cols-2">
-          {FEATURED_RESULTS.slice(0, 2).map((result) => (
-            <li key={result.slug}>
-              <ResultCard result={result} />
-            </li>
-          ))}
-        </ul>
+        {google ? (
+          <div className="my-auto flex flex-wrap items-center gap-x-6 gap-y-3">
+            <p className="flex items-baseline gap-2">
+              <span className="font-display text-[2.4rem] font-extrabold leading-none tracking-tight text-fg transition-colors duration-300 group-hover:text-accent-deep">
+                {google.rating.toFixed(1)}
+              </span>
+              <span className="text-[0.78rem] leading-tight text-fg-soft">
+                from {google.reviewCount}
+                <br />
+                Google review{google.reviewCount === 1 ? "" : "s"}
+              </span>
+            </p>
+            <ul className="flex gap-1" aria-hidden>
+              {Array.from({ length: 5 }, (_, i) => (
+                <li
+                  key={i}
+                  className="transition duration-500 ease-smooth group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5"
+                  style={{ transitionDelay: `${i * 55}ms` }}
+                >
+                  <Star
+                    size={19}
+                    strokeWidth={0}
+                    className={
+                      i < Math.round(google.rating)
+                        ? "fill-accent text-accent"
+                        : "fill-line text-line"
+                    }
+                  />
+                </li>
+              ))}
+            </ul>
+            <p className="min-w-0 flex-1 text-[0.78rem] leading-snug text-fg-soft">
+              Every review is on the public profile, under real names. Nothing
+              here is written for the site.
+            </p>
+          </div>
+        ) : (
+          <p className="my-auto text-[0.85rem] leading-snug text-fg-soft">
+            No public reviews yet.
+          </p>
+        )}
       </Panel>
+
     </PanelBoard>
   );
 }
