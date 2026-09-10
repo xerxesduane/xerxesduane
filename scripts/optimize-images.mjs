@@ -7,6 +7,8 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const RAW = join(root, "work-raw");
 const OUT = join(root, "public/work");
 const MANIFEST = join(root, "src/data/workItems.ts");
+// Descriptive titles verified against the existing archive screenshots.
+const WEB_TITLES = JSON.parse(readFileSync(join(root, "scripts/web-project-titles.json"), "utf8"));
 
 // Drop raw originals here (gitignored). Run: npm run images
 const CATS = [
@@ -105,7 +107,7 @@ for (const cat of CATS) {
     items.push({
       category: cat.key,
       label: cat.label,
-      title: itemMeta.title || `${cat.label} ${n}`,
+      title: itemMeta.title || (cat.key === "web" && WEB_TITLES[base]) || `${cat.label} ${n}`,
       ...(itemMeta.href ? { href: itemMeta.href } : {}),
       src: `/work/${cat.key}/${base}.webp`,
       thumb: `/work/${cat.key}/${base}-thumb.webp`,

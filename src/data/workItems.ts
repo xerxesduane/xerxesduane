@@ -48,7 +48,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 4",
+    "title": "Long Wknd — Skincare & body care store",
     "src": "/work/web/web-04.webp",
     "thumb": "/work/web/web-04-thumb.webp",
     "w": 600,
@@ -58,7 +58,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 5",
+    "title": "Long Wknd — Online store mockup",
     "src": "/work/web/web-05.webp",
     "thumb": "/work/web/web-05-thumb.webp",
     "w": 1400,
@@ -68,7 +68,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 6",
+    "title": "Reign — Restaurant website mockup",
     "src": "/work/web/web-06.webp",
     "thumb": "/work/web/web-06-thumb.webp",
     "w": 1400,
@@ -78,7 +78,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 7",
+    "title": "Jessica Gregory — Runway coaching",
     "src": "/work/web/web-07.webp",
     "thumb": "/work/web/web-07-thumb.webp",
     "w": 400,
@@ -88,7 +88,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 8",
+    "title": "Golvhuset — Flooring & interiors",
     "src": "/work/web/web-08.webp",
     "thumb": "/work/web/web-08-thumb.webp",
     "w": 500,
@@ -98,7 +98,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 9",
+    "title": "Long Wknd — Store design presentation",
     "src": "/work/web/web-09.webp",
     "thumb": "/work/web/web-09-thumb.webp",
     "w": 1400,
@@ -108,7 +108,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 10",
+    "title": "Flourish Chiropractic — Wellness website mockup",
     "src": "/work/web/web-10.webp",
     "thumb": "/work/web/web-10-thumb.webp",
     "w": 1400,
@@ -118,7 +118,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 11",
+    "title": "Dental tourism — Croatia website mockup",
     "src": "/work/web/web-11.webp",
     "thumb": "/work/web/web-11-thumb.webp",
     "w": 1600,
@@ -128,7 +128,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 12",
+    "title": "Reign — Restaurant & dining",
     "src": "/work/web/web-12.webp",
     "thumb": "/work/web/web-12-thumb.webp",
     "w": 500,
@@ -138,7 +138,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 13",
+    "title": "Flourish Chiropractic — Chiropractic & massage",
     "src": "/work/web/web-13.webp",
     "thumb": "/work/web/web-13-thumb.webp",
     "w": 500,
@@ -148,7 +148,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 14",
+    "title": "VideaHealth — Dental AI platform",
     "src": "/work/web/web-14.webp",
     "thumb": "/work/web/web-14-thumb.webp",
     "w": 600,
@@ -158,7 +158,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 15",
+    "title": "VideaHealth — Responsive website mockup",
     "src": "/work/web/web-15.webp",
     "thumb": "/work/web/web-15-thumb.webp",
     "w": 1400,
@@ -168,7 +168,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 16",
+    "title": "Dental tourism — Croatia",
     "src": "/work/web/web-16.webp",
     "thumb": "/work/web/web-16-thumb.webp",
     "w": 300,
@@ -178,7 +178,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 17",
+    "title": "Jessica Gregory — Coaching website mockup",
     "src": "/work/web/web-17.webp",
     "thumb": "/work/web/web-17-thumb.webp",
     "w": 1600,
@@ -188,7 +188,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 18",
+    "title": "Golvhuset — Flooring website mockup",
     "src": "/work/web/web-18.webp",
     "thumb": "/work/web/web-18-thumb.webp",
     "w": 1400,
@@ -198,7 +198,7 @@ export const WORK_ITEMS: WorkItem[] = [
   {
     "category": "web",
     "label": "Web Design",
-    "title": "Web Design 19",
+    "title": "Fellowship Dubai — Church & community",
     "src": "/work/web/web-19.webp",
     "thumb": "/work/web/web-19-thumb.webp",
     "w": 1200,

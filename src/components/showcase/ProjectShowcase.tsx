@@ -26,8 +26,8 @@ function Preview({ item, onBack }: { item: WorkItem; onBack: () => void }) {
   const back = useRef<HTMLButtonElement>(null);
   useEffect(() => { back.current?.focus({ preventScroll: true }); }, []);
   return (
-    <div className="p-4 sm:p-6">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <div className="project-browser">
+      <div className="project-browser-toolbar flex flex-wrap items-center justify-between gap-3">
         <button
           ref={back}
           type="button"
@@ -53,7 +53,7 @@ function Preview({ item, onBack }: { item: WorkItem; onBack: () => void }) {
           </p>
         )}
       </div>
-      <h3 className="font-display text-lg font-extrabold text-fg">{item.title}</h3>
+      <div className="project-browser-caption"><h3 className="font-display text-lg font-extrabold text-fg">{item.title}</h3><p className="text-sm text-fg-soft">Archived website screenshot{item.href ? " · Use Open the live site to explore the current website." : "."}</p></div>
       <img
         src={item.src}
         width={item.w}
@@ -61,7 +61,7 @@ function Preview({ item, onBack }: { item: WorkItem; onBack: () => void }) {
         alt={`${item.title} — full screenshot`}
         loading="lazy"
         decoding="async"
-        className="mt-3 w-full rounded-xl border border-line bg-plate"
+        className="block h-auto w-full bg-plate"
       />
     </div>
   );
@@ -138,7 +138,7 @@ export default function ProjectShowcase({ items = WEB_DESIGNS, className = "" }:
       <Overlay
         open={open}
         onClose={close}
-        showTitle
+        presentation={selected ? "preview" : "immersive"}
         title={selected ? selected.title : "Websites & funnels"}
         description={
           selected
@@ -157,7 +157,7 @@ export default function ProjectShowcase({ items = WEB_DESIGNS, className = "" }:
           <Suspense fallback={<Loading />}>
             {/* Reduced motion or a coarse pointer starts on the flat list; the
                 cylinder is one button away either way. */}
-            <ProjectReel items={items} flatByDefault={reduced || !fine} onSelect={setSelected} />
+            <ProjectReel items={items} active={!selected} flatByDefault={reduced || !fine} onSelect={setSelected} />
           </Suspense>
         </div>
       </Overlay>

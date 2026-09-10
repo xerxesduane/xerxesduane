@@ -12,6 +12,7 @@ interface OverlayProps {
   description?: string;
   /** Show the title visually as well as to assistive tech. */
   showTitle?: boolean;
+  presentation?: "panel" | "immersive" | "preview";
   children: ReactNode;
 }
 
@@ -35,6 +36,7 @@ export default function Overlay({
   title,
   description,
   showTitle = false,
+  presentation = "panel",
   children,
 }: OverlayProps) {
   const panelRef = useRef<HTMLDivElement>(null);
@@ -132,7 +134,8 @@ export default function Overlay({
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[90] flex items-center justify-center p-3 sm:p-6"
+      className={`fixed inset-0 z-[90] flex items-center justify-center ${presentation === "panel" ? "p-3 sm:p-6" : "showcase-overlay"}`}
+      data-presentation={presentation}
       onKeyDown={onKeyDown}
     >
       <button
@@ -149,9 +152,9 @@ export default function Overlay({
         aria-labelledby={`${id}-title`}
         aria-describedby={description ? `${id}-desc` : undefined}
         tabIndex={-1}
-        className="overlay-panel relative flex max-h-full w-full max-w-6xl flex-col overflow-hidden rounded-panel border border-line bg-panel shadow-card-hover"
+        className={`overlay-panel relative flex max-h-full w-full flex-col overflow-hidden ${presentation === "panel" ? "max-w-6xl rounded-panel border border-line bg-panel shadow-card-hover" : `showcase-dialog showcase-dialog--${presentation}`}`}
       >
-        <div className="flex items-start justify-between gap-4 border-b border-line px-4 py-3 sm:px-6 sm:py-4">
+        <div className={`flex items-start justify-between gap-4 ${presentation === "panel" ? "border-b border-line px-4 py-3 sm:px-6 sm:py-4" : "showcase-dialog-header"}`}>
           <div className={showTitle ? "" : "sr-only"}>
             <h2 id={`${id}-title`} className="font-display text-lg font-extrabold text-fg">
               {title}
