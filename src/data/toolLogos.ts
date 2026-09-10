@@ -158,4 +158,13 @@ export const TOOL_LOGOS: ToolLogo[] = [
     ],
     hex: "21759b",
   },
+  {
+    label: "Framer",
+    viewBox: "4 0 16 24",
+    aspect: 0.67,
+    paths: [
+      "M4 0h16v8h-8zM4 8h8l8 8H4zM4 16h8v8z",
+    ],
+    hex: "0055ff",
+  },
 ];

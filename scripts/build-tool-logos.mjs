@@ -3,8 +3,8 @@
 // Run: npm run logos
 //
 // Why generate rather than import at runtime: simple-icons alone is 3,459
-// icons. The strip needs sixteen, so the paths are extracted at build time and
-// the packages stay devDependencies that never reach a browser.
+// icons. The strip needs a couple of dozen, so the paths are extracted at build
+// time and the packages stay devDependencies that never reach a browser.
 //
 // LICENSING. Simple Icons ships its SVGs under CC0 and Devicon under MIT, so
 // the icon *files* are free to use. The marks themselves remain their owners'
@@ -44,6 +44,7 @@ const TOOLS = [
   { label: "VS Code", dev: "vscode" },
   { label: "Shopify", si: "shopify" },
   { label: "WordPress", si: "wordpress" },
+  { label: "Framer", si: "framer" },
 ];
 
 const hexToRgb = (h) => [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
