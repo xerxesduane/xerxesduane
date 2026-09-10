@@ -1,4 +1,5 @@
-import { ArrowLeft, Check, Compass, ListChecks, MapPin, Quote, User } from "lucide-react";
+import { ArrowLeft, Check, Compass, ListChecks, Quote } from "lucide-react";
+import AboutIntro from "../components/about/AboutIntro";
 import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import Panel from "../components/page/Panel";
@@ -26,8 +27,8 @@ export default function About() {
     <>
       <PageHeader
         eyebrow="About"
-        title={<>The person behind the work.</>}
-        lede="Independent systems consultant in Dubai, building the setups small businesses actually run on."
+        title={<>Hi, I&rsquo;m Xerxes.</>}
+        lede="I build the systems that keep a small business running when nobody is watching them."
         actions={
           <>
             <PrimaryAction href="/#contact">Book a free audit</PrimaryAction>
@@ -38,29 +39,11 @@ export default function About() {
         }
       />
 
-      <PanelBoard>
-        {/* Identity */}
-        <Panel icon={User} label="Xerxes Duane" span="lg:col-span-4">
-          <img
-            src="/brand/founder-xerxes.jpg"
-            alt="Xerxes Duane, founder and lead consultant"
-            width={112}
-            height={112}
-            loading="lazy"
-            decoding="async"
-            className="h-28 w-28 rounded-2xl border border-line object-cover object-top"
-          />
-          <p className="font-technical text-[0.68rem] font-bold uppercase tracking-[0.14em] text-accent-deep">
-            Founder &amp; Lead Consultant
-          </p>
-          <p className="inline-flex w-fit items-center gap-2 rounded-full border border-line bg-panel-alt px-3 py-1.5 text-xs text-fg-soft">
-            <MapPin size={13} className="text-accent" aria-hidden />
-            Dubai · serving across borders
-          </p>
-        </Panel>
+      <AboutIntro />
 
+      <PanelBoard className="mt-4">
         {/* Bio */}
-        <Panel icon={Compass} label="How I work" span="lg:col-span-8">
+        <Panel icon={Compass} label="How I work" span="lg:col-span-7">
           <div className="space-y-3 text-[0.95rem] leading-relaxed text-fg-soft">
             <p>
               I help growing businesses run on systems that actually work
@@ -82,7 +65,7 @@ export default function About() {
         </Panel>
 
         {/* Approach */}
-        <Panel icon={ListChecks} label="My approach" span="lg:col-span-6">
+        <Panel icon={ListChecks} label="My approach" span="lg:col-span-5">
           <ul className="space-y-2">
             {FOCUS.map((f) => (
               <li key={f} className="flex items-start gap-2.5 text-sm text-fg-soft">
@@ -94,7 +77,7 @@ export default function About() {
         </Panel>
 
         {/* Recent work */}
-        <Panel icon={Compass} label="Recent work spans" span="lg:col-span-6">
+        <Panel icon={Compass} label="Recent work spans" span="lg:col-span-7">
           <ul className="grid gap-2 sm:grid-cols-2">
             {PROJECTS.map((p) => (
               <li
@@ -111,7 +94,7 @@ export default function About() {
             client card is also commented out in data/content.ts. */}
 
         {/* Closing note */}
-        <Panel icon={Quote} label="Why I do it" span="lg:col-span-12">
+        <Panel icon={Quote} label="Why I do it" span="lg:col-span-5">
           <p className="font-display text-lg italic leading-relaxed text-fg sm:text-xl">
             I don't just create things. I help your business run, and I stay for
             the parts of your life it touches. Serving comes first; the build is
