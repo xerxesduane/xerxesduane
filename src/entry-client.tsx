@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot, hydrateRoot } from "react-dom/client";
+import { createRoot } from "react-dom/client";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./index.css";
 import App from "./App";
@@ -18,15 +18,17 @@ const tree = (
   </StrictMode>
 );
 
-// Keep the prerendered page in place: it supplies the first paint and native
-// scroll restoration while lazy route code loads. Vite dev has an empty root.
-if (container.querySelector("main")) hydrateRoot(container, tree);
-else createRoot(container).render(tree);
+// The build serves fully prerendered HTML for crawlers and the first paint.
+// Framer Motion's client-only state differs from its static markup, so replace
+// the snapshot cleanly rather than producing a recoverable hydration error.
+container.replaceChildren();
+createRoot(container).render(tree);
 
 /**
  * Re-run the browser's scroll-to-fragment.
  *
- * Watch for the target to appear (development routes are lazy chunks, so it is not
+ * Because the prerendered DOM is replaced, watch for the target to reappear
+ * (routes are lazy chunks, so it is not
  * there on the first frame), scroll to it, then correct once more after
  * `load` in case images changed the layout underneath it. `scrollIntoView`
  * respects each section's `scroll-margin-top`, so the offset matches what an
