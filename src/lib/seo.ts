@@ -1,5 +1,6 @@
 import { SERVICE_PAGES, getServicePage } from "../data/servicePages";
 import { CASE_STUDIES, FAQS } from "../data/content";
+import { CURRENCY, NONPROFIT, RATE_CARD, UNIT_SCHEMA, aed, priceForSlug } from "../data/pricing";
 import { INSIGHTS, getInsight } from "../data/insights";
 import { SERVICE_PAGES_AR, getServicePageAr } from "../data/servicePagesAr";
 
@@ -100,6 +101,104 @@ const FAQ_SCHEMA = {
   })),
 };
 
+/**
+ * A Schema.org Offer for one service's starting price.
+ *
+ * `minPrice` on a PriceSpecification rather than a flat `price`, because
+ * every figure here is a floor. Publishing it as an exact price would be a
+ * different claim, and the one thing worse than hiding a price is stating one
+ * you will not honour.
+ *
+ * `priceValidUntil` is deliberately absent: these are standing rates, not a
+ * promotion, and a stale date makes Google drop the offer entirely.
+ */
+function offerFor(pageSlug: string, url: string): Record<string, unknown> | null {
+  const point = priceForSlug(pageSlug);
+  if (!point) return null;
+  const { unitText, recurring } = UNIT_SCHEMA[point.unit];
+  return {
+    "@type": "Offer",
+    availability: "https://schema.org/InStock",
+    url,
+    priceSpecification: {
+      "@type": recurring ? "UnitPriceSpecification" : "PriceSpecification",
+      priceCurrency: CURRENCY,
+      minPrice: point.from,
+      valueAddedTaxIncluded: false,
+      ...(recurring
+        ? { billingIncrement: 1, unitText, referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitText } }
+        : { unitText }),
+    },
+  };
+}
+
+/**
+ * Every published price as one catalogue, for the pricing page.
+ *
+ * This is the node an assistant reads when someone asks what a website costs
+ * in Dubai: each entry pairs a service name with a number and a currency, so
+ * the answer can be quoted without the model having to parse a table.
+ */
+function offerCatalog(): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "OfferCatalog",
+    name: "Starting prices",
+    url: `${SITE_ORIGIN}/pricing`,
+    provider: { "@id": `${SITE_ORIGIN}/#org` },
+    itemListElement: RATE_CARD.map((point, i) => ({
+      "@type": "Offer",
+      position: i + 1,
+      name: point.service,
+      availability: "https://schema.org/InStock",
+      priceSpecification: {
+        "@type": UNIT_SCHEMA[point.unit].recurring ? "UnitPriceSpecification" : "PriceSpecification",
+        priceCurrency: CURRENCY,
+        minPrice: point.from,
+        unitText: UNIT_SCHEMA[point.unit].unitText,
+        valueAddedTaxIncluded: false,
+      },
+      itemOffered: {
+        "@type": "Service",
+        name: point.service,
+        provider: { "@id": `${SITE_ORIGIN}/#org` },
+        areaServed: { "@type": "City", name: "Dubai" },
+      },
+      eligibleCustomerType: "https://schema.org/Business",
+    })),
+  };
+}
+
+/**
+ * The questions people type, answered in the words they would quote.
+ *
+ * Separate from the site-wide FAQS because these only make sense next to the
+ * table: an assistant that lifts one of these answers should come away with a
+ * figure and a currency, not a promise that someone will get back to them.
+ */
+const PRICING_FAQS: { q: string; a: string }[] = [
+  {
+    q: "How much does a website cost in Dubai?",
+    a: `A landing page starts at ${aed(2500)} and an e-commerce build at ${aed(9000)}. If the budget is tight, The Starter package is a fixed ${aed(2500)} for a complete one-page site. Every figure is a starting point; the exact price comes in a written proposal after a free 60-minute audit.`,
+  },
+  {
+    q: "What is the cheapest option for a small business?",
+    a: `The Starter package, at a fixed ${aed(2500)}. That is one page covering your offer, your proof and a contact route that lands in WhatsApp, built mobile-first and owned outright by you. It is a finished thing at a fixed price rather than a deposit on a larger project.`,
+  },
+  {
+    q: "Do you offer discounts for non-profits, churches or charities?",
+    a: `Yes. ${NONPROFIT.who} pay ${NONPROFIT.label} on everything, the entire rate card rather than one service. A landing page is ${aed(1250)} instead of ${aed(2500)}, and an Odoo rollout ${aed(6000)} instead of ${aed(12000)}. Send proof of registration with your enquiry and the proposal comes back at the reduced rate.`,
+  },
+  {
+    q: "How much does Odoo ERP implementation cost in Dubai?",
+    a: `An Odoo or ERP rollout starts at ${aed(12000)}. CRM and dashboard builds start at ${aed(4000)}, and AI automation at ${aed(6000)}. What you pay depends on how many processes move into the system, which the free audit scopes before anyone quotes.`,
+  },
+  {
+    q: "Are these prices fixed?",
+    a: "The published figures are floors, not quotes. After the free 60-minute audit you get a written proposal with real scope at a fixed price, so the number you agree is the number you pay. No hourly billing and no surprises mid-project.",
+  },
+];
+
 const HOME_META: PageMeta = {
   title: "Xerxes Duane - Independent Systems Consultant in Dubai",
   description:
@@ -136,6 +235,7 @@ export function allRoutes(): string[] {
     "/",
     "/about",
     "/services",
+    "/pricing",
     "/contact",
     "/case-studies",
     ...CASE_STUDIES.map((study) => `/case-studies/${study.slug}`),
@@ -167,6 +267,26 @@ const AR_HOME_META: PageMeta = {
   ogImage: `${SITE_ORIGIN}/brand/og/ar-home.png`,
   locale: "ar_AR",
   alternates: HOME_ALTERNATES,
+};
+
+const PRICING_META: PageMeta = {
+  title: "Pricing - Xerxes Duane",
+  ogTitle: "Pricing - Xerxes Duane",
+  canonical: `${SITE_ORIGIN}/pricing`,
+  description: `Published starting prices for websites, Odoo ERP, CRM, automation and AI in Dubai. Landing pages from ${aed(2500)}, Odoo from ${aed(12000)}. ${NONPROFIT.label} for registered non-profits, churches and charities.`,
+  jsonLd: [
+    offerCatalog(),
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: PRICING_FAQS.map((f) => ({
+        "@type": "Question",
+        name: f.q,
+        acceptedAnswer: { "@type": "Answer", text: f.a },
+      })),
+    },
+    breadcrumb([HOME_CRUMB, { name: "Pricing", url: `${SITE_ORIGIN}/pricing` }]),
+  ],
 };
 
 const ABOUT_META: PageMeta = {
@@ -287,6 +407,7 @@ export function getPageMeta(path: string): PageMeta {
       jsonLd: [breadcrumb([HOME_CRUMB, { name: title, url: `${SITE_ORIGIN}/${slug}` }])],
     };
   }
+  if (slug === "pricing") return PRICING_META;
   if (slug === "about") return ABOUT_META;
   if (slug === "ai-lab" || slug === "demos") return AI_LAB_META;
   if (slug === "case-studies") return CASE_STUDIES_META;
@@ -405,6 +526,10 @@ export function getPageMeta(path: string): PageMeta {
         areaServed: { "@type": "City", name: "Dubai" },
         url: canonical,
         description: page.metaDescription,
+        // Only the pages whose service is on the rate card carry a price.
+        // An Offer without one is worse than none: it tells a crawler there
+        // is something to sell and then declines to say what it costs.
+        ...(offerFor(page.slug, canonical) ? { offers: offerFor(page.slug, canonical) } : {}),
       },
       {
         "@context": "https://schema.org",

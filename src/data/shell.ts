@@ -1,4 +1,4 @@
-import { Bot, User } from "lucide-react";
+import { Bot, Tag, User } from "lucide-react";
 import type { ComponentType } from "react";
 import { ChatGlyph, FolderGlyph, HomeGlyph, LayersGlyph } from "../components/ui/NavIcons";
 import { CONTACT } from "./content";
@@ -63,6 +63,7 @@ export const SHELL_NAV: ShellNavItem[] = [
     icon: LayersGlyph,
     matches: ["/services", ...SERVICE_PAGES.flatMap((page) => [`/${page.slug}`, `/ar/${page.slug}`])],
   },
+  { label: "Pricing", labelAr: "الأسعار", href: "/pricing", icon: Tag },
   { label: "AI Lab", labelAr: "مختبر الذكاء الاصطناعي", shortLabelAr: "المختبر", href: "/ai-lab", icon: Bot },
   {
     label: "About",

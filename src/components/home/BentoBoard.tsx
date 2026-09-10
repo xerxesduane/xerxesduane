@@ -198,17 +198,19 @@ export default function BentoBoard() {
         span={CREDENTIALS.length > 0 ? "" : "board:col-span-2"}
       >
         <ol className="divide-y divide-line-soft">
-          {CORE_SERVICES.map((title, i) => (
+          {CORE_SERVICES.map((service, i) => (
             <li
-              key={title}
+              key={service.title}
               className="flex items-baseline gap-2 py-[0.42rem] transition-transform duration-300 ease-smooth group-hover:translate-x-1 group-focus-visible:translate-x-1"
               style={{ transitionDelay: `${i * 40}ms` }}
             >
               <span className="grow text-[0.84rem] font-semibold leading-snug text-fg">
-                {title}
+                {service.title}
               </span>
+              {/* The starting price, where the row number used to be. Same
+                  column, same height, something a visitor can act on. */}
               <span className="shrink-0 font-display text-[0.68rem] font-bold tabular-nums text-fg-faint transition-colors duration-300 group-hover:text-accent">
-                {String(i + 1).padStart(2, "0")}
+                {service.price?.replace(/^from /, "") ?? ""}
               </span>
             </li>
           ))}

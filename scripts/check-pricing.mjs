@@ -1,0 +1,120 @@
+// Asserts the rate card still joins to everything that reads it.
+//
+// Run: npm run check:pricing  (also runs as part of npm run build)
+//
+// Why this exists. Prices reach the page through two joins: by service title
+// for the cards on the home page, and by service page slug for the headers and
+// the Schema.org offers. Both fail silently. A mistyped title just renders a
+// card with no price, and a mistyped slug ships a Service node with no offer,
+// which looks fine to everyone except the search engines the prices are there
+// for. That exact bug was written and caught by hand once; this is so it cannot
+// be shipped a second time.
+//
+// The charity check is arithmetic rather than a join, but it belongs here for
+// the same reason: a wrong number on this site is a promise to a stranger.
+import { readFileSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const read = (p) => readFileSync(join(root, p), "utf8");
+
+const fail = [];
+const check = (ok, message) => {
+  if (!ok) fail.push(message);
+};
+
+// Rate card entries, straight out of the source.
+const pricing = read("src/data/pricing.ts");
+const card = [...pricing.matchAll(
+  /\{ service: "([^"]+)",(?: pageSlug: "([^"]+)",)? from: (\d+), unit: "(\w+)" \}/g,
+)].map((m) => ({ service: m[1], pageSlug: m[2], from: Number(m[3]), unit: m[4] }));
+
+check(card.length >= 12, `parsed only ${card.length} rate card entries, expected at least 12`);
+
+// 1. Every service title must exist in SERVICES, or the home cards lose their price.
+const content = read("src/data/content.ts");
+const serviceBlock = content.slice(content.indexOf("const SERVICE_DEFS"));
+const titles = new Set(
+  [...serviceBlock.matchAll(/title: "([^"]+)"/g)].map((m) => m[1]),
+);
+for (const p of card) {
+  check(titles.has(p.service), `rate card names "${p.service}", which is not a title in SERVICES`);
+}
+
+// 2. Every pageSlug must exist, or that page ships a Service node with no offer.
+const pages = read("src/data/servicePages.ts");
+const slugs = new Set([...pages.matchAll(/slug: "([^"]+)"/g)].map((m) => m[1]));
+for (const p of card) {
+  if (!p.pageSlug) continue;
+  check(slugs.has(p.pageSlug), `rate card points at page "${p.pageSlug}", which does not exist`);
+}
+
+// 3. Prices must be sane: positive, whole dirhams, and a unit the formatter knows.
+const UNITS = new Set(["project", "month", "day", "video"]);
+for (const p of card) {
+  check(p.from > 0 && Number.isInteger(p.from), `${p.service} has a non-integer or zero price`);
+  check(UNITS.has(p.unit), `${p.service} uses unit "${p.unit}", which has no label or schema mapping`);
+}
+
+// 4. The charity rate must halve cleanly, or the published table shows fractions
+//    of a dirham next to a real one.
+const rate = Number(/rate: ([\d.]+),/.exec(pricing)?.[1]);
+check(rate > 0 && rate < 1, `non-profit rate is ${rate}, which is not a discount`);
+for (const p of card) {
+  const discounted = p.from * rate;
+  check(
+    Number.isInteger(discounted),
+    `${p.service} at ${p.from} x ${rate} gives ${discounted}, which is not a whole dirham`,
+  );
+}
+
+// 5. Figures hard-coded into prose must be a price the site actually charges.
+//    These are written out for the FAQ answers an assistant quotes, so a stale
+//    one is a number the site states and will not honour.
+//
+//    Two legitimate sources, not one: the rate card, and the package prices,
+//    which are set independently (The Build starts at AED 5,000, which is not
+//    any single service's floor). Half of either is legitimate too, because
+//    that is the charity rate.
+const packageMatches = [...content.matchAll(/price: "(?:from )?AED ([\d,]+)"/g)].map((m) =>
+  Number(m[1].replace(/,/g, "")),
+);
+// Count matches, not distinct values: two packages legitimately share
+// AED 2,500, and deduping them first made this assertion fail on correct data.
+check(
+  packageMatches.length >= 3,
+  `parsed only ${packageMatches.length} package prices, expected at least 3`,
+);
+const packagePrices = new Set(packageMatches);
+const amounts = new Set([...card.map((p) => p.from), ...packagePrices]);
+const prose = [
+  ["src/data/pricing.ts", pricing],
+  ["src/lib/seo.ts", read("src/lib/seo.ts")],
+  ["src/data/content.ts", content],
+];
+for (const [where, text] of prose) {
+  for (const m of text.matchAll(/aed\((\d+)\)/g)) {
+    const n = Number(m[1]);
+    check(
+      amounts.has(n) || amounts.has(n * 2),
+      `${where} writes aed(${n}), which is not a published price or half of one`,
+    );
+  }
+  for (const m of text.matchAll(/AED ([\d,]{3,})/g)) {
+    const n = Number(m[1].replace(/,/g, ""));
+    check(
+      amounts.has(n) || amounts.has(n * 2),
+      `${where} writes "AED ${m[1]}", which is not a published price or half of one`,
+    );
+  }
+}
+
+if (fail.length) {
+  console.error(`Pricing check failed (${fail.length}):`);
+  for (const f of fail) console.error(`  - ${f}`);
+  process.exit(1);
+}
+console.log(
+  `  pricing ok: ${card.length} services + ${packageMatches.length} packages, all joined, charity rate ${rate * 100}%`,
+);

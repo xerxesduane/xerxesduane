@@ -21,8 +21,18 @@ import { WEB_DESIGNS, type WorkItem } from "./workItems";
 export { TOOL_LOGOS as TOOLS } from "./toolLogos";
 export type { ToolLogo as Tool } from "./toolLogos";
 
-/** Core offerings, trimmed to the compact card. */
-export const CORE_SERVICES = SERVICES.slice(0, 5).map((s) => s.title);
+/**
+ * Core offerings for the compact card, each with what it starts at.
+ *
+ * The price rides along because the card had a decorative 01-05 counter in
+ * that column, and a number a visitor can act on is worth more than a number
+ * that only counts the rows. It costs no extra height, which the home page
+ * does not have to spare.
+ */
+export const CORE_SERVICES = SERVICES.slice(0, 5).map((s) => ({
+  title: s.title,
+  price: s.price,
+}));
 
 /**
  * Documented outcomes, pulled straight from the case studies that carry real
