@@ -83,9 +83,14 @@ const packageMatches = [...content.matchAll(/price: "(?:from )?AED ([\d,]+)"/g)]
 // Count matches, not distinct values: two packages legitimately share
 // AED 2,500, and deduping them first made this assertion fail on correct data.
 check(
-  packageMatches.length >= 3,
-  `parsed only ${packageMatches.length} package prices, expected at least 3`,
+  packageMatches.length >= 2,
+  `parsed only ${packageMatches.length} package prices, expected at least 2`,
 );
+// The Starter's price is derived from STARTER in pricing.ts rather than typed
+// into PACKAGES, so pick it up from there or every figure quoting it fails.
+const starterPrice = Number(/price: (\d+),/.exec(pricing)?.[1]);
+check(starterPrice > 0, "could not read STARTER.price from pricing.ts");
+packageMatches.push(starterPrice);
 const packagePrices = new Set(packageMatches);
 const amounts = new Set([...card.map((p) => p.from), ...packagePrices]);
 const prose = [

@@ -5,7 +5,7 @@ import SystemDiagram from "../components/home/SystemDiagram";
 import Contact from "../components/Contact";
 import { PrimaryAction } from "../components/page/PageActions";
 import { SERVICE_PAGES } from "../data/servicePages";
-import { priceForSlug, priceLabel } from "../data/pricing";
+import { PRICING, priceForSlug, priceLabel } from "../data/pricing";
 
 export default function Services() {
   return <>
@@ -27,7 +27,7 @@ export default function Services() {
       })}
     </PanelBoard>
     <p className="mt-4 text-center text-sm text-fg-soft">
-      Every figure is a starting point.{" "}
+      {PRICING.line}{" "}
       <a href="/pricing" className="font-bold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent">
         See the full rate card
       </a>

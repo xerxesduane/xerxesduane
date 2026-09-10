@@ -22,7 +22,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AI_LAB_TOOL_COUNT } from "./aiLab";
-import { NONPROFIT, PRICING, aed, priceFor, priceLabel } from "./pricing";
+import { NONPROFIT, PRICING, STARTER, aed, priceFor, priceLabel } from "./pricing";
 
 export { PRICING };
 
@@ -703,12 +703,14 @@ export const PACKAGES = [
     featured: true,
   },
   {
-    name: "The Starter",
-    price: "AED 2,500",
+    name: STARTER.name,
+    // Derived, so the card, /starter and the schema cannot disagree.
+    price: aed(STARTER.price),
     note: "fixed price, not a deposit",
     pitch: "For a tight budget",
     body: "One page that does the job: your offer, your proof, and a way to reach you that lands in WhatsApp rather than an inbox nobody opens. Mobile-first, fast, and yours outright. A fixed scope at a fixed price, so a small budget buys something finished instead of a deposit on something bigger.",
-    cta: "Start here",
+    cta: "See what's included",
+    href: `/${STARTER.slug}`,
     featured: false,
   },
   {
