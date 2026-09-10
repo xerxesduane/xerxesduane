@@ -13,7 +13,7 @@ export default function CaseStudies() {
       <PageHeader
         eyebrow="Projects"
         title={<>Real businesses. Real systems.</>}
-        lede="A closer look at the work — from full Odoo deployments to ad campaigns that pay for themselves, across the UAE, the Philippines and beyond."
+        lede="A closer look at the work, from full Odoo deployments to ad campaigns that pay for themselves, across the UAE, the Philippines and beyond."
         actions={
           <>
             <PrimaryAction href="/#contact">Book a free audit</PrimaryAction>

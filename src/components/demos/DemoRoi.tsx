@@ -113,7 +113,7 @@ export default function DemoRoi() {
             </div>
           </div>
           <p className="mt-4 border-t border-cream/10 pt-3 text-xs text-muted-dark">
-            Rough estimate only — it assumes automation handles about {Math.round(RECOVERY * 100)}% of this repetitive
+            Rough estimate only, it assumes automation handles about {Math.round(RECOVERY * 100)}% of this repetitive
             work. Your real numbers depend on the task; that's exactly what a free audit pins down.
           </p>
           <a

@@ -107,7 +107,7 @@ export default function DemoSection() {
             </div>
           )}
           <p className="mt-2 text-xs text-muted-dark">
-            Rendered live from AI output in your brand system — this is the kind of section I ship, fully editable.
+            Rendered live from AI output in your brand system, this is the kind of section I ship, fully editable.
           </p>
         </div>
       )}

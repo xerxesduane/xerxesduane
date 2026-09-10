@@ -47,7 +47,7 @@ export default function DemoQuote() {
         value={request}
         onChange={(e) => setRequest(e.target.value)}
         rows={3}
-        placeholder="Describe the job — what you're delivering, for whom…"
+        placeholder="Describe the job, what you're delivering, for whom…"
         aria-label="Job to quote for"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />

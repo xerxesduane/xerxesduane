@@ -39,14 +39,14 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
       aria-label="Profile and site navigation"
       className="hidden shrink-0 lg:block lg:w-[15rem] xl:w-[16.5rem] board:w-[18rem]"
     >
-      <div className="sticky top-0 flex flex-col gap-4 py-8 pe-1">
+      <div className="sticky top-0 flex flex-col gap-4 py-8 pe-1 board:gap-2.5 board:py-4">
         {/* Portrait + identity, as one link home. The logo mark rides the
             portrait's corner so the brand asset stays present without a
             second lockup competing with the name below it. */}
         <m.a
           variants={fadeUp}
           href="/"
-          aria-label={`${SHELL_IDENTITY.name} — home`}
+          aria-label={`${SHELL_IDENTITY.name}, home`}
           className="group flex flex-col items-center rounded-3xl px-2 pt-1 text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4 focus-visible:ring-offset-canvas"
         >
           <span className="relative">
@@ -58,7 +58,7 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className="h-[7.5rem] w-[7.5rem] rounded-full border border-line bg-panel object-cover object-top shadow-card transition duration-500 ease-smooth group-hover:-translate-y-0.5 board:h-[10rem] board:w-[10rem]"
+              className="h-[7.5rem] w-[7.5rem] board:h-[5.75rem] board:w-[5.75rem] rounded-full border border-line bg-panel object-cover object-top shadow-card transition duration-500 ease-smooth group-hover:-translate-y-0.5 board:h-[10rem] board:w-[10rem]"
             />
             <span
               aria-hidden
@@ -68,7 +68,7 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
             </span>
           </span>
 
-          <h2 className="mt-4 flex items-center justify-center gap-1.5 font-display text-[1.6rem] font-extrabold leading-none tracking-tight text-fg">
+          <h2 className="mt-4 board:mt-2.5 flex items-center justify-center gap-1.5 font-display text-[1.6rem] board:text-[1.3rem] font-extrabold leading-none tracking-tight text-fg">
             {SHELL_IDENTITY.name}
             {SHELL_IDENTITY.verified && <VerifiedTick size={19} />}
           </h2>

@@ -88,7 +88,7 @@ export default function DemoVoice() {
       setTranscript(text);
       await converse(text);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong — try the text box below.");
+      setError(err instanceof Error ? err.message : "Something went wrong, try the text box below.");
     } finally {
       setBusy(false);
     }
@@ -117,7 +117,7 @@ export default function DemoVoice() {
       track("demo_run", { demo: "voice" });
       timerRef.current = window.setTimeout(() => stopRecording(), 15000);
     } catch {
-      setError("I couldn't access the mic — allow microphone access, or just type your message below.");
+      setError("I couldn't access the mic, allow microphone access, or just type your message below.");
     }
   }
 
@@ -193,17 +193,17 @@ export default function DemoVoice() {
             </>
           ) : (
             <>
-              <Mic size={16} /> {busy ? "Thinking…" : "Hold a conversation — tap to speak"}
+              <Mic size={16} /> {busy ? "Thinking…" : "Hold a conversation, tap to speak"}
             </>
           )}
         </button>
       ) : (
-        <p className="text-xs text-muted-dark">Your browser doesn't support recording — type your message below instead.</p>
+        <p className="text-xs text-muted-dark">Your browser doesn't support recording, type your message below instead.</p>
       )}
 
       <p className="flex items-start gap-1.5 font-mono text-[10.5px] leading-snug text-muted-dark">
         <ShieldCheck size={12} className="mt-px shrink-0 text-gold/60" />
-        Mic audio is sent once to transcribe this clip, then discarded — nothing is stored. Speak in English or Arabic.
+        Mic audio is sent once to transcribe this clip, then discarded: nothing is stored. Speak in English or Arabic.
       </p>
 
       {/* Always-available text fallback */}
@@ -211,7 +211,7 @@ export default function DemoVoice() {
         <input
           value={typed}
           onChange={(e) => setTyped(e.target.value)}
-          placeholder="…or type instead — English or بالعربية"
+          placeholder="…or type instead, English or بالعربية"
           aria-label="Type a message to the receptionist"
           className="w-full rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
         />

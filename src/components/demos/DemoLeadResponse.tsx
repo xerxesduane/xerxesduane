@@ -11,7 +11,7 @@ type LeadResponse = {
   nextStep: string;
 };
 
-const EXAMPLE = `Hi, I saw your AC servicing ad. Our office in Business Bay has 6 split units and two of them are barely cooling — it's getting really uncomfortable for the team. We'd need someone out this week if possible. Can you do a maintenance contract too? Reach me on 050 998 7766 or omar@nasr-trading.ae. Thanks!`;
+const EXAMPLE = `Hi, I saw your AC servicing ad. Our office in Business Bay has 6 split units and two of them are barely cooling, it's getting really uncomfortable for the team. We'd need someone out this week if possible. Can you do a maintenance contract too? Reach me on 050 998 7766 or omar@nasr-trading.ae. Thanks!`;
 
 const URGENCY_COLOR: Record<LeadResponse["urgency"], string> = {
   high: "text-gold",
@@ -47,7 +47,7 @@ export default function DemoLeadResponse() {
         value={enquiry}
         onChange={(e) => setEnquiry(e.target.value)}
         rows={5}
-        placeholder="Paste a customer enquiry — an email, a WhatsApp message, a contact-form note…"
+        placeholder="Paste a customer enquiry, an email, a WhatsApp message, a contact-form note…"
         aria-label="Customer enquiry"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />

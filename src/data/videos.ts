@@ -15,19 +15,19 @@ export const VIDEOS: VideoItem[] = [
   { id: "CB4j2pDTZEk", title: "Reformation Conference 2023", tag: "Event" },
   {
     id: "-CH0mfTkfhU",
-    title: "Lanna Christian School Graduation 2024 — Phayao, Thailand",
+    title: "Lanna Christian School Graduation 2024, Phayao, Thailand",
     tag: "Event",
   },
   { id: "xhSudmPb6wg", title: "Tribal New Life Church Missions", tag: "Documentary" },
   {
     id: "lyr5kgvR9gU",
-    title: "VFBM Church Building Project — Batanes, Philippines",
+    title: "VFBM Church Building Project, Batanes, Philippines",
     tag: "Documentary",
   },
-  { id: "hZvfrwOVRic", title: "Ayangan, Ifugao — Mensaheros", tag: "Documentary" },
+  { id: "hZvfrwOVRic", title: "Ayangan, Ifugao: Mensaheros", tag: "Documentary" },
   {
     id: "YF4fhBL8xOA",
-    title: "Discover MORE about 1 John 1 — Original Language Academy",
+    title: "Discover MORE about 1 John 1, Original Language Academy",
     tag: "Educational",
   },
 ];

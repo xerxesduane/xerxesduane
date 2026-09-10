@@ -19,13 +19,13 @@ const CDN = "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.6";
 const MODEL = "Xenova/all-MiniLM-L6-v2";
 
 const FAQS: { q: string; a: string }[] = [
-  { q: "How much does a website cost?", a: "It depends on the scope — pages, integrations, and what you already have running. You get one fixed quote in writing after a free audit, so there's nothing to guess at." },
-  { q: "Do you work with Odoo or ERP systems?", a: "Yes — Odoo/ERP and CRM setup is a core service: sales, inventory, accounting and more, connected into one system." },
-  { q: "Can you build AI automation for my business?", a: "Yes — from WhatsApp automation to AI assistants and agents. The same tools you can try live here in the AI Lab." },
-  { q: "Do you work in Arabic?", a: "Bilingual is the default in Dubai — websites, support and AI assistants all work in Arabic and English." },
-  { q: "How do we get started?", a: "Book a free 60-minute systems audit. No pressure — you leave with a plan whether or not you hire me." },
-  { q: "Where are you based?", a: "Dubai, UAE — serving small businesses across the UAE and the wider GCC." },
-  { q: "Do I own what you build?", a: "Yes — you own all the code, accounts and data. No lock-in, ever." },
+  { q: "How much does a website cost?", a: "It depends on the scope, pages, integrations, and what you already have running. You get one fixed quote in writing after a free audit, so there's nothing to guess at." },
+  { q: "Do you work with Odoo or ERP systems?", a: "Yes, Odoo/ERP and CRM setup is a core service: sales, inventory, accounting and more, connected into one system." },
+  { q: "Can you build AI automation for my business?", a: "Yes, from WhatsApp automation to AI assistants and agents. The same tools you can try live here in the AI Lab." },
+  { q: "Do you work in Arabic?", a: "Bilingual is the default in Dubai, websites, support and AI assistants all work in Arabic and English." },
+  { q: "How do we get started?", a: "Book a free 60-minute systems audit. No pressure, you leave with a plan whether or not you hire me." },
+  { q: "Where are you based?", a: "Dubai, UAE: serving small businesses across the UAE and the wider GCC." },
+  { q: "Do I own what you build?", a: "Yes, you own all the code, accounts and data. No lock-in, ever." },
 ];
 
 function dot(a: number[], b: number[]): number {
@@ -70,7 +70,7 @@ export default function DemoOnDevice() {
       setStatus("ready");
     } catch {
       setStatus("error");
-      setError("Couldn't load the in-browser model — your network or browser may block it. Everything else in the Lab still works.");
+      setError("Couldn't load the in-browser model, your network or browser may block it. Everything else in the Lab still works.");
     }
   }
 
@@ -95,7 +95,7 @@ export default function DemoOnDevice() {
       });
       setMatch({ ...FAQS[bi], score: best });
     } catch {
-      setError("Search failed — try again.");
+      setError("Search failed, try again.");
     } finally {
       setSearching(false);
     }
@@ -106,7 +106,7 @@ export default function DemoOnDevice() {
       <p className="flex items-start gap-1.5 font-mono text-[10.5px] leading-snug text-muted-dark">
         <ShieldCheck size={12} className="mt-px shrink-0 text-gold/60" />
         Semantic FAQ search that runs entirely in your browser. The model loads once (~30 MB, then cached) and every
-        search after that is instant, free, and private — nothing leaves your device.
+        search after that is instant, free, and private: nothing leaves your device.
       </p>
 
       {status !== "ready" ? (
@@ -124,7 +124,7 @@ export default function DemoOnDevice() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Ask in your own words — e.g. 'what'll a site set me back?'"
+            placeholder="Ask in your own words, e.g. 'what'll a site set me back?'"
             aria-label="Ask the FAQ"
             className={field}
           />

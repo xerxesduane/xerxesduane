@@ -42,7 +42,7 @@ export default function DemoProperty() {
         value={facts}
         onChange={(e) => setFacts(e.target.value)}
         rows={4}
-        placeholder="Bullet facts — beds, area, size, view, price, amenities…"
+        placeholder="Bullet facts, beds, area, size, view, price, amenities…"
         aria-label="Property facts"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />

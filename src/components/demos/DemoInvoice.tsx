@@ -7,7 +7,7 @@ type Item = { description: string; quantity: number; unitPrice: number };
 type Invoice = { vendor: string; invoiceDate: string; currency: string; items: Item[] };
 
 const EXAMPLE =
-  "Gulf Office Supplies LLC — TAX INVOICE 14/03/2026\n" +
+  "Gulf Office Supplies LLC, TAX INVOICE 14/03/2026\n" +
   "5 reams A4 paper @ 14.50 ea\n" +
   "printer toner cartridge x2  220 each\n" +
   "delivery charge ........ 35\n" +

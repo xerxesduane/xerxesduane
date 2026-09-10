@@ -39,7 +39,7 @@ export default function DemoPipeline() {
         value={process}
         onChange={(e) => setProcess(e.target.value)}
         rows={5}
-        placeholder="Describe how you sell — where leads come from, the steps you take, and how a deal closes…"
+        placeholder="Describe how you sell, where leads come from, the steps you take, and how a deal closes…"
         aria-label="Your sales process"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />

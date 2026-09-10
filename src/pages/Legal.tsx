@@ -84,7 +84,7 @@ export function Privacy() {
         it: no cookie is set, no identifier is created, and nothing about you is
         sent or stored. Your browser keeps a single flag for the length of the
         tab session so one visit isn&rsquo;t counted twice, and the server keeps
-        one number per month &mdash; not one row per visitor.
+        one number per month, not one row per visitor.
       </p>
       <p>
         <strong className="font-bold text-fg">Cookies &amp; local storage.</strong>{" "}

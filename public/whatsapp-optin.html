@@ -57,7 +57,7 @@
     <div class="optin" id="card">
       <span class="badge">✓ WhatsApp</span>
       <h1>Get updates on WhatsApp</h1>
-      <p class="sub">News, offers, and quick answers from Xerxes Duane — straight to your WhatsApp. Opt out anytime by replying STOP.</p>
+      <p class="sub">News, offers, and quick answers from Xerxes Duane, straight to your WhatsApp. Opt out anytime by replying STOP.</p>
       <form id="form" novalidate>
         <label for="name">Your name</label>
         <input id="name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe" />
@@ -119,7 +119,7 @@
             `<p class="sub">You'll hear from us on WhatsApp. Want to start the chat now?</p>` +
             `<a class="wa-link" href="${waLink}" target="_blank" rel="noopener">Open WhatsApp →</a></div>`;
         } catch (e2) {
-          err.textContent = "Something went wrong — please try again.";
+          err.textContent = "Something went wrong, please try again.";
           err.hidden = false;
           btn.disabled = false;
           btn.textContent = "Yes, message me on WhatsApp";

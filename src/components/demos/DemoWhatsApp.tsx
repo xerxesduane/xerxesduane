@@ -41,8 +41,8 @@ const MAX_LIVE = 6;
 const COLORS = ["#C9A227", "#5B8DEF", "#3FB984", "#E8557E", "#9B59B6", "#FF7A45", "#19B5A3", "#F4A300"];
 
 const SAMPLE_LEADS: Lead[] = [
-  { id: 1, name: "Aisha Rahman", company: "Noor Interiors", interest: "a kitchen renovation quote", city: "Dubai", source: "Website enquiry", color: COLORS[0], consent: true, reply: "Oh perfect timing — yes please, can you send pricing? 😍" },
-  { id: 2, name: "Daniel Okafor", company: "BrightPath Tutoring", interest: "the 1-on-1 SAT prep program", city: "Abu Dhabi", source: "Booking form", color: COLORS[1], consent: true, reply: "Great — what slots do you have next week?" },
+  { id: 1, name: "Aisha Rahman", company: "Noor Interiors", interest: "a kitchen renovation quote", city: "Dubai", source: "Website enquiry", color: COLORS[0], consent: true, reply: "Oh perfect timing, yes please, can you send pricing? 😍" },
+  { id: 2, name: "Daniel Okafor", company: "BrightPath Tutoring", interest: "the 1-on-1 SAT prep program", city: "Abu Dhabi", source: "Booking form", color: COLORS[1], consent: true, reply: "Great, what slots do you have next week?" },
   { id: 3, name: "Mei Lin Chen", company: "Lotus Wellness", interest: "the monthly membership", city: "Dubai", source: "Purchased list", color: COLORS[2], consent: false },
 ];
 
@@ -152,7 +152,7 @@ export default function DemoWhatsApp() {
   function applyImport(text: string) {
     const parsed = parseLeads(text);
     if (!parsed.length) {
-      setError("Couldn't read any leads — check the format (Name, Company, Interest, City).");
+      setError("Couldn't read any leads, check the format (Name, Company, Interest, City).");
       return;
     }
     loadLeads(parsed, true);
@@ -304,7 +304,7 @@ export default function DemoWhatsApp() {
           >
             <div className="flex flex-col gap-3 rounded-2xl border border-cream/10 bg-cream/[0.03] p-4">
               <p className="text-sm text-cream-dim">
-                Open your Google Sheet or Excel file, select your lead rows, and paste them here — or upload a CSV.
+                Open your Google Sheet or Excel file, select your lead rows, and paste them here: or upload a CSV.
                 Columns are matched automatically (<span className="text-cream">Name, Company, Interest, City, Source, Consent</span>).
                 Add a <span className="text-cream">Consent</span> column (yes/no) and only opted-in contacts are messaged.
               </p>
@@ -424,7 +424,7 @@ export default function DemoWhatsApp() {
                       )}
                     </span>
                     <span className="mt-1 block truncate text-[11px] text-muted-dark">
-                      {[lead.company, lead.city].filter(Boolean).join(" · ") || "—"}
+                      {[lead.company, lead.city].filter(Boolean).join(" · ") || ","}
                     </span>
                     <span className="mt-1.5 flex items-center gap-1.5">
                       <span className="text-[11px] text-muted-dark">↳</span>
@@ -454,11 +454,11 @@ export default function DemoWhatsApp() {
         <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-muted-dark">
           {optedIn > MAX_LIVE
             ? `Openers + replies written live by the AI for the first ${liveCount} · production runs all ${optedIn} opted-in through the WhatsApp Business API`
-            : "Openers AND replies are written live by the AI — it personalizes, then handles the conversation and books. Production runs through the WhatsApp Business API."}
+            : "Openers AND replies are written live by the AI, it personalizes, then handles the conversation and books. Production runs through the WhatsApp Business API."}
         </p>
         <p className="flex flex-wrap items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-muted-dark">
           <ShieldCheck size={12} className="text-[#3FB984]" />
-          Only opted-in contacts are messaged — the compliant way.
+          Only opted-in contacts are messaged, the compliant way.
           <a
             href="/whatsapp-optin.html"
             target="_blank"
@@ -577,7 +577,7 @@ function PhoneMock({
 
         {status === "idle" && !message && (
           <span className="m-auto px-4 text-center text-[11.5px] leading-relaxed text-[#5f7079]">
-            Queued — the AI will write a personalized opener and send it here.
+            Queued, the AI will write a personalized opener and send it here.
           </span>
         )}
       </div>

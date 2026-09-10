@@ -79,7 +79,7 @@ const NODES: Record<string, ReactNode> = {
   "assistant": (
       <DemoChat
         demo="assistant"
-        greeting="Hi! I'm a demo assistant for a small business. Ask me anything a customer might — hours, services, getting a quote…"
+        greeting="Hi! I'm a demo assistant for a small business. Ask me anything a customer might, hours, services, getting a quote…"
         placeholder="Ask the assistant a question…"
         suggestions={["What services do you offer?", "Are you open on weekends?", "Can I get a quote?"]}
       />
@@ -87,7 +87,7 @@ const NODES: Record<string, ReactNode> = {
   "lead": (
       <DemoChat
         demo="lead"
-        greeting="Hey — tell me a bit about your business and what's slowing you down, and I'll figure out how I can help."
+        greeting="Hey, tell me a bit about your business and what's slowing you down, and I'll figure out how I can help."
         placeholder="Tell it about your business…"
         suggestions={[
           "I run a small e-commerce store",
@@ -100,21 +100,21 @@ const NODES: Record<string, ReactNode> = {
       <>
         <DemoChat
           demo="receptionist"
-          greeting="Hi! I'm a bilingual AI receptionist — اسألني بالعربي أو بالإنجليزي 🙂 I can answer questions or book you an appointment. How can I help?"
+          greeting="Hi! I'm a bilingual AI receptionist, اسألني بالعربي أو بالإنجليزي 🙂 I can answer questions or book you an appointment. How can I help?"
           placeholder="Type in English or بالعربية…"
           suggestions={["I'd like to book an appointment", "ما هي ساعات العمل؟", "Where are you located?"]}
         />
         <DemoLeadCapture
           demo="receptionist"
           prompt="Want a bilingual receptionist like this?"
-          sub="Drop your WhatsApp or email — I'll show you how it'd handle your customers, in Arabic and English."
+          sub="Drop your WhatsApp or email, I'll show you how it'd handle your customers, in Arabic and English."
         />
       </>
   ),
   "booking": (
       <DemoChat
         demo="booking"
-        greeting="Hi! I can book you in 💆 Tell me what you'd like and when — أو راسلني بالعربي."
+        greeting="Hi! I can book you in 💆 Tell me what you'd like and when, أو راسلني بالعربي."
         placeholder="e.g. a haircut on Saturday afternoon…"
         suggestions={["Book a haircut for Saturday", "أبغى موعد تنظيف بشرة", "Do you have evening slots?"]}
       />
@@ -122,7 +122,7 @@ const NODES: Record<string, ReactNode> = {
   "trades": (
       <DemoChat
         demo="trades"
-        greeting="Hi! Tell me what's going on and where, and I'll help sort it — AC, plumbing, handyman…"
+        greeting="Hi! Tell me what's going on and where, and I'll help sort it: AC, plumbing, handyman…"
         placeholder="e.g. AC not cooling, 2BR in JLT…"
         suggestions={["My AC isn't cooling, JLT", "Kitchen sink is leaking", "Need a handyman this week"]}
       />
@@ -250,17 +250,17 @@ function DemoCard({ demo }: { demo: Demo }) {
 }
 
 const PIPELINE: { icon: LucideIcon; title: string; text: string }[] = [
-  { icon: FileSpreadsheet, title: "Your leads", text: "Connect the Google Sheet, Excel, or CRM your contacts already live in — no migration." },
+  { icon: FileSpreadsheet, title: "Your leads", text: "Connect the Google Sheet, Excel, or CRM your contacts already live in: no migration." },
   { icon: Sparkles, title: "AI personalizes", text: "Every lead gets a unique, on-brand opener with their name, interest and city woven in." },
   { icon: Send, title: "Sent on WhatsApp", text: "Delivered through the official WhatsApp Business API with your pre-approved templates." },
-  { icon: Inbox, title: "AI handles replies", text: "Two-way — the AI answers questions, qualifies, and books, then hands you a warm lead. Status synced to your CRM." },
+  { icon: Inbox, title: "AI handles replies", text: "Two-way, the AI answers questions, qualifies, and books, then hands you a warm lead. Status synced to your CRM." },
 ];
 
 function ProductionPipeline() {
   return (
     <div className="relative mt-8 border-t border-cream/10 pt-7">
       <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-gold/80">How it works in production</p>
-      <h3 className="mt-1.5 text-lg text-cream sm:text-xl">From your spreadsheet to their WhatsApp — on autopilot</h3>
+      <h3 className="mt-1.5 text-lg text-cream sm:text-xl">From your spreadsheet to their WhatsApp, on autopilot</h3>
 
       <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {PIPELINE.map((s, i) => {
@@ -290,7 +290,7 @@ function ProductionPipeline() {
       <div className="mt-5 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         <p className="flex items-start gap-2 text-xs leading-relaxed text-muted-dark">
           <ShieldCheck size={15} className="mt-px shrink-0 text-gold/70" />
-          Runs on the <span className="text-cream-dim">official WhatsApp Business Cloud API</span> — opt-in contacts,
+          Runs on the <span className="text-cream-dim">official WhatsApp Business Cloud API</span>, opt-in contacts,
           Meta-approved templates, billed per conversation. Built for you in days, wired into the tools you already use.
         </p>
         <a
@@ -309,7 +309,7 @@ function ProductionPipeline() {
 const FLAGSHIP_FAQ = [
   {
     q: "Will my WhatsApp number get banned?",
-    a: "No. It runs on the official WhatsApp Business Cloud API with Meta-approved templates and opt-in contacts — the compliant route, not a grey-market blaster.",
+    a: "No. It runs on the official WhatsApp Business Cloud API with Meta-approved templates and opt-in contacts, the compliant route, not a grey-market blaster.",
   },
   {
     q: "Isn't this just spam?",
@@ -317,7 +317,7 @@ const FLAGSHIP_FAQ = [
   },
   {
     q: "What does it cost to run?",
-    a: "You pay Meta a small per-conversation fee (cents, not dirhams). The build itself is a one-off — I'll scope it precisely in your free audit.",
+    a: "You pay Meta a small per-conversation fee (cents, not dirhams). The build itself is a one-off, I'll scope it precisely in your free audit.",
   },
   {
     q: "How fast can it go live?",
@@ -372,7 +372,7 @@ function FeaturedDemo({ demo }: { demo: Demo }) {
           <DemoLeadCapture
             demo="whatsapp"
             prompt="Want this running on your lead list?"
-            sub="Drop your WhatsApp or email and I'll show you exactly what it takes to set up for your business — free."
+            sub="Drop your WhatsApp or email and I'll show you exactly what it takes to set up for your business, free."
           />
         </div>
       </div>
@@ -490,7 +490,7 @@ export default function Demos() {
                 type="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search tools — e.g. WhatsApp, Arabic, invoice…"
+                placeholder="Search tools, e.g. WhatsApp, Arabic, invoice…"
                 className="w-full rounded-full border border-cream/12 bg-cream/5 py-2.5 pl-11 pr-4 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none"
               />
             </div>
@@ -504,7 +504,7 @@ export default function Demos() {
             <div className="mx-auto max-w-md rounded-3xl border border-cream/10 bg-ink-deep/40 p-8 text-center">
               <p className="text-cream">No tools match “{query.trim()}”.</p>
               <p className="mt-2 text-sm text-muted">
-                Try another word — or{" "}
+                Try another word, or{" "}
                 <a href="/#contact" className="text-gold underline underline-offset-2 hover:text-gold-soft">
                   tell me what you need
                 </a>{" "}
@@ -541,7 +541,7 @@ export default function Demos() {
             <div className="mx-auto mt-12 max-w-2xl rounded-3xl border border-gold/20 bg-[linear-gradient(180deg,rgba(218,164,66,0.08),transparent)] p-8 text-center sm:p-10">
               <h2 className="text-2xl text-cream sm:text-3xl">Like one of these? Let's build yours.</h2>
               <p className="mx-auto mt-3 max-w-xl text-muted">
-                Every tool here is live and real — and I tune them to your business, your data, and your
+                Every tool here is live and real, and I tune them to your business, your data, and your
                 tone, then wire them into what you already use.
               </p>
               <a

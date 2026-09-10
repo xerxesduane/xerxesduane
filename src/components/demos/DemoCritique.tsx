@@ -96,7 +96,7 @@ export default function DemoCritique() {
             value={copy}
             onChange={(e) => setCopy(e.target.value)}
             rows={7}
-            placeholder="Paste your landing-page copy — headline, subhead, body, CTAs…"
+            placeholder="Paste your landing-page copy, headline, subhead, body, CTAs…"
             aria-label="Landing page copy"
             className={`${FIELD} resize-none`}
           />

@@ -9,7 +9,7 @@ type Notes = {
   actionItems: { task: string; owner: string }[];
 };
 
-const EXAMPLE = `quick sync re the new client onboarding. omar says the intake form is too long, ppl drop off. agreed to cut it to 5 fields. layla will redo it in the crm by thursday. we also decided to send a welcome whatsapp automatically after signup — needs the api connected, omar to check with the dev. budget for the automation tool approved, ~AED 150/mo. still open: who writes the welcome message copy. next call monday 10am.`;
+const EXAMPLE = `quick sync re the new client onboarding. omar says the intake form is too long, ppl drop off. agreed to cut it to 5 fields. layla will redo it in the crm by thursday. we also decided to send a welcome whatsapp automatically after signup, needs the api connected, omar to check with the dev. budget for the automation tool approved, ~AED 150/mo. still open: who writes the welcome message copy. next call monday 10am.`;
 
 export default function DemoSummarize() {
   const [notes, setNotes] = useState(EXAMPLE);

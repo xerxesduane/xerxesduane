@@ -27,7 +27,7 @@ export default function ToolsStrip() {
       aria-label="Tools and platforms I work with"
       onFocusCapture={() => setInteracting(true)}
       onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}
-      className="mb-4 board:mb-2 rounded-[2.1rem] bg-gradient-to-r from-canvas-sunk/30 via-wash/45 to-wash-strong/60 p-1.5"
+      className="mb-4 board:mb-1.5 rounded-[2.1rem] bg-gradient-to-r from-canvas-sunk/30 via-wash/45 to-wash-strong/60 p-1.5"
     >
       <div className="flex items-stretch overflow-hidden rounded-[1.7rem] border border-line bg-panel shadow-card">
         {/* Fixed label */}
@@ -46,7 +46,7 @@ export default function ToolsStrip() {
             pauseOnHover
             paused={paused || reduced || interacting}
             repeat={3}
-            className="py-3 [--duration:52s] [--gap:0px] sm:py-3.5"
+            className="py-3 [--duration:52s] [--gap:0px] sm:py-3.5 board:py-2"
           >
             {TOOLS.map((tool) => {
               const Icon = tool.icon;
