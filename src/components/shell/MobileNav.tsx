@@ -3,6 +3,7 @@ import { Languages, Menu, X } from "lucide-react";
 import SocialLinks from "./SocialLinks";
 import { AR_CHROME } from "../../data/servicePagesAr";
 import ThemeToggle from "../ui/ThemeToggle";
+import VerifiedTick from "./VerifiedTick";
 import { SHELL_IDENTITY, SHELL_NAV, isNavActive, navHref, navLabel } from "../../data/shell";
 
 /**
@@ -54,6 +55,7 @@ export default function MobileNav({
           <div className="min-w-0 flex-1">
             <p className="truncate font-display text-sm font-semibold text-fg">
               {SHELL_IDENTITY.name}
+              {SHELL_IDENTITY.verified && <VerifiedTick size={14} className="ms-1" />}
             </p>
             <p className="truncate text-xs text-fg-soft">
               {ar ? SHELL_IDENTITY.taglineAr : SHELL_IDENTITY.tagline}

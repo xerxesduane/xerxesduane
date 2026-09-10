@@ -92,6 +92,36 @@ src/
     ui/                   # Overlay, ThemeToggle, NavIcons, Counter, Reveal…
 ```
 
+## The visit counter
+
+The number under the profile is this month's real visit count, or nothing at
+all. `api/visits.ts` talks to a Postgres table in Supabase holding one row per
+month, keyed in **Asia/Dubai** so the month turns over at midnight in Dubai
+rather than 8pm the evening before. Old months are kept, so "resets monthly"
+means a new row, not lost history.
+
+It needs two environment variables in Vercel. Without them the endpoint
+returns 503 and the rail renders no number — never a zero, never a
+placeholder, because an invented visitor count is worse than none:
+
+| Variable | Where to find it |
+| --- | --- |
+| `SUPABASE_URL` | Supabase → Project Settings → Data API → Project URL |
+| `SUPABASE_PUBLISHABLE_KEY` | Supabase → Project Settings → API Keys → publishable (`sb_publishable_…`) |
+
+That key is safe to expose. The table has RLS on with **no policies**, so it
+grants no read or write access to the table itself — only `bump_site_visits()`
+(adds exactly 1) and `get_site_visits()` (reads). Supabase's linter flags both
+as "public can execute a SECURITY DEFINER function"; that is the design, not an
+oversight.
+
+A visit is one browser session: the browser sets a `sessionStorage` flag and
+tells the server whether to count. Repeat loads, crawlers and anyone hammering
+the endpoint all silently fall through to a read instead. Nothing identifying
+is sent or stored — no cookie, no IP, no visitor row, one integer per month —
+which is why it runs without waiting on the analytics consent banner and is
+described separately on the privacy page.
+
 ## The site assistant
 
 The chat launcher in the corner of every page (`components/assistant/`) talks
