@@ -5,6 +5,7 @@ import { AR_CHROME } from "../../data/servicePagesAr";
 import ThemeToggle from "../ui/ThemeToggle";
 import VerifiedTick from "./VerifiedTick";
 import { SHELL_IDENTITY, SHELL_NAV, isNavActive, navHref, navLabel } from "../../data/shell";
+import { useVisitCount } from "../../lib/useVisitCount";
 
 /**
  * Compact navigation for narrow viewports: a sticky identity bar plus a
@@ -24,6 +25,9 @@ export default function MobileNav({
   locale?: "en" | "ar";
 }) {
   const ar = locale === "ar";
+  // Shares the desktop rail's request through a module-level promise, so
+  // rendering the number in both places still counts the visit once.
+  const visits = useVisitCount();
   const [open, setOpen] = useState(false);
   const panelId = useId();
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -57,8 +61,23 @@ export default function MobileNav({
               {SHELL_IDENTITY.name}
               {SHELL_IDENTITY.verified && <VerifiedTick size={14} className="ms-1" />}
             </p>
-            <p className="truncate text-xs text-fg-soft">
-              {ar ? SHELL_IDENTITY.taglineAr : SHELL_IDENTITY.tagline}
+            <p className="flex items-baseline gap-1.5 text-xs text-fg-soft">
+              <span className="truncate">
+                {ar ? SHELL_IDENTITY.taglineAr : SHELL_IDENTITY.tagline}
+              </span>
+              {visits !== null && (
+                // "this month" doesn't fit this bar without truncating the
+                // tagline to nothing, but dropping it would leave a number
+                // that reads as all-time. Kept for assistive tech and hover
+                // instead of shortened away.
+                <span
+                  className="shrink-0 tabular-nums text-fg-faint"
+                  title={ar ? "زيارة هذا الشهر" : "visits this month"}
+                >
+                  {visits.toLocaleString("en-US")} {ar ? "زيارة" : "visits"}
+                  <span className="sr-only">{ar ? " هذا الشهر" : " this month"}</span>
+                </span>
+              )}
             </p>
           </div>
           <ThemeToggle />

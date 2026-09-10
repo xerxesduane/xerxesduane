@@ -119,6 +119,10 @@ grants no access to the table itself — only `bump_site_visits()` (adds exactly
 1) and `get_site_visits()` (reads). Supabase's linter flags both as "public can
 execute a SECURITY DEFINER function"; that is the design, not an oversight.
 
+It shows in the desktop profile rail and the mobile header, both reading one
+shared request — the hook caches its promise at module level, so two consumers
+still count one visit.
+
 A visit is one browser session: the browser sets a `sessionStorage` flag and
 tells the server whether to count. Repeat loads, crawlers and anyone hammering
 the endpoint all silently fall through to a read instead. Nothing identifying
