@@ -38,6 +38,31 @@ const META = {
   },
 };
 
+/**
+ * The output size for a source, capped by width and by what WebP can encode.
+ *
+ * WebP refuses anything over 16,383px on either axis. Width alone never gets
+ * near that, but a full-page screenshot does: the portfolio is meant to hold
+ * whole-site captures — several here are 1:4 to 1:6, and a long marketing page
+ * runs past 16,383px well before it runs out of content. Capping width only
+ * meant sharp threw "Processed image is too large for the WebP format" partway
+ * through a run, after the output directory had already been cleaned.
+ *
+ * So height is a real constraint, not a formality: when the proportional
+ * height would overflow, narrow the image until it fits. A very tall capture
+ * comes out narrower than requested, which is the right trade — it still shows
+ * the whole design, just smaller.
+ */
+const WEBP_MAX = 16383;
+
+function fitWebp(srcW, srcH, maxW) {
+  const w = Math.min(srcW, maxW);
+  const h = Math.round(srcH * (w / srcW));
+  if (h <= WEBP_MAX) return [w, h];
+  const scale = WEBP_MAX / h;
+  return [Math.max(1, Math.floor(w * scale)), WEBP_MAX];
+}
+
 // Pre-flight. work-raw/ is gitignored, so it is absent or incomplete in a
 // fresh clone. The loop below cleans each category's output directory and the
 // manifest is rewritten wholesale, so running against a partial source set
@@ -94,8 +119,8 @@ for (const cat of CATS) {
     const meta = await sharp(src).metadata();
     const srcW = meta.width || 1600;
     const srcH = meta.height || 1000;
-    const fullW = Math.min(srcW, 1600);
-    const fullH = Math.round(srcH * (fullW / srcW));
+    const [fullW, fullH] = fitWebp(srcW, srcH, 1600);
+    const [thumbW] = fitWebp(srcW, srcH, 800);
 
     await sharp(src)
       .rotate()
@@ -105,7 +130,7 @@ for (const cat of CATS) {
 
     await sharp(src)
       .rotate()
-      .resize({ width: 800, withoutEnlargement: true })
+      .resize({ width: thumbW, withoutEnlargement: true })
       .webp({ quality: 72 })
       .toFile(join(outDir, `${base}-thumb.webp`));
 
