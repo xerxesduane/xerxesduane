@@ -1,5 +1,5 @@
 import { CASE_STUDIES, SERVICES } from "./content";
-import { WEB_DESIGNS } from "./workItems";
+import { WEB_DESIGNS, type WorkItem } from "./workItems";
 
 /* ---------------------------------------------------------------------------
  * Homepage data.
@@ -48,18 +48,44 @@ export const FEATURED_RESULTS: FeaturedResult[] = CASE_STUDIES.filter(
 }));
 
 /**
+ * Which builds lead the home page, newest first.
+ *
+ * Named rather than taken off the top of the archive. The rule used to be
+ * "the first three with a live link", which really meant "whichever three
+ * happen to sort first in work-raw/" — so a new project could not reach the
+ * home page without renumbering every source file and changing nineteen
+ * image URLs to do it. Naming them makes this the editorial choice it always
+ * was, and leaves the archive's own ordering alone.
+ *
+ * Matched on the client name rather than the image path, so renumbering the
+ * archive later cannot quietly empty this list.
+ *
+ * Three, and three is the ceiling: the home page has to fit one screen, and a
+ * fourth row costs about 41px, which took 1440x760 to 801. The reel beside
+ * the list scrolls and would take more, but the captions next to it will not.
+ * Adding one here means dropping one, or giving up that viewport.
+ */
+const HOME_PROJECT_CLIENTS = [
+  "Construction Desert Schools",
+  "We Aspire",
+  "Gilani Mobility",
+];
+
+/**
  * Previews shown in the Projects card.
  *
- * Drawn from the portfolio's own screenshot set, filtered to the builds whose
- * client is identified (they carry the live site's URL), so every image is a
- * real screenshot of the site it is captioned with — no logo stands in for a
- * screenshot, and no screenshot is captioned with the wrong client.
+ * Only builds carrying the live site's URL qualify, so every image is a real
+ * screenshot of the site it is captioned with — no logo stands in for a
+ * screenshot, and no screenshot is captioned with the wrong client. A name
+ * that matches nothing is dropped rather than rendered blank.
  *
  * `title` is "Client · descriptor" in workItems.ts; the split keeps the client
  * name on its own line and the descriptor beneath it.
  */
-export const FEATURED_PROJECTS = WEB_DESIGNS.filter((item) => item.href)
-  .slice(0, 3)
+export const FEATURED_PROJECTS = HOME_PROJECT_CLIENTS.map((client) =>
+  WEB_DESIGNS.find((item) => item.href && item.title.startsWith(`${client} ·`)),
+)
+  .filter((item): item is WorkItem => item !== undefined)
   .map((item) => {
     const [client, ...restOfTitle] = item.title.split(" · ");
     return {
