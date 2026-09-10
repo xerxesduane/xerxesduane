@@ -82,6 +82,7 @@ src/
   entry-server.tsx        # SSR entry used by scripts/prerender.mjs
   data/                   # all copy and data (edit here)
   components/
+    assistant/            # the site assistant: launcher, panel, chat state
     shell/                # profile rail, mobile nav, mobile tab bar, canvas lines
     home/                 # hero, tools strip, bento board, system diagram
     page/                 # Panel / PanelBoard / PageHeader / PageActions
@@ -91,10 +92,68 @@ src/
     ui/                   # Overlay, ThemeToggle, NavIcons, Counter, Reveal…
 ```
 
+## The visit counter
+
+The number under the profile is this month's real visit count, or nothing at
+all. A number every visitor sees has to live somewhere shared and durable, so
+there is no version of this without a store — but `api/visits.ts` accepts
+either, and needs only one:
+
+| Store | Setup | Notes |
+| --- | --- | --- |
+| **Vercel KV / Upstash Redis** | Attach a store in Vercel. Nothing to paste. | It injects `KV_REST_API_URL` + `KV_REST_API_TOKEN` — the same pair `_shared.ts` already uses for rate limiting, so both light up at once. |
+| **Supabase Postgres** | Set `SUPABASE_URL` + `SUPABASE_PUBLISHABLE_KEY`. | Keeps every past month as a row you can query. Migration `site_visit_counter`. |
+
+Supabase wins if both are set, because setting those two variables is a
+deliberate act while a KV store might have been attached only for the limiter.
+With neither, the endpoint returns 503 and the rail renders no number — never
+a zero, never a placeholder, because an invented visitor count is worse than
+none.
+
+The month is keyed in **Asia/Dubai** either way, so it turns over at midnight
+in Dubai rather than 8pm the evening before. Past months are kept, so "resets
+monthly" is a new key, not lost history.
+
+The Supabase table has RLS on with **no policies**, so the publishable key
+grants no access to the table itself — only `bump_site_visits()` (adds exactly
+1) and `get_site_visits()` (reads). Supabase's linter flags both as "public can
+execute a SECURITY DEFINER function"; that is the design, not an oversight.
+
+It shows in the desktop profile rail and the mobile header, both reading one
+shared request — the hook caches its promise at module level, so two consumers
+still count one visit.
+
+A visit is one browser session: the browser sets a `sessionStorage` flag and
+tells the server whether to count. Repeat loads, crawlers and anyone hammering
+the endpoint all silently fall through to a read instead. Nothing identifying
+is sent or stored — no cookie, no IP, no visitor row, one integer per month —
+which is why it runs without waiting on the analytics consent banner and is
+described separately on the privacy page.
+
+## The site assistant
+
+The chat launcher in the corner of every page (`components/assistant/`) talks
+to `api/assistant.ts`, a Vercel Edge function that shares the AI Lab's model
+key and rate limiter. It is grounded rather than general: `api/_siteContext.ts`
+fetches the site's **own prerendered pages** at request time — the home page
+always, plus up to three more picked by keyword — and the system prompt tells
+it to answer from those and nothing else. So there is no knowledge base to
+keep in sync; editing a page edits what the assistant knows.
+
+It refuses to invent prices, clients, timelines or results, which means a real
+prospect reaches its limits quickly. That is why WhatsApp sits pinned above the
+composer rather than buried in a reply, and why it carries the visitor's last
+question across. With no model key configured the endpoint returns 503 and the
+panel says so, WhatsApp and the audit link still working.
+
+Rename it in one place: `NAME_EN` / `NAME_AR` in `src/data/assistant.ts`, which
+holds every string the widget shows in both languages.
+
 ## Notes
 
 - The contact form posts to Formspree; the same details also compose a
-  pre-filled WhatsApp message. Booking goes to zcal.
+  pre-filled WhatsApp message. The floating button in the corner is the
+  assistant now — WhatsApp moved inside it. Booking goes to zcal.
 - Analytics (GA4 + Clarity) stay denied until the visitor accepts the cookie
   notice.
 - Motion respects `prefers-reduced-motion` everywhere: the tools strip stops,

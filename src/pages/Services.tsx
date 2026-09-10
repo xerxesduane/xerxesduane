@@ -15,7 +15,7 @@ export default function Services() {
     <PanelBoard cols="xl:grid-cols-3">
       {SERVICE_PAGES.map(service => <Panel key={service.slug} icon={service.icon}
         label={service.navLabel} href={`/${service.slug}`} blurb={service.metaDescription}
-        footer={service.price && <p className="text-sm font-bold text-accent-deep">{service.price}</p>} />)}
+        footer={<p className="text-sm font-bold text-accent-deep">Fixed proposal after the free audit</p>} />)}
     </PanelBoard>
     <Contact />
   </>;

@@ -1,10 +1,12 @@
 import { m } from "framer-motion";
 import { Languages } from "lucide-react";
 import SocialLinks from "./SocialLinks";
+import VerifiedTick from "./VerifiedTick";
 import ThemeToggle from "../ui/ThemeToggle";
 import { LogoMark } from "../ui/Wordmark";
 import { SHELL_IDENTITY, SHELL_NAV, isNavActive, navHref, navLabel } from "../../data/shell";
 import { fadeUp, stagger } from "../../lib/motion";
+import { useVisitCount } from "../../lib/useVisitCount";
 
 interface ProfileSidebarProps {
   /** Current path, for the active nav state. */
@@ -29,6 +31,7 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
   const ar = locale === "ar";
   const tagline = ar ? SHELL_IDENTITY.taglineAr : SHELL_IDENTITY.tagline;
   const location = ar ? SHELL_IDENTITY.locationAr : SHELL_IDENTITY.location;
+  const visits = useVisitCount();
   return (
     <m.aside
       variants={stagger}
@@ -66,8 +69,9 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
             </span>
           </span>
 
-          <h2 className="mt-4 font-display text-[1.6rem] font-extrabold leading-none tracking-tight text-fg">
+          <h2 className="mt-4 flex items-center justify-center gap-1.5 font-display text-[1.6rem] font-extrabold leading-none tracking-tight text-fg">
             {SHELL_IDENTITY.name}
+            {SHELL_IDENTITY.verified && <VerifiedTick size={19} />}
           </h2>
           {/* The handle is a Latin token: pin it LTR so RTL bidi doesn't
               throw the "@" to the far end of the line. */}
@@ -75,6 +79,9 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
             <span dir="ltr">{SHELL_IDENTITY.handle}</span> · {location}
           </p>
           <p className="mt-1 text-[0.85rem] font-semibold text-accent-deep">{tagline}</p>
+          <p className="mt-1.5 h-[1.05rem] text-[0.72rem] font-medium tabular-nums text-fg-faint">
+            {visits !== null && (ar ? `${visits.toLocaleString("en-US")} زيارة هذا الشهر` : `${visits.toLocaleString("en-US")} visits this month`)}
+          </p>
         </m.a>
 
         {/* Socials + theme switch, centred under the identity block. */}

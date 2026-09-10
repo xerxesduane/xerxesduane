@@ -61,7 +61,7 @@ export const SHELL_NAV: ShellNavItem[] = [
     href: "/services",
     hrefAr: "/ar#services",
     icon: LayersGlyph,
-    matches: ["/services", ...SERVICE_PAGES.flatMap(page => [`/${page.slug}`, `/ar/${page.slug}`])],
+    matches: ["/services", ...SERVICE_PAGES.flatMap((page) => [`/${page.slug}`, `/ar/${page.slug}`])],
   },
   { label: "AI Lab", labelAr: "مختبر الذكاء الاصطناعي", shortLabelAr: "المختبر", href: "/ai-lab", icon: Bot },
   {
@@ -100,6 +100,8 @@ export const SHELL_IDENTITY = {
   taglineAr: "استشاري أنظمة مستقل",
   location: "Dubai & the UAE",
   locationAr: "دبي والإمارات",
+  /** Shows the owner's brand check beside the name. */
+  verified: true,
   portrait: "/brand/portrait-560.webp",
   portraitFallback: "/brand/founder-xerxes.jpg",
 };

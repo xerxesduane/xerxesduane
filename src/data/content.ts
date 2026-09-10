@@ -22,6 +22,9 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AI_LAB_TOOL_COUNT } from "./aiLab";
+import { PRICING } from "./pricing";
+
+export { PRICING };
 
 export const CONTACT = {
   whatsapp: "971543281995",
