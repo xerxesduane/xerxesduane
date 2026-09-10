@@ -95,25 +95,29 @@ src/
 ## The visit counter
 
 The number under the profile is this month's real visit count, or nothing at
-all. `api/visits.ts` talks to a Postgres table in Supabase holding one row per
-month, keyed in **Asia/Dubai** so the month turns over at midnight in Dubai
-rather than 8pm the evening before. Old months are kept, so "resets monthly"
-means a new row, not lost history.
+all. A number every visitor sees has to live somewhere shared and durable, so
+there is no version of this without a store — but `api/visits.ts` accepts
+either, and needs only one:
 
-It needs two environment variables in Vercel. Without them the endpoint
-returns 503 and the rail renders no number — never a zero, never a
-placeholder, because an invented visitor count is worse than none:
+| Store | Setup | Notes |
+| --- | --- | --- |
+| **Vercel KV / Upstash Redis** | Attach a store in Vercel. Nothing to paste. | It injects `KV_REST_API_URL` + `KV_REST_API_TOKEN` — the same pair `_shared.ts` already uses for rate limiting, so both light up at once. |
+| **Supabase Postgres** | Set `SUPABASE_URL` + `SUPABASE_PUBLISHABLE_KEY`. | Keeps every past month as a row you can query. Migration `site_visit_counter`. |
 
-| Variable | Where to find it |
-| --- | --- |
-| `SUPABASE_URL` | Supabase → Project Settings → Data API → Project URL |
-| `SUPABASE_PUBLISHABLE_KEY` | Supabase → Project Settings → API Keys → publishable (`sb_publishable_…`) |
+Supabase wins if both are set, because setting those two variables is a
+deliberate act while a KV store might have been attached only for the limiter.
+With neither, the endpoint returns 503 and the rail renders no number — never
+a zero, never a placeholder, because an invented visitor count is worse than
+none.
 
-That key is safe to expose. The table has RLS on with **no policies**, so it
-grants no read or write access to the table itself — only `bump_site_visits()`
-(adds exactly 1) and `get_site_visits()` (reads). Supabase's linter flags both
-as "public can execute a SECURITY DEFINER function"; that is the design, not an
-oversight.
+The month is keyed in **Asia/Dubai** either way, so it turns over at midnight
+in Dubai rather than 8pm the evening before. Past months are kept, so "resets
+monthly" is a new key, not lost history.
+
+The Supabase table has RLS on with **no policies**, so the publishable key
+grants no access to the table itself — only `bump_site_visits()` (adds exactly
+1) and `get_site_visits()` (reads). Supabase's linter flags both as "public can
+execute a SECURITY DEFINER function"; that is the design, not an oversight.
 
 A visit is one browser session: the browser sets a `sessionStorage` flag and
 tells the server whether to count. Repeat loads, crawlers and anyone hammering
