@@ -7,7 +7,7 @@
 // then executed and streamed. Nothing is stored.
 import { generateText } from "ai";
 import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, parseLooseJson, logAiError } from "../_shared";
+import { GROQ_DIRECT, MODEL_FAST, preflight, errorResponse, clamp, parseLooseJson, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -40,6 +40,7 @@ export default async function handler(req: Request): Promise<Response> {
   try {
     const { text } = await generateText({
       model: groq(MODEL_FAST),
+      providerOptions: GROQ_DIRECT,
       maxOutputTokens: 700,
       temperature: 0.4,
       prompt:

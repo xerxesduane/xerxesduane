@@ -3,7 +3,7 @@
 // automate. Streams plain text back to the browser.
 import { streamText } from "ai";
 import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { GROQ_DIRECT, MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -39,6 +39,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   const result = streamText({
     model: groq(MODEL_FAST),
+    providerOptions: GROQ_DIRECT,
     system: `${SYSTEM}\nTone: ${tone}`,
     messages: [{ role: "user", content: `Write a reply to this review:\n"""\n${review}\n"""` }],
     maxOutputTokens: 320,
