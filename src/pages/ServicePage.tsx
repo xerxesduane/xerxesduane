@@ -3,6 +3,7 @@ import { ArrowUpRight, ArrowLeft, Check } from "lucide-react";
 import { SERVICE_PAGES, type ServicePageData } from "../data/servicePages";
 import { getServicePageAr } from "../data/servicePagesAr";
 import { CASE_STUDIES, PRICING } from "../data/content";
+import { priceForSlug, priceLabel } from "../data/pricing";
 import { INSIGHTS } from "../data/insights";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import Reveal from "../components/ui/Reveal";
@@ -17,6 +18,8 @@ import ServicePackages from "../components/ServicePackages";
 
 export default function ServicePage({ page }: { page: ServicePageData }) {
   const Icon = page.icon;
+  const point = priceForSlug(page.slug);
+  const servicePrice = point ? priceLabel(point) : null;
   const proof = page.caseStudyClient
     ? CASE_STUDIES.find((c) => c.client === page.caseStudyClient)
     : undefined;
@@ -36,9 +39,25 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
           </>
         }
         lede={page.lede}
-        // The header used to lead with "from AED X". It leads with how the
-        // number gets set instead, which is the same on every service page.
-        meta={<span>{PRICING.meta}</span>}
+        // Lead with this page's own starting price where there is one, and
+        // fall back to how the number gets set where there isn't. SEO and
+        // general web development are the two without a published floor.
+        meta={
+          <span>
+            {servicePrice ? (
+              <>
+                <strong className="font-bold text-accent-deep">{servicePrice}</strong>
+                {" · "}
+                <a href="/pricing" className="underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent">
+                  all pricing
+                </a>
+                {", including half price for charities"}
+              </>
+            ) : (
+              PRICING.meta
+            )}
+          </span>
+        }
         actions={
           <>
             <PrimaryAction href="#contact">Book a free audit</PrimaryAction>

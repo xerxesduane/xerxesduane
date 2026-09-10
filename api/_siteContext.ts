@@ -111,15 +111,21 @@ const ROUTES: Route[] = [
     path: "/generative-engine-optimization-dubai",
     keywords: ["geo", "generative", "chatgpt", "gemini", "claude", "cited", "citation", "llm", "mentioned"],
   },
-  // Cost questions route HERE, to what the audit covers and what follows it,
-  // because that is now the site's answer: scope first, then a written
-  // proposal. Deliberately NOT to /insights/website-cost-dubai — that guide
-  // quotes what things go for in Dubai generally, and market figures sitting
-  // in the assistant's context are figures it can misattribute as his rates.
-  // A prompt rule asks it not to; leaving them out means it cannot.
+  // Cost questions route HERE first. The page carries the whole rate card, the
+  // budget package and the charity rate as plain text, so the assistant can
+  // answer with a real figure instead of deflecting to a booking form.
+  //
+  // Still deliberately NOT /insights/website-cost-dubai: that guide quotes
+  // what things go for in Dubai generally, and market figures sitting in the
+  // assistant's context are figures it can misattribute as his rates. A prompt
+  // rule asks it not to; leaving them out of the context means it cannot.
+  {
+    path: "/pricing",
+    keywords: ["cost", "costs", "price", "prices", "pricing", "budget", "quote", "quotes", "much", "expensive", "cheap", "cheapest", "affordable", "afford", "rate", "rates", "fee", "fees", "charge", "charges", "ballpark", "estimate", "discount", "starter", "package", "packages", "nonprofit", "non-profit", "charity", "charities", "church", "churches", "ngo"],
+  },
   {
     path: "/insights/what-a-systems-audit-covers",
-    keywords: ["cost", "costs", "price", "prices", "pricing", "budget", "quote", "quotes", "much", "expensive", "cheap", "rate", "rates", "fee", "fees", "charge", "charges", "ballpark", "estimate", "proposal", "audit", "free", "consultation", "meeting", "call", "session", "expect", "start", "started", "starting", "begin", "first", "process", "onboarding"],
+    keywords: ["proposal", "audit", "free", "consultation", "meeting", "call", "session", "expect", "start", "started", "starting", "begin", "first", "process", "onboarding"],
   },
   {
     path: "/insights/how-much-does-odoo-cost-dubai",

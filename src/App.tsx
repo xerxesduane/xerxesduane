@@ -23,6 +23,7 @@ const InsightPost = lazy(() => import("./pages/InsightPost"));
 const ServicePageAr = lazy(() => import("./pages/ServicePageAr"));
 const HomeAr = lazy(() => import("./pages/HomeAr"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Pricing = lazy(() => import("./pages/Pricing"));
 const Privacy = lazy(() =>
   import("./pages/Legal").then((m) => ({ default: m.Privacy })),
 );
@@ -53,6 +54,7 @@ function Route({ path }: { path: string }) {
   const slug = pathToSlug(path);
   if (slug === "") return <Home />;
   if (slug === "services") return <Services />;
+  if (slug === "pricing") return <Pricing />;
   if (slug === "contact") return <ContactPage />;
   if (slug === "case-studies") return <CaseStudies />;
   if (slug.startsWith("case-studies/")) {

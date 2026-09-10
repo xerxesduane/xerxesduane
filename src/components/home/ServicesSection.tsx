@@ -51,21 +51,28 @@ export default function ServicesSection() {
                 {service.title}
               </h3>
               <p className="text-sm leading-snug text-fg-soft">{service.description}</p>
+              {service.price && (
+                <p className="mt-auto pt-2 font-technical text-[0.82rem] font-bold text-accent-deep">
+                  {service.price}
+                </p>
+              )}
             </m.article>
           );
         })}
       </div>
 
-      {/* Where the twelve "from AED X" lines used to be. Once, with weight. */}
+      {/* The floors are on the cards; this says what a floor is, and where the
+          two things a card cannot show — the budget option and the charity
+          rate — actually live. */}
       <m.p variants={fadeUp} className="mt-4 text-center text-sm text-fg-soft">
-        {PRICING.line}{" "}
+        {PRICING.line} Tight budget, or a church or charity?{" "}
         <a
-          href="#contact"
+          href="/pricing"
           className="font-bold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
         >
-          Book the free audit
-        </a>{" "}
-        and you get a proposal with both.
+          See all pricing
+        </a>
+        .
       </m.p>
     </m.section>
   );

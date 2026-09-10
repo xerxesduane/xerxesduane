@@ -22,7 +22,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { AI_LAB_TOOL_COUNT } from "./aiLab";
-import { PRICING } from "./pricing";
+import { NONPROFIT, PRICING, aed, priceFor, priceLabel } from "./pricing";
 
 export { PRICING };
 
@@ -51,6 +51,7 @@ export const AUDIT_DELIVERABLES = [
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
   { label: "Services", href: "/services" },
+  { label: "Pricing", href: "/pricing" },
   { label: "Portfolio", href: "/portfolio" },
   { label: "Showreel", href: "/showreel" },
   { label: "AI Lab", href: "/ai-lab" },
@@ -63,19 +64,23 @@ export interface Service {
   title: string;
   tagline: string;
   description: string;
-  /** Indicative starting price, e.g. "from AED 4,500". */
+  /**
+   * Starting price, e.g. "from AED 4,500". Filled in from the rate card in
+   * pricing.ts by title, never typed here: the same number has to reach the
+   * card, the service page and the Schema.org offer, and three copies of a
+   * price is three chances to publish a stale one.
+   */
   price?: string;
   featured?: boolean;
 }
 
-export const SERVICES: Service[] = [
+const SERVICE_DEFS: Service[] = [
   {
     icon: Bot,
     title: "AI Automation & Solutions",
     tagline: "The new advantage.",
     description:
       "AI workflows, chatbots, and custom assistants that quietly run your business in the background, answering questions, qualifying leads, and giving you back the hours you've been losing.",
-    price: "from AED 6,000",
     featured: true,
   },
   {
@@ -84,7 +89,6 @@ export const SERVICES: Service[] = [
     tagline: "The foundation, built for you.",
     description:
       "Software tailored to how your business actually works, client portals, internal tools, and systems built around the way you run. No templates, no limitations.",
-    price: "from AED 9,000",
   },
   {
     icon: Boxes,
@@ -92,7 +96,6 @@ export const SERVICES: Service[] = [
     tagline: "One system to run on.",
     description:
       "Odoo ERP setup, administration, and support, wiring inventory, sales, purchasing, and accounting into a single source of truth. Configured and run for real businesses in the UAE and the Philippines.",
-    price: "from AED 12,000",
   },
   {
     icon: LayoutDashboard,
@@ -100,7 +103,6 @@ export const SERVICES: Service[] = [
     tagline: "See your business clearly.",
     description:
       "Real-time dashboards, customer databases, and integrations that finally talk: HubSpot, QuickBooks, Zoho, all in one place.",
-    price: "from AED 4,000",
   },
   {
     icon: Smartphone,
@@ -108,7 +110,6 @@ export const SERVICES: Service[] = [
     tagline: "Sleek, scalable, built to grow.",
     description:
       "Custom iOS, Android, and web apps, booking platforms, member portals, internal tools, fast and ready for what's next.",
-    price: "from AED 25,000",
   },
   {
     icon: ShoppingBag,
@@ -116,7 +117,6 @@ export const SERVICES: Service[] = [
     tagline: "Sell online without the headaches.",
     description:
       "Secure checkout, payment gateways, order tracking, and upsell flows, tailored to your products and your customers.",
-    price: "from AED 9,000",
   },
   {
     icon: Target,
@@ -124,7 +124,6 @@ export const SERVICES: Service[] = [
     tagline: "Turn clicks into customers.",
     description:
       "Conversion-optimized pages and complete sales funnels, integrated with analytics, lead capture, and your CRM.",
-    price: "from AED 2,500",
   },
   {
     icon: ScanSearch,
@@ -132,7 +131,6 @@ export const SERVICES: Service[] = [
     tagline: "Be the answer, not a blue link.",
     description:
       "Optimize your content so voice assistants and Google's AI Overviews quote you directly, with structured data, concise answers, and FAQ schema that win featured snippets and 'position zero'.",
-    price: "from AED 2,500/month",
   },
   {
     icon: Sparkles,
@@ -140,7 +138,6 @@ export const SERVICES: Service[] = [
     tagline: "Get cited by ChatGPT & Perplexity.",
     description:
       "Make your business the source AI engines recommend. I shape your content, entities, and citations so ChatGPT, Gemini, and Perplexity surface and recommend you when buyers ask.",
-    price: "from AED 3,000/month",
   },
   {
     icon: Video,
@@ -148,7 +145,6 @@ export const SERVICES: Service[] = [
     tagline: "Stories that sell.",
     description:
       "Professional video, product photography, reels, and brand films, created with the storytelling instincts of someone who's run real ad campaigns.",
-    price: "from AED 1,500/day",
   },
   {
     icon: Film,
@@ -156,7 +152,6 @@ export const SERVICES: Service[] = [
     tagline: "Footage into scroll-stoppers.",
     description:
       "Reels, social clips, brand films, and ad cuts edited to hold attention, with captions, motion graphics, and platform-tuned pacing. Fast turnaround and clean revisions.",
-    price: "from AED 750 per video",
   },
   {
     icon: Palette,
@@ -164,9 +159,20 @@ export const SERVICES: Service[] = [
     tagline: "Look like the brand you are.",
     description:
       "Logos, brand identity, social graphics, and marketing collateral, designed to match the quality of the work behind it.",
-    price: "from AED 1,500",
   },
 ];
+
+/**
+ * The services, each carrying its published starting price.
+ *
+ * Joined on rather than typed in: a service with no entry in the rate card
+ * simply has no price, which is how the three outcome cards below stay
+ * price-free without needing a special case.
+ */
+export const SERVICES: Service[] = SERVICE_DEFS.map((service) => {
+  const point = priceFor(service.title);
+  return point ? { ...service, price: priceLabel(point) } : service;
+});
 
 export interface Outcome {
   no: string;
@@ -697,6 +703,15 @@ export const PACKAGES = [
     featured: true,
   },
   {
+    name: "The Starter",
+    price: "AED 2,500",
+    note: "fixed price, not a deposit",
+    pitch: "For a tight budget",
+    body: "One page that does the job: your offer, your proof, and a way to reach you that lands in WhatsApp rather than an inbox nobody opens. Mobile-first, fast, and yours outright. A fixed scope at a fixed price, so a small budget buys something finished instead of a deposit on something bigger.",
+    cta: "Start here",
+    featured: false,
+  },
+  {
     name: "The Build",
     price: "from AED 5,000",
     note: "project-based",
@@ -768,6 +783,14 @@ export const CLIENTS: Client[] = [
 ];
 
 export const FAQS: { q: string; a: string }[] = [
+  // Cost leads, because it is the question everyone has and most sites make
+  // you book a call to hear. The figures come from the rate card so this
+  // answer cannot drift from the pricing page, and it is short on purpose:
+  // an answer engine quoting one paragraph should still get a real number.
+  {
+    q: "How much does it cost?",
+    a: `Starting prices are published. A landing page starts at ${aed(2500)}, CRM and dashboards at ${aed(4000)}, AI automation at ${aed(6000)}, and an Odoo rollout at ${aed(12000)}. The Starter package is a fixed ${aed(2500)} if the budget is tight, and ${NONPROFIT.who.toLowerCase()} pay ${NONPROFIT.label} on everything. Those are floors: the exact price comes in a written proposal after the free audit. Full rate card at /pricing.`,
+  },
   {
     q: "Is the audit really free?",
     a: "Yes, for now. I'm keeping it free while I onboard my founding clients. Eventually it'll be AED 750–1,500, but you're early.",
