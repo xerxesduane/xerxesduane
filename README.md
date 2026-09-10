@@ -92,6 +92,40 @@ src/
     ui/                   # Overlay, ThemeToggle, NavIcons, Counter, Reveal…
 ```
 
+## The visit counter
+
+The number under the profile is this month's real visit count, or nothing at
+all. A number every visitor sees has to live somewhere shared and durable, so
+there is no version of this without a store — but `api/visits.ts` accepts
+either, and needs only one:
+
+| Store | Setup | Notes |
+| --- | --- | --- |
+| **Vercel KV / Upstash Redis** | Attach a store in Vercel. Nothing to paste. | It injects `KV_REST_API_URL` + `KV_REST_API_TOKEN` — the same pair `_shared.ts` already uses for rate limiting, so both light up at once. |
+| **Supabase Postgres** | Set `SUPABASE_URL` + `SUPABASE_PUBLISHABLE_KEY`. | Keeps every past month as a row you can query. Migration `site_visit_counter`. |
+
+Supabase wins if both are set, because setting those two variables is a
+deliberate act while a KV store might have been attached only for the limiter.
+With neither, the endpoint returns 503 and the rail renders no number — never
+a zero, never a placeholder, because an invented visitor count is worse than
+none.
+
+The month is keyed in **Asia/Dubai** either way, so it turns over at midnight
+in Dubai rather than 8pm the evening before. Past months are kept, so "resets
+monthly" is a new key, not lost history.
+
+The Supabase table has RLS on with **no policies**, so the publishable key
+grants no access to the table itself — only `bump_site_visits()` (adds exactly
+1) and `get_site_visits()` (reads). Supabase's linter flags both as "public can
+execute a SECURITY DEFINER function"; that is the design, not an oversight.
+
+A visit is one browser session: the browser sets a `sessionStorage` flag and
+tells the server whether to count. Repeat loads, crawlers and anyone hammering
+the endpoint all silently fall through to a read instead. Nothing identifying
+is sent or stored — no cookie, no IP, no visitor row, one integer per month —
+which is why it runs without waiting on the analytics consent banner and is
+described separately on the privacy page.
+
 ## The site assistant
 
 The chat launcher in the corner of every page (`components/assistant/`) talks

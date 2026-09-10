@@ -98,6 +98,8 @@ export const SHELL_IDENTITY = {
   taglineAr: "استشاري أنظمة مستقل",
   location: "Dubai & the UAE",
   locationAr: "دبي والإمارات",
+  /** Shows the check beside the name. A brand mark, not a platform badge. */
+  verified: true,
   portrait: "/brand/portrait-560.webp",
   portraitFallback: "/brand/founder-xerxes.jpg",
 };

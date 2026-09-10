@@ -78,16 +78,27 @@ export function Privacy() {
         exactly the same.
       </p>
       <p>
+        <strong className="font-bold text-fg">Visit counter.</strong> The number
+        shown beside the profile counts visits to this site each month. It runs
+        without waiting for your consent because there is nothing personal in
+        it: no cookie is set, no identifier is created, and nothing about you is
+        sent or stored. Your browser keeps a single flag for the length of the
+        tab session so one visit isn&rsquo;t counted twice, and the server keeps
+        one number per month &mdash; not one row per visitor.
+      </p>
+      <p>
         <strong className="font-bold text-fg">Cookies &amp; local storage.</strong>{" "}
-        We store your cookie choice on your device so we don't ask again.
-        Analytics providers set their own cookies only after you accept.
+        We store your cookie choice on your device so we don't ask again, and a
+        session flag for the visit counter above. Analytics providers set their
+        own cookies only after you accept.
       </p>
 
       <H2>Who we share it with</H2>
       <p>
         We don't sell your data. We use a small set of trusted providers to run
         the site and respond to you: Google (Analytics), Microsoft (Clarity),
-        Formspree (contact form), Vercel (hosting), and WhatsApp (if you message
+        Formspree (contact form), Vercel (hosting), Supabase (the visit
+        counter's database), and WhatsApp (if you message
         us there). Each processes data under its own privacy terms, and some may
         process it outside the UAE.
       </p>
