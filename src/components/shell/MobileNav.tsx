@@ -61,9 +61,10 @@ export default function MobileNav({
               {SHELL_IDENTITY.name}
               {SHELL_IDENTITY.verified && <VerifiedTick size={14} className="ms-1" />}
             </p>
+            {/* Handle rather than the positioning line, matching the rail. */}
             <p className="flex items-baseline gap-1.5 text-xs text-fg-soft">
-              <span className="truncate">
-                {ar ? SHELL_IDENTITY.taglineAr : SHELL_IDENTITY.tagline}
+              <span className="truncate" dir="ltr">
+                {SHELL_IDENTITY.handle}
               </span>
               {visits !== null && (
                 // "this month" doesn't fit this bar without truncating the

@@ -30,7 +30,6 @@ interface ProfileSidebarProps {
 export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSidebarProps) {
   const ar = locale === "ar";
   const tagline = ar ? SHELL_IDENTITY.taglineAr : SHELL_IDENTITY.tagline;
-  const location = ar ? SHELL_IDENTITY.locationAr : SHELL_IDENTITY.location;
   const visits = useVisitCount();
   return (
     <m.aside
@@ -73,12 +72,14 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
             {SHELL_IDENTITY.name}
             {SHELL_IDENTITY.verified && <VerifiedTick size={19} />}
           </h2>
-          {/* The handle is a Latin token: pin it LTR so RTL bidi doesn't
-              throw the "@" to the far end of the line. */}
+          {/* Handle only. The location and the positioning line came off:
+              on a one-screen home every line has to earn its space, and the
+              board says what the work is better than a job title does.
+              The handle is a Latin token, so pin it LTR — otherwise RTL bidi
+              throws the "@" to the far end of the line. */}
           <p className="mt-1.5 text-[0.8rem] font-medium text-fg-faint">
-            <span dir="ltr">{SHELL_IDENTITY.handle}</span> · {location}
+            <span dir="ltr">{SHELL_IDENTITY.handle}</span>
           </p>
-          <p className="mt-1 text-[0.85rem] font-semibold text-accent-deep">{tagline}</p>
           <p className="mt-1.5 h-[1.05rem] text-[0.72rem] font-medium tabular-nums text-fg-faint">
             {visits !== null && (ar ? `${visits.toLocaleString("en-US")} زيارة هذا الشهر` : `${visits.toLocaleString("en-US")} visits this month`)}
           </p>

@@ -1,39 +1,32 @@
 import BentoBoard from "../components/home/BentoBoard";
 import HeroBlock from "../components/home/HeroBlock";
-import { MobileProof, MobileResults } from "../components/home/MobileBlocks";
-import ServicesSection from "../components/home/ServicesSection";
 import ToolsStrip from "../components/home/ToolsStrip";
-import FAQ from "../components/FAQ";
-import Contact from "../components/Contact";
 
 /**
- * Homepage.
+ * Homepage — one screen, nothing below it.
  *
- * Above the fold on a desktop: headline, the stack strip, and the bento board —
- * the six entry points into the rest of the site. On a phone the same board
- * becomes a swipeable Explore rail, with the proof figures lifted above it and
- * the featured results stacked below (see components/home/MobileBlocks).
+ * Headline, the tools strip, and the board of entry points, sized to land
+ * inside a desktop viewport so there is nothing to scroll to and therefore no
+ * footer (App.tsx drops it on this route). The sections that used to sit
+ * underneath — services, FAQs, contact — already have real pages at /services
+ * and /contact, which is where the nav has pointed for a while, so nothing
+ * moved and no link broke; they simply stopped being duplicated here.
  *
- * Below that sit the sections the nav and inbound links target (#services,
- * #faq, #contact) so no existing anchor breaks. The profile rail and page
- * chrome come from ShellLayout in App.tsx.
+ * A phone can't hold all of this at once and shouldn't pretend to: the board
+ * becomes a swipeable rail and the page scrolls a little. The promise is a
+ * desktop one.
  */
 export default function Home() {
   return (
-    <>
-      <div id="top">
-        <HeroBlock />
-        <MobileProof />
-        <ToolsStrip />
-        <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[0.14em] text-fg-faint sm:hidden">
-          Explore · swipe
-        </p>
-        <div id="work" className="scroll-mt-8"><BentoBoard /></div>
-        <MobileResults />
+    <div id="top">
+      <HeroBlock />
+      <ToolsStrip />
+      <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[0.14em] text-fg-faint sm:hidden">
+        Explore · swipe
+      </p>
+      <div id="work" className="scroll-mt-8">
+        <BentoBoard />
       </div>
-      <ServicesSection />
-      <FAQ />
-      <Contact />
-    </>
+    </div>
   );
 }
