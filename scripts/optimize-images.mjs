@@ -25,6 +25,13 @@ const META = {
   "03-aya-home-spa": { title: "AYA Home Spa · Dubai", href: "https://www.ayahomespa.ae/" },
   // HIDDEN (re-add later): move 04-fellowship-dubai.png back into _raw/web and restore this line:
   // "04-fellowship-dubai": { title: "Fellowship Dubai · Church website, Dubai", href: "https://fellowshipdubai.com/" },
+  // Pending its screenshot: work-raw/web/ is empty in a fresh clone, so the
+  // image has to be dropped in before `npm run images` will pick this up. The
+  // entry is inert until then, and holds the real title and link meanwhile.
+  "20-construction-desert-schools": {
+    title: "Construction Desert Schools · Executive learning programme, Dubai",
+    href: "https://www.constructiondesertschools.com/",
+  },
   "10-saladmaster-al-mumtaz": {
     title: "Saladmaster UAE (Al Mumtaz) · Logo & brand identity",
     href: "https://saladmasteruae.me/",

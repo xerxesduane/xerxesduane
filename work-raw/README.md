@@ -41,6 +41,13 @@ The script refuses to run if a category has no source directory, or if there
 are fewer sources than the manifest already holds — that combination means the
 run would delete work. Pass `--force` only when deliberately shrinking the set.
 
+## Waiting on a screenshot
+
+`web/20-construction-desert-schools.png` is the one item whose metadata is
+already in `META` but whose image has never been captured. Drop a full-width
+homepage screenshot in (1600px wide is plenty) and `npm run images` will pick
+it up with the title and live link already attached.
+
 ## Missing originals
 
 Only `graphic/10-saladmaster-al-mumtaz.jpeg` is present. The originals behind
