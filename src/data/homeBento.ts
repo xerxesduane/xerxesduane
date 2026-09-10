@@ -93,11 +93,13 @@ export const FEATURED_PROJECTS = WEB_DESIGNS.filter((item) => item.href)
   });
 
 export const HERO = {
-  // Kept short on purpose: the home page has to land inside one viewport, and
-  // a headline that wraps to a third line takes the fold with it.
-  headline: "Your tools, finally talking.",
+  // Plain words on purpose: the people this is for run 2-10 person businesses
+  // in a city where English is often a second language, so "systems", "stack"
+  // and "wired" are words they skim past. Short also buys fold space, and the
+  // home page has to land inside one viewport.
+  headline: "Less admin. More business.",
   subhead:
-    "I wire the website, CRM, Odoo and WhatsApp you already pay for into one setup, then stay on to run it.",
+    "I connect your website, CRM, Odoo and WhatsApp, so the follow-up happens without you chasing it.",
   ctaLabel: "Get in touch",
   // /contact, not /#contact: the home page no longer carries a contact
   // section, so the anchor it used to target isn't there to scroll to.

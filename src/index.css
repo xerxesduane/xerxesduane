@@ -703,7 +703,7 @@ html[data-theme-vt="active"]::view-transition-new(root) {
      viewport, and on a 900px-tall screen two fixed rows plus the hero and the
      strip do not. `vh` lets the board give height back on a shorter screen
      instead of pushing the fold off the bottom. */
-  .home-board > div { grid-template-rows: repeat(2, minmax(clamp(142px, 19vh, 228px), auto)); }
+  .home-board > div { grid-template-rows: repeat(2, minmax(clamp(142px, 29vh, 316px), auto)); }
   .home-projects > div:first-child, .home-projects > p, .home-projects ul { width: 47%; }
   .home-projects > div:nth-of-type(2) { display: contents; }
   .home-projects .project-track { position: absolute; inset: 18px 18px 18px 52%; height: auto; }
