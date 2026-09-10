@@ -48,7 +48,7 @@ export const ASSISTANT_EN: AssistantCopy = {
   name: NAME_EN,
   role: "AI assistant · answers from this site",
   greeting:
-    `Hi, I'm ${NAME_EN} — the assistant on Xerxes's site. Ask me about the work, how a project runs, or how to get started. ` +
+    `Hi, I'm ${NAME_EN}. I'm the assistant on Xerxes's site: ask me about the work, how a project runs, or how to get started. ` +
     "For anything I can't answer, WhatsApp is right below.",
   prompts: ["What does Xerxes build?", "How does pricing work?", "How do I get started?"],
   openLabel: "Ask a question about this site",
@@ -68,7 +68,7 @@ export const ASSISTANT_AR: AssistantCopy = {
   name: NAME_AR,
   role: "مساعد ذكي · يجيب من هذا الموقع",
   greeting:
-    `مرحبًا، أنا ${NAME_AR} — المساعد على موقع Xerxes. اسألني عن الخدمات، أو كيف يسير المشروع، أو كيف تبدأ. ` +
+    `مرحبًا، أنا ${NAME_AR}، المساعد على موقع Xerxes. اسألني عن الخدمات، أو كيف يسير المشروع، أو كيف تبدأ. ` +
     "ولأي سؤال لا أستطيع الإجابة عنه، واتساب في الأسفل.",
   prompts: ["ما الذي يقدّمه Xerxes؟", "كيف تُحدَّد الأسعار؟", "كيف أبدأ؟"],
   openLabel: "اسأل عن هذا الموقع",
@@ -102,6 +102,6 @@ export function whatsappText(locale: "en" | "ar", question?: string): string {
       : "مرحبًا Xerxes، أودّ معرفة المزيد.";
   }
   return q
-    ? `Hi Xerxes — I was on your site and asked: "${q}"`
+    ? `Hi Xerxes, I was on your site and asked: "${q}"`
     : "Hi Xerxes, I'd like to learn more.";
 }

@@ -115,7 +115,7 @@ export default function WorkGallery({ items }: { items: WorkItem[] }) {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-ink-deep transition-colors hover:bg-gold-soft"
               >
-                Visit {items[active].title.split(" — ")[0]} live
+                Visit {items[active].title.split(", ")[0]} live
                 <ArrowUpRight size={15} strokeWidth={2.5} />
               </a>
             )}

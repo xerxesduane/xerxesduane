@@ -59,7 +59,7 @@ export default function DemoData() {
         onChange={(e) => setCsv(e.target.value)}
         rows={6}
         spellCheck={false}
-        placeholder="Paste a small CSV — a header row and a few rows of sales, orders, leads…"
+        placeholder="Paste a small CSV, a header row and a few rows of sales, orders, leads…"
         aria-label="CSV data"
         className={field}
       />

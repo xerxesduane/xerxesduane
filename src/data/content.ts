@@ -45,7 +45,7 @@ export const AUDIT_STEPS = [
 export const AUDIT_DELIVERABLES = [
   "A plain-English map of your current systems",
   "3 quick wins you can act on right away",
-  "A prioritised next-step plan — yours to keep, hire me or not",
+  "A prioritised next-step plan you keep, whether you hire me or not",
 ];
 
 export const NAV_LINKS = [
@@ -128,7 +128,7 @@ export const SERVICES: Service[] = [
   },
   {
     icon: ScanSearch,
-    title: "AEO — Answer Engine Optimization",
+    title: "AEO (Answer Engine Optimization)",
     tagline: "Be the answer, not a blue link.",
     description:
       "Optimize your content so voice assistants and Google's AI Overviews quote you directly, with structured data, concise answers, and FAQ schema that win featured snippets and 'position zero'.",
@@ -136,7 +136,7 @@ export const SERVICES: Service[] = [
   },
   {
     icon: Sparkles,
-    title: "GEO — Generative Engine Optimization",
+    title: "GEO (Generative Engine Optimization)",
     tagline: "Get cited by ChatGPT & Perplexity.",
     description:
       "Make your business the source AI engines recommend. I shape your content, entities, and citations so ChatGPT, Gemini, and Perplexity surface and recommend you when buyers ask.",
@@ -183,7 +183,7 @@ export const OUTCOMES: Outcome[] = [
     no: "01",
     title: "Get more leads",
     promise: "Be found, be chosen, be contacted.",
-    body: "A web presence engineered to bring enquiries in — not just to look good. Pages built to convert, and search work that puts you in front of buyers (and the AI engines they now ask).",
+    body: "A web presence engineered to bring enquiries in, not just to look good. Pages built to convert, and search work that puts you in front of buyers (and the AI engines they now ask).",
     items: [
       { label: "Websites that convert", href: "/web-development-dubai" },
       { label: "Landing pages & funnels", href: "/landing-page-design-dubai" },
@@ -196,7 +196,7 @@ export const OUTCOMES: Outcome[] = [
     no: "02",
     title: "Stop losing leads",
     promise: "Every enquiry captured, followed up, and visible.",
-    body: "Most businesses don't have a lead problem — they have a leak problem. I connect your forms, WhatsApp, and CRM so nothing falls through, and dashboards show you exactly where every lead stands.",
+    body: "Most businesses don't have a lead problem, they have a leak problem. I connect your forms, WhatsApp, and CRM so nothing falls through, and dashboards show you exactly where every lead stands.",
     items: [
       { label: "CRM setup & pipelines", href: "/crm-development-dubai" },
       { label: "WhatsApp workflows & follow-ups", href: "/ai-automation-dubai" },
@@ -208,7 +208,7 @@ export const OUTCOMES: Outcome[] = [
     no: "03",
     title: "Run the business better",
     promise: "One operating system instead of ten tools.",
-    body: "Inventory, invoicing, projects, and people — wired into one place. From full Odoo/ERP rollouts to custom internal tools and practical AI that gives your team hours back every week.",
+    body: "Inventory, invoicing, projects, and people: wired into one place. From full Odoo/ERP rollouts to custom internal tools and practical AI that gives your team hours back every week.",
     items: [
       { label: "Odoo / ERP implementation", href: "/odoo-erp-dubai" },
       { label: "Custom internal systems", href: "/custom-software-development-dubai" },
@@ -568,7 +568,7 @@ export const RESULTS: Result[] = [
     value: "791",
     label: "customer conversations",
     whatChanged:
-      "A focused paid-social campaign reached more than 54,000 people and produced 98,000 video plays. The goal wasn't passive engagement — it was starting real conversations with potential customers.",
+      "A focused paid-social campaign reached more than 54,000 people and produced 98,000 video plays. The goal wasn't passive engagement, it was starting real conversations with potential customers.",
     proof: "Verified campaign data · Meta Ads",
     serviceHref: "/landing-page-design-dubai",
   },
@@ -578,7 +578,7 @@ export const RESULTS: Result[] = [
     value: "610",
     label: "tracked conversions from 1,530+ clicks",
     whatChanged:
-      "A disciplined search campaign focused budget on high-intent searches, holding an 8.28% top-ad click-through rate at an average cost per click of $6.89 — managed remotely from Dubai.",
+      "A disciplined search campaign focused budget on high-intent searches, holding an 8.28% top-ad click-through rate at an average cost per click of $6.89, managed remotely from Dubai.",
     proof: "Verified campaign data · Google Ads",
     serviceHref: "/seo-dubai",
   },
@@ -588,7 +588,7 @@ export const RESULTS: Result[] = [
     value: "452",
     label: "direction requests in one month",
     whatChanged:
-      "Website improvements, local-search optimization, and better-managed business profiles helped more people discover locations and take a measurable next step — alongside 60,000+ monthly content views.",
+      "Website improvements, local-search optimization, and better-managed business profiles helped more people discover locations and take a measurable next step, alongside 60,000+ monthly content views.",
     proof: "Measured monthly activity · Web · GMB · Social",
     serviceHref: "/web-development-dubai",
   },
@@ -598,7 +598,7 @@ export const RESULTS: Result[] = [
     value: "8 → 1",
     label: "workflows in one operating system",
     whatChanged:
-      "CRM, quotations, purchasing, inventory, accounting, project management, e-commerce, and automation — connected through one structured Odoo ERP platform.",
+      "CRM, quotations, purchasing, inventory, accounting, project management, e-commerce, and automation: connected through one structured Odoo ERP platform.",
     proof: "Delivered scope · Odoo ERP",
     serviceHref: "/odoo-erp-dubai",
   },
@@ -608,7 +608,7 @@ export const RESULTS: Result[] = [
     value: "800%",
     label: "increase in organic visits",
     whatChanged:
-      "A long-term SEO campaign — technical fixes, content, and targeted keywords — also grew new users by 270%, page views by 200%, and put 115 keywords on page one.",
+      "A long-term SEO campaign of technical fixes, content and targeted keywords grew new users by 270%, page views by 200%, and put 115 keywords on page one.",
     proof: "Campaign result · SEO",
     serviceHref: "/seo-dubai",
   },
@@ -618,7 +618,7 @@ export const RESULTS: Result[] = [
     value: "300%",
     label: "increase in leads",
     whatChanged:
-      "A focused ads-and-social push tripled inbound leads — including a 300% rise in daily Facebook enquiries.",
+      "A focused ads-and-social push tripled inbound leads, including a 300% rise in daily Facebook enquiries.",
     proof: "Campaign result · Growth",
     serviceHref: "/crm-development-dubai",
   },
@@ -648,14 +648,14 @@ export interface Testimonial {
 // marked placeholders so the section can be reviewed and filled in.
 export const TESTIMONIALS: Testimonial[] = [
   {
-    quote: "Add a real client quote here — ideally what changed for their business, in their own words.",
+    quote: "Add a real client quote here, ideally what changed for their business, in their own words.",
     name: "[Client name]",
     business: "[Business]",
     sector: "[Sector · Dubai]",
     placeholder: true,
   },
   {
-    quote: "A second short, specific quote — the more concrete the result, the more it persuades.",
+    quote: "A second short, specific quote: the more concrete the result, the more it persuades.",
     name: "[Client name]",
     business: "[Business]",
     sector: "[Sector · UAE]",
@@ -681,7 +681,7 @@ export const PROMISE = {
     "Honest answers, even when they cost me money",
     "One trusted person who picks up the phone",
     "A real audit before any recommendation",
-    "You own everything I build — code, accounts, and data",
+    "You own everything I build: the code, the accounts and the data",
     "I'll tell you when you don't need me, and I mean it",
   ],
 };
@@ -692,7 +692,7 @@ export const PACKAGES = [
     price: "Free",
     note: "for a limited time",
     pitch: "Start here",
-    body: "A 60-minute diagnostic of your whole stack — website, leads, CRM, WhatsApp, spreadsheets, automation. You leave with a plain-English map of what's disconnected and a prioritised roadmap of what to fix first. No pressure, no lock-in.",
+    body: "A 60-minute diagnostic of your whole stack: website, leads, CRM, WhatsApp, spreadsheets, automation. You leave with a plain-English map of what's disconnected and a prioritised roadmap of what to fix first. No pressure, no lock-in.",
     cta: "Book your free systems audit",
     featured: true,
   },

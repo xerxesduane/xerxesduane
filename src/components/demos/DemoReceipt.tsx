@@ -17,7 +17,7 @@ type Receipt = {
 };
 
 function money(n: number, currency: string): string {
-  if (!Number.isFinite(n)) return "—";
+  if (!Number.isFinite(n)) return ",";
   return `${currency || "AED"} ${n.toFixed(2)}`;
 }
 
@@ -141,7 +141,7 @@ function Field({ label, value, className = "text-cream-dim" }: { label: string; 
     <div>
       <p className="font-mono text-[10px] uppercase tracking-wider text-muted-dark">{label}</p>
       <p className={`mt-0.5 text-sm ${className}`}>
-        {value?.toString().trim() ? value : <span className="text-muted-dark">—</span>}
+        {value?.toString().trim() ? value : <span className="text-muted-dark">,</span>}
       </p>
     </div>
   );

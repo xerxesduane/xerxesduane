@@ -49,7 +49,7 @@ function Preview({ item, onBack }: { item: WorkItem; onBack: () => void }) {
           </a>
         ) : (
           <p className="text-[0.78rem] text-fg-faint">
-            Screenshot from the archive — this build has no public link.
+            Screenshot from the archive, this build has no public link.
           </p>
         )}
       </div>
@@ -58,7 +58,7 @@ function Preview({ item, onBack }: { item: WorkItem; onBack: () => void }) {
         src={item.src}
         width={item.w}
         height={item.h}
-        alt={`${item.title} — full screenshot`}
+        alt={`${item.title}, full screenshot`}
         loading="lazy"
         decoding="async"
         className="block h-auto w-full bg-plate"

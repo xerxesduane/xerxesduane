@@ -121,7 +121,7 @@ export default {
 
       fontSize: {
         /* Oversized hero headline — clamps so it never overflows the shell. */
-        hero: ["clamp(2.35rem, 4.3vw, 4.15rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
+        hero: ["clamp(2.15rem, 3.7vw, 3.5rem)", { lineHeight: "1.02", letterSpacing: "-0.03em" }],
         "hero-sm": ["clamp(2rem, 3.2vw, 3rem)", { lineHeight: "1.06", letterSpacing: "-0.025em" }],
         /* Bento card heading — uppercase, set solid. */
         card: ["1.06rem", { lineHeight: "1.15", letterSpacing: "0.005em" }],

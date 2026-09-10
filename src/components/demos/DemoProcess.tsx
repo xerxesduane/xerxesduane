@@ -48,7 +48,7 @@ export default function DemoProcess() {
         value={workflow}
         onChange={(e) => setWorkflow(e.target.value)}
         rows={6}
-        placeholder="Describe a manual workflow, step by step — how a job moves from start to finish today…"
+        placeholder="Describe a manual workflow, step by step: how a job moves from start to finish today…"
         aria-label="Manual workflow description"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />

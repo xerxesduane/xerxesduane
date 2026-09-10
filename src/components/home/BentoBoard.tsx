@@ -87,7 +87,7 @@ export default function BentoBoard() {
               >
                 <img
                   src={project.image}
-                  alt={`${project.title} — screenshot of the live site`}
+                  alt={`${project.title}, screenshot of the live site`}
                   loading="lazy"
                   decoding="async"
                   className="aspect-[1.6] w-full object-cover object-top"
@@ -110,7 +110,7 @@ export default function BentoBoard() {
           height={851}
           loading="lazy"
           decoding="async"
-          className="mx-auto my-1 block w-full max-w-[11rem] select-none transition duration-500 ease-smooth group-hover:-translate-y-1 group-focus-visible:-translate-y-1"
+          className="mx-auto my-0.5 block w-full max-w-[11rem] select-none board:max-w-[8.5rem] transition duration-500 ease-smooth group-hover:-translate-y-1 group-focus-visible:-translate-y-1"
           draggable={false}
         />
       </Panel>

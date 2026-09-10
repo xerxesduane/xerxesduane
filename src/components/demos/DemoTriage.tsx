@@ -13,7 +13,7 @@ type Triage = {
 };
 
 const EXAMPLE =
-  "Hi — I was charged twice for my subscription this month and the second payment hasn't been refunded. This is really frustrating, I've emailed twice already with no reply. Please sort this out today.";
+  "Hi, I was charged twice for my subscription this month and the second payment hasn't been refunded. This is really frustrating, I've emailed twice already with no reply. Please sort this out today.";
 
 const PRIORITY_STYLES: Record<Triage["priority"], string> = {
   low: "bg-cream/10 text-cream-dim",
@@ -56,7 +56,7 @@ export default function DemoTriage() {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         rows={4}
-        placeholder="Paste a customer message — an email, a chat, a contact-form note…"
+        placeholder="Paste a customer message, an email, a chat, a contact-form note…"
         aria-label="Customer message to triage"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />

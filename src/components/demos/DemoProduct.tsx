@@ -61,7 +61,7 @@ export default function DemoProduct() {
         value={product}
         onChange={(e) => setProduct(e.target.value)}
         rows={3}
-        placeholder="A few product notes — name, key features, materials…"
+        placeholder="A few product notes, name, key features, materials…"
         aria-label="Product notes"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />

@@ -691,13 +691,19 @@ html[data-theme-vt="active"]::view-transition-new(root) {
 /* Homepage composition: the project image occupies the entire right half,
    while every other tile keeps the shared Panel typography and states. */
 .home-board > div > * { min-width: 0; gap: 8px; }
-@media (min-width: 1180px) { .home-board { padding: 8px; } .home-board > div { gap: 10px; } }
+@media (min-width: 1180px) {
+  .home-board { padding: 6px; }
+  .home-board > div { gap: 8px; }
+  /* Tighter cards, board only: at 1440 the four columns narrow enough
+     that content, not the row template, sets the height. */
+  .home-board > div > * { padding: 0.8rem 0.9rem; }
+}
 @media (min-width: 1180px) {
   /* Fluid rather than a fixed 254px: the home page is meant to land inside one
      viewport, and on a 900px-tall screen two fixed rows plus the hero and the
      strip do not. `vh` lets the board give height back on a shorter screen
      instead of pushing the fold off the bottom. */
-  .home-board > div { grid-template-rows: repeat(2, minmax(clamp(196px, 25.5vh, 254px), auto)); }
+  .home-board > div { grid-template-rows: repeat(2, minmax(clamp(142px, 19vh, 228px), auto)); }
   .home-projects > div:first-child, .home-projects > p, .home-projects ul { width: 47%; }
   .home-projects > div:nth-of-type(2) { display: contents; }
   .home-projects .project-track { position: absolute; inset: 18px 18px 18px 52%; height: auto; }

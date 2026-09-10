@@ -12,7 +12,7 @@ type Aeo = {
 };
 
 const EXAMPLE =
-  "AYA Home Spa — a home-service beauty and wellness spa in Dubai offering facials, massage, and nail care at your home across Dubai. Bookings via WhatsApp and Instagram.";
+  "AYA Home Spa, a home-service beauty and wellness spa in Dubai offering facials, massage, and nail care at your home across Dubai. Bookings via WhatsApp and Instagram.";
 
 const CONF: Record<Aeo["confidence"], { label: string; cls: string }> = {
   high: { label: "High confidence", cls: "text-gold" },

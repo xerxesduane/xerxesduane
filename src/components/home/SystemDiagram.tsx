@@ -131,7 +131,7 @@ export default function SystemDiagram() {
       <figcaption className="mx-auto mt-5 max-w-2xl text-[0.82rem] leading-relaxed text-fg-soft">
         <span className="font-bold text-fg">How the pieces connect.</span> Website, WhatsApp and
         ads feed one hub; CRM, Odoo and your dashboards read from the same place. An illustration
-        of how these builds are wired — not a live view of any client&rsquo;s system.
+        of how these builds are wired, not a live view of any client&rsquo;s system.
       </figcaption>
     </figure>
   );

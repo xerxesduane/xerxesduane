@@ -40,7 +40,7 @@ export default function DemoBroadcast() {
         value={promo}
         onChange={(e) => setPromo(e.target.value)}
         rows={3}
-        placeholder="Describe the promo — the offer, the deadline, who it's for…"
+        placeholder="Describe the promo, the offer, the deadline, who it's for…"
         aria-label="Promo to broadcast"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />
@@ -74,8 +74,8 @@ export default function DemoBroadcast() {
               </div>
 
               <div className="mt-4 flex flex-col gap-2 border-t border-cream/10 pt-3">
-                <FollowUp label="Day 2 — gentle nudge" text={broadcast.followUp1} />
-                <FollowUp label="Day 4 — final call" text={broadcast.followUp2} />
+                <FollowUp label="Day 2, gentle nudge" text={broadcast.followUp1} />
+                <FollowUp label="Day 4, final call" text={broadcast.followUp2} />
               </div>
 
               {broadcast.audience && (

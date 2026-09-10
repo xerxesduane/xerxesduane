@@ -75,16 +75,16 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Agentic workflow",
     title: "Watch an AI agent work a lead, step by step",
     blurb:
-      "Paste an inbound enquiry and the agent reads it, enriches the contact, scores the fit, drafts a reply, offers a time and updates the CRM — every step and tool-call shown live. The visible reasoning is the point.",
+      "Paste an inbound enquiry and the agent reads it, enriches the contact, scores the fit, drafts a reply, offers a time and updates the CRM: every step and tool-call shown live. The visible reasoning is the point.",
   },
   {
     id: "voice",
     category: "frontier",
     icon: Mic,
     eyebrow: "Voice receptionist · EN/AR",
-    title: "Talk to an AI receptionist — out loud",
+    title: "Talk to an AI receptionist, out loud",
     blurb:
-      "Tap, speak in Arabic or English, and it transcribes you, replies, and talks back — a real bilingual front desk you can hold a conversation with. Prefer to type? There's always a text box.",
+      "Tap, speak in Arabic or English, and it transcribes you, replies, and talks back: a real bilingual front desk you can hold a conversation with. Prefer to type? There's always a text box.",
   },
   {
     id: "vision-receipt",
@@ -93,7 +93,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Vision · bookkeeping",
     title: "Snap a receipt → a clean expense line",
     blurb:
-      "Photograph any receipt or invoice and the AI reads it into a tidy expense record — merchant, date, category, line items and 5% VAT — ready to push into Odoo or your books.",
+      "Photograph any receipt or invoice and the AI reads it into a tidy expense record, merchant, date, category, line items and 5% VAT: ready to push into Odoo or your books.",
   },
   {
     id: "vision-product",
@@ -102,7 +102,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Vision · e-commerce",
     title: "Photograph a product → a full listing",
     blurb:
-      "Point your camera at a product and get a store-ready description, highlight bullets, SEO title + meta, tags and a suggested AED price — straight from the photo.",
+      "Point your camera at a product and get a store-ready description, highlight bullets, SEO title + meta, tags and a suggested AED price: straight from the photo.",
   },
   {
     id: "ondevice",
@@ -111,7 +111,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "On-device · private",
     title: "AI that runs entirely in your browser",
     blurb:
-      "A real embedding model loads once into your browser, then answers questions semantically — fully on your device, nothing sent to a server. The privacy-first option for sensitive data.",
+      "A real embedding model loads once into your browser, then answers questions semantically: fully on your device, nothing sent to a server. The privacy-first option for sensitive data.",
   },
   {
     id: "data",
@@ -120,7 +120,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Data → insight",
     title: "Turn a CSV into insights + a chart",
     blurb:
-      "Paste or upload a small sales CSV and get three specific insights, a generated chart, and a recommended next move — the analyst layer on top of your numbers.",
+      "Paste or upload a small sales CSV and get three specific insights, a generated chart, and a recommended next move: the analyst layer on top of your numbers.",
   },
   {
     id: "aeo",
@@ -138,7 +138,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Instant landing section",
     title: "Describe a business → a live landing section",
     blurb:
-      "Type a business or offer and watch a complete, on-brand hero section render live — headline, value bullets, CTAs and a proof stat — the way I'd ship it.",
+      "Type a business or offer and watch a complete, on-brand hero section render live: headline, value bullets, CTAs and a proof stat: the way I'd ship it.",
   },
   {
     id: "process",
@@ -156,7 +156,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "CRM pipeline designer",
     title: "Design your sales pipeline in seconds",
     blurb:
-      "Describe how you sell and the AI proposes practical pipeline stages, the fields to capture, and the automations worth setting up — the blueprint for a CRM that fits how you work.",
+      "Describe how you sell and the AI proposes practical pipeline stages, the fields to capture, and the automations worth setting up: the blueprint for a CRM that fits how you work.",
   },
   {
     id: "roi",
@@ -165,7 +165,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Automation ROI calculator",
     title: "See what a repeated task really costs",
     blurb:
-      "Enter how often a manual task runs and what it costs, and get an estimate of the hours and money you'd win back by automating it. Runs entirely in your browser — just math, no AI.",
+      "Enter how often a manual task runs and what it costs, and get an estimate of the hours and money you'd win back by automating it. Runs entirely in your browser, just math, no AI.",
   },
   {
     id: "repurpose",
@@ -174,7 +174,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Content repurposing",
     title: "One message → email, social & a video",
     blurb:
-      "Paste a long update and get a concise email, a ready-to-post social caption, and a short-video outline — the same idea, reshaped for every channel in one go.",
+      "Paste a long update and get a concise email, a ready-to-post social caption, and a short-video outline: the same idea, reshaped for every channel in one go.",
   },
   {
     id: "leadresponse",
@@ -183,7 +183,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Lead response assistant",
     title: "Reply to an enquiry the right way",
     blurb:
-      "Paste a customer enquiry and get a clear, professional reply plus a read on their intent, urgency, and the best next step — so no lead waits or gets a weak answer.",
+      "Paste a customer enquiry and get a clear, professional reply plus a read on their intent, urgency, and the best next step: so no lead waits or gets a weak answer.",
   },
   {
     id: "critique",
@@ -192,7 +192,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     eyebrow: "Conversion critique",
     title: "Find what's costing you conversions",
     blurb:
-      "Enter a page URL or paste your copy and get a prioritized critique — unclear messaging, missing trust signals, weak CTAs, and the friction to fix first. Suggestions, never guarantees.",
+      "Enter a page URL or paste your copy and get a prioritized critique, unclear messaging, missing trust signals, weak CTAs, and the friction to fix first. Suggestions, never guarantees.",
   },
   {
     id: "assistant",
@@ -216,7 +216,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Headset,
     eyebrow: "Bilingual front desk",
     title: "An AI receptionist that speaks Arabic & English",
-    blurb: "Write to it in Arabic or English — it answers in the same language, handles your FAQs, and books appointments. The 24/7 front desk every Dubai business needs.",
+    blurb: "Write to it in Arabic or English, it answers in the same language, handles your FAQs, and books appointments. The 24/7 front desk every Dubai business needs.",
   },
   {
     id: "booking",
@@ -224,7 +224,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: CalendarClock,
     eyebrow: "Bookings, hands-free",
     title: "An AI concierge that books appointments",
-    blurb: "It chats with a customer, collects the service, day, time and number, then confirms the booking — a front desk that never sleeps, in Arabic or English.",
+    blurb: "It chats with a customer, collects the service, day, time and number, then confirms the booking: a front desk that never sleeps, in Arabic or English.",
   },
   {
     id: "trades",
@@ -232,7 +232,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Wrench,
     eyebrow: "Trades lead qualifier",
     title: "Qualify a repair job, capture the callback",
-    blurb: "A homeowner describes the problem; the AI asks the right questions, gives a likely cause and a ballpark, and takes their number — a dispatcher that pre-qualifies every job.",
+    blurb: "A homeowner describes the problem; the AI asks the right questions, gives a likely cause and a ballpark, and takes their number: a dispatcher that pre-qualifies every job.",
   },
   {
     id: "broadcast",
@@ -240,7 +240,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Megaphone,
     eyebrow: "WhatsApp campaigns",
     title: "Build a WhatsApp broadcast campaign",
-    blurb: "Describe a promo and get a Meta-ready opt-in template, two follow-up nudges, and the audience to send it to — a full campaign, drafted in seconds.",
+    blurb: "Describe a promo and get a Meta-ready opt-in template, two follow-up nudges, and the audience to send it to: a full campaign, drafted in seconds.",
   },
   {
     id: "whatsapp",
@@ -249,7 +249,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     featured: true,
     eyebrow: "Flagship · WhatsApp marketing automation",
     title: "Turn your lead list into personal WhatsApp messages",
-    blurb: "Import your leads from Google Sheets or Excel and the AI writes a unique, on-brand WhatsApp opener for every one — then, when they reply, it answers, qualifies, and books the appointment. A full two-way conversation at scale, on the channel people actually read.",
+    blurb: "Import your leads from Google Sheets or Excel and the AI writes a unique, on-brand WhatsApp opener for every one: then, when they reply, it answers, qualifies, and books the appointment. A full two-way conversation at scale, on the channel people actually read.",
   },
   {
     id: "reply",
@@ -257,7 +257,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: CornerDownLeft,
     eyebrow: "Inbox on autopilot",
     title: "Draft replies to any message",
-    blurb: "Paste an email, WhatsApp, or DM and pick a tone — get a ready-to-send reply that answers every question in it.",
+    blurb: "Paste an email, WhatsApp, or DM and pick a tone: get a ready-to-send reply that answers every question in it.",
   },
   {
     id: "review",
@@ -265,7 +265,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Star,
     eyebrow: "Reputation, handled",
     title: "Reply to reviews the right way",
-    blurb: "Paste any Google review — glowing or brutal — and it writes a calm, on-brand public response in seconds.",
+    blurb: "Paste any Google review, glowing or brutal: and it writes a calm, on-brand public response in seconds.",
   },
   {
     id: "translate",
@@ -273,7 +273,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Languages,
     eyebrow: "Arabic ⇄ English",
     title: "Translate either direction, instantly",
-    blurb: "Bilingual is the default in Dubai. Paste Arabic or English and get a natural translation — handy for sites, support, and content.",
+    blurb: "Bilingual is the default in Dubai. Paste Arabic or English and get a natural translation, handy for sites, support, and content.",
   },
   {
     id: "triage",
@@ -281,7 +281,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Split,
     eyebrow: "Inbox routing",
     title: "Triage & route any inbound message",
-    blurb: "Paste a customer message and it tags the department, priority, sentiment, language, and a suggested SLA — plus a ready acknowledgement. The brain behind a shared inbox.",
+    blurb: "Paste a customer message and it tags the department, priority, sentiment, language, and a suggested SLA: plus a ready acknowledgement. The brain behind a shared inbox.",
   },
   {
     id: "social",
@@ -289,7 +289,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Sparkles,
     eyebrow: "Content in seconds",
     title: "Social captions, tuned per platform",
-    blurb: "One idea in, a scroll-stopping caption out — written natively for Instagram, LinkedIn, or TikTok, hashtags included.",
+    blurb: "One idea in, a scroll-stopping caption out: written natively for Instagram, LinkedIn, or TikTok, hashtags included.",
   },
   {
     id: "seo",
@@ -297,7 +297,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Search,
     eyebrow: "SEO & answer-engine ready",
     title: "Generate search metadata that ranks",
-    blurb: "Describe a page and get an optimized title, meta description, slug, keywords, and FAQ schema — the groundwork for SEO and AI search.",
+    blurb: "Describe a page and get an optimized title, meta description, slug, keywords, and FAQ schema: the groundwork for SEO and AI search.",
   },
   {
     id: "ads",
@@ -313,7 +313,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: ShoppingBag,
     eyebrow: "E-commerce copy",
     title: "Product descriptions that sell",
-    blurb: "A few notes in, a polished store-ready description with highlight bullets out — in the tone your brand wants.",
+    blurb: "A few notes in, a polished store-ready description with highlight bullets out: in the tone your brand wants.",
   },
   {
     id: "property",
@@ -321,7 +321,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Building2,
     eyebrow: "Real estate listings",
     title: "Turn bullet facts into a property listing",
-    blurb: "Drop in the basics — beds, area, size, price — and get a polished portal listing, a punchy headline, and a ready-to-send WhatsApp blurb in English and Arabic.",
+    blurb: "Drop in the basics, beds, area, size, price: and get a polished portal listing, a punchy headline, and a ready-to-send WhatsApp blurb in English and Arabic.",
   },
   {
     id: "menu",
@@ -329,7 +329,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: UtensilsCrossed,
     eyebrow: "Delivery-app menus",
     title: "Make your menu sell on Talabat & Deliveroo",
-    blurb: "Paste a rough menu and get appetizing dish names, mouth-watering descriptions, allergen tags, and upsell pairings — formatted to convert on the delivery apps.",
+    blurb: "Paste a rough menu and get appetizing dish names, mouth-watering descriptions, allergen tags, and upsell pairings: formatted to convert on the delivery apps.",
   },
   {
     id: "tone",
@@ -337,7 +337,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Wand2,
     eyebrow: "Brand voice",
     title: "Rewrite anything in your brand voice",
-    blurb: "Paste any text and pick a voice — luxury, playful, corporate, or Gulf-warm — and watch it get rewritten on-brand, live.",
+    blurb: "Paste any text and pick a voice, luxury, playful, corporate, or Gulf-warm: and watch it get rewritten on-brand, live.",
   },
   {
     id: "ask",
@@ -345,7 +345,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: FileSearch,
     eyebrow: "Answers from your content",
     title: "Ask questions about any document",
-    blurb: "Paste text or point it at a page, then ask — it answers only from what's there, not the open internet.",
+    blurb: "Paste text or point it at a page, then ask: it answers only from what's there, not the open internet.",
   },
   {
     id: "extract",
@@ -353,7 +353,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: Braces,
     eyebrow: "Structured extraction",
     title: "Turn messy messages into clean data",
-    blurb: "Drop in a rambling enquiry and watch it become a tidy, typed record — the first step of any automation.",
+    blurb: "Drop in a rambling enquiry and watch it become a tidy, typed record: the first step of any automation.",
   },
   {
     id: "summarize",
@@ -369,7 +369,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: ReceiptText,
     eyebrow: "Quotes in seconds",
     title: "Turn a job into a priced quote",
-    blurb: "Describe the work and get an itemized quote with line items, 5% UAE VAT, and a total — the kind of thing your Odoo/CRM can send automatically.",
+    blurb: "Describe the work and get an itemized quote with line items, 5% UAE VAT, and a total: the kind of thing your Odoo/CRM can send automatically.",
   },
   {
     id: "invoice",
@@ -377,7 +377,7 @@ export const AI_LAB_DEMOS: AiLabDemo[] = [
     icon: FileText,
     eyebrow: "Bookkeeping automation",
     title: "Parse a messy invoice into clean data",
-    blurb: "Paste a supplier invoice or statement and get structured line items with 5% VAT and totals computed — ready to push into Odoo or Zoho Books.",
+    blurb: "Paste a supplier invoice or statement and get structured line items with 5% VAT and totals computed, ready to push into Odoo or Zoho Books.",
   },
 ];
 

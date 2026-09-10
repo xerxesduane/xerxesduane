@@ -10,7 +10,7 @@ export default function Showreel() {
       <PageHeader
         eyebrow="Showreel · video & motion"
         title={<>Footage into stories that move.</>}
-        lede="Video production, editing, colour grading, animation and social content — shot and cut across events, documentaries and brand work in the UAE and beyond. Tap any thumbnail to play."
+        lede="Video production, editing, colour grading, animation and social content: shot and cut across events, documentaries and brand work in the UAE and beyond. Tap any thumbnail to play."
         actions={
           <>
             <PrimaryAction href="#contact">Start a video project</PrimaryAction>

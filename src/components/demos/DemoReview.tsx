@@ -70,7 +70,7 @@ export default function DemoReview() {
         value={review}
         onChange={(e) => setReview(e.target.value)}
         rows={4}
-        placeholder="Paste a customer review — good, bad, or mixed…"
+        placeholder="Paste a customer review, good, bad, or mixed…"
         aria-label="Customer review"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />

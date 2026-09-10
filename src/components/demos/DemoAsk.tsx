@@ -3,7 +3,7 @@ import { ArrowRight, FileText, Link2, Sparkles } from "lucide-react";
 import { streamDemo } from "../../lib/demoClient";
 import { track } from "../../lib/analytics";
 
-const EXAMPLE_TEXT = `Greenfield Landscaping — Service Terms (2026)
+const EXAMPLE_TEXT = `Greenfield Landscaping, Service Terms (2026)
 
 We serve residential and commercial clients across Dubai and Sharjah. Standard
 maintenance visits are weekly or fortnightly. Our weekly garden package starts
@@ -74,7 +74,7 @@ export default function DemoAsk() {
             value={text}
             onChange={(e) => setText(e.target.value)}
             rows={6}
-            placeholder="Paste any text — a policy, a product page, an FAQ, meeting notes…"
+            placeholder="Paste any text, a policy, a product page, an FAQ, meeting notes…"
             aria-label="Source text"
             className={`${field} resize-none`}
           />

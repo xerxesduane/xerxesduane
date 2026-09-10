@@ -13,7 +13,7 @@ import { track } from "../../lib/analytics";
 export default function DemoLeadCapture({
   demo,
   prompt = "Want this running in your business?",
-  sub = "Drop your WhatsApp or email and I'll show you what it would take — free, no pressure.",
+  sub = "Drop your WhatsApp or email and I'll show you what it would take, free, no pressure.",
 }: {
   demo: string;
   prompt?: string;
@@ -29,7 +29,7 @@ export default function DemoLeadCapture({
     return (
       <div className="mt-6 flex items-center gap-3 rounded-2xl border border-gold/25 bg-gold/[0.06] p-4 text-sm text-cream">
         <CheckCircle2 size={18} className="shrink-0 text-gold" />
-        Got it — I'll be in touch within a few hours. Want to skip ahead?{" "}
+        Got it, I'll be in touch within a few hours. Want to skip ahead?{" "}
         <a
           href={`https://wa.me/${CONTACT.whatsapp}`}
           target="_blank"
@@ -49,7 +49,7 @@ export default function DemoLeadCapture({
       onSubmit={handleSubmit}
       className="mt-6 rounded-2xl border border-cream/10 bg-ink-deep/40 p-4 sm:p-5"
     >
-      <input type="hidden" name="_subject" value={`AI Lab lead — ${demo} demo`} />
+      <input type="hidden" name="_subject" value={`AI Lab lead, ${demo} demo`} />
       <input type="hidden" name="demo" value={demo} />
       <input
         type="text"

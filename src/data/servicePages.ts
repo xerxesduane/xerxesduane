@@ -443,7 +443,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
       },
       {
         q: "How much does custom software development cost?",
-        a: "It depends on the roles, the data and what the tool has to talk to. After the free audit I define the smallest useful version and put a fixed price in writing before any development starts — a range now would only be a guess.",
+        a: "It depends on the roles, the data and what the tool has to talk to. After the free audit I define the smallest useful version and put a fixed price in writing before any development starts, a range now would only be a guess.",
       },
       {
         q: "Can you improve an existing custom system?",

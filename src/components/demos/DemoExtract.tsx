@@ -15,7 +15,7 @@ type Lead = {
   suggestedReply: string;
 };
 
-const EXAMPLE = `hey there, found you through a friend. we run a small dental clinic in JLT (Bright Smile) and honestly our booking is a mess — half on whatsapp, half on paper. losing appts. would love a proper online booking + reminders thing, and maybe connect it to our accounts. need it before ramadan ideally. you can reach me on 050 123 4567 or sara@brightsmile.ae. thanks!`;
+const EXAMPLE = `hey there, found you through a friend. we run a small dental clinic in JLT (Bright Smile) and honestly our booking is a mess, half on whatsapp, half on paper. losing appts. would love a proper online booking + reminders thing, and maybe connect it to our accounts. need it before ramadan ideally. you can reach me on 050 123 4567 or sara@brightsmile.ae. thanks!`;
 
 const URGENCY_COLOR: Record<Lead["urgency"], string> = {
   high: "text-gold",
@@ -52,7 +52,7 @@ export default function DemoExtract() {
         value={text}
         onChange={(e) => setText(e.target.value)}
         rows={5}
-        placeholder="Paste a messy enquiry — a WhatsApp message, an email, a DM…"
+        placeholder="Paste a messy enquiry, a WhatsApp message, an email, a DM…"
         aria-label="Message to extract from"
         className="w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40"
       />
@@ -116,7 +116,7 @@ function Field({ label, value, className = "text-cream-dim" }: { label: string; 
   return (
     <div>
       <p className="font-mono text-[10px] uppercase tracking-wider text-muted-dark">{label}</p>
-      <p className={`mt-0.5 text-sm ${className}`}>{value?.trim() ? value : <span className="text-muted-dark">—</span>}</p>
+      <p className={`mt-0.5 text-sm ${className}`}>{value?.trim() ? value : <span className="text-muted-dark">,</span>}</p>
     </div>
   );
 }

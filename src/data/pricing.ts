@@ -14,7 +14,7 @@ export const PRICING = {
   /** Where a "from AED X" line used to sit, on a service page header. */
   meta: "Priced to the scope · a fixed proposal after your free audit",
   /** Said once under the services grid, instead of on every card. */
-  line: "No rate card here — every build is different, so the number comes after the scope does.",
+  line: "No rate card here. Every build is different, so the number comes after the scope does.",
   answer:
     "It depends on the build. Scope, integrations and how much you already have running all move the number, so anything published here would be wrong before we started. What you get instead is a written proposal after the free 60-minute audit: real scope, real price, fixed. No guessing games. Want the email to set that call up, or would you rather WhatsApp me?",
 };

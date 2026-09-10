@@ -76,16 +76,16 @@ export const FEATURED_RESULTS: FeaturedResult[] = CASE_STUDIES.filter(
  * real screenshot of the site it is captioned with — no logo stands in for a
  * screenshot, and no screenshot is captioned with the wrong client.
  *
- * `title` is "Client — descriptor" in workItems.ts; the split keeps the client
+ * `title` is "Client · descriptor" in workItems.ts; the split keeps the client
  * name on its own line and the descriptor beneath it.
  */
 export const FEATURED_PROJECTS = WEB_DESIGNS.filter((item) => item.href)
   .slice(0, 3)
   .map((item) => {
-    const [client, ...restOfTitle] = item.title.split("—");
+    const [client, ...restOfTitle] = item.title.split(" · ");
     return {
       client: client.trim(),
-      descriptor: restOfTitle.join("—").trim(),
+      descriptor: restOfTitle.join(" · ").trim(),
       image: item.thumb,
       /** Full original title, for the image's alt text. */
       title: item.title,
@@ -93,9 +93,13 @@ export const FEATURED_PROJECTS = WEB_DESIGNS.filter((item) => item.href)
   });
 
 export const HERO = {
-  headline: "One system. Not twelve tools.",
+  // Kept short on purpose: the home page has to land inside one viewport, and
+  // a headline that wraps to a third line takes the fold with it.
+  headline: "Your tools, finally talking.",
   subhead:
-    "Websites, CRM, Odoo, automation and AI — wired into one setup that runs your business instead of adding to your admin.",
+    "I wire the website, CRM, Odoo and WhatsApp you already pay for into one setup, then stay on to run it.",
   ctaLabel: "Get in touch",
-  ctaHref: "/#contact",
+  // /contact, not /#contact: the home page no longer carries a contact
+  // section, so the anchor it used to target isn't there to scroll to.
+  ctaHref: "/contact",
 };

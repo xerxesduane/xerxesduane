@@ -9,7 +9,7 @@ type AgentEvent =
   | { type: "summary"; score: number; reply: string; slot: string };
 
 const EXAMPLE =
-  "Hi, I run a 12-branch restaurant group in Dubai. Reservations and complaints are scattered across WhatsApp and email and we keep dropping the ball. Looking for someone to build a proper system — maybe AI to triage messages and book tables? Budget is flexible if it works. — Khalid, Operations, +971 50 123 4567";
+  "Hi, I run a 12-branch restaurant group in Dubai. Reservations and complaints are scattered across WhatsApp and email and we keep dropping the ball. Looking for someone to build a proper system, maybe AI to triage messages and book tables? Budget is flexible if it works., Khalid, Operations, +971 50 123 4567";
 
 const field =
   "w-full resize-none rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40";
@@ -67,7 +67,7 @@ export default function DemoAgent() {
         value={lead}
         onChange={(e) => setLead(e.target.value)}
         rows={4}
-        placeholder="Paste an inbound lead — an email, a WhatsApp, a form fill…"
+        placeholder="Paste an inbound lead, an email, a WhatsApp, a form fill…"
         aria-label="Inbound lead message"
         className={field}
       />
