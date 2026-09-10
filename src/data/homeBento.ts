@@ -98,8 +98,10 @@ export const HERO = {
   // and "wired" are words they skim past. Short also buys fold space, and the
   // home page has to land inside one viewport.
   headline: "Less admin. More business.",
-  subhead:
-    "I connect your website, CRM, Odoo and WhatsApp, so the follow-up happens without you chasing it.",
+  // The headline is memorable but says nothing about the offer, so this line
+  // carries the whole "what and for whom". Literal on purpose: it is also what
+  // a search engine or an AI assistant will quote when describing the site.
+  subhead: "Websites, CRM, Odoo and AI automation for small businesses in Dubai.",
   ctaLabel: "Get in touch",
   // /contact, not /#contact: the home page no longer carries a contact
   // section, so the anchor it used to target isn't there to scroll to.
