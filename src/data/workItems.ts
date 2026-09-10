@@ -206,6 +206,17 @@ export const WORK_ITEMS: WorkItem[] = [
     "featured": false
   },
   {
+    "category": "web",
+    "label": "Web Design",
+    "title": "Construction Desert Schools · Executive learning programme, Dubai",
+    "href": "https://www.constructiondesertschools.com/",
+    "src": "/work/web/web-20.webp",
+    "thumb": "/work/web/web-20-thumb.webp",
+    "w": 1440,
+    "h": 6218,
+    "featured": false
+  },
+  {
     "category": "graphic",
     "label": "Graphic Design",
     "title": "Graphic Design 1",

@@ -1,8 +1,60 @@
 import { useState } from "react";
 import { Pause, Play } from "lucide-react";
 import { Marquee } from "../vendor/Marquee";
-import { TOOLS } from "../../data/homeBento";
+import { TOOLS, type Tool } from "../../data/homeBento";
 import { useReducedMotionPref } from "../../lib/usePrefs";
+
+/** Mark height. Width follows from the mark's own shape. */
+const MARK = 18;
+
+/**
+ * One brand mark, set to a common height rather than a common box.
+ *
+ * Sizing by height is what keeps the row level: the marks are cropped to their
+ * ink (see build-tool-logos.mjs), and Odoo and Zoho only publish wordmarks, so
+ * a shared square would have set those two three times smaller than everything
+ * beside them. They come out wider instead, which is how a wordmark is meant
+ * to be set.
+ *
+ * The colour rides on a custom property rather than a `fill`, so the dark
+ * theme can swap it: a handful of these marks are black or near-black and
+ * would otherwise vanish on the dark canvas — the generator works out the
+ * replacement from real contrast against that canvas.
+ *
+ * `aria-hidden`, because the tool's name sits right beside it in text.
+ */
+function ToolMark({ tool }: { tool: Tool }) {
+  if (!tool.paths) {
+    return (
+      <span
+        aria-hidden
+        style={{ height: MARK, width: MARK }}
+        className="grid shrink-0 place-items-center rounded-[0.3rem] bg-accent text-[0.55rem] font-extrabold leading-none text-accent-ink"
+      >
+        {tool.monogram}
+      </span>
+    );
+  }
+  return (
+    <svg
+      viewBox={tool.viewBox}
+      width={Math.round(MARK * (tool.aspect ?? 1))}
+      height={MARK}
+      aria-hidden
+      className="shrink-0 text-[color:var(--mark)] dark:text-[color:var(--mark-dark)]"
+      style={
+        {
+          "--mark": `#${tool.hex}`,
+          "--mark-dark": `#${tool.darkHex ?? tool.hex}`,
+        } as React.CSSProperties
+      }
+    >
+      {tool.paths.map((d) => (
+        <path key={d.slice(0, 24)} d={d} fill="currentColor" />
+      ))}
+    </svg>
+  );
+}
 
 /**
  * The stack strip: a fixed label, then a clipped row that scrolls its contents.
@@ -48,18 +100,15 @@ export default function ToolsStrip() {
             repeat={3}
             className="py-3 [--duration:52s] [--gap:0px] sm:py-3.5 board:py-2"
           >
-            {TOOLS.map((tool) => {
-              const Icon = tool.icon;
-              return (
-                <span
-                  key={tool.label}
-                  className="flex shrink-0 items-center gap-2.5 whitespace-nowrap border-e border-line-soft px-4 text-[0.9rem] sm:px-6 sm:text-[0.95rem] font-semibold text-fg"
-                >
-                  <Icon size={18} strokeWidth={2.1} aria-hidden className="text-accent" />
-                  {tool.label}
-                </span>
-              );
-            })}
+            {TOOLS.map((tool) => (
+              <span
+                key={tool.label}
+                className="flex shrink-0 items-center gap-2.5 whitespace-nowrap border-e border-line-soft px-4 text-[0.9rem] sm:px-6 sm:text-[0.95rem] font-semibold text-fg"
+              >
+                <ToolMark tool={tool} />
+                {tool.label}
+              </span>
+            ))}
           </Marquee>
           {/* Fade the clipped edges rather than cutting a label mid-glyph.
               Physical left/right on purpose: the track always travels the same
