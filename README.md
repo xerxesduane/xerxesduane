@@ -82,6 +82,7 @@ src/
   entry-server.tsx        # SSR entry used by scripts/prerender.mjs
   data/                   # all copy and data (edit here)
   components/
+    assistant/            # the site assistant: launcher, panel, chat state
     shell/                # profile rail, mobile nav, mobile tab bar, canvas lines
     home/                 # hero, tools strip, bento board, system diagram
     page/                 # Panel / PanelBoard / PageHeader / PageActions
@@ -91,10 +92,30 @@ src/
     ui/                   # Overlay, ThemeToggle, NavIcons, Counter, Reveal…
 ```
 
+## The site assistant
+
+The chat launcher in the corner of every page (`components/assistant/`) talks
+to `api/assistant.ts`, a Vercel Edge function that shares the AI Lab's model
+key and rate limiter. It is grounded rather than general: `api/_siteContext.ts`
+fetches the site's **own prerendered pages** at request time — the home page
+always, plus up to three more picked by keyword — and the system prompt tells
+it to answer from those and nothing else. So there is no knowledge base to
+keep in sync; editing a page edits what the assistant knows.
+
+It refuses to invent prices, clients, timelines or results, which means a real
+prospect reaches its limits quickly. That is why WhatsApp sits pinned above the
+composer rather than buried in a reply, and why it carries the visitor's last
+question across. With no model key configured the endpoint returns 503 and the
+panel says so, WhatsApp and the audit link still working.
+
+Rename it in one place: `NAME_EN` / `NAME_AR` in `src/data/assistant.ts`, which
+holds every string the widget shows in both languages.
+
 ## Notes
 
 - The contact form posts to Formspree; the same details also compose a
-  pre-filled WhatsApp message. Booking goes to zcal.
+  pre-filled WhatsApp message. The floating button in the corner is the
+  assistant now — WhatsApp moved inside it. Booking goes to zcal.
 - Analytics (GA4 + Clarity) stay denied until the visitor accepts the cookie
   notice.
 - Motion respects `prefers-reduced-motion` everywhere: the tools strip stops,

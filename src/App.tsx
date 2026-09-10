@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { LazyMotion, domAnimation, MotionConfig } from "framer-motion";
 import ShellLayout from "./components/shell/ShellLayout";
 import Footer from "./components/Footer";
-import WhatsAppButton from "./components/WhatsAppButton";
+import SiteAssistant from "./components/assistant/SiteAssistant";
 import MobileTabBar from "./components/shell/MobileTabBar";
 import ConsentBanner from "./components/ConsentBanner";
 import SmoothScroll from "./components/fx/SmoothScroll";
@@ -116,7 +116,7 @@ export default function App({ path = "/" }: { path?: string }) {
           className="h-[calc(5rem+env(safe-area-inset-bottom))] lg:hidden"
           aria-hidden
         />
-        <WhatsAppButton locale={isArabic ? "ar" : "en"} />
+        <SiteAssistant locale={isArabic ? "ar" : "en"} />
         <MobileTabBar path={path} locale={isArabic ? "ar" : "en"} />
         <ConsentBanner locale={isArabic ? "ar" : "en"} />
       </div>
