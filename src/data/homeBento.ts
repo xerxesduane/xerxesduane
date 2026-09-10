@@ -22,17 +22,36 @@ export { TOOL_LOGOS as TOOLS } from "./toolLogos";
 export type { ToolLogo as Tool } from "./toolLogos";
 
 /**
- * Core offerings for the compact card, each with what it starts at.
+ * The five services on the home card, cheapest first, each with its floor.
+ *
+ * Named and ordered rather than `SERVICES.slice(0, 5)`, which is how this
+ * started. That slice was an accident of array order and it happened to pick
+ * the five most expensive things on the rate card: the home page opened at
+ * AED 6,000 and ran to AED 25,000, with an average of 11,200 and nothing
+ * below 4,000 anywhere on it. For a site whose customers are 2-10 person
+ * businesses, the first number they see was a reason to close the tab.
+ *
+ * These five are the core of the work and span the real range, low end
+ * first, so the page opens at AED 2,500 instead. Nothing was discounted to
+ * do it; the affordable work was simply not being shown.
  *
  * The price rides along because the card had a decorative 01-05 counter in
  * that column, and a number a visitor can act on is worth more than a number
- * that only counts the rows. It costs no extra height, which the home page
- * does not have to spare.
+ * that counts rows. It costs no extra height, which this page cannot spare.
  */
-export const CORE_SERVICES = SERVICES.slice(0, 5).map((s) => ({
-  title: s.title,
-  price: s.price,
-}));
+const HOME_SERVICE_TITLES = [
+  "Landing Pages & Funnels",
+  "Dashboards & CRM",
+  "AI Automation & Solutions",
+  "E-Commerce & Stores",
+  "ERP & Odoo",
+];
+
+export const CORE_SERVICES = HOME_SERVICE_TITLES.map((title) => {
+  const service = SERVICES.find((s) => s.title === title);
+  if (!service) throw new Error(`Home card names "${title}", which is not a service`);
+  return { title: service.title, price: service.price };
+});
 
 /**
  * Documented outcomes, pulled straight from the case studies that carry real
