@@ -10,9 +10,10 @@
 // will do:
 //
 //   1. Vercel KV / Upstash Redis. Nothing to paste: attaching a store in
-//      Vercel injects KV_REST_API_URL and KV_REST_API_TOKEN, the same pair
-//      _shared.ts already uses for rate limiting, so the counter lights up
-//      with no extra configuration.
+//      Vercel injects the REST credentials, the same pair _shared.ts uses for
+//      rate limiting, so the counter lights up with no extra configuration.
+//      The names are matched by suffix (see findRedisRest), because a
+//      Marketplace connection may prefix them.
 //   2. Supabase Postgres, via SUPABASE_URL + SUPABASE_PUBLISHABLE_KEY. More
 //      to set up, but it keeps every past month as a row you can query.
 //
@@ -23,14 +24,13 @@
 // Either way the month is keyed in Asia/Dubai, so it turns over at midnight in
 // Dubai rather than 8pm the evening before, and nothing identifying is stored:
 // no IP, no cookie, no visitor row. One integer per month.
-import { clientIp, rateLimit, errorResponse, json } from "./_shared";
+import { clientIp, rateLimit, errorResponse, findRedisRest, json } from "./_shared";
 
 export const config = { runtime: "edge" };
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_KEY = process.env.SUPABASE_PUBLISHABLE_KEY ?? process.env.SUPABASE_ANON_KEY;
-const KV_URL = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
-const KV_TOKEN = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
+const KV = findRedisRest();
 
 /** Crawlers that do run JS. Most never reach here — this is client-triggered. */
 const BOT = /bot|crawler|spider|crawl|slurp|headless|lighthouse|pingdom|preview|facebookexternalhit|bingpreview|curl|wget|python-requests|axios|node-fetch/i;
@@ -59,10 +59,10 @@ async function kvVisits(count: boolean): Promise<number> {
   const key = `site:visits:${dubaiPeriod()}`;
   const [signal, done] = withTimeout(4000);
   try {
-    const res = await fetch(`${KV_URL}/pipeline`, {
+    const res = await fetch(`${KV?.url}/pipeline`, {
       method: "POST",
       signal,
-      headers: { authorization: `Bearer ${KV_TOKEN}`, "content-type": "application/json" },
+      headers: { authorization: `Bearer ${KV?.token}`, "content-type": "application/json" },
       body: JSON.stringify([count ? ["INCR", key] : ["GET", key]]),
     });
     if (!res.ok) throw new Error(`kv ${res.status}`);
@@ -105,9 +105,17 @@ async function supabaseVisits(count: boolean): Promise<number> {
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") return errorResponse("Method not allowed.", 405);
 
-  const store =
-    SUPABASE_URL && SUPABASE_KEY ? supabaseVisits : KV_URL && KV_TOKEN ? kvVisits : null;
-  if (!store) return errorResponse("The visit counter isn't configured.", 503);
+  const store = SUPABASE_URL && SUPABASE_KEY ? supabaseVisits : KV ? kvVisits : null;
+  if (!store) {
+    // Name what was looked for, so a mis-set variable is a five-second fix
+    // rather than a guess. Names only — never a value.
+    return errorResponse(
+      "The visit counter has no store. Expected KV_REST_API_URL + KV_REST_API_TOKEN " +
+        "(or UPSTASH_REDIS_REST_URL + _TOKEN, with or without a prefix), " +
+        "or SUPABASE_URL + SUPABASE_PUBLISHABLE_KEY. Env changes need a redeploy.",
+      503,
+    );
+  }
 
   let body: { count?: boolean };
   try {

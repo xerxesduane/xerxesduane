@@ -72,9 +72,33 @@ async function kvRateLimit(ip: string, url: string, token: string): Promise<Limi
   return { ok: true, retryAfter: 0 };
 }
 
+/**
+ * Find the Redis REST credentials whatever the platform called them.
+ *
+ * Vercel injects `KV_REST_API_URL`/`_TOKEN` for its own KV, Upstash injects
+ * `UPSTASH_REDIS_REST_URL`/`_TOKEN`, and a Marketplace connection lets you set
+ * a prefix on either — so the pair can arrive as `STORAGE_KV_REST_API_URL` or
+ * anything else ending the same way. Matching on the suffix and rebuilding the
+ * token name from the same prefix finds all of those, and reading the pair as
+ * a unit means a half-configured store degrades rather than half-works.
+ */
+export function findRedisRest(): { url: string; token: string } | null {
+  const env = process.env as Record<string, string | undefined>;
+  const SUFFIX = /(KV_REST_API|UPSTASH_REDIS_REST)_URL$/;
+  for (const key of Object.keys(env)) {
+    const match = SUFFIX.exec(key);
+    if (!match || !env[key]) continue;
+    const tokenKey = key.slice(0, key.length - "_URL".length) + "_TOKEN";
+    const token = env[tokenKey];
+    if (token) return { url: env[key], token };
+  }
+  return null;
+}
+
 export async function rateLimit(ip: string): Promise<Limit> {
-  const url = process.env.KV_REST_API_URL ?? process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN ?? process.env.UPSTASH_REDIS_REST_TOKEN;
+  const found = findRedisRest();
+  const url = found?.url;
+  const token = found?.token;
   if (url && token) {
     try {
       return await kvRateLimit(ip, url, token);
