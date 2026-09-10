@@ -1,4 +1,4 @@
-import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { useEffect, useRef, useState, type ComponentPropsWithoutRef, type ReactNode } from "react";
 
 /**
  * Marquee — adapted from Magic UI (MIT). See ./LICENSE-magicui.md.
@@ -44,6 +44,22 @@ export function Marquee({
   children,
   ...props
 }: MarqueeProps) {
+  const root = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    let inView = false;
+    const update = () => setVisible(inView && !document.hidden);
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      update();
+    });
+    if (root.current) observer.observe(root.current);
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, []);
   const track = [
     "flex shrink-0 justify-around gap-[var(--gap)]",
     vertical ? "animate-marquee-y flex-col" : "animate-marquee-x flex-row",
@@ -63,6 +79,7 @@ export function Marquee({
   return (
     <div
       {...props}
+      ref={root}
       className={`group/marquee flex gap-[var(--gap)] overflow-hidden [--duration:40s] [--gap:1rem] ${
         vertical ? "flex-col" : "flex-row"
       } ${className}`}
@@ -75,7 +92,7 @@ export function Marquee({
           aria-hidden={i > 0 || undefined}
           inert={i > 0 || undefined}
           className={track}
-          style={paused ? { animationPlayState: "paused" } : undefined}
+          style={paused || !visible ? { animationPlayState: "paused" } : undefined}
         >
           {children}
         </div>

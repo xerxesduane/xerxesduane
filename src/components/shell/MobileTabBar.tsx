@@ -31,7 +31,7 @@ export default function MobileTabBar({
           const Icon = item.icon;
           const label = navLabel(item, locale, true);
           const href = navHref(item, locale);
-          const isContact = item.href === "/#contact";
+          const isContact = item.href === "/contact";
           const active = isNavActive(item, path);
 
           if (isContact) {

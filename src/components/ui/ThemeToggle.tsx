@@ -42,7 +42,8 @@ export default function ThemeToggle({ className = "" }: { className?: string }) 
     const root = document.documentElement;
     const flip = () => applyTheme(root.dataset.theme === "dark" ? "light" : "dark");
 
-    if (reduced || typeof doc.startViewTransition !== "function" || busy.current) {
+    if (busy.current || root.dataset.themeVt === "active") return;
+    if (reduced || typeof doc.startViewTransition !== "function") {
       flip();
       return;
     }

@@ -19,7 +19,7 @@ approach of Magic UI's `animated-theme-toggler` (View Transitions API +
 `clip-path`), rewritten against this project's `data-theme` + localStorage
 preference model rather than the upstream `.dark` class + `theme` key.
 
-Aceternity UI's Animated Modal was considered for the project reel overlay but
-`ui.aceternity.com` is not reachable from this build environment, so
-`src/components/ui/Overlay.tsx` is a first-party implementation with focus
-trapping, Escape handling and scroll restoration.
+Aceternity UI's [Animated Modal](https://ui.aceternity.com/components/animated-modal)
+was reviewed. The reel retains the first-party `src/components/ui/Overlay.tsx`
+with background inertness, focus trapping, Escape handling and scroll restoration.
+No Aceternity source or additional animation dependency is included.

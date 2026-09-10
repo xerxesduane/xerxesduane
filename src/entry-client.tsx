@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
+import { createRoot, hydrateRoot } from "react-dom/client";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./index.css";
 import App from "./App";
@@ -18,21 +18,15 @@ const tree = (
   </StrictMode>
 );
 
-// The build serves fully prerendered HTML for crawlers and social scrapers.
-// Client rendering avoids recoverable hydration mismatches from animation-only
-// markup while preserving the static HTML response for SEO.
-container.replaceChildren();
-createRoot(container).render(tree);
+// Keep the prerendered page in place: it supplies the first paint and native
+// scroll restoration while lazy route code loads. Vite dev has an empty root.
+if (container.querySelector("main")) hydrateRoot(container, tree);
+else createRoot(container).render(tree);
 
 /**
  * Re-run the browser's scroll-to-fragment.
  *
- * Because the line above throws the prerendered DOM away and renders fresh,
- * the document collapses to nothing for a moment — and with it whatever
- * position the browser had already scrolled to for a `#hash` in the URL. A
- * cold load of `/#contact` therefore landed at the top of the page.
- *
- * So: watch for the target to appear (routes are lazy chunks, so it is not
+ * Watch for the target to appear (development routes are lazy chunks, so it is not
  * there on the first frame), scroll to it, then correct once more after
  * `load` in case images changed the layout underneath it. `scrollIntoView`
  * respects each section's `scroll-margin-top`, so the offset matches what an

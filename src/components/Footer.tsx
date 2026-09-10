@@ -78,8 +78,8 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
                   </a>
                 </li>
                 <li>
-                  <a href="/ai-lab" className="inline-flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
-                    AI Lab
+                  <a href="/insights" className="inline-flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
+                    Insights
                     <span aria-hidden>→</span>
                   </a>
                 </li>

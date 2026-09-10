@@ -68,10 +68,10 @@ export default function ConsentBanner({ locale = "en" }: { locale?: "en" | "ar" 
 
   return (
     <div
-      role="dialog"
+      role="region"
       aria-label={ar ? AR_CHROME.consentAria : "Cookie consent"}
       aria-live="polite"
-      className="fixed inset-x-3 bottom-[calc(6rem+env(safe-area-inset-bottom))] z-[60] lg:bottom-5 lg:left-1/2 lg:right-auto lg:w-[min(54rem,calc(100vw-13rem))] lg:-translate-x-1/2"
+      className="relative z-20 mx-auto w-full max-w-shell px-4 pb-4"
     >
       <div className="nav-surface flex flex-col gap-3 rounded-2xl p-3.5 shadow-card-hover sm:flex-row sm:items-center sm:gap-4 sm:p-4">
         <p className="text-xs leading-relaxed text-cream-dim sm:text-sm">

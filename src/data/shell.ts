@@ -2,6 +2,7 @@ import { Bot, User } from "lucide-react";
 import type { ComponentType } from "react";
 import { ChatGlyph, FolderGlyph, HomeGlyph, LayersGlyph } from "../components/ui/NavIcons";
 import { CONTACT } from "./content";
+import { SERVICE_PAGES } from "./servicePages";
 
 /**
  * Nav glyphs are either a lucide icon or one of the local multi-part glyphs
@@ -57,9 +58,10 @@ export const SHELL_NAV: ShellNavItem[] = [
   {
     label: "Services",
     labelAr: "الخدمات",
-    href: "/#services",
+    href: "/services",
     hrefAr: "/ar#services",
     icon: LayersGlyph,
+    matches: ["/services", ...SERVICE_PAGES.flatMap(page => [`/${page.slug}`, `/ar/${page.slug}`])],
   },
   { label: "AI Lab", labelAr: "مختبر الذكاء الاصطناعي", shortLabelAr: "المختبر", href: "/ai-lab", icon: Bot },
   {
@@ -74,7 +76,7 @@ export const SHELL_NAV: ShellNavItem[] = [
     shortLabel: "Contact",
     labelAr: "الأسئلة والتواصل",
     shortLabelAr: "تواصل",
-    href: "/#contact",
+    href: "/contact",
     hrefAr: "/ar#contact",
     icon: ChatGlyph,
   },
@@ -86,7 +88,7 @@ export const SHELL_NAV: ShellNavItem[] = [
  * it stays one tap away through the Explore rail on the homepage and the rail
  * nav on every other viewport, so the bar keeps thumb-sized targets.
  */
-export const MOBILE_BAR_NAV: ShellNavItem[] = ["/", "/case-studies", "/#contact", "/#services", "/about"]
+export const MOBILE_BAR_NAV: ShellNavItem[] = ["/", "/case-studies", "/contact", "/services", "/about"]
   .map((href) => SHELL_NAV.find((item) => item.href === href))
   .filter((item): item is ShellNavItem => Boolean(item));
 

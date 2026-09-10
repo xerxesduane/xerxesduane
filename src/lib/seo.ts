@@ -135,6 +135,8 @@ export function allRoutes(): string[] {
   return [
     "/",
     "/about",
+    "/services",
+    "/contact",
     "/case-studies",
     ...CASE_STUDIES.map((study) => `/case-studies/${study.slug}`),
     "/portfolio",
@@ -273,6 +275,18 @@ const AI_LAB_META: PageMeta = {
 export function getPageMeta(path: string): PageMeta {
   const slug = pathToSlug(path);
   if (slug === "") return HOME_META;
+  if (slug === "services" || slug === "contact") {
+    const title = slug === "services" ? "Services" : "FAQs & Contact";
+    return {
+      title: `${title} - Xerxes Duane`,
+      ogTitle: `${title} - Xerxes Duane`,
+      canonical: `${SITE_ORIGIN}/${slug}`,
+      description: slug === "services"
+        ? "Explore website development, Odoo ERP, CRM, automation and AI services for businesses in Dubai, with scope and starting prices."
+        : "Contact Xerxes Duane in Dubai. Book a free systems audit, send an enquiry, or find answers to common questions.",
+      jsonLd: [breadcrumb([HOME_CRUMB, { name: title, url: `${SITE_ORIGIN}/${slug}` }])],
+    };
+  }
   if (slug === "about") return ABOUT_META;
   if (slug === "ai-lab" || slug === "demos") return AI_LAB_META;
   if (slug === "case-studies") return CASE_STUDIES_META;

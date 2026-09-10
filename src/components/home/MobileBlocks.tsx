@@ -24,21 +24,21 @@ export function MobileProof() {
       initial="hidden"
       animate="show"
       aria-label="Experience at a glance"
-      className="mb-4 grid grid-cols-2 gap-2 sm:hidden"
+      className="mb-4 grid grid-cols-4 gap-0 divide-x divide-line rounded-xl border border-line bg-panel sm:hidden"
     >
-      {STATS.map((stat) => (
+      {STATS.map((stat, index) => (
         <m.div
           key={stat.label}
           variants={fadeUp}
-          className="rounded-xl border border-line bg-panel px-3 py-2.5 shadow-card"
+          className="px-2 py-3"
         >
           <dt className="sr-only">{stat.label}</dt>
           <dd>
-            <span className="block font-display text-[1.35rem] font-extrabold leading-none tracking-tight text-fg">
+            <span className="block font-display text-[1.1rem] font-extrabold leading-none tracking-tight text-fg">
               <Counter value={stat.value} suffix={stat.suffix} />
             </span>
             <span className="mt-1 block text-[0.7rem] leading-tight text-fg-soft">
-              {stat.label}
+              {["Years building", "Ad impressions", "AI tools", "Countries"][index]}
             </span>
           </dd>
         </m.div>

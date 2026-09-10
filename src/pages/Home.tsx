@@ -28,7 +28,7 @@ export default function Home() {
         <p className="mb-2 text-[0.75rem] font-bold uppercase tracking-[0.14em] text-fg-faint sm:hidden">
           Explore · swipe
         </p>
-        <BentoBoard />
+        <div id="work" className="scroll-mt-8"><BentoBoard /></div>
         <MobileResults />
       </div>
       <ServicesSection />

@@ -12,6 +12,8 @@ import PageTransition from "./components/fx/PageTransition";
 // only downloads the JS for the route they're on. The streaming prerender
 // (entry-server) resolves these before writing HTML, so SEO is unaffected.
 const Home = lazy(() => import("./pages/Home"));
+const Services = lazy(() => import("./pages/Services"));
+const ContactPage = lazy(() => import("./pages/ContactPage"));
 const ServicePage = lazy(() => import("./pages/ServicePage"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
 const CaseStudyPage = lazy(() => import("./pages/CaseStudyPage"));
@@ -50,6 +52,8 @@ function altLanguage(path: string): { href: string; label: string } {
 function Route({ path }: { path: string }) {
   const slug = pathToSlug(path);
   if (slug === "") return <Home />;
+  if (slug === "services") return <Services />;
+  if (slug === "contact") return <ContactPage />;
   if (slug === "case-studies") return <CaseStudies />;
   if (slug.startsWith("case-studies/")) {
     const study = CASE_STUDIES.find((item) => item.slug === slug.slice("case-studies/".length));
@@ -110,6 +114,7 @@ export default function App({ path = "/" }: { path?: string }) {
         </ShellLayout>
 
         <Footer locale={isArabic ? "ar" : "en"} />
+        <ConsentBanner locale={isArabic ? "ar" : "en"} />
         {/* Reserve the bottom bar's height (plus the iOS home indicator) so
             the end of the footer is never trapped underneath it. */}
         <div
@@ -118,7 +123,6 @@ export default function App({ path = "/" }: { path?: string }) {
         />
         <WhatsAppButton locale={isArabic ? "ar" : "en"} />
         <MobileTabBar path={path} locale={isArabic ? "ar" : "en"} />
-        <ConsentBanner locale={isArabic ? "ar" : "en"} />
       </div>
       </MotionConfig>
     </LazyMotion>

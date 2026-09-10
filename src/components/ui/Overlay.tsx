@@ -22,11 +22,9 @@ const FOCUSABLE =
  * A modal overlay: dimmed, blurred backdrop, one close control, and the
  * keyboard behaviour a dialog owes its user.
  *
- * Written here rather than pulled from Aceternity UI's Animated Modal —
- * `ui.aceternity.com` is unreachable from this build environment, and the
- * pieces that matter for this use (a real focus trap, Escape, restoring focus
- * and the page's scroll position, and stopping the Lenis inertia loop while
- * open) are the parts a decorative modal usually leaves out.
+ * A first-party overlay, retained after reviewing Aceternity Animated Modal.
+ * Focus containment, inert background, Escape, scroll restoration and Lenis
+ * coordination are part of this shared primitive, not each showcase.
  *
  * Scroll is locked by pinning `<body>` at its current offset rather than with
  * `overflow: hidden`, because the latter loses the scroll position on iOS.
@@ -93,6 +91,10 @@ export default function Overlay({
     body.style.width = "100%";
     body.style.overflowY = "scroll";
 
+    const app = document.getElementById("root");
+    const wasInert = app?.inert ?? false;
+    if (app) app.inert = true;
+
     // Move focus in once the panel exists.
     const panel = panelRef.current;
     const target = panel?.querySelector<HTMLElement>(FOCUSABLE) ?? panel;
@@ -105,14 +107,22 @@ export default function Overlay({
       if (event.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onDocumentKey);
+    const containFocus = (event: FocusEvent) => {
+      if (panel && !panel.contains(event.target as Node)) {
+        (panel.querySelector<HTMLElement>(FOCUSABLE) ?? panel).focus({ preventScroll: true });
+      }
+    };
+    document.addEventListener("focusin", containFocus);
 
     return () => {
       document.removeEventListener("keydown", onDocumentKey);
+      document.removeEventListener("focusin", containFocus);
+      if (app) app.inert = wasInert;
       body.style.position = previous.position;
       body.style.top = previous.top;
       body.style.width = previous.width;
       body.style.overflowY = previous.overflowY;
-      window.scrollTo(0, scrollY);
+      window.scrollTo({ top: scrollY, behavior: "instant" });
       lenis?.start();
       restoreTo.current?.focus({ preventScroll: true });
     };
@@ -130,7 +140,7 @@ export default function Overlay({
         aria-label="Close"
         tabIndex={-1}
         onClick={onClose}
-        className="absolute inset-0 cursor-default bg-canvas-sunk/80 backdrop-blur-md"
+        className="overlay-backdrop absolute inset-0 cursor-default bg-[#081326]/65 backdrop-blur-md"
       />
       <div
         ref={panelRef}
@@ -139,7 +149,7 @@ export default function Overlay({
         aria-labelledby={`${id}-title`}
         aria-describedby={description ? `${id}-desc` : undefined}
         tabIndex={-1}
-        className="relative flex max-h-full w-full max-w-6xl flex-col overflow-hidden rounded-panel border border-line bg-panel shadow-card-hover"
+        className="overlay-panel relative flex max-h-full w-full max-w-6xl flex-col overflow-hidden rounded-panel border border-line bg-panel shadow-card-hover"
       >
         <div className="flex items-start justify-between gap-4 border-b border-line px-4 py-3 sm:px-6 sm:py-4">
           <div className={showTitle ? "" : "sr-only"}>
@@ -161,7 +171,7 @@ export default function Overlay({
             <span className="sr-only">Close</span>
           </button>
         </div>
-        <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
+        <div data-lenis-prevent className="min-h-0 flex-1 overflow-y-auto overscroll-contain">{children}</div>
       </div>
     </div>,
     document.body,

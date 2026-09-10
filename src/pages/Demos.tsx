@@ -171,14 +171,16 @@ function DemoSkeleton() {
 function LazyDemo({ id, children }: { id: string; children: ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
   // Deep links (#demo-id) land on the demo instantly; mount it right away.
-  const [show, setShow] = useState(
-    () => typeof window !== "undefined" && window.location.hash === `#${id}`,
-  );
+  const [show, setShow] = useState(false);
   const engaged = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (window.location.hash === `#${id}`) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- resolve the URL after matching the server snapshot
+      setShow(true);
+    }
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -405,7 +407,11 @@ function initialFilter(): CatId | "all" {
 }
 
 export default function Demos() {
-  const [filter, setFilterState] = useState<CatId | "all">(initialFilter);
+  const [filter, setFilterState] = useState<CatId | "all">("all");
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- client URL preferences must not change the hydration snapshot
+    setFilterState(initialFilter());
+  }, []);
   const [query, setQuery] = useState("");
   const featured = DEMOS.find((d) => d.featured);
   const rest = DEMOS.filter((d) => !d.featured);

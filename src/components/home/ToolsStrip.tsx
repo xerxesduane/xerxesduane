@@ -20,10 +20,13 @@ import { useReducedMotionPref } from "../../lib/usePrefs";
 export default function ToolsStrip() {
   const reduced = useReducedMotionPref();
   const [paused, setPaused] = useState(false);
+  const [interacting, setInteracting] = useState(false);
 
   return (
     <section
       aria-label="Tools and platforms I work with"
+      onFocusCapture={() => setInteracting(true)}
+      onBlurCapture={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}
       className="mb-4 rounded-[2.1rem] bg-gradient-to-r from-canvas-sunk/30 via-wash/45 to-wash-strong/60 p-1.5"
     >
       <div className="flex items-stretch overflow-hidden rounded-[1.7rem] border border-line bg-panel shadow-card">
@@ -41,7 +44,7 @@ export default function ToolsStrip() {
         <div className="relative min-w-0 flex-1">
           <Marquee
             pauseOnHover
-            paused={paused || reduced}
+            paused={paused || reduced || interacting}
             repeat={3}
             className="py-3 [--duration:52s] [--gap:0px] sm:py-3.5"
           >

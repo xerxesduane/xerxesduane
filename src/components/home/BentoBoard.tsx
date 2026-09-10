@@ -50,7 +50,7 @@ function MoreLink({ href, children }: { href: string; children: ReactNode }) {
  */
 export default function BentoBoard() {
   return (
-    <PanelBoard rail cols="board:grid-cols-4">
+    <PanelBoard rail cols="board:grid-cols-4" className="home-board">
       {/* ---- Projects: a clipped reel of real client-site screenshots ---- */}
       <Panel
         iconNode={<FolderGlyph size={20} />}
@@ -58,15 +58,16 @@ export default function BentoBoard() {
         blurb="Websites, ERP rollouts and campaigns built for real businesses."
         href="/case-studies"
         span="sm:col-span-2"
+        className="home-projects"
       >
         <div className="grid min-h-0 flex-1 items-center gap-3 sm:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)]">
-          <ul className="flex flex-col justify-center gap-2">
+          <ul className="flex flex-col justify-center gap-3">
             {FEATURED_PROJECTS.map((project) => (
               <li key={project.image} className="min-w-0">
-                <p className="truncate text-[0.85rem] font-bold leading-tight text-fg">
+                <p className="text-[0.85rem] font-bold leading-tight text-fg">
                   {project.client}
                 </p>
-                <p className="truncate text-[0.72rem] leading-tight text-fg-faint">
+                <p className="mt-1 text-[0.75rem] leading-snug text-fg-faint">
                   {project.descriptor}
                 </p>
               </li>
@@ -79,7 +80,7 @@ export default function BentoBoard() {
             vertical
             startOnHover
             repeat={2}
-            className="h-[10rem] rounded-xl border border-line bg-canvas-sunk/60 p-1.5 [--duration:14s] [--gap:0.375rem]"
+            className="project-track h-[12rem] rounded-xl border border-line bg-panel-alt p-1.5 [--duration:18s] [--gap:0.5rem]"
           >
             {FEATURED_PROJECTS.map((project) => (
               <figure
@@ -91,7 +92,7 @@ export default function BentoBoard() {
                   alt={`${project.title} — screenshot of the live site`}
                   loading="lazy"
                   decoding="async"
-                  className="h-[6.5rem] w-full object-cover object-top"
+                  className="aspect-[1.6] w-full object-cover object-top"
                 />
               </figure>
             ))}
@@ -100,17 +101,17 @@ export default function BentoBoard() {
       </Panel>
 
       {/* ---- About: the portrait on a small fan of cards ---- */}
-      <Panel icon={User} label="About" href="/about">
+      <Panel icon={User} label="About" blurb="The person behind the systems." href="/about">
         {/* Two blank card backs behind the one real photograph — a photo stack
             without pretending there are three different photographs. */}
-        <div className="relative h-[6.75rem]">
+        <div className="relative mx-auto my-1 h-[6.75rem] w-[6rem]">
           <span
             aria-hidden
-            className="absolute inset-x-6 inset-y-1 rounded-xl border border-line bg-panel-alt transition duration-500 ease-smooth group-hover:-translate-x-3 group-hover:-rotate-[7deg] group-focus-visible:-translate-x-3 group-focus-visible:-rotate-[7deg]"
+            className="absolute inset-0 -translate-x-3 -rotate-12 rounded-xl border border-line bg-wash transition duration-500 ease-smooth group-hover:-translate-x-5 group-hover:-rotate-[18deg] group-focus-visible:-translate-x-5"
           />
           <span
             aria-hidden
-            className="absolute inset-x-3 inset-y-0.5 rounded-xl border border-line bg-panel-alt transition duration-500 ease-smooth group-hover:translate-x-3 group-hover:rotate-[5deg] group-focus-visible:translate-x-3 group-focus-visible:rotate-[5deg]"
+            className="absolute inset-0 translate-x-2 rotate-6 rounded-xl border border-line bg-panel-alt transition duration-500 ease-smooth group-hover:translate-x-4 group-hover:rotate-12 group-focus-visible:translate-x-4"
           />
           <img
             src={SHELL_IDENTITY.portrait}
@@ -123,11 +124,7 @@ export default function BentoBoard() {
           />
         </div>
         <p className="text-[0.85rem] leading-snug text-fg-soft">
-          Independent consultant wiring websites, CRM, Odoo and AI into one
-          system small businesses can actually run.
-        </p>
-        <p className="mt-auto text-[0.76rem] font-semibold text-fg-faint">
-          {SHELL_IDENTITY.location} · serving the wider GCC
+          Independent systems consultant, based in Dubai.
         </p>
       </Panel>
 
@@ -138,7 +135,7 @@ export default function BentoBoard() {
         blurb="Live demos you can run right here."
         footer={<MoreLink href="/ai-lab">All {AI_LAB_COUNT} tools</MoreLink>}
       >
-        <div className="flex flex-col gap-1.5">
+        <div className="my-auto flex flex-col gap-2.5">
           {AI_LAB_HOME_ROWS.map((row, i) => (
             <Marquee
               key={i}
@@ -163,7 +160,7 @@ export default function BentoBoard() {
             </Marquee>
           ))}
         </div>
-        <p className="truncate text-[0.72rem] text-fg-faint">{AI_LAB_TRUST.join(" · ")}</p>
+        <p className="text-[0.72rem] text-fg-faint">{AI_LAB_TRUST.join(" · ")}</p>
       </Panel>
 
       {/* ---- Experience: figures already published on the site ---- */}
@@ -190,7 +187,7 @@ export default function BentoBoard() {
       </Panel>
 
       {/* ---- Services ---- */}
-      <Panel iconNode={<LayersGlyph size={20} />} label="Services" href="/#services">
+      <Panel iconNode={<LayersGlyph size={20} />} label="Services" href="/services">
         <ol className="divide-y divide-line-soft">
           {CORE_SERVICES.map((title, i) => (
             <li

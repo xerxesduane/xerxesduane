@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Rows3 } from "lucide-react";
+import { useReducedMotionPref } from "../../lib/usePrefs";
 import type { WorkItem } from "../../data/workItems";
 
 interface ProjectReelProps {
@@ -10,8 +11,8 @@ interface ProjectReelProps {
   onSelect: (item: WorkItem) => void;
 }
 
-const CARD_W = 300;
-const CARD_H = 188;
+const CARD_W = 256;
+const CARD_H = 182;
 const DRAG_THRESHOLD = 6;
 /** Degrees of rotation per pixel dragged. */
 const SENSITIVITY = 0.22;
@@ -36,9 +37,10 @@ const SENSITIVITY = 0.22;
  *    the only route to the work.
  */
 export default function ProjectReel({ items, flatByDefault = false, onSelect }: ProjectReelProps) {
+  const reduced = useReducedMotionPref();
   const [flat, setFlat] = useState(flatByDefault);
   const [angle, setAngle] = useState(0);
-  const [focusIndex, setFocusIndex] = useState(0);
+  const [row, setRow] = useState(0);
   const [dragging, setDragging] = useState(false);
   /** True while the momentum loop is writing the angle every frame. */
   const [coasting, setCoasting] = useState(false);
@@ -49,10 +51,15 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
   const frame = useRef(0);
 
   const count = items.length;
-  const step = count > 0 ? 360 / count : 0;
+  const columns = Math.max(3, Math.ceil(count / 3));
+  const rows = Math.ceil(count / columns);
+  const step = 360 / columns;
+  const frontColumn = ((Math.round(-angle / step) % columns) + columns) % columns;
+  const candidate = row * columns + frontColumn;
+  const focusIndex = candidate < count ? candidate : frontColumn;
   const radius = useMemo(
-    () => (count > 1 ? Math.round(CARD_W / 2 / Math.tan(Math.PI / count)) : 0),
-    [count],
+    () => (Math.round((CARD_W + 18) / 2 / Math.tan(Math.PI / columns))),
+    [columns],
   );
 
   const stopMomentum = useCallback(() => {
@@ -66,13 +73,16 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
   const runMomentum = useCallback(() => {
     cancelAnimationFrame(frame.current);
     setCoasting(true);
-    const tick = () => {
-      velocity.current *= 0.94;
+    let previous = performance.now();
+    const tick = (now: number) => {
+      const elapsed = Math.min(32, now - previous) / 16;
+      previous = now;
+      velocity.current *= Math.pow(0.94, elapsed);
       if (Math.abs(velocity.current) < 0.02) {
         stopMomentum();
         return;
       }
-      setAngle((a) => a + velocity.current);
+      setAngle((a) => a + velocity.current * elapsed);
       frame.current = requestAnimationFrame(tick);
     };
     frame.current = requestAnimationFrame(tick);
@@ -100,8 +110,7 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
       lastT: e.timeStamp,
       moved: 0,
     };
-    setDragging(true);
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    // Preserve native clicks until the movement is clearly a drag.
   };
 
   const onPointerMove = (e: React.PointerEvent) => {
@@ -109,10 +118,15 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
     if (!d.active) return;
     const dx = e.clientX - d.startX;
     d.moved = Math.max(d.moved, Math.abs(dx));
+    if (d.moved <= DRAG_THRESHOLD) return;
+    if (!(e.currentTarget as HTMLElement).hasPointerCapture(e.pointerId)) {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+      setDragging(true);
+    }
     setAngle(d.startAngle + dx * SENSITIVITY);
 
     const dt = e.timeStamp - d.lastT;
-    if (dt > 0) velocity.current = ((e.clientX - d.lastX) * SENSITIVITY * 16) / dt;
+    if (dt > 0) velocity.current = Math.max(-3, Math.min(3, ((e.clientX - d.lastX) * SENSITIVITY * 16) / dt));
     d.lastX = e.clientX;
     d.lastT = e.timeStamp;
   };
@@ -127,7 +141,8 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
     } catch {
       /* pointer already gone */
     }
-    if (Math.abs(velocity.current) > 0.15) runMomentum();
+    if (!reduced && e.type !== "pointercancel" && d.moved > DRAG_THRESHOLD && Math.abs(velocity.current) > 0.15) runMomentum();
+    else stopMomentum();
   };
 
   /** True when the pointer that just came up was dragging, not clicking. */
@@ -136,10 +151,9 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
   const spin = useCallback(
     (direction: 1 | -1) => {
       stopMomentum();
-      setAngle((a) => a - direction * step);
-      setFocusIndex((i) => (i + direction + count) % count);
+      setAngle((a) => (Math.round(a / step) - direction) * step);
     },
-    [count, step, stopMomentum],
+    [step, stopMomentum],
   );
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -150,6 +164,13 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
       spin(-1);
+    } else if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      setRow((r) => (r + (e.key === "ArrowDown" ? 1 : rows - 1)) % rows);
+    } else if ((e.key === "Enter" || e.key === " ") && e.target === e.currentTarget) {
+      e.preventDefault();
+      stopMomentum();
+      onSelect(items[focusIndex]);
     }
   };
 
@@ -216,7 +237,8 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
         onPointerMove={onPointerMove}
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
-        className={`relative h-[15.5rem] touch-pan-y select-none overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent sm:h-[19rem] ${
+        onLostPointerCapture={() => { drag.current.active = false; setDragging(false); }}
+        className={`relative h-[min(62dvh,36rem)] touch-pan-y select-none overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent sm:h-[min(68dvh,39rem)] ${
           dragging ? "cursor-grabbing" : "cursor-grab"
         }`}
         style={{ perspective: "900px", perspectiveOrigin: "50% 50%" }}
@@ -233,7 +255,7 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
             // No easing while a gesture or the momentum loop owns the angle —
             // a transition on every frame would fight the rAF updates.
             transition:
-              dragging || coasting ? "none" : "transform 520ms cubic-bezier(0.16, 1, 0.3, 1)",
+              dragging || coasting || reduced ? "none" : "transform 520ms cubic-bezier(0.16, 1, 0.3, 1)",
             willChange: "transform",
             width: CARD_W,
             height: CARD_H,
@@ -241,26 +263,28 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
         >
           {items.map((item, i) => {
             // How close this card is to facing the viewer, 1 = dead centre.
-            const facing = Math.cos(((i * step + angle) * Math.PI) / 180);
+            const facing = Math.cos((((i % columns) * step + angle) * Math.PI) / 180);
             const front = facing > 0.3;
             return (
               <button
                 key={item.src}
                 type="button"
-                tabIndex={i === focusIndex ? 0 : -1}
+                tabIndex={-1}
                 aria-current={i === focusIndex ? "true" : undefined}
-                onClick={() => {
-                  if (wasDrag()) return;
+                onClick={(event) => {
+                  if (event.detail > 0 && wasDrag()) return;
+                  stopMomentum();
                   onSelect(item);
                 }}
-                onFocus={() => setFocusIndex(i)}
                 className="group/card absolute inset-0 overflow-hidden rounded-xl border border-line bg-panel text-start shadow-card transition-[opacity,box-shadow] duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
                 style={{
-                  transform: `rotateY(${i * step}deg) translateZ(${radius}px)`,
+                  transform: `translateY(${(Math.floor(i / columns) - (rows - 1) / 2) * (CARD_H + 14)}px) rotateY(${(i % columns) * step}deg) translateZ(${radius}px)`,
                   // Fade with the turn so the far side of the ring recedes
                   // instead of competing with the card in front.
                   opacity: Math.max(0.18, 0.22 + 0.78 * Math.max(0, facing)),
                   pointerEvents: front ? "auto" : "none",
+                  boxShadow: i === focusIndex ? "0 0 0 2px rgb(var(--c-accent))" : undefined,
+                  backfaceVisibility: "hidden",
                 }}
               >
                 <img
@@ -286,9 +310,10 @@ export default function ProjectReel({ items, flatByDefault = false, onSelect }: 
         </div>
       </div>
 
+      <p aria-live="polite" aria-atomic="true" className="px-4 pb-3 text-center text-sm font-bold text-fg">{items[focusIndex]?.title}</p>
       <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-3 sm:px-6">
         <p className="text-[0.8rem] text-fg-soft">
-          Drag to turn · arrow keys work too · {count} builds
+          Drag to turn · ← → rotate · ↑ ↓ choose row · Enter opens
         </p>
         <div className="flex items-center gap-2">
           <button

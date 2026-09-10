@@ -90,13 +90,13 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     --c-fg-on-solid: 255 255 255;
 
     /* ---- hairlines ---- */
-    --c-line: 229 226 217;
-    --c-line-soft: 239 237 230;
+    --c-line: 216 221 228;
+    --c-line-soft: 232 235 239;
 
     /* ---- accent: bright orange for tiles, a deeper orange for text ---- */
-    --c-accent: 234 88 12;
+    --c-accent: 249 112 22;
     --c-accent-soft: 253 236 225;
-    --c-accent-deep: 180 83 9;
+    --c-accent-deep: 166 65 10;
     /* Hover for a filled accent button: darker, so text on it stays AA. */
     --c-accent-hover: 154 71 8;
     --c-accent-ink: 255 255 255;
@@ -116,11 +116,11 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     --surface-alt: #faf9f5;
     --ink: #112244;
     --muted: #4a5a74;
-    --line: #e5e2d9;
+    --line: #d8dde4;
     --navy: #112244;
     --navy-dark: #0a1630;
-    --gold: #b45309;
-    --gold-soft: #ea580c;
+    --gold: #a6410a;
+    --gold-soft: #f97016;
     --success: #1f7a5a;
     --danger: #b94242;
     --studio-bg: #f5f3ec;
@@ -132,7 +132,7 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     --studio-cream-dim: #4a5a74;
     --studio-muted: #4a5a74;
     --studio-ink: #112244;
-    --studio-gold: #b45309;
+    --studio-gold: #a6410a;
     --studio-gold-deep: #9a4708;
   }
 
@@ -163,7 +163,7 @@ html[data-theme-vt="active"]::view-transition-new(root) {
 
     --c-accent: 240 100 20;
     --c-accent-soft: 58 34 18;
-    --c-accent-deep: 253 186 116;
+    --c-accent-deep: 255 171 128;
     --c-accent-hover: 240 100 20;
     --c-accent-ink: 255 255 255;
 
@@ -182,7 +182,7 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     --line: #283752;
     --navy: #edf2f9;
     --navy-dark: #ffffff;
-    --gold: #fdba74;
+    --gold: #ffab80;
     --gold-soft: #f06414;
     --studio-bg: #0c1526;
     --studio-bg-deep: #080f1c;
@@ -193,7 +193,7 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     --studio-cream-dim: #acbbd0;
     --studio-muted: #8f9fb7;
     --studio-ink: #0c1526;
-    --studio-gold: #fdba74;
+    --studio-gold: #ffab80;
     --studio-gold-deep: #f06414;
   }
 
@@ -687,3 +687,25 @@ html[data-theme-vt="active"]::view-transition-new(root) {
 .studio-thumb-fade {
   animation: studio-thumb-out 1000ms ease-out forwards;
 }
+
+/* Homepage composition: the project image occupies the entire right half,
+   while every other tile keeps the shared Panel typography and states. */
+.home-board > div > * { min-width: 0; gap: 8px; }
+@media (min-width: 1500px) {
+  .home-board > div { grid-template-rows: minmax(254px, auto) minmax(254px, auto); }
+  .home-projects > div:first-child, .home-projects > p, .home-projects ul { width: 47%; }
+  .home-projects > div:nth-of-type(2) { display: contents; }
+  .home-projects .project-track { position: absolute; inset: 18px 18px 18px 52%; height: auto; }
+  .home-projects > div:nth-of-type(2) > ul { margin-top: auto; margin-bottom: auto; }
+}
+@media (max-width: 639px) {
+  .home-board { padding: 0; background: none !important; }
+  .home-board > div { padding: 6px 3px 16px; scroll-padding-inline: 3px; }
+  .home-board > div > * { min-height: 310px; }
+  .home-projects ul { display: none; }
+  .home-projects .project-track { height: 170px; }
+}
+@keyframes overlay-enter { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+@keyframes backdrop-enter { from { opacity: 0; } to { opacity: 1; } }
+.overlay-panel { animation: overlay-enter 280ms cubic-bezier(.16,1,.3,1); }
+.overlay-backdrop { animation: backdrop-enter 200ms ease-out; }

@@ -35,9 +35,9 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
       initial="hidden"
       animate="show"
       aria-label="Profile and site navigation"
-      className="hidden shrink-0 lg:block lg:w-[17.5rem] xl:w-[19rem] board:w-[21rem]"
+      className="hidden shrink-0 lg:block lg:w-[15rem] xl:w-[16.5rem] board:w-[18rem]"
     >
-      <div className="sticky top-0 flex max-h-dvh flex-col gap-4 overflow-y-auto py-6 pe-1">
+      <div className="sticky top-0 flex flex-col gap-4 py-8 pe-1">
         {/* Portrait + identity, as one link home. The logo mark rides the
             portrait's corner so the brand asset stays present without a
             second lockup competing with the name below it. */}
@@ -56,7 +56,7 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
               loading="eager"
               decoding="async"
               fetchPriority="high"
-              className="h-[7.5rem] w-[7.5rem] rounded-full border border-line bg-panel object-cover object-top shadow-card transition duration-500 ease-smooth group-hover:-translate-y-0.5 board:h-[8.5rem] board:w-[8.5rem]"
+              className="h-[7.5rem] w-[7.5rem] rounded-full border border-line bg-panel object-cover object-top shadow-card transition duration-500 ease-smooth group-hover:-translate-y-0.5 board:h-[10rem] board:w-[10rem]"
             />
             <span
               aria-hidden

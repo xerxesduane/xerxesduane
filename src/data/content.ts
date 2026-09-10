@@ -47,10 +47,12 @@ export const AUDIT_DELIVERABLES = [
 
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Services", href: "/#services" },
-  { label: "Work", href: "/#work" },
+  { label: "Services", href: "/services" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "Showreel", href: "/showreel" },
   { label: "AI Lab", href: "/ai-lab" },
   { label: "About", href: "/about" },
+  { label: "FAQs / Contact", href: "/contact" },
 ];
 
 export interface Service {

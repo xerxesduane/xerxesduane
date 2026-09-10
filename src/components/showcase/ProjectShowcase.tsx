@@ -1,4 +1,4 @@
-import { Suspense, lazy, useCallback, useState } from "react";
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowUpRight, MousePointerClick } from "lucide-react";
 import Overlay from "../ui/Overlay";
 import { IconTile, PANEL_HOVER } from "../page/Panel";
@@ -23,10 +23,13 @@ function Loading() {
 
 /** The full-size look at one build, with an honest note about what it links to. */
 function Preview({ item, onBack }: { item: WorkItem; onBack: () => void }) {
+  const back = useRef<HTMLButtonElement>(null);
+  useEffect(() => { back.current?.focus({ preventScroll: true }); }, []);
   return (
     <div className="p-4 sm:p-6">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <button
+          ref={back}
           type="button"
           onClick={onBack}
           className="inline-flex items-center gap-2 rounded-full border border-line bg-panel px-4 py-2 text-[0.8rem] font-bold text-fg transition hover:border-accent/45 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
@@ -105,14 +108,14 @@ export default function ProjectShowcase({ items = WEB_DESIGNS, className = "" }:
           <h2 className="min-w-0 flex-1 font-display text-card font-extrabold uppercase tracking-[0.045em] text-fg transition-colors duration-300 group-hover:text-accent-deep">
             Websites &amp; funnels
           </h2>
-          <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line bg-panel-alt px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.1em] text-accent-deep">
+          <span className="hidden shrink-0 items-center gap-1.5 rounded-full border border-line bg-panel-alt px-3 py-1.5 text-[0.72rem] font-bold uppercase tracking-[0.1em] text-accent-deep sm:inline-flex">
             <MousePointerClick size={13} strokeWidth={2.4} aria-hidden />
             Spin the reel
           </span>
         </div>
         <p className="-mt-1 text-[0.9rem] leading-snug text-fg-soft">
-          {items.length} builds shipped for real businesses. Open the reel, turn it, and look at
-          any one of them full size.
+          {items.length} website designs from my portfolio archive. Open the reel and explore
+          the screenshots, with live links where available.
         </p>
         <span className="grid grid-cols-3 gap-2.5" aria-hidden>
           {preview.map((item) => (
@@ -143,15 +146,20 @@ export default function ProjectShowcase({ items = WEB_DESIGNS, className = "" }:
             : "Drag the reel sideways, or use the arrow keys. Choose a build to see it full size."
         }
       >
-        {selected ? (
-          <Preview item={selected} onBack={() => setSelected(null)} />
-        ) : (
+        {selected && <Preview item={selected} onBack={() => {
+          setSelected(null);
+          requestAnimationFrame(() => {
+            const dialog = document.querySelector('[role="dialog"]');
+            (dialog?.querySelector<HTMLElement>('[aria-label^="Project reel"]') ?? dialog?.querySelector<HTMLElement>("ul button"))?.focus({ preventScroll: true });
+          });
+        }} />}
+        <div hidden={!!selected}>
           <Suspense fallback={<Loading />}>
             {/* Reduced motion or a coarse pointer starts on the flat list; the
                 cylinder is one button away either way. */}
             <ProjectReel items={items} flatByDefault={reduced || !fine} onSelect={setSelected} />
           </Suspense>
-        )}
+        </div>
       </Overlay>
     </>
   );
