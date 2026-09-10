@@ -19,7 +19,7 @@ const CDN = "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.7.6";
 const MODEL = "Xenova/all-MiniLM-L6-v2";
 
 const FAQS: { q: string; a: string }[] = [
-  { q: "How much does a website cost?", a: "Most small-business sites start from AED 6,000. You get one fixed quote after a free audit — no surprises, no lock-in." },
+  { q: "How much does a website cost?", a: "It depends on the scope — pages, integrations, and what you already have running. You get one fixed quote in writing after a free audit, so there's nothing to guess at." },
   { q: "Do you work with Odoo or ERP systems?", a: "Yes — Odoo/ERP and CRM setup is a core service: sales, inventory, accounting and more, connected into one system." },
   { q: "Can you build AI automation for my business?", a: "Yes — from WhatsApp automation to AI assistants and agents. The same tools you can try live here in the AI Lab." },
   { q: "Do you work in Arabic?", a: "Bilingual is the default in Dubai — websites, support and AI assistants all work in Arabic and English." },

@@ -2,7 +2,7 @@ import { m } from "framer-motion";
 import { ArrowUpRight, ArrowLeft, Check } from "lucide-react";
 import { SERVICE_PAGES, type ServicePageData } from "../data/servicePages";
 import { getServicePageAr } from "../data/servicePagesAr";
-import { CASE_STUDIES } from "../data/content";
+import { CASE_STUDIES, PRICING } from "../data/content";
 import { INSIGHTS } from "../data/insights";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 import Reveal from "../components/ui/Reveal";
@@ -36,14 +36,9 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
           </>
         }
         lede={page.lede}
-        meta={
-          page.price ? (
-            <>
-              <span className="font-bold text-accent-deep">{page.price}</span>
-              <span>· fixed quote after your free audit</span>
-            </>
-          ) : undefined
-        }
+        // The header used to lead with "from AED X". It leads with how the
+        // number gets set instead, which is the same on every service page.
+        meta={<span>{PRICING.meta}</span>}
         actions={
           <>
             <PrimaryAction href="#contact">Book a free audit</PrimaryAction>

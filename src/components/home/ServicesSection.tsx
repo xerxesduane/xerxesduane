@@ -1,6 +1,6 @@
 import { m } from "framer-motion";
 import SystemDiagram from "./SystemDiagram";
-import { SERVICES } from "../../data/content";
+import { PRICING, SERVICES } from "../../data/content";
 import { fadeUp, stagger, VIEWPORT } from "../../lib/motion";
 
 /**
@@ -51,15 +51,22 @@ export default function ServicesSection() {
                 {service.title}
               </h3>
               <p className="text-sm leading-snug text-fg-soft">{service.description}</p>
-              {service.price && (
-                <p className="mt-auto pt-2 font-display text-xs font-bold uppercase tracking-wide text-accent-deep">
-                  {service.price}
-                </p>
-              )}
             </m.article>
           );
         })}
       </div>
+
+      {/* Where the twelve "from AED X" lines used to be. Once, with weight. */}
+      <m.p variants={fadeUp} className="mt-4 text-center text-sm text-fg-soft">
+        {PRICING.line}{" "}
+        <a
+          href="#contact"
+          className="font-bold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
+        >
+          Book the free audit
+        </a>{" "}
+        and you get a proposal with both.
+      </m.p>
     </m.section>
   );
 }

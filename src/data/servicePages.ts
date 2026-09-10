@@ -32,8 +32,6 @@ export interface ServicePageData {
   ogTitle: string;
   /** Service schema name for JSON-LD */
   jsonLdName: string;
-  /** Indicative starting price, e.g. "from AED 4,500". */
-  price?: string;
   eyebrow: string;
   h1Lead: string;
   h1Accent: string;
@@ -58,7 +56,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Odoo ERP setup and support in Dubai: inventory, sales, invoicing, CRM, and operations connected in one practical system. Book a free audit.",
     ogTitle: "Odoo ERP Implementation in Dubai",
     jsonLdName: "Odoo ERP Implementation & Administration",
-    price: "from AED 12,000",
     eyebrow: "Odoo & ERP · Dubai",
     h1Lead: "Run your whole business on one system,",
     h1Accent: "not five that don't talk.",
@@ -118,7 +115,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Custom websites, web apps, and high-converting landing pages for Dubai small businesses. Fast, mobile-first, SEO-ready, with fixed quotes and no lock-in. Book a free systems audit.",
     ogTitle: "Web Development in Dubai",
     jsonLdName: "Web Development & Web Applications",
-    price: "from AED 4,500",
     eyebrow: "Web Development · Dubai",
     h1Lead: "A website that brings in customers,",
     h1Accent: "not one that just sits there.",
@@ -177,7 +173,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "AI automation in Dubai for small businesses: chatbots, workflows, and assistants that qualify leads, answer questions, and remove busywork.",
     ogTitle: "AI Automation in Dubai",
     jsonLdName: "AI Automation & Custom AI Workflows",
-    price: "from AED 6,000",
     eyebrow: "AI & Automation · Dubai",
     h1Lead: "Let AI do the repetitive work,",
     h1Accent: "so you can do the real work.",
@@ -236,7 +231,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "SEO in Dubai for keywords that convert: technical SEO, local search, and content for small businesses, with plain-English reporting.",
     ogTitle: "SEO Services in Dubai",
     jsonLdName: "Search Engine Optimisation (SEO)",
-    price: "from AED 2,000/month",
     eyebrow: "SEO · Dubai",
     h1Lead: "Get found by people ready to buy,",
     h1Accent: "not just ready to browse.",
@@ -296,7 +290,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "AEO in Dubai: get quoted by Google AI Overviews, voice assistants, and featured snippets with answer-first content and structured data.",
     ogTitle: "Answer Engine Optimization (AEO) in Dubai",
     jsonLdName: "Answer Engine Optimization (AEO)",
-    price: "from AED 2,500/month",
     eyebrow: "AEO · Dubai",
     h1Lead: "Be the answer customers hear,",
     h1Accent: "not the link they scroll past.",
@@ -355,7 +348,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "GEO in Dubai: become the business ChatGPT, Gemini, and Perplexity recommend. I shape content, entities, and citations so AI engines surface and cite you. Book a free systems audit.",
     ogTitle: "Generative Engine Optimization (GEO) in Dubai",
     jsonLdName: "Generative Engine Optimization (GEO)",
-    price: "from AED 3,000/month",
     eyebrow: "GEO · Dubai",
     h1Lead: "Get recommended by the AI tools",
     h1Accent: "your customers now ask first.",
@@ -414,7 +406,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Custom software development in Dubai for growing businesses: internal tools, client portals, workflow systems, and integrations built around how your team actually works.",
     ogTitle: "Custom Software Development in Dubai",
     jsonLdName: "Custom Software Development",
-    price: "from AED 9,000",
     eyebrow: "Custom Software · Dubai",
     h1Lead: "Software shaped around your business,",
     h1Accent: "not the other way around.",
@@ -452,7 +443,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
       },
       {
         q: "How much does custom software development cost?",
-        a: "Focused internal tools start from AED 9,000. After the free audit, I define the smallest useful version and provide a fixed quote before development begins.",
+        a: "It depends on the roles, the data and what the tool has to talk to. After the free audit I define the smallest useful version and put a fixed price in writing before any development starts — a range now would only be a guess.",
       },
       {
         q: "Can you improve an existing custom system?",
@@ -473,7 +464,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "CRM setup and development in Dubai: connected lead pipelines, customer databases, dashboards, and follow-up automation for growing small businesses.",
     ogTitle: "CRM Development & Setup in Dubai",
     jsonLdName: "CRM Development, Setup & Dashboards",
-    price: "from AED 4,000",
     eyebrow: "CRM & Dashboards · Dubai",
     h1Lead: "Know every lead, customer, and next step,",
     h1Accent: "without chasing spreadsheets.",
@@ -532,7 +522,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Mobile and web app development in Dubai for booking, customer portals, memberships, and internal operations. Practical apps built to launch and grow.",
     ogTitle: "Mobile App Development in Dubai",
     jsonLdName: "Mobile & Web App Development",
-    price: "from AED 25,000",
     eyebrow: "Mobile & Web Apps · Dubai",
     h1Lead: "An app people have a reason to use,",
     h1Accent: "built for the work it needs to do.",
@@ -570,7 +559,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
       },
       {
         q: "How much does app development cost?",
-        a: "Focused app projects start from AED 25,000. The final fixed quote depends on user roles, integrations, payments, notifications, and the scope of the first release.",
+        a: "It depends on user roles, integrations, payments, notifications and how much goes into the first release. You get a fixed price in writing after the audit, once the scope is real, rather than a number now that moves later.",
       },
       {
         q: "Can you help define the app before building it?",
@@ -591,7 +580,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "E-commerce development in Dubai: fast online stores, secure UAE payments, inventory connections, order workflows, and conversion-focused customer journeys.",
     ogTitle: "E-Commerce Development in Dubai",
     jsonLdName: "E-Commerce Development",
-    price: "from AED 9,000",
     eyebrow: "E-Commerce · Dubai",
     h1Lead: "An online store that makes buying easy,",
     h1Accent: "and running it manageable.",
@@ -651,7 +639,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Landing page design in Dubai for campaigns, launches, and lead generation. Conversion-focused pages connected to analytics, forms, CRM, and follow-up.",
     ogTitle: "Landing Page Design in Dubai",
     jsonLdName: "Landing Page Design & Sales Funnels",
-    price: "from AED 2,500",
     eyebrow: "Landing Pages & Funnels · Dubai",
     h1Lead: "Turn campaign clicks into enquiries,",
     h1Accent: "not expensive exits.",
@@ -710,7 +697,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Branding and graphic design in Dubai for growing businesses: practical identities, marketing collateral, campaign graphics, and consistent visual systems.",
     ogTitle: "Branding & Graphic Design in Dubai",
     jsonLdName: "Branding & Graphic Design",
-    price: "from AED 1,500",
     eyebrow: "Branding & Graphic Design · Dubai",
     h1Lead: "Look as credible as the work",
     h1Accent: "you already deliver.",
@@ -769,7 +755,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Videography and photography in Dubai for brands, products, events, and campaigns. Purposeful production planned for the channels where the work will be used.",
     ogTitle: "Videography & Photography in Dubai",
     jsonLdName: "Videography & Photography",
-    price: "from AED 1,500/day",
     eyebrow: "Video & Photography · Dubai",
     h1Lead: "Create the visuals people need",
     h1Accent: "to understand and trust you.",
@@ -828,7 +813,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Video editing in Dubai for social reels, ads, interviews, events, and brand films. Clean pacing, captions, motion graphics, and channel-ready exports.",
     ogTitle: "Video Editing in Dubai",
     jsonLdName: "Video Editing & Post-Production",
-    price: "from AED 750 per video",
     eyebrow: "Video Editing · Dubai",
     h1Lead: "Turn footage into something",
     h1Accent: "people keep watching.",
