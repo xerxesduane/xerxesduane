@@ -1,4 +1,5 @@
 import { CASE_STUDIES, SERVICES } from "./content";
+import { STARTER, aed } from "./pricing";
 import { WEB_DESIGNS, type WorkItem } from "./workItems";
 
 /* ---------------------------------------------------------------------------
@@ -40,18 +41,46 @@ export type { ToolLogo as Tool } from "./toolLogos";
  * that counts rows. It costs no extra height, which this page cannot spare.
  */
 const HOME_SERVICE_TITLES = [
-  "Landing Pages & Funnels",
   "Dashboards & CRM",
   "AI Automation & Solutions",
   "E-Commerce & Stores",
   "ERP & Odoo",
 ];
 
-export const CORE_SERVICES = HOME_SERVICE_TITLES.map((title) => {
-  const service = SERVICES.find((s) => s.title === title);
-  if (!service) throw new Error(`Home card names "${title}", which is not a service`);
-  return { title: service.title, price: service.price };
-});
+export interface HomeService {
+  title: string;
+  price?: string;
+  /** Set on the one row that is a fixed price rather than a floor. */
+  href?: string;
+  fixed?: boolean;
+}
+
+/**
+ * The Starter leads, then four services ascending.
+ *
+ * The Starter takes the first row rather than sitting on the pricing page
+ * two clicks away, because it is the only thing here a small business can
+ * buy outright and the home page is where they decide whether to keep
+ * reading. It replaces a fifth service rather than adding a row: this page
+ * has to fit one screen, and a sixth line does not fit.
+ *
+ * Landing Pages & Funnels came off for it. The two are the same money and
+ * the Starter is the clearer promise of the pair, being fixed rather than
+ * "from" -- /starter explains the difference for anyone who wants it.
+ */
+export const CORE_SERVICES: HomeService[] = [
+  {
+    title: STARTER.name,
+    price: aed(STARTER.price),
+    href: `/${STARTER.slug}`,
+    fixed: true,
+  },
+  ...HOME_SERVICE_TITLES.map((title) => {
+    const service = SERVICES.find((s) => s.title === title);
+    if (!service) throw new Error(`Home card names "${title}", which is not a service`);
+    return { title: service.title, price: service.price };
+  }),
+];
 
 /**
  * Documented outcomes, pulled straight from the case studies that carry real

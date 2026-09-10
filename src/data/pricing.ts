@@ -111,6 +111,54 @@ export const priceForSlug = (slug: string): PricePoint | undefined =>
   RATE_CARD.find((p) => p.pageSlug === slug);
 
 /**
+ * The budget option, described in full.
+ *
+ * Its own object because it is the one thing on this site aimed squarely at
+ * someone who cannot spend five figures, and it needs to be quotable: the
+ * home page, /starter, the pricing table and the assistant all read from
+ * here, so the scope a visitor is promised is the same in all four places.
+ *
+ * WHAT IS AND IS NOT HERE. Everything in `includes` restates a commitment the
+ * site already makes: the package body in content.ts, and the ownership
+ * promise in PROMISE. Nothing about revisions, delivery time, hosting or
+ * domains appears, because none of that has ever been offered in writing and
+ * a fixed-price product is exactly where an invented commitment gets
+ * expensive. `excludes` is not a disclaimer either: each line names work the
+ * rate card already prices separately, which is what keeps a fixed scope
+ * fixed and gives an honest answer to "can you also...".
+ */
+export const STARTER = {
+  name: "The Starter",
+  /** Fixed, not a floor. That distinction is the whole product. */
+  price: 2500,
+  slug: "starter",
+  tagline: "A complete website for a small budget.",
+  /** Why this is not simply the landing page service at its floor. */
+  versus:
+    "Landing Pages & Funnels starts at AED 2,500 and goes up with scope. The Starter is that same craft at a scope fixed in advance, so the price cannot move. One is priced from, the other is priced at.",
+  includes: [
+    "One page, built around your offer",
+    "Your proof: the work, the reviews, the reasons to trust you",
+    "A contact route that lands in WhatsApp, not an inbox nobody opens",
+    "Mobile-first, because that is where your customers are",
+    "Built to load fast",
+    "Yours outright: the code, the accounts and the data",
+  ],
+  /** Named so a fixed scope stays fixed, each pointing at its real price. */
+  excludes: [
+    { what: "More pages, or a multi-step funnel", instead: "Landing Pages & Funnels" },
+    { what: "An online store, checkout or payments", instead: "E-Commerce & Stores" },
+    { what: "A CRM, dashboard or pipeline behind it", instead: "Dashboards & CRM" },
+    { what: "Ongoing search and answer-engine work", instead: "AEO (Answer Engine Optimization)" },
+  ],
+  who: [
+    "You are starting out and need something real on the internet",
+    "You have a page from years ago that no longer represents you",
+    "You want one honest quote, not a discovery call that ends in a range",
+  ],
+};
+
+/**
  * The reduced rate for organisations that are not trying to make money.
  *
  * Half price, stated as a rule rather than "get in touch and we'll see". A

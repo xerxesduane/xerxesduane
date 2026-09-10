@@ -93,8 +93,10 @@ export default function Pricing() {
               <p className="font-display text-2xl font-extrabold text-accent-deep">{pkg.price}</p>
               <p className="text-[0.78rem] font-semibold text-fg-faint">{pkg.note}</p>
               <p className="mt-1 text-sm leading-snug text-fg-soft">{pkg.body}</p>
+              {/* The Starter carries its own page, so its card sends people
+                  to read the scope rather than straight to a form. */}
               <a
-                href="/contact"
+                href={"href" in pkg && pkg.href ? pkg.href : "/contact"}
                 className="mt-auto pt-3 text-[0.85rem] font-bold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
               >
                 {pkg.cta}

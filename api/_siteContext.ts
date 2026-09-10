@@ -121,7 +121,14 @@ const ROUTES: Route[] = [
   // rule asks it not to; leaving them out of the context means it cannot.
   {
     path: "/pricing",
-    keywords: ["cost", "costs", "price", "prices", "pricing", "budget", "quote", "quotes", "much", "expensive", "cheap", "cheapest", "affordable", "afford", "rate", "rates", "fee", "fees", "charge", "charges", "ballpark", "estimate", "discount", "starter", "package", "packages", "nonprofit", "non-profit", "charity", "charities", "church", "churches", "ngo"],
+    keywords: ["cost", "costs", "price", "prices", "pricing", "budget", "quote", "quotes", "much", "expensive", "cheap", "cheapest", "affordable", "afford", "rate", "rates", "fee", "fees", "charge", "charges", "ballpark", "estimate", "discount", "package", "packages", "nonprofit", "non-profit", "charity", "charities", "church", "churches", "ngo"],
+  },
+  // The budget question deserves the page that answers it in full. /pricing
+  // gives the number; this gives the scope, which is what someone spending
+  // their last 2,500 actually needs before they commit.
+  {
+    path: "/starter",
+    keywords: ["starter", "cheapest", "budget", "afford", "affordable", "small", "simple", "basic", "minimum", "least", "fixed", "one-page", "onepage", "single", "tight"],
   },
   {
     path: "/insights/what-a-systems-audit-covers",

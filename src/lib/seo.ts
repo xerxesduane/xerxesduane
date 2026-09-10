@@ -1,6 +1,6 @@
 import { SERVICE_PAGES, getServicePage } from "../data/servicePages";
 import { CASE_STUDIES, FAQS } from "../data/content";
-import { CURRENCY, NONPROFIT, RATE_CARD, UNIT_SCHEMA, aed, priceForSlug } from "../data/pricing";
+import { CURRENCY, NONPROFIT, RATE_CARD, STARTER, UNIT_SCHEMA, aed, priceForSlug } from "../data/pricing";
 import { INSIGHTS, getInsight } from "../data/insights";
 import { SERVICE_PAGES_AR, getServicePageAr } from "../data/servicePagesAr";
 
@@ -236,6 +236,7 @@ export function allRoutes(): string[] {
     "/about",
     "/services",
     "/pricing",
+    "/starter",
     "/contact",
     "/case-studies",
     ...CASE_STUDIES.map((study) => `/case-studies/${study.slug}`),
@@ -286,6 +287,71 @@ const PRICING_META: PageMeta = {
       })),
     },
     breadcrumb([HOME_CRUMB, { name: "Pricing", url: `${SITE_ORIGIN}/pricing` }]),
+  ],
+};
+
+const STARTER_META: PageMeta = {
+  title: `${STARTER.name} - a complete website for ${aed(STARTER.price)} - Xerxes Duane`,
+  ogTitle: `${STARTER.name} - a complete website for ${aed(STARTER.price)}`,
+  canonical: `${SITE_ORIGIN}/${STARTER.slug}`,
+  description: `A finished one-page website in Dubai for a fixed ${aed(STARTER.price)}. Mobile-first, WhatsApp contact, and yours outright. ${aed(STARTER.price * NONPROFIT.rate)} for churches and charities.`,
+  jsonLd: [
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      name: STARTER.name,
+      serviceType: "Website design",
+      provider: { "@id": `${SITE_ORIGIN}/#org` },
+      areaServed: { "@type": "City", name: "Dubai" },
+      url: `${SITE_ORIGIN}/${STARTER.slug}`,
+      description: STARTER.tagline,
+      // A flat `price`, not minPrice: this is the one thing on the site that
+      // is genuinely fixed, and saying so is the entire product.
+      offers: {
+        "@type": "Offer",
+        availability: "https://schema.org/InStock",
+        url: `${SITE_ORIGIN}/${STARTER.slug}`,
+        price: STARTER.price,
+        priceCurrency: CURRENCY,
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          price: STARTER.price,
+          priceCurrency: CURRENCY,
+          valueAddedTaxIncluded: false,
+        },
+      },
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: `What do you get for ${aed(STARTER.price)}?`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: `${STARTER.includes.join(". ")}. The price is fixed before work starts, so it cannot move.`,
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What is not included?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: `${STARTER.excludes.map((e) => e.what).join("; ")}. Each of those is priced separately on the rate card, so a fixed scope stays fixed.`,
+          },
+        },
+        {
+          "@type": "Question",
+          name: `Is ${aed(STARTER.price)} a deposit?`,
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: `No. It is the whole price for the scope described, agreed before anything begins. Churches, charities and registered non-profits pay ${aed(STARTER.price * NONPROFIT.rate)}.`,
+          },
+        },
+      ],
+    },
+    breadcrumb([HOME_CRUMB, { name: STARTER.name, url: `${SITE_ORIGIN}/${STARTER.slug}` }]),
   ],
 };
 
@@ -408,6 +474,7 @@ export function getPageMeta(path: string): PageMeta {
     };
   }
   if (slug === "pricing") return PRICING_META;
+  if (slug === "starter") return STARTER_META;
   if (slug === "about") return ABOUT_META;
   if (slug === "ai-lab" || slug === "demos") return AI_LAB_META;
   if (slug === "case-studies") return CASE_STUDIES_META;
