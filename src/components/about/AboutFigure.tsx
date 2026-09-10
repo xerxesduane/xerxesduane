@@ -4,12 +4,13 @@ import DeskIllustration from "./DeskIllustration";
 import { useReducedMotionPref } from "../../lib/usePrefs";
 
 /**
- * Where to drop the artwork. A transparent PNG (or WebP — change the
- * extension here) of you at the desk, roughly 4:3, ideally ~1400px wide.
- * Until that file exists the drawn SVG stands in, so the page is never
- * broken by a missing asset.
+ * The artwork: you at the desk, keyed to transparency and trimmed to the
+ * figure so `items-end` can sit it on the card's bottom edge. If it ever goes
+ * missing the drawn SVG stands in, so the page is never broken by a 404.
  */
-const FIGURE_SRC = "/brand/about-desk.png";
+const FIGURE_SRC = "/brand/about-desk.webp";
+const FIGURE_W = 1200;
+const FIGURE_H = 851;
 
 /**
  * The About card's figure: your illustration, floating.
@@ -50,12 +51,15 @@ export default function AboutFigure() {
             src={FIGURE_SRC}
             alt=""
             aria-hidden
+            width={FIGURE_W}
+            height={FIGURE_H}
             loading="lazy"
             decoding="async"
             onError={() => setMissing(true)}
-            // Fills the column and sits on the card's bottom edge, the way the
-            // reference does. Give the artwork transparent margins of its own
-            // rather than padding it here.
+            // Fits the column and stands on the card's bottom edge, the way
+            // the reference does. Not oversized: the figure runs to 92% of the
+            // frame, so any bleed off the card's right edge takes his sleeve
+            // with the chair. The artwork carries its own margins.
             className="mx-auto block w-full select-none"
             draggable={false}
           />
