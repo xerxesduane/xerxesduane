@@ -10,17 +10,39 @@ import { generateObject } from "ai";
 import { groq } from "@ai-sdk/groq";
 import type { z } from "zod";
 
-export const MODEL_FAST = "llama-3.3-70b-versatile";
-export const MODEL_SMART = "llama-3.3-70b-versatile";
+// Groq deprecated llama-3.3-70b-versatile on 2026-06-17 and stopped serving it
+// on free and developer tiers that August, which silently took out every demo
+// below and the site assistant with them: the request 200s, the model 404s,
+// and the stream ends empty. gpt-oss-120b is Groq's named replacement.
+export const MODEL_FAST = "openai/gpt-oss-120b";
+export const MODEL_SMART = "openai/gpt-oss-120b";
 // Structured output (generateObject) needs json_schema support, which Llama
 // models lack in this runtime — use a gpt-oss model for the extraction demo.
 export const MODEL_STRUCTURED = "openai/gpt-oss-20b";
-// Vision / multimodal: Llama 4 Scout accepts image input (preview).
-// Being a Llama model it also lacks json_schema, so the vision endpoints use
-// generateText + parseLooseJson rather than generateObject.
-export const MODEL_VISION = "meta-llama/llama-4-scout-17b-16e-instruct";
+// Vision / multimodal. Llama 4 Scout was deprecated in the same 2026-06-17
+// round; Qwen 3.6 is the multimodal model Groq still serves, though it is a
+// preview rather than a production model. Like Scout it can't be trusted with
+// json_schema, so the vision endpoints stay on generateText + parseLooseJson.
+export const MODEL_VISION = "qwen/qwen3.6-27b";
 // Speech-to-text: hosted speech-to-text (called over REST, see groqTranscribe).
 export const MODEL_TRANSCRIBE = "whisper-large-v3-turbo";
+
+/**
+ * Chat calls, told not to think out loud.
+ *
+ * gpt-oss is a reasoning model: left alone it spends output tokens deliberating
+ * before it answers, which against a 400-token cap can consume the whole budget
+ * and return nothing — the exact empty-stream symptom the old dead model
+ * produced. `none` buys the budget back, and `hidden` keeps any reasoning that
+ * does happen out of the text stream, so it can never surface to a visitor.
+ *
+ * Deliberately NOT applied to `structured()` below, where the model's thinking
+ * is what gets the JSON right, or to the vision model, which is a different
+ * family and may not take these options.
+ */
+export const GROQ_DIRECT = {
+  groq: { reasoningEffort: "none", reasoningFormat: "hidden" },
+} as const;
 
 const WINDOW_MS = 60_000;
 const WINDOW_SEC = WINDOW_MS / 1000;

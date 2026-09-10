@@ -3,7 +3,7 @@
 // generation step behind an automation that reaches out to many leads at once.
 import { streamText } from "ai";
 import { groq } from "@ai-sdk/groq";
-import { MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { GROQ_DIRECT, MODEL_FAST, preflight, errorResponse, clamp, logAiError } from "../_shared";
 
 export const config = { runtime: "edge" };
 
@@ -59,6 +59,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   const result = streamText({
     model: groq(MODEL_FAST),
+    providerOptions: GROQ_DIRECT,
     system: SYSTEM,
     messages: [{ role: "user", content: `Write the outreach message for this lead.\n\n${lead}` }],
     maxOutputTokens: 160,

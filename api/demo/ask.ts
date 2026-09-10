@@ -3,7 +3,7 @@
 // plain text tokens back to the browser.
 import { streamText } from "ai";
 import { groq } from "@ai-sdk/groq";
-import { MODEL_SMART, preflight, errorResponse, clamp, logAiError } from "../_shared";
+import { GROQ_DIRECT, MODEL_SMART, preflight, errorResponse, clamp, logAiError } from "../_shared";
 import { isFetchableUrl, fetchUrlText } from "../_fetchUrl";
 
 export const config = { runtime: "edge" };
@@ -56,6 +56,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   const result = streamText({
     model: groq(MODEL_SMART),
+    providerOptions: GROQ_DIRECT,
     system:
       "You answer questions strictly from the provided CONTEXT. " +
       "If the answer isn't in the context, say so plainly — do not use outside knowledge or guess. " +

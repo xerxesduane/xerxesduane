@@ -10,6 +10,7 @@
 import { streamText } from "ai";
 import { groq } from "@ai-sdk/groq";
 import {
+  GROQ_DIRECT,
   MODEL_FAST,
   aiErrorDetail,
   clientIp,
@@ -146,6 +147,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   const result = streamText({
     model: groq(MODEL_FAST),
+    providerOptions: GROQ_DIRECT,
     system: `${SYSTEM}\n\n<site>\n${site || "(No page content loaded — say you can't reach the site's pages right now and offer WhatsApp.)"}\n</site>`,
     messages,
     maxOutputTokens: 400,
