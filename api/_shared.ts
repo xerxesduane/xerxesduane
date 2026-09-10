@@ -28,20 +28,29 @@ export const MODEL_VISION = "qwen/qwen3.6-27b";
 export const MODEL_TRANSCRIBE = "whisper-large-v3-turbo";
 
 /**
- * Chat calls, told not to think out loud.
+ * Chat calls, told to think as little as possible.
  *
- * gpt-oss is a reasoning model: left alone it spends output tokens deliberating
- * before it answers, which against a 400-token cap can consume the whole budget
- * and return nothing — the exact empty-stream symptom the old dead model
- * produced. `none` buys the budget back, and `hidden` keeps any reasoning that
- * does happen out of the text stream, so it can never surface to a visitor.
+ * gpt-oss is a reasoning model: left alone it spends output tokens
+ * deliberating before it answers, and against a tight cap that can consume the
+ * whole budget and return nothing.
+ *
+ * `low` rather than `none`, and no `reasoningFormat` at all, both learned the
+ * hard way. The AI SDK's option types are the union across every Groq model,
+ * not the set any one model accepts: gpt-oss takes only low/medium/high, and
+ * rejects `none` — and `reasoning_format` — with a 400. That 400 is invisible
+ * from the outside, because the response has already been committed by the
+ * time it arrives, so it surfaced as a chat that answered every question with
+ * an error. Widen these only against the provider's per-model docs.
+ *
+ * Reasoning still doesn't reach a visitor: the SDK routes it to reasoning
+ * parts, and the endpoints stream `textStream`, which carries only the answer.
  *
  * Deliberately NOT applied to `structured()` below, where the model's thinking
  * is what gets the JSON right, or to the vision model, which is a different
  * family and may not take these options.
  */
 export const GROQ_DIRECT = {
-  groq: { reasoningEffort: "none", reasoningFormat: "hidden" },
+  groq: { reasoningEffort: "low" },
 } as const;
 
 const WINDOW_MS = 60_000;

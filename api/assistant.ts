@@ -93,8 +93,13 @@ function failureMessage(err: unknown): string {
   if (status === 404) {
     return "I can't reach my model right now — it looks like it's been retired or renamed, which is ours to fix. WhatsApp below gets you a real reply in the meantime.";
   }
-  if (status === 400 || status === 413 || status === 422) {
+  if (status === 413 || status === 422) {
     return "That question needed more context than I can hold at once. Try asking it more specifically, or use WhatsApp below.";
+  }
+  if (status === 400) {
+    // Almost always a parameter this model won't take, not anything the
+    // visitor did — say so plainly rather than blaming their question.
+    return "My model rejected that request, which is a fault on our side rather than anything you asked. WhatsApp below gets you a real reply in the meantime.";
   }
   return "Something went wrong reaching my model. Try again in a moment, or use WhatsApp below for a real reply.";
 }
@@ -150,9 +155,12 @@ export default async function handler(req: Request): Promise<Response> {
     providerOptions: GROQ_DIRECT,
     system: `${SYSTEM}\n\n<site>\n${site || "(No page content loaded — say you can't reach the site's pages right now and offer WhatsApp.)"}\n</site>`,
     messages,
-    maxOutputTokens: 400,
-    // Low: this answers factual questions about a real business. Invention is
-    // the failure mode, so leave little room for it.
+    // Generous because reasoning tokens are billed against this same budget:
+    // at 400 a short answer could be truncated to nothing by the thinking in
+    // front of it. The style rules keep replies to ~70 words regardless.
+    maxOutputTokens: 1200,
+    // Low temperature: this answers factual questions about a real business.
+    // Invention is the failure mode, so leave little room for it.
     temperature: 0.3,
     onError: ({ error }) => {
       failure = error;
