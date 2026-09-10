@@ -41,12 +41,33 @@ The script refuses to run if a category has no source directory, or if there
 are fewer sources than the manifest already holds — that combination means the
 run would delete work. Pass `--force` only when deliberately shrinking the set.
 
-## Waiting on a screenshot
+## Adding one project without the full set
 
-`web/20-construction-desert-schools.png` is the one item whose metadata is
-already in `META` but whose image has never been captured. Drop a full-width
-homepage screenshot in (1600px wide is plenty) and `npm run images` will pick
-it up with the title and live link already attached.
+`npm run images` is all-or-nothing: it cleans every output directory and
+rewrites the manifest from whatever it finds, so it only runs on a machine
+holding every original. To ship a single new project instead:
+
+```bash
+node scripts/optimize-images.mjs --add path/to/shot.png --category web
+```
+
+That copies the source in here, encodes it at the next free index, and appends
+one entry. Nothing else is touched, so it is safe from a partial clone. Add the
+title and live link to `META` first, keyed by the filename stem, or the item
+falls back to "Web Design 20".
+
+## Capturing a whole-site screenshot
+
+The gallery is built for full-page captures, not just the first screen: the
+grid is masonry so a tall image keeps its shape, and the viewer scrolls
+anything past a 2.2 ratio rather than shrinking it. In Chrome, `F12` then
+`Ctrl+Shift+P` and "Capture full size screenshot". Two things to watch:
+
+- Sites with scroll-reveal animations (Framer, most page builders) capture
+  blank sections that were never scrolled into view. Set **Rendering ->
+  Emulate prefers-reduced-motion: reduce** first.
+- WebP cannot exceed 16,383px on either axis. The pipeline narrows anything
+  taller so it still encodes, but a page that long is worth splitting.
 
 ## Missing originals
 
