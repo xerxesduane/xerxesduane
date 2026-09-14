@@ -7,7 +7,7 @@ import { track } from "../lib/analytics";
 import Reveal from "./ui/Reveal";
 import GoogleRating from "./GoogleRating";
 
-export default function Contact() {
+export default function Contact({ compact = false }: { compact?: boolean } = {}) {
   const [form, setForm] = useState({ name: "", business: "", email: "", phone: "", note: "" });
   const [source, setSource] = useState({ page: "", referrer: "" });
   const [state, handleSubmit] = useForm(CONTACT.formspreeId);
@@ -43,13 +43,14 @@ export default function Contact() {
     .join("\n");
   const whatsappHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
-  const field =
-    "w-full rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40";
+  const field = `w-full rounded-xl border border-cream/10 bg-ink-deep/50 px-4 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40 ${
+    compact ? "py-2" : "py-3"
+  }`;
 
   return (
-    <section id="contact" className="scroll-mt-24 py-20 sm:py-28">
+    <section id="contact" className={compact ? "scroll-mt-24" : "scroll-mt-24 py-20 sm:py-28"}>
       <div className="container-bl">
-        <div className="glass border-glow grid gap-10 overflow-hidden rounded-3xl p-7 sm:p-10 lg:grid-cols-2 lg:gap-14">
+        <div className={`glass border-glow grid overflow-hidden rounded-3xl lg:grid-cols-2 ${compact ? "gap-6 p-5 sm:p-6 lg:gap-8" : "gap-10 p-7 sm:p-10 lg:gap-14"}`}>
           {/* Left: pitch + contacts */}
           <Reveal>
             <span className="eyebrow">

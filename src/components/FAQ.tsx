@@ -15,8 +15,10 @@ import { EASE, fadeUp, stagger, VIEWPORT } from "../lib/motion";
  * The height animation is on a wrapper with `overflow: hidden`; the answer
  * itself never animates, so text never reflows mid-transition.
  */
-export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(0);
+export default function FAQ({ compact = false }: { compact?: boolean }) {
+  // Collapsed by default in compact mode: beside the form it only has to
+  // be scannable, not pre-opened.
+  const [open, setOpen] = useState<number | null>(compact ? null : 0);
   const id = useId();
 
   return (
@@ -26,7 +28,7 @@ export default function FAQ() {
       initial="hidden"
       whileInView="show"
       viewport={VIEWPORT}
-      className="scroll-mt-24 py-14 sm:py-16"
+      className={compact ? "scroll-mt-24" : "scroll-mt-24 py-14 sm:py-16"}
       aria-label="Common questions"
     >
       <m.header variants={fadeUp} className="mb-6 max-w-2xl">

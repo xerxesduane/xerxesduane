@@ -25,7 +25,7 @@ export default function Starter() {
       <PageHeader
         eyebrow="The Starter"
         title={<>{STARTER.tagline}</>}
-        lede="A finished one-page website at a price fixed before we begin. Not a deposit, not a discovery call that ends in a range, and not a template with someone else's logo swapped out."
+        lede="A finished one-page website at a price fixed before we begin — not a deposit, and not a template with someone else's logo swapped out."
         meta={
           <span>
             <strong className="font-bold text-accent-deep">{aed(STARTER.price)}</strong>
@@ -47,7 +47,7 @@ export default function Starter() {
         whileInView="show"
         viewport={VIEWPORT}
         aria-labelledby="scope-heading"
-        className="scroll-mt-24 py-8 sm:py-10"
+        className="scroll-mt-24 py-3"
       >
         <h2 id="scope-heading" className="sr-only">
           What the Starter includes and excludes
@@ -115,9 +115,9 @@ export default function Starter() {
         whileInView="show"
         viewport={VIEWPORT}
         aria-labelledby="who-heading"
-        className="scroll-mt-24 py-8 sm:py-10"
+        className="scroll-mt-24 py-3"
       >
-        <m.header variants={fadeUp} className="mb-5 max-w-2xl">
+        <m.header variants={fadeUp} className="mb-3 max-w-2xl">
           <span className="eyebrow">Who it is for</span>
           <h2
             id="who-heading"
@@ -144,7 +144,7 @@ export default function Starter() {
         whileInView="show"
         viewport={VIEWPORT}
         aria-labelledby="versus-heading"
-        className="scroll-mt-24 py-8 sm:py-10"
+        className="scroll-mt-24 py-3"
       >
         <m.div
           variants={fadeUp}
