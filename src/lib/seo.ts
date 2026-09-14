@@ -449,7 +449,7 @@ const PORTFOLIO_META: PageMeta = {
 const SHOWREEL_META: PageMeta = {
   title: "Showreel - Xerxes Duane",
   description:
-    "Xerxes Duane's video production, editing, color grading, and animation: events, documentaries, social reels, and brand work across the UAE and beyond.",
+    "Xerxes Duane's video editing, color grading, and animation: events, documentaries, social reels, and brand work across the UAE and beyond.",
   canonical: `${SITE_ORIGIN}/showreel`,
   ogTitle: "Showreel - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/showreel.png`,

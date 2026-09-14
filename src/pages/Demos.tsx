@@ -535,48 +535,66 @@ export default function Demos() {
 
   return (
     <>
+      {/* The search and the back control ride in the header's meta line
+          rather than a row of their own, which cost 58px on a page that has to
+          fit one screen.
+
+          The meta line rather than the action slot: actions are shrink-0, so a
+          field there narrowed the title column enough to wrap the h1 onto a
+          second line at 1440, costing more height than the row it saved.
+
+          Still one field, mounted once: it sits outside every conditional
+          below, so typing never swaps it out from under the caret as the view
+          changes. */}
       <PageHeader
         eyebrow={`AI Lab · ${DEMOS.length} tools`}
         title={<>Try the AI. Not just read about it.</>}
-        lede="Practical AI tools for real business workflows. Open a set, type into them, and see what useful AI does inside sales, service, content, operations and reporting work."
-        meta={<span>Practical demos · No sign-up · Your input isn't stored</span>}
+        lede="Practical AI tools for real business workflows: open a set, type into it, and see what AI does inside sales, service, content and operations."
+        meta={
+          <>
+            <span>Practical demos · No sign-up · Your input isn't stored</span>
+            {!onHub && (
+              <button
+                type="button"
+                onClick={() => setView(null)}
+                className="inline-flex items-center gap-1.5 rounded-full border border-cream/12 bg-cream/5 px-3 py-1.5 text-xs font-semibold text-cream-dim transition-colors hover:border-gold/40 hover:text-gold"
+              >
+                <ArrowLeft size={13} aria-hidden /> Overview
+              </button>
+            )}
+            <label htmlFor="ai-lab-search" className="sr-only">
+              Search the AI Lab tools
+            </label>
+            <div className="relative w-full sm:w-[17rem]">
+              <Search
+                size={15}
+                aria-hidden
+                className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-dark"
+              />
+              <input
+                id="ai-lab-search"
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={`Search all ${DEMOS.length} tools…`}
+                className="w-full rounded-full border border-cream/12 bg-cream/5 py-1.5 pl-9 pr-3 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none"
+              />
+            </div>
+          </>
+        }
         actions={<PrimaryAction href="/contact">Book a free audit</PrimaryAction>}
       />
 
-      {/* One search field for the whole page, mounted once so typing never
-          swaps it out from under the caret as the view changes. */}
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        {!onHub && (
-          <button
-            type="button"
-            onClick={() => setView(null)}
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-cream/12 bg-cream/5 px-4 py-2 text-sm font-semibold text-cream-dim transition-colors hover:border-gold/40 hover:text-gold"
-          >
-            <ArrowLeft size={14} aria-hidden /> Overview
-          </button>
-        )}
-        <label htmlFor="ai-lab-search" className="sr-only">
-          Search the AI Lab tools
-        </label>
-        <div className="relative min-w-[13rem] flex-1">
-          <Search
-            size={16}
-            aria-hidden
-            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-dark"
-          />
-          <input
-            id="ai-lab-search"
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder={`Search all ${DEMOS.length} tools: WhatsApp, Arabic, invoice…`}
-            className="w-full rounded-full border border-cream/12 bg-cream/5 py-2.5 pl-11 pr-4 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none"
-          />
-        </div>
-      </div>
-
       {onHub && (
-        <PanelBoard rail cols="board:grid-cols-4">
+        <PanelBoard
+          rail
+          cols="board:grid-cols-4"
+          /* Tighter than the shared default at the board breakpoint only:
+             this board carries seven cards where the others carry five, and
+             the page has to fit one screen. The arbitrary variant reaches the
+             inner grid's gap without changing PanelBoard for every page. */
+          className="board:p-2 board:[&>div]:gap-2"
+        >
           {featured && (
             <Panel
               icon={featured.icon}
@@ -609,14 +627,20 @@ export default function Demos() {
                 label={c.label}
                 labelHref={`/ai-lab?cat=${c.id}`}
                 onLabelClick={open(c.id)}
+                className="board:gap-1.5 board:p-3"
               >
-                <ul className="-mt-1 flex flex-wrap gap-1">
+                {/* Dense on purpose. Every tool is listed rather than a
+                    sample, so the only way to shorten these cards is to make
+                    each pill smaller: at the board breakpoint the list is the
+                    whole height of the card, and the card sets the height of
+                    the row. Tap targets keep their 24px line box below sm. */}
+                <ul className="-mt-1 flex flex-wrap gap-1 board:gap-[0.2rem]">
                   {tools.map((d) => (
                     <li key={d.id}>
                       <a
                         href={`/ai-lab#${d.id}`}
                         onClick={openDemo(d)}
-                        className="inline-block rounded-full border border-cream/12 bg-cream/5 px-2.5 py-1 text-xs text-cream-dim transition hover:border-gold/40 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent board:text-[0.7rem]"
+                        className="inline-block rounded-full border border-cream/12 bg-cream/5 px-2.5 py-1 text-xs leading-snug text-cream-dim transition hover:border-gold/40 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent board:px-2 board:py-[0.1rem] board:text-[0.68rem]"
                       >
                         {d.eyebrow}
                       </a>

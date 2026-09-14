@@ -189,7 +189,7 @@ export default function Portfolio() {
           <Panel
             icon={Clapperboard}
             label="Video & motion"
-            blurb={`${VIDEOS.length} pieces: production, editing, grading and animation.`}
+            blurb={`${VIDEOS.length} pieces: editing, grading and animation.`}
             href="/showreel"
           />
 
