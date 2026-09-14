@@ -32,13 +32,12 @@ const card = [...pricing.matchAll(
 
 // The point is that the regex above matched every entry, not that the rate
 // card is a particular length: services come and go (videography did), and a
-// hard count just fails the build on a deliberate edit. Counting the literal
-// "service:" keys catches the thing that actually matters, a line the pattern
-// silently skipped because someone reformatted it.
-// Counted inside the array body and independent of formatting: a first
-// attempt counted "{ service:" on one line, which moved in step with the
-// parser when an entry was reformatted onto several lines, so the two agreed
-// on a wrong answer and the check passed.
+// hard count just fails the build on a deliberate edit.
+//
+// Counted inside the array body, and deliberately independent of formatting.
+// A first attempt counted "{ service:" on one line, which moved in step with
+// the parser when an entry was reformatted onto several lines, so the two
+// agreed on a wrong answer and the check passed.
 const cardBody = /RATE_CARD: PricePoint\[\] = \[([\s\S]*?)\n\];/.exec(pricing)?.[1] ?? "";
 const declared = (cardBody.match(/\bservice:/g) || []).length;
 check(
