@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react";
 import { LazyMotion, domAnimation, MotionConfig } from "framer-motion";
 import ShellLayout from "./components/shell/ShellLayout";
-import Footer from "./components/Footer";
 import SiteAssistant from "./components/assistant/SiteAssistant";
 import MobileTabBar from "./components/shell/MobileTabBar";
 import ConsentBanner from "./components/ConsentBanner";
@@ -121,13 +120,9 @@ export default function App({ path = "/" }: { path?: string }) {
           </main>
         </ShellLayout>
 
-        {/* The English home is deliberately one screen with nothing below it,
-            so it carries no footer. Every other route still does — a footer is
-            navigation, and only this page has none left to offer. */}
-        {slug !== "" && <Footer locale={isArabic ? "ar" : "en"} />}
         <ConsentBanner locale={isArabic ? "ar" : "en"} />
         {/* Reserve the bottom bar's height (plus the iOS home indicator) so
-            the end of the footer is never trapped underneath it. */}
+            the end of the page is never trapped underneath it. */}
         <div
           className="h-[calc(5rem+env(safe-area-inset-bottom))] lg:hidden"
           aria-hidden
