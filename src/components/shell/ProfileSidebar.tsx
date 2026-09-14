@@ -135,9 +135,34 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
           </a>
         </m.nav>
 
-        <m.p variants={fadeUp} className="pt-1 text-center text-xs text-fg-faint board:text-[0.7rem]">
-          © {new Date().getFullYear()} {SHELL_IDENTITY.name}
-        </m.p>
+        {/* The footer used to carry these. It is gone, and /terms and the
+            WhatsApp opt-in page had no other link on the site — the opt-in one
+            is how a contact gives consent to be messaged, so it has to stay
+            reachable from every page. Arabic keeps the split the footer had:
+            the opt-in line is translated, the English-only legal pages are
+            not surfaced there. */}
+        <m.div variants={fadeUp} className="pt-1 text-center">
+          <p className="flex flex-wrap items-center justify-center gap-x-2 gap-y-0 text-xs text-fg-faint board:text-[0.7rem]">
+            {!ar && (
+              <>
+                <a href="/privacy" className="py-1 transition-colors hover:text-accent-deep">
+                  Privacy
+                </a>
+                <span aria-hidden>·</span>
+                <a href="/terms" className="py-1 transition-colors hover:text-accent-deep">
+                  Terms
+                </a>
+                <span aria-hidden>·</span>
+              </>
+            )}
+            <a href="/whatsapp-optin.html" className="py-1 transition-colors hover:text-accent-deep">
+              {ar ? "تحديثات واتساب" : "WhatsApp updates"}
+            </a>
+          </p>
+          <p className="text-xs text-fg-faint board:text-[0.7rem]">
+            © {new Date().getFullYear()} {SHELL_IDENTITY.name}
+          </p>
+        </m.div>
       </div>
     </m.aside>
   );
