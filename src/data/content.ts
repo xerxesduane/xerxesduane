@@ -50,6 +50,7 @@ export const AUDIT_DELIVERABLES = [
 
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
+  { label: "Projects", href: "/projects" },
   { label: "Services", href: "/services" },
   { label: "Pricing", href: "/pricing" },
   { label: "Portfolio", href: "/portfolio" },

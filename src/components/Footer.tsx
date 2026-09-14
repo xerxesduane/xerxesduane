@@ -18,9 +18,24 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
   const linkCls = "link-grow text-cream-dim transition-colors hover:text-gold";
 
   return (
-    <footer className="border-t border-cream/8 bg-ink-deep/60 py-14">
+    <footer className="border-t border-cream/8 bg-ink-deep/60 py-10 lg:py-5">
       <div className="container-bl">
-        <div className={`grid gap-10 ${gridCols}`}>
+        {/* Desktop: the columns below cost ~450px, which no page can spare if
+            it is to fit one screen. The footer is still navigation — it is just
+            one row of it up here, and the full set stays on mobile where the
+            page scrolls regardless. */}
+        <nav
+          aria-label={ar ? AR_CHROME.footerServicesHeading : "Footer"}
+          className="hidden flex-wrap items-center gap-x-5 gap-y-2 text-sm lg:flex"
+        >
+          {(ar ? serviceItems.slice(0, 6) : NAV_LINKS).map((l) => (
+            <a key={l.href} href={l.href} className={linkCls}>
+              {l.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className={`grid gap-10 lg:hidden ${gridCols}`}>
           <div>
             <Wordmark />
             <p className="mt-4 max-w-xs font-display text-lg italic text-cream-dim">
@@ -132,7 +147,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-cream/8 pt-6 text-xs text-muted-dark sm:flex-row">
+        <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-cream/8 pt-6 text-xs text-muted-dark sm:flex-row lg:mt-4 lg:border-t-0 lg:pt-0">
           {ar ? (
             <>
               <span>© {new Date().getFullYear()} {AR_CHROME.footerRights}</span>
