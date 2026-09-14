@@ -92,7 +92,7 @@ export default function Projects() {
         <Panel
           icon={LayoutTemplate}
           label="Websites & commerce"
-          blurb={`${WEB_DESIGNS.length} builds — sites, stores and landing pages.`}
+          blurb={`${WEB_DESIGNS.length} builds: sites, stores and landing pages.`}
           href="/portfolio"
         >
           <Thumbs items={WEB_DESIGNS.slice(0, 4).map((w) => ({ src: w.thumb, alt: w.title }))} />
@@ -101,7 +101,7 @@ export default function Projects() {
         <Panel
           icon={Palette}
           label="Brand & content"
-          blurb={`${GRAPHIC_DESIGNS.length} pieces — identity, print and social.`}
+          blurb={`${GRAPHIC_DESIGNS.length} pieces: identity, print and social.`}
           href="/portfolio"
         >
           <Thumbs items={GRAPHIC_DESIGNS.slice(0, 4).map((g) => ({ src: g.thumb, alt: g.title }))} />
@@ -125,7 +125,7 @@ export default function Projects() {
         <Panel
           icon={Clapperboard}
           label="Video & motion"
-          blurb={`${VIDEOS.length} pieces — production, editing, grading and animation.`}
+          blurb={`${VIDEOS.length} pieces: production, editing, grading and animation.`}
           href="/showreel"
         >
           <ul className="flex flex-wrap gap-1.5">

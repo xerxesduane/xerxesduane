@@ -569,7 +569,7 @@ export default function Demos() {
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder={`Search all ${DEMOS.length} tools — WhatsApp, Arabic, invoice…`}
+            placeholder={`Search all ${DEMOS.length} tools: WhatsApp, Arabic, invoice…`}
             className="w-full rounded-full border border-cream/12 bg-cream/5 py-2.5 pl-11 pr-4 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none"
           />
         </div>

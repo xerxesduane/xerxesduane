@@ -6,7 +6,6 @@ import {
   ShoppingBag,
   Target,
   Bot,
-  Video,
   Film,
   Palette,
   Languages,
@@ -141,18 +140,11 @@ const SERVICE_DEFS: Service[] = [
       "Make your business the source AI engines recommend. I shape your content, entities, and citations so ChatGPT, Gemini, and Perplexity surface and recommend you when buyers ask.",
   },
   {
-    icon: Video,
-    title: "Videography & Photography",
-    tagline: "Stories that sell.",
-    description:
-      "Professional video, product photography, reels, and brand films, created with the storytelling instincts of someone who's run real ad campaigns.",
-  },
-  {
     icon: Film,
-    title: "Video Editing",
-    tagline: "Footage into scroll-stoppers.",
+    title: "Photo & Video Editing",
+    tagline: "Your footage, finished.",
     description:
-      "Reels, social clips, brand films, and ad cuts edited to hold attention, with captions, motion graphics, and platform-tuned pacing. Fast turnaround and clean revisions.",
+      "Reels, social clips, brand films and ad cuts edited to hold attention, with captions, motion graphics and platform-tuned pacing. Product and campaign photos retouched, colour-matched and exported to the sizes each channel wants.",
   },
   {
     icon: Palette,
@@ -227,8 +219,7 @@ export const OUTCOMES: Outcome[] = [
 
 // Creative work that supports all three outcomes — kept visible, not equal-billed.
 export const CREATIVE_SUPPORT: { label: string; href: string }[] = [
-  { label: "Videography & photography", href: "/videography-photography-dubai" },
-  { label: "Video editing", href: "/video-editing-dubai" },
+  { label: "Photo & video editing", href: "/video-editing-dubai" },
   { label: "Branding & graphic design", href: "/branding-graphic-design-dubai" },
 ];
 
@@ -457,7 +448,7 @@ export const CASE_STUDIES: CaseStudy[] = [
       "Optimized toward conversations instead of vanity engagement",
       "Used campaign learning to improve the next creative cycle",
     ],
-    relatedServices: ["landing-page-design-dubai", "videography-photography-dubai", "video-editing-dubai"],
+    relatedServices: ["landing-page-design-dubai", "video-editing-dubai"],
     image: "/work/web/web-03-thumb.webp",
     stats: [
       { value: "54K", label: "People reached" },

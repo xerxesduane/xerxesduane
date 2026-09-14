@@ -30,7 +30,20 @@ const card = [...pricing.matchAll(
   /\{ service: "([^"]+)",(?: pageSlug: "([^"]+)",)? from: (\d+), unit: "(\w+)" \}/g,
 )].map((m) => ({ service: m[1], pageSlug: m[2], from: Number(m[3]), unit: m[4] }));
 
-check(card.length >= 12, `parsed only ${card.length} rate card entries, expected at least 12`);
+// The point is that the regex above matched every entry, not that the rate
+// card is a particular length: services come and go (videography did), and a
+// hard count just fails the build on a deliberate edit.
+//
+// Counted inside the array body, and deliberately independent of formatting.
+// A first attempt counted "{ service:" on one line, which moved in step with
+// the parser when an entry was reformatted onto several lines, so the two
+// agreed on a wrong answer and the check passed.
+const cardBody = /RATE_CARD: PricePoint\[\] = \[([\s\S]*?)\n\];/.exec(pricing)?.[1] ?? "";
+const declared = (cardBody.match(/\bservice:/g) || []).length;
+check(
+  card.length === declared && card.length > 0,
+  `parsed ${card.length} rate card entries but ${declared} are declared; the pattern missed one`,
+);
 
 // 1. Every service title must exist in SERVICES, or the home cards lose their price.
 const content = read("src/data/content.ts");

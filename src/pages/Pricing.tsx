@@ -135,7 +135,7 @@ export default function Pricing() {
           title="Starting prices by service"
           lede="What each piece of work starts at. A real table, so you can compare it against any other quote you are holding."
         >
-          {/* Two halves side by side on the board: sixteen rows in one
+          {/* Two halves side by side on the board: the rate card in a single
               column cost 465px, and every figure still has to be visible
               plain text. Each half is its own scroller, because the page body
               must never scroll sideways and a table is the one thing allowed

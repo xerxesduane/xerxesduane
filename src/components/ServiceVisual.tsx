@@ -7,7 +7,7 @@ const visualType = (slug: string) => {
   if (slug.includes("crm") || slug.includes("ai")) return "workflow";
   if (slug.includes("ecommerce") || slug.includes("landing")) return "conversion";
   if (slug.includes("mobile") || slug.includes("web-development")) return "product";
-  if (slug.includes("branding") || slug.includes("video") || slug.includes("photography")) return "creative";
+  if (slug.includes("branding") || slug.includes("video")) return "creative";
   return "search";
 };
 
