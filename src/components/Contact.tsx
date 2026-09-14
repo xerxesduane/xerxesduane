@@ -66,7 +66,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
               systems and three quick wins you can use right away.
             </p>
 
-            <p className="mt-8 font-display text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">What happens next</p>
+            <p className="mt-8 font-display text-xs board:text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">What happens next</p>
             <ol className="mt-3 space-y-4">
               {AUDIT_STEPS.map((s, i) => (
                 <li key={s} className="flex gap-3 text-sm text-cream-dim">
@@ -79,7 +79,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
             </ol>
 
             <div className="mt-6 rounded-2xl border border-cream/10 bg-ink-deep/40 p-4">
-              <p className="font-display text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">You walk away with</p>
+              <p className="font-display text-xs board:text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">You walk away with</p>
               <ul className="mt-2.5 space-y-1.5">
                 {AUDIT_DELIVERABLES.map((d) => (
                   <li key={d} className="flex items-start gap-2 text-sm text-cream-dim">
@@ -100,24 +100,24 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
               Prefer to pick a time? Book instantly
             </a>
 
-            <div className="mt-8 flex flex-col gap-3 text-sm">
+            <div className="mt-8 flex flex-col gap-1 text-sm">
               <a
                 href={`https://wa.me/${CONTACT.whatsapp}`}
                 target="_blank"
                 rel="noopener"
-                className="inline-flex items-center gap-2.5 text-cream transition-colors hover:text-gold"
+                className="inline-flex items-center gap-2.5 py-1 text-cream transition-colors hover:text-gold"
               >
                 <MessageCircle size={16} className="text-gold" />
                 {CONTACT.whatsappDisplay}
               </a>
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="inline-flex items-center gap-2.5 text-cream transition-colors hover:text-gold"
+                className="inline-flex items-center gap-2.5 py-1 text-cream transition-colors hover:text-gold"
               >
                 <Mail size={16} className="text-gold" />
                 {CONTACT.email}
               </a>
-              <span className="inline-flex items-center gap-2.5 text-muted">
+              <span className="inline-flex items-center gap-2.5 py-1 text-muted">
                 <MapPin size={16} className="text-gold" />
                 {CONTACT.location}
               </span>

@@ -125,7 +125,7 @@ export default {
         "hero-sm": ["clamp(2rem, 3.2vw, 3rem)", { lineHeight: "1.06", letterSpacing: "-0.025em" }],
         /* Bento card heading — uppercase, set solid. */
         card: ["1.06rem", { lineHeight: "1.15", letterSpacing: "0.005em" }],
-        eyebrow: ["0.72rem", { lineHeight: "1", letterSpacing: "0.16em" }],
+        eyebrow: ["0.75rem", { lineHeight: "1", letterSpacing: "0.16em" }],
       },
 
       maxWidth: {

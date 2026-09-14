@@ -82,7 +82,7 @@ function Fact({
       </span>
       <span className="min-w-0">
         <span className="block text-[0.88rem] font-bold leading-tight text-fg">{title}</span>
-        <span className="block text-[0.72rem] uppercase leading-tight tracking-[0.08em] text-fg-faint">
+        <span className="block text-xs uppercase leading-tight tracking-[0.08em] text-fg-faint board:text-[0.72rem]">
           {detail}
         </span>
       </span>
@@ -174,7 +174,7 @@ export default function AboutIntro() {
                     {item.title}
                   </span>
 
-                  <span className="order-2 ms-auto shrink-0 font-display text-[0.72rem] font-bold tabular-nums text-fg-faint sm:order-3 sm:ms-0">
+                  <span className="order-2 ms-auto shrink-0 font-display text-xs board:text-[0.72rem] font-bold tabular-nums text-fg-faint sm:order-3 sm:ms-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </a>

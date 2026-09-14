@@ -161,7 +161,7 @@ export default function Starter() {
           </p>
           <a
             href="/landing-page-design-dubai"
-            className="mt-4 inline-flex items-center gap-1.5 text-[0.9rem] font-bold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
+            className="mt-3 inline-flex items-center gap-1.5 py-1 text-[0.9rem] font-bold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
           >
             Compare with Landing Pages &amp; Funnels
             <ArrowUpRight size={15} strokeWidth={2.4} aria-hidden />

@@ -64,7 +64,7 @@ export default function VideoGallery() {
           </div>
           <figcaption className="flex items-center justify-between gap-3 p-4">
             <span className="text-sm text-cream">{v.title}</span>
-            <span className="shrink-0 rounded-full bg-gold/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-wider text-gold/90">
+            <span className="shrink-0 rounded-full bg-gold/10 px-2.5 py-1 font-mono text-xs board:text-[10px] uppercase tracking-wider text-gold/90">
               {v.tag}
             </span>
           </figcaption>

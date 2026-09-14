@@ -1,7 +1,7 @@
 import { m } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { fadeUp } from "../../lib/motion";
 
 interface PanelProps {
@@ -14,6 +14,13 @@ interface PanelProps {
   blurb?: string;
   /** When set the whole panel is a link; omit for panels with links inside. */
   href?: string;
+  /**
+   * Intercepts the anchor's click. Used by the hubs that switch view in place:
+   * the `href` stays real so the card is a proper link (middle-click, copy
+   * link, crawlers), and this swaps the view without a reload when it is an
+   * ordinary left click.
+   */
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
   /** Tailwind grid spans, applied by the caller. */
   span?: string;
   /** `plain` drops the card chrome — for panels that only need the rhythm. */
@@ -70,6 +77,7 @@ export default function Panel({
   label,
   blurb,
   href,
+  onClick,
   span = "",
   tone = "card",
   footer,
@@ -119,6 +127,7 @@ export default function Panel({
         whileFocus={LIFT}
         transition={LIFT_TRANSITION}
         href={href}
+        onClick={onClick}
         className={`${shell} ${PANEL_HOVER} ${span} ${className}`}
       >
         {body}

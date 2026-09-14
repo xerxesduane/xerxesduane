@@ -130,7 +130,7 @@ export default function HomeAr() {
                 جرّب أكثر من ٣٠ أداة حية
                 <ArrowUpRight size={15} className="rtl-flip" />
               </a>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.15em] text-muted-dark">
+              <p className="mt-4 font-mono text-xs board:text-[11px] uppercase tracking-[0.15em] text-muted-dark">
                 بلا تسجيل · تستجيب فعلًا
               </p>
             </div>
