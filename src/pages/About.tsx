@@ -30,7 +30,7 @@ export default function About() {
         lede="I build the systems that keep a small business running when nobody is watching them."
         actions={
           <>
-            <PrimaryAction href="/#contact">Book a free audit</PrimaryAction>
+            <PrimaryAction href="/contact">Book a free audit</PrimaryAction>
             <GhostAction href="/" icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}>
               Home
             </GhostAction>
@@ -40,10 +40,10 @@ export default function About() {
 
       <AboutIntro />
 
-      <PanelBoard className="mt-4">
+      <PanelBoard cols="board:grid-cols-4" className="mt-3">
         {/* Bio */}
-        <Panel icon={Compass} label="How I work" span="lg:col-span-7">
-          <div className="space-y-3 text-[0.95rem] leading-relaxed text-fg-soft">
+        <Panel icon={Compass} label="How I work">
+          <div className="space-y-2 text-[0.82rem] leading-snug text-fg-soft">
             <p>
               I help growing businesses run on systems that actually work
               together. Instead of a website in one place, spreadsheets in
@@ -64,10 +64,10 @@ export default function About() {
         </Panel>
 
         {/* Approach */}
-        <Panel icon={ListChecks} label="My approach" span="lg:col-span-5">
+        <Panel icon={ListChecks} label="My approach">
           <ul className="space-y-2">
             {FOCUS.map((f) => (
-              <li key={f} className="flex items-start gap-2.5 text-sm text-fg-soft">
+              <li key={f} className="flex items-start gap-2 text-[0.82rem] leading-snug text-fg-soft">
                 <Check size={16} className="mt-0.5 shrink-0 text-accent" aria-hidden />
                 {f}
               </li>
@@ -76,12 +76,12 @@ export default function About() {
         </Panel>
 
         {/* Recent work */}
-        <Panel icon={Compass} label="Recent work spans" span="lg:col-span-7">
-          <ul className="grid gap-2 sm:grid-cols-2">
+        <Panel icon={Compass} label="Recent work spans">
+          <ul className="grid gap-1.5">
             {PROJECTS.map((p) => (
               <li
                 key={p}
-                className="rounded-xl border border-line bg-panel-alt px-3.5 py-2.5 text-sm text-fg-soft"
+                className="rounded-lg border border-line bg-panel-alt px-2.5 py-1.5 text-[0.78rem] text-fg-soft"
               >
                 {p}
               </li>
@@ -93,8 +93,8 @@ export default function About() {
             client card is also commented out in data/content.ts. */}
 
         {/* Closing note */}
-        <Panel icon={Quote} label="Why I do it" span="lg:col-span-5">
-          <p className="font-display text-lg italic leading-relaxed text-fg sm:text-xl">
+        <Panel icon={Quote} label="Why I do it">
+          <p className="font-display text-[0.95rem] italic leading-snug text-fg">
             I don't just create things. I help your business run, and I stay for
             the parts of your life it touches. Serving comes first; the build is
             how I do it.

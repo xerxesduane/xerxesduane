@@ -120,7 +120,7 @@ export default function AboutIntro() {
             `min-w-0`: a grid item defaults to `min-width: auto`, so a long
             unbroken string inside would size the column and overflow the card
             on a phone. */}
-        <div className="order-2 min-w-0 p-6 sm:p-8 lg:order-1 lg:py-10 lg:pe-4 lg:ps-10">
+        <div className="order-2 min-w-0 p-5 sm:p-6 lg:order-1 lg:py-6 lg:pe-4 lg:ps-8">
           <m.p
             variants={fadeUp}
             className="max-w-[31ch] font-display text-[1.5rem] font-extrabold leading-[1.28] tracking-tight text-fg sm:text-[1.8rem]"
