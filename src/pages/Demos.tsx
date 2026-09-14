@@ -450,6 +450,10 @@ function readUrl(): { view: View | null; demo: string | null } {
   return { view: cat && VIEW_IDS.has(cat) ? (cat as View) : null, demo: null };
 }
 
+/** A left click with no modifier — the only one we handle ourselves. */
+const plain = (event: ReactMouseEvent) =>
+  !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0;
+
 export default function Demos() {
   // `null` is the hub. Resolved from the URL after mount so the hydrated
   // markup still matches the prerendered hub.
@@ -488,9 +492,28 @@ export default function Demos() {
 
   /** Hub cards are real links, so only plain left clicks switch in place. */
   const open = (next: View) => (event: ReactMouseEvent) => {
-    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+    if (plain(event)) {
+      event.preventDefault();
+      setView(next);
+    }
+  };
+
+  /** A name in the index: open its category, then bring the tool into view. */
+  const openDemo = (demo: Demo) => (event: ReactMouseEvent) => {
+    if (!plain(event)) return;
     event.preventDefault();
-    setView(next);
+    setViewState(demo.featured ? "flagship" : demo.category);
+    setQuery("");
+    track("ai_lab_filter", { category: demo.category });
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("cat");
+      url.hash = demo.id;
+      window.history.pushState(null, "", url);
+      requestAnimationFrame(() =>
+        document.getElementById(demo.id)?.scrollIntoView({ block: "start" }),
+      );
+    }
   };
 
   const featured = DEMOS.find((d) => d.featured);
@@ -557,8 +580,8 @@ export default function Demos() {
           {featured && (
             <Panel
               icon={featured.icon}
-              label="Flagship · WhatsApp automation"
-              blurb={featured.blurb}
+              label={featured.eyebrow}
+              blurb={featured.title}
               href="/ai-lab?cat=flagship"
               onClick={open("flagship")}
               span="sm:col-span-2"
@@ -567,38 +590,47 @@ export default function Demos() {
                   <Sparkles size={13} aria-hidden /> Run the live demo
                 </span>
               }
-            />
+            >
+              <p className="text-[0.88rem] leading-snug text-fg-soft">{featured.blurb}</p>
+            </Panel>
           )}
 
-          {CATEGORIES.map((c) => (
-            <Panel
-              key={c.id}
-              icon={CAT_ICON[c.id]}
-              label={c.label}
-              blurb={`${count(c.id)} live tools.`}
-              href={`/ai-lab?cat=${c.id}`}
-              onClick={open(c.id)}
-            >
-              <ul className="flex flex-wrap gap-1.5">
-                {rest
-                  .filter((d) => d.category === c.id)
-                  .slice(0, 3)
-                  .map((d) => (
-                    <li
-                      key={d.id}
-                      className="rounded-full border border-cream/12 bg-cream/5 px-2.5 py-1 text-xs text-cream-dim board:text-[0.7rem]"
-                    >
-                      {d.eyebrow}
+          {/* Every tool is named here, not just three per category: the hub is
+              the page a crawler and a first-time visitor both land on, and the
+              catalogue behind it is only reachable with JavaScript. A panel
+              holding links cannot itself be one, so the heading carries the
+              link to the category instead of the whole card. */}
+          {CATEGORIES.map((c) => {
+            const tools = rest.filter((d) => d.category === c.id);
+            return (
+              <Panel
+                key={c.id}
+                icon={CAT_ICON[c.id]}
+                label={c.label}
+                labelHref={`/ai-lab?cat=${c.id}`}
+                onLabelClick={open(c.id)}
+              >
+                <ul className="-mt-1 flex flex-wrap gap-1">
+                  {tools.map((d) => (
+                    <li key={d.id}>
+                      <a
+                        href={`/ai-lab#${d.id}`}
+                        onClick={openDemo(d)}
+                        className="inline-block rounded-full border border-cream/12 bg-cream/5 px-2.5 py-1 text-xs text-cream-dim transition hover:border-gold/40 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent board:text-[0.7rem]"
+                      >
+                        {d.eyebrow}
+                      </a>
                     </li>
                   ))}
-              </ul>
-            </Panel>
-          ))}
+                </ul>
+              </Panel>
+            );
+          })}
 
           <Panel
             icon={LayoutGrid}
             label="Every tool"
-            blurb={`Every tool beyond the flagship — all ${rest.length}, in one list.`}
+            blurb={`All ${rest.length}, in one list, with the flagship on top.`}
             href="/ai-lab?cat=all"
             onClick={open("all")}
           />
