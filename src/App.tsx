@@ -16,6 +16,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Services = lazy(() => import("./pages/Services"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const ServicePage = lazy(() => import("./pages/ServicePage"));
+const Projects = lazy(() => import("./pages/Projects"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
 const CaseStudyPage = lazy(() => import("./pages/CaseStudyPage"));
 const About = lazy(() => import("./pages/About"));
@@ -59,6 +60,7 @@ function Route({ path }: { path: string }) {
   if (slug === "pricing") return <Pricing />;
   if (slug === "starter") return <Starter />;
   if (slug === "contact") return <ContactPage />;
+  if (slug === "projects") return <Projects />;
   if (slug === "case-studies") return <CaseStudies />;
   if (slug.startsWith("case-studies/")) {
     const study = CASE_STUDIES.find((item) => item.slug === slug.slice("case-studies/".length));
