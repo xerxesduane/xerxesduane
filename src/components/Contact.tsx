@@ -43,8 +43,12 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
     .join("\n");
   const whatsappHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
+  // Tighter fields from the board breakpoint up, compact only. Five of them
+  // plus their labels and gaps set the height of the contact page's taller
+  // column, and 35px was the whole difference between fitting a laptop screen
+  // and not. Untouched below it, where the input is a touch target.
   const field = `w-full rounded-xl border border-cream/10 bg-ink-deep/50 px-4 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40 ${
-    compact ? "py-2" : "py-3"
+    compact ? "py-2 board:py-1.5" : "py-3"
   }`;
 
   return (
@@ -57,17 +61,17 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
               <span className="h-px w-6 bg-gold/60" aria-hidden />
               Free Business Systems Audit
             </span>
-            <h2 className={compact ? "mt-2 text-2xl" : "mt-4 text-3xl sm:text-4xl"}>
+            <h2 className={compact ? "mt-2 board:mt-1.5 text-2xl" : "mt-4 text-3xl sm:text-4xl"}>
               Just curious what{" "}
               <span className="text-gradient-gold">I'd say?</span>
             </h2>
-            <p className={compact ? "mt-2 max-w-md text-sm text-muted" : "mt-4 max-w-md text-muted"}>
+            <p className={compact ? "mt-2 board:mt-1.5 max-w-md text-sm text-muted" : "mt-4 max-w-md text-muted"}>
               60 minutes, zero pressure. You walk away with a clear map of your
               systems and three quick wins you can use right away.
             </p>
 
-            <p className={`font-display text-xs font-extrabold uppercase tracking-[0.16em] text-accent-deep board:text-[0.68rem] ${compact ? "mt-4" : "mt-8"}`}>What happens next</p>
-            <ol className={compact ? "mt-2 grid gap-1 sm:grid-cols-2" : "mt-3 space-y-4"}>
+            <p className={`font-display text-xs font-extrabold uppercase tracking-[0.16em] text-accent-deep board:text-[0.68rem] ${compact ? "mt-4 board:mt-2.5" : "mt-8"}`}>What happens next</p>
+            <ol className={compact ? "mt-2 board:mt-1.5 grid gap-1 board:gap-0.5 sm:grid-cols-2" : "mt-3 space-y-4"}>
               {AUDIT_STEPS.map((s, i) => (
                 <li key={s} className="flex gap-3 text-sm text-cream-dim">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-ink">
@@ -78,9 +82,9 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
               ))}
             </ol>
 
-            <div className={`rounded-2xl border border-cream/10 bg-ink-deep/40 ${compact ? "mt-3 p-3" : "mt-6 p-4"}`}>
+            <div className={`rounded-2xl border border-cream/10 bg-ink-deep/40 ${compact ? "mt-3 board:mt-2 p-3 board:p-2.5" : "mt-6 p-4"}`}>
               <p className="font-display text-xs board:text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">You walk away with</p>
-              <ul className={compact ? "mt-2 grid gap-1 sm:grid-cols-2" : "mt-2.5 space-y-1.5"}>
+              <ul className={compact ? "mt-2 board:mt-1.5 grid gap-1 board:gap-0.5 sm:grid-cols-2" : "mt-2.5 space-y-1.5"}>
                 {AUDIT_DELIVERABLES.map((d) => (
                   <li key={d} className="flex items-start gap-2 text-sm text-cream-dim">
                     <Check size={14} className="mt-0.5 shrink-0 text-gold" />
@@ -94,13 +98,13 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
               href={CONTACT.calendar}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold/15 ${compact ? "mt-4" : "mt-8"}`}
+              className={`inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold/15 ${compact ? "mt-4 board:mt-2.5" : "mt-8"}`}
             >
               <CalendarCheck size={17} />
               Prefer to pick a time? Book instantly
             </a>
 
-            <div className={`text-sm ${compact ? "mt-3 flex flex-wrap gap-x-5 gap-y-0" : "mt-8 flex flex-col gap-1"}`}>
+            <div className={`text-sm ${compact ? "mt-3 board:mt-2 flex flex-wrap gap-x-5 gap-y-0" : "mt-8 flex flex-col gap-1"}`}>
               <a
                 href={`https://wa.me/${CONTACT.whatsapp}`}
                 target="_blank"
@@ -123,7 +127,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
               </span>
             </div>
 
-            <GoogleRating className={compact ? "mt-4" : "mt-8"} />
+            <GoogleRating className={compact ? "mt-4 board:mt-2.5" : "mt-8"} />
           </Reveal>
 
           {/* Right: form, or success state */}
@@ -158,7 +162,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className={compact ? "flex flex-col gap-2.5" : "flex flex-col gap-4"}
+              className={compact ? "flex flex-col gap-2.5 board:gap-2" : "flex flex-col gap-4"}
             >
               <input type="hidden" name="_subject" value="New audit request from xerxesduane.com" />
               {/* Lead attribution: which page + referrer the enquiry came from */}
@@ -174,7 +178,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
                 style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
               />
               <div>
-                <label htmlFor="name" className="mb-1 block text-xs text-muted">
+                <label htmlFor="name" className="mb-1 block text-xs text-muted board:mb-0.5">
                   Your name
                 </label>
                 <input
@@ -188,7 +192,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
                 />
               </div>
               <div>
-                <label htmlFor="business" className="mb-1 block text-xs text-muted">
+                <label htmlFor="business" className="mb-1 block text-xs text-muted board:mb-0.5">
                   Your business and what you do <span className="text-muted-dark">(optional)</span>
                 </label>
                 <input
@@ -201,7 +205,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
                 />
               </div>
               <div>
-                <label htmlFor="email" className="mb-1 block text-xs text-muted">
+                <label htmlFor="email" className="mb-1 block text-xs text-muted board:mb-0.5">
                   Your email <span className="text-muted-dark">(optional)</span>
                 </label>
                 {/* Named `email` on purpose: Formspree uses a field with that
@@ -226,7 +230,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
                 />
               </div>
               <div>
-                <label htmlFor="phone" className="mb-1 block text-xs text-muted">
+                <label htmlFor="phone" className="mb-1 block text-xs text-muted board:mb-0.5">
                   WhatsApp or phone
                 </label>
                 <input
@@ -242,7 +246,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
                 <ValidationError field="phone" prefix="Phone" errors={state.errors} className="mt-1 text-xs text-gold" />
               </div>
               <div>
-                <label htmlFor="message" className="mb-1 block text-xs text-muted">
+                <label htmlFor="message" className="mb-1 block text-xs text-muted board:mb-0.5">
                   What's the one tech thing on your mind? <span className="text-muted-dark">(optional)</span>
                 </label>
                 <textarea
