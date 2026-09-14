@@ -45,7 +45,7 @@ export default function AboutFigure() {
         className="w-full"
       >
         {missing ? (
-          <DeskIllustration className="w-full" />
+          <DeskIllustration className="mx-auto w-full board:max-h-[23rem] board:w-auto" />
         ) : (
           <img
             src={FIGURE_SRC}
@@ -60,7 +60,13 @@ export default function AboutFigure() {
             // the reference does. Not oversized: the figure runs to 92% of the
             // frame, so any bleed off the card's right edge takes his sleeve
             // with the chair. The artwork carries its own margins.
-            className="mx-auto block w-full select-none"
+            //
+            // Capped, because `w-full` on an intrinsic aspect meant a wider
+            // window bought a taller figure: the card set the page height and
+            // /about grew from 853px at 1280 to 933 at 1880. The cap is above
+            // the copy column's own height at every width the cap applies to,
+            // so the figure still fills the card rather than floating in it.
+            className="mx-auto block w-full select-none board:max-h-[23rem] board:w-auto"
             draggable={false}
           />
         )}
