@@ -41,7 +41,7 @@ export default function PageHeader({
       variants={stagger}
       initial="hidden"
       animate="show"
-      className="mb-6"
+      className="mb-4"
     >
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
         <div className="min-w-0">

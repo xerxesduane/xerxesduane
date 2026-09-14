@@ -7,6 +7,7 @@ import MobileTabBar from "./components/shell/MobileTabBar";
 import ConsentBanner from "./components/ConsentBanner";
 import SmoothScroll from "./components/fx/SmoothScroll";
 import PageTransition from "./components/fx/PageTransition";
+import IntroSequence from "./components/fx/IntroSequence";
 
 // Route-level code splitting: each page ships as its own chunk, so a visitor
 // only downloads the JS for the route they're on. The streaming prerender
@@ -15,6 +16,7 @@ const Home = lazy(() => import("./pages/Home"));
 const Services = lazy(() => import("./pages/Services"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const ServicePage = lazy(() => import("./pages/ServicePage"));
+const Projects = lazy(() => import("./pages/Projects"));
 const CaseStudies = lazy(() => import("./pages/CaseStudies"));
 const CaseStudyPage = lazy(() => import("./pages/CaseStudyPage"));
 const About = lazy(() => import("./pages/About"));
@@ -58,6 +60,7 @@ function Route({ path }: { path: string }) {
   if (slug === "pricing") return <Pricing />;
   if (slug === "starter") return <Starter />;
   if (slug === "contact") return <ContactPage />;
+  if (slug === "projects") return <Projects />;
   if (slug === "case-studies") return <CaseStudies />;
   if (slug.startsWith("case-studies/")) {
     const study = CASE_STUDIES.find((item) => item.slug === slug.slice("case-studies/".length));
@@ -108,6 +111,7 @@ export default function App({ path = "/" }: { path?: string }) {
 
         <SmoothScroll />
         <PageTransition />
+        <IntroSequence />
 
         <ShellLayout path={path} lang={lang} locale={isArabic ? "ar" : "en"}>
           <main className="relative z-10">

@@ -1,11 +1,28 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { m } from "framer-motion";
-import { Send, Sparkles, Search, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck, ChevronDown } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ChevronDown,
+  Cpu,
+  FileSpreadsheet,
+  Inbox,
+  LayoutGrid,
+  MessagesSquare,
+  PenLine,
+  Search,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  TrendingUp,
+  Workflow,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import type { MouseEvent as ReactMouseEvent, ReactNode } from "react";
 import Reveal from "../components/ui/Reveal";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
+import Panel from "../components/page/Panel";
+import PanelBoard from "../components/page/PanelBoard";
 import { PrimaryAction } from "../components/page/PageActions";
 import { fadeUp, stagger } from "../lib/motion";
 import { track } from "../lib/analytics";
@@ -211,10 +228,10 @@ function LazyDemo({ id, children }: { id: string; children: ReactNode }) {
 function DemoCta({ demo }: { demo: Demo }) {
   return (
     <a
-      href="/#contact"
+      href="/contact"
       data-cursor="link"
       onClick={() => track("demo_cta", { demo: demo.id })}
-      className="group mt-5 inline-flex items-center gap-2 text-sm font-medium text-gold transition-colors hover:text-gold-soft"
+      className="group mt-5 inline-flex items-center gap-2 py-1 text-sm font-medium text-gold transition-colors hover:text-gold-soft"
     >
       Build this for my business
       <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
@@ -294,7 +311,7 @@ function ProductionPipeline() {
           Meta-approved templates, billed per conversation. Built for you in days, wired into the tools you already use.
         </p>
         <a
-          href="/#contact"
+          href="/contact"
           data-cursor="link"
           className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-ink-deep transition-colors hover:bg-navy-hover"
         >
@@ -397,134 +414,273 @@ function FilterPill({ active, onClick, children }: { active: boolean; onClick: (
   );
 }
 
-const CAT_IDS = new Set<string>(CATEGORIES.map((c) => c.id));
+/* --------------------------------------------------------------------------
+ * Views.
+ *
+ * Thirty-seven live tools cannot share a screen, so the lab opens as a board of
+ * the five categories plus the flagship, and the catalogue sits one click
+ * behind it. `?cat=` carries the view so any of them is linkable, and a
+ * `#demo-id` deep link (the homepage pills use them) still resolves straight to
+ * its tool by opening that tool's category first.
+ * ----------------------------------------------------------------------- */
 
-/** Initial filter from ?cat= so filtered views are shareable/deep-linkable. */
-function initialFilter(): CatId | "all" {
-  if (typeof window === "undefined") return "all";
+type View = CatId | "all" | "flagship";
+
+const CAT_IDS = new Set<string>(CATEGORIES.map((c) => c.id));
+const VIEW_IDS = new Set<string>([...CAT_IDS, "all", "flagship"]);
+
+/** The glyph on each category's hub card. */
+const CAT_ICON: Record<CatId, LucideIcon> = {
+  frontier: Cpu,
+  convert: TrendingUp,
+  comms: MessagesSquare,
+  create: PenLine,
+  automate: Workflow,
+};
+
+/** What the URL asks for: a view, and a tool to scroll to once it renders. */
+function readUrl(): { view: View | null; demo: string | null } {
+  if (typeof window === "undefined") return { view: null, demo: null };
+  const hash = window.location.hash.slice(1);
+  const target = hash ? DEMOS.find((d) => d.id === hash) : undefined;
+  if (target) {
+    return { view: target.featured ? "flagship" : target.category, demo: target.id };
+  }
   const cat = new URLSearchParams(window.location.search).get("cat");
-  return cat && CAT_IDS.has(cat) ? (cat as CatId) : "all";
+  return { view: cat && VIEW_IDS.has(cat) ? (cat as View) : null, demo: null };
 }
 
+/** A left click with no modifier — the only one we handle ourselves. */
+const plain = (event: ReactMouseEvent) =>
+  !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey && event.button === 0;
+
 export default function Demos() {
-  const [filter, setFilterState] = useState<CatId | "all">("all");
-  useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect -- client URL preferences must not change the hydration snapshot
-    setFilterState(initialFilter());
-  }, []);
+  // `null` is the hub. Resolved from the URL after mount so the hydrated
+  // markup still matches the prerendered hub.
+  const [view, setViewState] = useState<View | null>(null);
   const [query, setQuery] = useState("");
+
+  useEffect(() => {
+    const apply = () => {
+      const { view: next, demo } = readUrl();
+      setViewState(next);
+      if (demo) {
+        // The card does not exist until the view above renders; bring it into
+        // view on the next frame, once it does.
+        requestAnimationFrame(() => document.getElementById(demo)?.scrollIntoView({ block: "start" }));
+      }
+    };
+    apply();
+    window.addEventListener("popstate", apply);
+    return () => window.removeEventListener("popstate", apply);
+  }, []);
+
+  // Keep ?cat= in the URL in sync (shareable) and report filter usage.
+  const setView = (next: View | null) => {
+    setViewState(next);
+    setQuery("");
+    track("ai_lab_filter", { category: next ?? "overview" });
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      if (next) url.searchParams.set("cat", next);
+      else url.searchParams.delete("cat");
+      url.hash = "";
+      window.history.pushState(null, "", url);
+      window.scrollTo({ top: 0 });
+    }
+  };
+
+  /** Hub cards are real links, so only plain left clicks switch in place. */
+  const open = (next: View) => (event: ReactMouseEvent) => {
+    if (plain(event)) {
+      event.preventDefault();
+      setView(next);
+    }
+  };
+
+  /** A name in the index: open its category, then bring the tool into view. */
+  const openDemo = (demo: Demo) => (event: ReactMouseEvent) => {
+    if (!plain(event)) return;
+    event.preventDefault();
+    setViewState(demo.featured ? "flagship" : demo.category);
+    setQuery("");
+    track("ai_lab_filter", { category: demo.category });
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("cat");
+      url.hash = demo.id;
+      window.history.pushState(null, "", url);
+      requestAnimationFrame(() =>
+        document.getElementById(demo.id)?.scrollIntoView({ block: "start" }),
+      );
+    }
+  };
+
   const featured = DEMOS.find((d) => d.featured);
   const rest = DEMOS.filter((d) => !d.featured);
   const q = query.trim().toLowerCase();
-  const visible = rest.filter(
-    (d) =>
-      (filter === "all" || d.category === filter) &&
-      (q === "" ||
-        d.title.toLowerCase().includes(q) ||
-        d.blurb.toLowerCase().includes(q) ||
-        d.eyebrow.toLowerCase().includes(q)),
-  );
+  const searching = q !== "";
+  const onHub = !searching && view === null;
 
-  // Keep ?cat= in the URL in sync (shareable) and report filter usage.
-  const setFilter = (next: CatId | "all") => {
-    setFilterState(next);
-    track("ai_lab_filter", { category: next });
-    if (typeof window !== "undefined") {
-      const url = new URL(window.location.href);
-      if (next === "all") url.searchParams.delete("cat");
-      else url.searchParams.set("cat", next);
-      window.history.replaceState(null, "", url);
-    }
-  };
+  const visible = searching
+    ? rest.filter(
+        (d) =>
+          d.title.toLowerCase().includes(q) ||
+          d.blurb.toLowerCase().includes(q) ||
+          d.eyebrow.toLowerCase().includes(q),
+      )
+    : rest.filter((d) => view === "all" || d.category === view);
+
+  const count = (id: CatId) => rest.filter((d) => d.category === id).length;
 
   return (
     <>
       <PageHeader
         eyebrow={`AI Lab · ${DEMOS.length} tools`}
         title={<>Try the AI. Not just read about it.</>}
-        lede="Practical AI tools for real business workflows. Type into them and see what useful AI can do inside sales, service, content, operations and reporting work."
+        lede="Practical AI tools for real business workflows. Open a set, type into them, and see what useful AI does inside sales, service, content, operations and reporting work."
         meta={<span>Practical demos · No sign-up · Your input isn't stored</span>}
-        actions={<PrimaryAction href="/#contact">Book a free audit</PrimaryAction>}
+        actions={<PrimaryAction href="/contact">Book a free audit</PrimaryAction>}
       />
 
-      {/* flagship offer */}
-      {featured && (
+      {/* One search field for the whole page, mounted once so typing never
+          swaps it out from under the caret as the view changes. */}
+      <div className="mb-4 flex flex-wrap items-center gap-2">
+        {!onHub && (
+          <button
+            type="button"
+            onClick={() => setView(null)}
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-cream/12 bg-cream/5 px-4 py-2 text-sm font-semibold text-cream-dim transition-colors hover:border-gold/40 hover:text-gold"
+          >
+            <ArrowLeft size={14} aria-hidden /> Overview
+          </button>
+        )}
+        <label htmlFor="ai-lab-search" className="sr-only">
+          Search the AI Lab tools
+        </label>
+        <div className="relative min-w-[13rem] flex-1">
+          <Search
+            size={16}
+            aria-hidden
+            className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-dark"
+          />
+          <input
+            id="ai-lab-search"
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder={`Search all ${DEMOS.length} tools — WhatsApp, Arabic, invoice…`}
+            className="w-full rounded-full border border-cream/12 bg-cream/5 py-2.5 pl-11 pr-4 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none"
+          />
+        </div>
+      </div>
+
+      {onHub && (
+        <PanelBoard rail cols="board:grid-cols-4">
+          {featured && (
+            <Panel
+              icon={featured.icon}
+              label={featured.eyebrow}
+              blurb={featured.title}
+              href="/ai-lab?cat=flagship"
+              onClick={open("flagship")}
+              span="sm:col-span-2"
+              footer={
+                <span className="inline-flex items-center gap-1.5 font-technical text-[0.7rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
+                  <Sparkles size={13} aria-hidden /> Run the live demo
+                </span>
+              }
+            >
+              <p className="text-[0.88rem] leading-snug text-fg-soft">{featured.blurb}</p>
+            </Panel>
+          )}
+
+          {/* Every tool is named here, not just three per category: the hub is
+              the page a crawler and a first-time visitor both land on, and the
+              catalogue behind it is only reachable with JavaScript. A panel
+              holding links cannot itself be one, so the heading carries the
+              link to the category instead of the whole card. */}
+          {CATEGORIES.map((c) => {
+            const tools = rest.filter((d) => d.category === c.id);
+            return (
+              <Panel
+                key={c.id}
+                icon={CAT_ICON[c.id]}
+                label={c.label}
+                labelHref={`/ai-lab?cat=${c.id}`}
+                onLabelClick={open(c.id)}
+              >
+                <ul className="-mt-1 flex flex-wrap gap-1">
+                  {tools.map((d) => (
+                    <li key={d.id}>
+                      <a
+                        href={`/ai-lab#${d.id}`}
+                        onClick={openDemo(d)}
+                        className="inline-block rounded-full border border-cream/12 bg-cream/5 px-2.5 py-1 text-xs text-cream-dim transition hover:border-gold/40 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent board:text-[0.7rem]"
+                      >
+                        {d.eyebrow}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </Panel>
+            );
+          })}
+
+          <Panel
+            icon={LayoutGrid}
+            label="Every tool"
+            blurb={`All ${rest.length}, in one list, with the flagship on top.`}
+            href="/ai-lab?cat=all"
+            onClick={open("all")}
+          />
+        </PanelBoard>
+      )}
+
+      {!onHub && view === "flagship" && !searching && featured && (
         <section className="pb-8">
           <FeaturedDemo demo={featured} />
         </section>
       )}
 
-      {/* category filter */}
-      <section className="pb-2">
-        <div>
-          <Reveal>
-            <p className="mb-4 font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
-              And {rest.length} more live tools
-            </p>
-          </Reveal>
-          <div className="flex flex-wrap items-center gap-2">
-            <FilterPill active={filter === "all"} onClick={() => setFilter("all")}>
-              All <span className="opacity-50">{rest.length}</span>
-            </FilterPill>
-            {CATEGORIES.map((c) => {
-              const n = rest.filter((d) => d.category === c.id).length;
-              return (
-                <FilterPill key={c.id} active={filter === c.id} onClick={() => setFilter(c.id)}>
-                  {c.label} <span className="opacity-50">{n}</span>
+      {!onHub && !(view === "flagship" && !searching) && (
+        <section className="pb-8">
+          {!searching && (
+            <div className="mb-5 flex flex-wrap items-center gap-2">
+              <FilterPill active={view === "all"} onClick={() => setView("all")}>
+                All <span className="opacity-50">{rest.length}</span>
+              </FilterPill>
+              {CATEGORIES.map((c) => (
+                <FilterPill key={c.id} active={view === c.id} onClick={() => setView(c.id)}>
+                  {c.label} <span className="opacity-50">{count(c.id)}</span>
                 </FilterPill>
-              );
-            })}
-          </div>
-          <div className="mx-auto mt-5 max-w-md">
-            <label htmlFor="ai-lab-search" className="sr-only">
-              Search the AI Lab tools
-            </label>
-            <div className="relative">
-              <Search
-                size={16}
-                aria-hidden
-                className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-muted-dark"
-              />
-              <input
-                id="ai-lab-search"
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search tools, e.g. WhatsApp, Arabic, invoice…"
-                className="w-full rounded-full border border-cream/12 bg-cream/5 py-2.5 pl-11 pr-4 text-sm text-cream placeholder:text-muted-dark focus:border-gold/50 focus:outline-none"
-              />
+              ))}
             </div>
-          </div>
-        </div>
-      </section>
+          )}
 
-      <section className="pt-6 pb-8">
-        <div className="container-bl">
           {visible.length === 0 && (
             <div className="mx-auto max-w-md rounded-3xl border border-cream/10 bg-ink-deep/40 p-8 text-center">
               <p className="text-cream">No tools match “{query.trim()}”.</p>
               <p className="mt-2 text-sm text-muted">
                 Try another word, or{" "}
-                <a href="/#contact" className="text-gold underline underline-offset-2 hover:text-gold-soft">
+                <a href="/contact" className="text-gold underline underline-offset-2 hover:text-gold-soft">
                   tell me what you need
                 </a>{" "}
                 and I'll build it.
               </p>
               <button
                 type="button"
-                onClick={() => {
-                  setQuery("");
-                  setFilter("all");
-                }}
-                className="mt-5 rounded-full border border-cream/12 bg-cream/5 px-4 py-2 text-sm text-cream-dim transition-colors hover:border-gold/40 hover:text-gold"
+                onClick={() => setView(null)}
+                className="mt-5 min-h-11 rounded-full border border-cream/12 bg-cream/5 px-4 py-2 text-sm text-cream-dim transition-colors hover:border-gold/40 hover:text-gold"
               >
                 Clear search
               </button>
             </div>
           )}
-          {/* keyed by filter so the list re-staggers in on each change */}
+
+          {/* keyed by view so the list re-staggers in on each change */}
           <m.div
-            key={filter}
+            key={searching ? "search" : (view ?? "all")}
             variants={stagger}
             initial="hidden"
             animate="show"
@@ -536,28 +692,28 @@ export default function Demos() {
               </m.div>
             ))}
           </m.div>
+        </section>
+      )}
 
-          <Reveal>
-            <div className="mx-auto mt-12 max-w-2xl rounded-3xl border border-gold/20 bg-[linear-gradient(180deg,rgba(218,164,66,0.08),transparent)] p-8 text-center sm:p-10">
-              <h2 className="text-2xl text-cream sm:text-3xl">Like one of these? Let's build yours.</h2>
-              <p className="mx-auto mt-3 max-w-xl text-muted">
-                Every tool here is live and real, and I tune them to your business, your data, and your
-                tone, then wire them into what you already use.
-              </p>
-              <a
-                href="/#contact"
-                data-cursor="link"
-                className="group mt-7 inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-bold text-fg-onSolid shadow-solid transition-colors hover:bg-navy-hover"
-              >
-                Book your free audit
-                <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
-              </a>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      <Contact />
+      {!onHub && (
+        <Reveal>
+          <div className="mx-auto mb-8 max-w-2xl rounded-3xl border border-gold/20 bg-[linear-gradient(180deg,rgba(218,164,66,0.08),transparent)] p-8 text-center sm:p-10">
+            <h2 className="text-2xl text-cream sm:text-3xl">Like one of these? Let's build yours.</h2>
+            <p className="mx-auto mt-3 max-w-xl text-muted">
+              Every tool here is live and real, and I tune them to your business, your data, and your
+              tone, then wire them into what you already use.
+            </p>
+            <a
+              href="/contact"
+              data-cursor="link"
+              className="group mt-7 inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-bold text-fg-onSolid shadow-solid transition-colors hover:bg-navy-hover"
+            >
+              Book your free audit
+              <ArrowRight size={15} className="transition-transform group-hover:translate-x-0.5" />
+            </a>
+          </div>
+        </Reveal>
+      )}
     </>
   );
 }

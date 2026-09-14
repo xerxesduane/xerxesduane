@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, Newspaper } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { INSIGHTS, formatDate } from "../data/insights";
 import PageHeader from "../components/page/PageHeader";
 import PanelBoard from "../components/page/PanelBoard";
@@ -19,22 +19,17 @@ export default function Insights() {
         }
       />
 
-      <PanelBoard cols="lg:grid-cols-3">
+      <PanelBoard cols="board:grid-cols-4">
         {INSIGHTS.map((post) => (
-          <Panel key={post.slug} href={`/insights/${post.slug}`} icon={Newspaper}>
-            <div className="flex items-center gap-2 font-technical text-[0.68rem] text-fg-faint">
-              <span>{formatDate(post.date)}</span>
-              <span aria-hidden>·</span>
-              <span>{post.readingMinutes} min read</span>
-            </div>
-            <h2 className="font-display text-lg font-semibold leading-snug text-fg transition-colors group-hover:text-accent-deep">
+          <Panel key={post.slug} href={`/insights/${post.slug}`}>
+            <h2 className="font-display text-[0.95rem] font-semibold leading-snug text-fg transition-colors group-hover:text-accent-deep">
               {post.title}
             </h2>
-            <p className="flex-1 text-sm leading-snug text-fg-soft">{post.description}</p>
-            <span className="mt-1 inline-flex items-center gap-1.5 font-technical text-[0.68rem] font-bold uppercase tracking-[0.12em] text-accent-deep">
-              Read
-              <ArrowUpRight size={13} strokeWidth={2.4} aria-hidden />
-            </span>
+            <p className="flex items-center gap-2 font-technical text-xs text-fg-faint board:text-[0.66rem]">
+              <span>{formatDate(post.date)}</span>
+              <span aria-hidden>·</span>
+              <span>{post.readingMinutes} min</span>
+            </p>
           </Panel>
         ))}
       </PanelBoard>

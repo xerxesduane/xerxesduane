@@ -1,6 +1,5 @@
 import { Clapperboard } from "lucide-react";
 import VideoGallery from "../components/VideoGallery";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 
@@ -13,7 +12,7 @@ export default function Showreel() {
         lede="Video production, editing, colour grading, animation and social content: shot and cut across events, documentaries and brand work in the UAE and beyond. Tap any thumbnail to play."
         actions={
           <>
-            <PrimaryAction href="#contact">Start a video project</PrimaryAction>
+            <PrimaryAction href="/contact">Start a video project</PrimaryAction>
             <GhostAction href="/portfolio" icon={<Clapperboard size={15} aria-hidden />}>
               Portfolio
             </GhostAction>
@@ -30,7 +29,6 @@ export default function Showreel() {
         until you choose to watch.
       </p>
 
-      <Contact />
     </>
   );
 }

@@ -135,7 +135,7 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
           </a>
         </m.nav>
 
-        <m.p variants={fadeUp} className="pt-1 text-center text-[0.7rem] text-fg-faint">
+        <m.p variants={fadeUp} className="pt-1 text-center text-xs text-fg-faint board:text-[0.7rem]">
           © {new Date().getFullYear()} {SHELL_IDENTITY.name}
         </m.p>
       </div>

@@ -21,7 +21,7 @@ export default function ResultCard({
       <p className="text-[0.9rem] font-bold leading-tight text-fg transition-colors group-hover/result:text-accent-deep">
         {result.client}
       </p>
-      <p className="mt-0.5 text-[0.72rem] text-fg-faint">
+      <p className="mt-0.5 text-xs text-fg-faint board:text-[0.72rem]">
         {result.category} · {result.location}
       </p>
       <dl className="mt-2.5 grid grid-cols-2 gap-x-3 gap-y-2">

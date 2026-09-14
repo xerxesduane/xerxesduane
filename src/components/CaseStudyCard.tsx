@@ -16,14 +16,44 @@ function Label({ children }: { children: string }) {
  * One case study, in the panel language: hairline card, gold technical labels,
  * measured numbers pulled out as tiles.
  */
-export default function CaseStudyCard({ c }: { c: CaseStudy }) {
+export default function CaseStudyCard({
+  c,
+  compact = false,
+}: {
+  c: CaseStudy;
+  compact?: boolean;
+}) {
+  if (compact) {
+    const headline = c.stats?.[0];
+    return (
+      <m.a
+        variants={fadeUp}
+        href={`/case-studies/${c.slug}`}
+        className="group flex flex-col gap-2 rounded-card border border-line bg-panel p-4 shadow-card transition duration-300 ease-smooth hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+      >
+        <span className="w-fit rounded-full bg-accent/12 px-2.5 py-0.5 font-technical text-xs board:text-[0.6rem] font-bold uppercase tracking-[0.14em] text-accent-deep">
+          {c.category}
+        </span>
+        <h3 className="font-display text-base font-semibold leading-snug text-fg">{c.client}</h3>
+        <p className="text-[0.78rem] leading-snug text-fg-soft">{c.takeaway}</p>
+        {headline && (
+          <p className="mt-auto pt-1 text-[0.78rem] text-fg-soft">
+            <span className="font-display font-semibold text-accent-deep">{headline.value}</span>{" "}
+            {headline.label}
+          </p>
+        )}
+      </m.a>
+    );
+  }
+
+
   return (
     <m.article
       variants={fadeUp}
       className="flex flex-col rounded-card border border-line bg-panel p-5 shadow-card transition duration-300 ease-smooth hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-card-hover sm:p-6"
     >
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <span className="rounded-full bg-accent/12 px-3 py-1 font-technical text-[0.62rem] font-bold uppercase tracking-[0.14em] text-accent-deep">
+        <span className="rounded-full bg-accent/12 px-3 py-1 font-technical text-xs board:text-[0.62rem] font-bold uppercase tracking-[0.14em] text-accent-deep">
           {c.category}
         </span>
         <span className="font-technical text-xs text-fg-faint">{c.location}</span>

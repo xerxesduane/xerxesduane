@@ -14,7 +14,7 @@ function MoreLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a
       href={href}
-      className="group/more inline-flex items-center gap-1.5 rounded text-[0.82rem] font-bold text-accent-deep transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-panel"
+      className="group/more inline-flex items-center gap-1.5 rounded py-1 text-[0.82rem] font-bold text-accent-deep transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-panel"
     >
       {children}
       <ArrowRight
@@ -147,7 +147,7 @@ export default function BentoBoard() {
             </Marquee>
           ))}
         </div>
-        <p className="text-[0.72rem] text-fg-faint">{AI_LAB_TRUST.join(" · ")}</p>
+        <p className="text-xs text-fg-faint board:text-[0.72rem]">{AI_LAB_TRUST.join(" · ")}</p>
       </Panel>
 
       {/* ---- Credentials: real, verifiable, or absent ----
@@ -213,7 +213,7 @@ export default function BentoBoard() {
                 {/* "fixed" is the whole distinction between this row and the
                     four under it, so it is said rather than implied. */}
                 {service.fixed && (
-                  <span className="ms-1.5 font-technical text-[0.62rem] font-extrabold uppercase tracking-[0.1em] text-fg-faint">
+                  <span className="ms-1.5 font-technical text-xs board:text-[0.62rem] font-extrabold uppercase tracking-[0.1em] text-fg-faint">
                     fixed
                   </span>
                 )}
@@ -221,7 +221,7 @@ export default function BentoBoard() {
               {/* The starting price, where the row number used to be. Same
                   column, same height, something a visitor can act on. */}
               <span
-                className={`shrink-0 font-display text-[0.68rem] font-bold tabular-nums transition-colors duration-300 ${
+                className={`shrink-0 font-display text-xs board:text-[0.68rem] font-bold tabular-nums transition-colors duration-300 ${
                   service.fixed ? "text-accent-deep" : "text-fg-faint group-hover:text-accent"
                 }`}
               >

@@ -51,9 +51,9 @@ export const SHELL_NAV: ShellNavItem[] = [
   {
     label: "Projects",
     labelAr: "المشاريع",
-    href: "/case-studies",
+    href: "/projects",
     icon: FolderGlyph,
-    matches: ["/case-studies", "/portfolio", "/showreel"],
+    matches: ["/projects", "/case-studies", "/portfolio", "/showreel"],
   },
   {
     label: "Services",

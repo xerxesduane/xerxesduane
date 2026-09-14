@@ -78,7 +78,7 @@ export default function ConsentBanner({ locale = "en" }: { locale?: "en" | "ar" 
           {ar
             ? AR_CHROME.consentBody
             : "I use anonymous analytics to improve the site. Nothing is shared or sold. See the"}{" "}
-          <a href="/privacy" className="font-semibold text-gold underline-offset-2 hover:underline">
+          <a href="/privacy" className="inline-block py-1 font-semibold text-gold underline-offset-2 hover:underline">
             {ar ? AR_CHROME.consentPolicy : "Privacy Policy"}
           </a>
           .

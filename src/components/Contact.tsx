@@ -7,7 +7,7 @@ import { track } from "../lib/analytics";
 import Reveal from "./ui/Reveal";
 import GoogleRating from "./GoogleRating";
 
-export default function Contact() {
+export default function Contact({ compact = false }: { compact?: boolean } = {}) {
   const [form, setForm] = useState({ name: "", business: "", email: "", phone: "", note: "" });
   const [source, setSource] = useState({ page: "", referrer: "" });
   const [state, handleSubmit] = useForm(CONTACT.formspreeId);
@@ -43,30 +43,31 @@ export default function Contact() {
     .join("\n");
   const whatsappHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(whatsappMessage)}`;
 
-  const field =
-    "w-full rounded-xl border border-cream/10 bg-ink-deep/50 px-4 py-3 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40";
+  const field = `w-full rounded-xl border border-cream/10 bg-ink-deep/50 px-4 text-[15px] text-cream placeholder:text-muted-dark transition-colors focus:border-gold/50 focus:outline-none focus:ring-1 focus:ring-gold/40 ${
+    compact ? "py-2" : "py-3"
+  }`;
 
   return (
-    <section id="contact" className="scroll-mt-24 py-20 sm:py-28">
+    <section id="contact" className={compact ? "scroll-mt-24" : "scroll-mt-24 py-20 sm:py-28"}>
       <div className="container-bl">
-        <div className="glass border-glow grid gap-10 overflow-hidden rounded-3xl p-7 sm:p-10 lg:grid-cols-2 lg:gap-14">
+        <div className={`glass border-glow grid overflow-hidden rounded-3xl lg:grid-cols-2 ${compact ? "gap-4 p-4 lg:gap-6" : "gap-10 p-7 sm:p-10 lg:gap-14"}`}>
           {/* Left: pitch + contacts */}
           <Reveal>
             <span className="eyebrow">
               <span className="h-px w-6 bg-gold/60" aria-hidden />
               Free Business Systems Audit
             </span>
-            <h2 className="mt-4 text-3xl sm:text-4xl">
+            <h2 className={compact ? "mt-2 text-2xl" : "mt-4 text-3xl sm:text-4xl"}>
               Just curious what{" "}
               <span className="text-gradient-gold">I'd say?</span>
             </h2>
-            <p className="mt-4 max-w-md text-muted">
+            <p className={compact ? "mt-2 max-w-md text-sm text-muted" : "mt-4 max-w-md text-muted"}>
               60 minutes, zero pressure. You walk away with a clear map of your
               systems and three quick wins you can use right away.
             </p>
 
-            <p className="mt-8 font-display text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">What happens next</p>
-            <ol className="mt-3 space-y-4">
+            <p className={`font-display text-xs font-extrabold uppercase tracking-[0.16em] text-accent-deep board:text-[0.68rem] ${compact ? "mt-4" : "mt-8"}`}>What happens next</p>
+            <ol className={compact ? "mt-2 grid gap-1 sm:grid-cols-2" : "mt-3 space-y-4"}>
               {AUDIT_STEPS.map((s, i) => (
                 <li key={s} className="flex gap-3 text-sm text-cream-dim">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-ink">
@@ -77,9 +78,9 @@ export default function Contact() {
               ))}
             </ol>
 
-            <div className="mt-6 rounded-2xl border border-cream/10 bg-ink-deep/40 p-4">
-              <p className="font-display text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">You walk away with</p>
-              <ul className="mt-2.5 space-y-1.5">
+            <div className={`rounded-2xl border border-cream/10 bg-ink-deep/40 ${compact ? "mt-3 p-3" : "mt-6 p-4"}`}>
+              <p className="font-display text-xs board:text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">You walk away with</p>
+              <ul className={compact ? "mt-2 grid gap-1 sm:grid-cols-2" : "mt-2.5 space-y-1.5"}>
                 {AUDIT_DELIVERABLES.map((d) => (
                   <li key={d} className="flex items-start gap-2 text-sm text-cream-dim">
                     <Check size={14} className="mt-0.5 shrink-0 text-gold" />
@@ -93,36 +94,36 @@ export default function Contact() {
               href={CONTACT.calendar}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-8 inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold/15"
+              className={`inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold/15 ${compact ? "mt-4" : "mt-8"}`}
             >
               <CalendarCheck size={17} />
               Prefer to pick a time? Book instantly
             </a>
 
-            <div className="mt-8 flex flex-col gap-3 text-sm">
+            <div className={`text-sm ${compact ? "mt-3 flex flex-wrap gap-x-5 gap-y-0" : "mt-8 flex flex-col gap-1"}`}>
               <a
                 href={`https://wa.me/${CONTACT.whatsapp}`}
                 target="_blank"
                 rel="noopener"
-                className="inline-flex items-center gap-2.5 text-cream transition-colors hover:text-gold"
+                className="inline-flex items-center gap-2.5 py-1 text-cream transition-colors hover:text-gold"
               >
                 <MessageCircle size={16} className="text-gold" />
                 {CONTACT.whatsappDisplay}
               </a>
               <a
                 href={`mailto:${CONTACT.email}`}
-                className="inline-flex items-center gap-2.5 text-cream transition-colors hover:text-gold"
+                className="inline-flex items-center gap-2.5 py-1 text-cream transition-colors hover:text-gold"
               >
                 <Mail size={16} className="text-gold" />
                 {CONTACT.email}
               </a>
-              <span className="inline-flex items-center gap-2.5 text-muted">
+              <span className="inline-flex items-center gap-2.5 py-1 text-muted">
                 <MapPin size={16} className="text-gold" />
                 {CONTACT.location}
               </span>
             </div>
 
-            <GoogleRating className="mt-8" />
+            <GoogleRating className={compact ? "mt-4" : "mt-8"} />
           </Reveal>
 
           {/* Right: form, or success state */}
@@ -157,7 +158,7 @@ export default function Contact() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="flex flex-col gap-4"
+              className={compact ? "flex flex-col gap-2.5" : "flex flex-col gap-4"}
             >
               <input type="hidden" name="_subject" value="New audit request from xerxesduane.com" />
               {/* Lead attribution: which page + referrer the enquiry came from */}
@@ -173,7 +174,7 @@ export default function Contact() {
                 style={{ position: "absolute", left: "-9999px", width: 1, height: 1, opacity: 0 }}
               />
               <div>
-                <label htmlFor="name" className="mb-1.5 block text-xs text-muted">
+                <label htmlFor="name" className="mb-1 block text-xs text-muted">
                   Your name
                 </label>
                 <input
@@ -187,7 +188,7 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="business" className="mb-1.5 block text-xs text-muted">
+                <label htmlFor="business" className="mb-1 block text-xs text-muted">
                   Your business and what you do <span className="text-muted-dark">(optional)</span>
                 </label>
                 <input
@@ -200,7 +201,7 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="mb-1.5 block text-xs text-muted">
+                <label htmlFor="email" className="mb-1 block text-xs text-muted">
                   Your email <span className="text-muted-dark">(optional)</span>
                 </label>
                 {/* Named `email` on purpose: Formspree uses a field with that
@@ -225,7 +226,7 @@ export default function Contact() {
                 />
               </div>
               <div>
-                <label htmlFor="phone" className="mb-1.5 block text-xs text-muted">
+                <label htmlFor="phone" className="mb-1 block text-xs text-muted">
                   WhatsApp or phone
                 </label>
                 <input
@@ -241,7 +242,7 @@ export default function Contact() {
                 <ValidationError field="phone" prefix="Phone" errors={state.errors} className="mt-1 text-xs text-gold" />
               </div>
               <div>
-                <label htmlFor="message" className="mb-1.5 block text-xs text-muted">
+                <label htmlFor="message" className="mb-1 block text-xs text-muted">
                   What's the one tech thing on your mind? <span className="text-muted-dark">(optional)</span>
                 </label>
                 <textarea

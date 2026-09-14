@@ -238,6 +238,7 @@ export function allRoutes(): string[] {
     "/pricing",
     "/starter",
     "/contact",
+    "/projects",
     "/case-studies",
     ...CASE_STUDIES.map((study) => `/case-studies/${study.slug}`),
     "/portfolio",
@@ -388,6 +389,14 @@ const ABOUT_META: PageMeta = {
   ],
 };
 
+const PROJECTS_META: PageMeta = {
+  title: "Projects - Xerxes Duane",
+  description:
+    "Client systems, websites, brand and video work, and the live AI tools \u2014 built for small businesses in Dubai, the UAE and beyond.",
+  canonical: `${SITE_ORIGIN}/projects`,
+  ogTitle: "Projects - Xerxes Duane",
+};
+
 const CASE_STUDIES_META: PageMeta = {
   title: "Work - Xerxes Duane",
   description:
@@ -477,6 +486,7 @@ export function getPageMeta(path: string): PageMeta {
   if (slug === "starter") return STARTER_META;
   if (slug === "about") return ABOUT_META;
   if (slug === "ai-lab" || slug === "demos") return AI_LAB_META;
+  if (slug === "projects") return PROJECTS_META;
   if (slug === "case-studies") return CASE_STUDIES_META;
   if (slug.startsWith("case-studies/")) {
     const study = CASE_STUDIES.find((item) => item.slug === slug.slice("case-studies/".length));

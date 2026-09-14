@@ -1,7 +1,7 @@
 import { m } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import type { ReactNode } from "react";
+import type { MouseEvent, ReactNode } from "react";
 import { fadeUp } from "../../lib/motion";
 
 interface PanelProps {
@@ -14,6 +14,22 @@ interface PanelProps {
   blurb?: string;
   /** When set the whole panel is a link; omit for panels with links inside. */
   href?: string;
+  /**
+   * Intercepts the anchor's click. Used by the hubs that switch view in place:
+   * the `href` stays real so the card is a proper link (middle-click, copy
+   * link, crawlers), and this swaps the view without a reload when it is an
+   * ordinary left click.
+   */
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+  /** Anchor id, for cards a published #link still points at. */
+  id?: string;
+  /**
+   * Makes the heading the link instead of the whole card. For panels whose
+   * body holds its own links — nesting anchors is invalid, and a card-wide
+   * anchor would swallow them.
+   */
+  labelHref?: string;
+  onLabelClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
   /** Tailwind grid spans, applied by the caller. */
   span?: string;
   /** `plain` drops the card chrome — for panels that only need the rhythm. */
@@ -70,6 +86,10 @@ export default function Panel({
   label,
   blurb,
   href,
+  onClick,
+  labelHref,
+  onLabelClick,
+  id,
   span = "",
   tone = "card",
   footer,
@@ -88,7 +108,25 @@ export default function Panel({
       )}
       {label && (
         <h3 className="min-w-0 flex-1 font-display text-card font-extrabold uppercase tracking-[0.045em] text-fg transition-colors duration-300 group-hover:text-accent-deep group-focus-visible:text-accent-deep">
-          {label}
+          {labelHref ? (
+            <a
+              href={labelHref}
+              onClick={onLabelClick}
+              // `py-1` only to clear WCAG 2.2's 24px target: the heading
+              // text alone is a 19px line box.
+              className="inline-flex items-center gap-1.5 rounded py-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-panel"
+            >
+              {label}
+              <ArrowUpRight
+                size={16}
+                strokeWidth={2.4}
+                aria-hidden
+                className="shrink-0 -translate-x-1 text-accent opacity-0 transition duration-300 ease-smooth group-hover:translate-x-0 group-hover:opacity-100"
+              />
+            </a>
+          ) : (
+            label
+          )}
         </h3>
       )}
       {href && (
@@ -118,7 +156,9 @@ export default function Panel({
         whileHover={LIFT}
         whileFocus={LIFT}
         transition={LIFT_TRANSITION}
+        id={id}
         href={href}
+        onClick={onClick}
         className={`${shell} ${PANEL_HOVER} ${span} ${className}`}
       >
         {body}
@@ -130,6 +170,7 @@ export default function Panel({
       variants={fadeUp}
       whileHover={LIFT}
       transition={LIFT_TRANSITION}
+      id={id}
       aria-label={label}
       className={`${shell} ${tone === "card" ? "transition duration-300 ease-smooth hover:border-accent/45 hover:shadow-card-hover" : ""} ${span} ${className}`}
     >

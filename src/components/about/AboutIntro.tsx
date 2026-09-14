@@ -76,13 +76,13 @@ function Fact({
   detail: string;
 }) {
   return (
-    <div className="flex min-w-0 flex-1 items-center gap-3 px-4 py-3">
+    <div className="flex min-w-0 flex-1 items-center gap-3 px-4 py-2.5">
       <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent-deep">
         <Icon size={18} strokeWidth={2.2} aria-hidden />
       </span>
       <span className="min-w-0">
         <span className="block text-[0.88rem] font-bold leading-tight text-fg">{title}</span>
-        <span className="block text-[0.72rem] uppercase leading-tight tracking-[0.08em] text-fg-faint">
+        <span className="block text-xs uppercase leading-tight tracking-[0.08em] text-fg-faint board:text-[0.72rem]">
           {detail}
         </span>
       </span>
@@ -120,10 +120,10 @@ export default function AboutIntro() {
             `min-w-0`: a grid item defaults to `min-width: auto`, so a long
             unbroken string inside would size the column and overflow the card
             on a phone. */}
-        <div className="order-2 min-w-0 p-6 sm:p-8 lg:order-1 lg:py-10 lg:pe-4 lg:ps-10">
+        <div className="order-2 min-w-0 p-5 sm:p-6 lg:order-1 lg:py-5 lg:pe-4 lg:ps-8">
           <m.p
             variants={fadeUp}
-            className="max-w-[31ch] font-display text-[1.5rem] font-extrabold leading-[1.28] tracking-tight text-fg sm:text-[1.8rem]"
+            className="max-w-[44ch] font-display text-[1.4rem] font-extrabold leading-[1.25] tracking-tight text-fg sm:text-[1.65rem]"
           >
             Most small businesses don&rsquo;t need more tools.{" "}
             <span className="text-fg-soft">
@@ -133,7 +133,7 @@ export default function AboutIntro() {
 
           <m.p
             variants={fadeUp}
-            className="mt-4 max-w-[52ch] text-[0.95rem] leading-relaxed text-fg-soft"
+            className="mt-3 max-w-[52ch] text-[0.95rem] leading-snug text-fg-soft"
           >
             <span className="font-bold text-fg">Independent since {TRUST.since}</span>, and
             hands-on. My work sits between off-the-shelf tools that never quite fit and enterprise
@@ -144,13 +144,13 @@ export default function AboutIntro() {
           {/* ---- what the work actually is ---- */}
           <m.ol
             variants={fadeUp}
-            className="mt-7 max-w-[46rem] divide-y divide-line-soft border-y border-line-soft"
+            className="mt-4 grid max-w-[46rem] border-y border-line-soft board:grid-cols-2 board:gap-x-8"
           >
             {DISCIPLINES.map((item, i) => (
-              <li key={item.title}>
+              <li key={item.title} className="border-b border-line-soft last:border-b-0 board:[&:nth-last-child(-n+2)]:border-b-0">
                 <a
                   href={item.href}
-                  className="group flex flex-wrap items-center gap-x-4 gap-y-2 py-3.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-panel sm:flex-nowrap"
+                  className="group flex flex-wrap items-center gap-x-4 gap-y-2 py-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-panel sm:flex-nowrap"
                 >
                   {/* Fixed-width so every title starts at the same x. */}
                   <span
@@ -174,7 +174,7 @@ export default function AboutIntro() {
                     {item.title}
                   </span>
 
-                  <span className="order-2 ms-auto shrink-0 font-display text-[0.72rem] font-bold tabular-nums text-fg-faint sm:order-3 sm:ms-0">
+                  <span className="order-2 ms-auto shrink-0 font-display text-xs board:text-[0.72rem] font-bold tabular-nums text-fg-faint sm:order-3 sm:ms-0">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </a>
@@ -185,7 +185,7 @@ export default function AboutIntro() {
           {/* ---- two facts, one strip, split by a rule ---- */}
           <m.div
             variants={fadeUp}
-            className="mt-6 flex max-w-[46rem] flex-col divide-y divide-line rounded-2xl border border-line bg-panel/70 sm:flex-row sm:divide-x sm:divide-y-0 sm:rtl:divide-x-reverse"
+            className="mt-4 flex max-w-[46rem] flex-col divide-y divide-line rounded-2xl border border-line bg-panel/70 sm:flex-row sm:divide-x sm:divide-y-0 sm:rtl:divide-x-reverse"
           >
             <Fact
               icon={UserRoundCheck}

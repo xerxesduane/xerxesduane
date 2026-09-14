@@ -84,7 +84,7 @@ export default function ToolsStrip() {
       <div className="flex items-stretch overflow-hidden rounded-[1.7rem] border border-line bg-panel shadow-card">
         {/* Fixed label */}
         <div className="flex shrink-0 flex-col justify-center gap-0.5 border-e border-line px-3 py-2.5 sm:px-6">
-          <span className="font-technical text-[0.62rem] font-extrabold uppercase tracking-[0.14em] text-accent-deep sm:text-eyebrow sm:tracking-[0.16em]">
+          <span className="font-technical text-xs font-extrabold uppercase tracking-[0.14em] text-accent-deep sm:text-eyebrow sm:tracking-[0.16em]">
             Daily drivers
           </span>
           <span className="hidden whitespace-nowrap font-display text-[0.95rem] font-bold text-fg sm:block">

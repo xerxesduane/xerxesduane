@@ -12,31 +12,43 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
   const serviceItems = ar
     ? SERVICE_PAGES_AR.map((p) => ({ href: `/ar/${p.slug}`, label: p.navLabel }))
     : SERVICE_PAGES.map((p) => ({ href: `/${p.slug}`, label: p.navLabel }));
-  const gridCols = ar
-    ? "sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]"
-    : "sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_1.55fr_1fr]";
-  const linkCls = "link-grow text-cream-dim transition-colors hover:text-gold";
+  const linkCls =
+    "link-grow inline-block py-1 text-cream-dim transition-colors hover:text-gold lg:py-0";
 
   return (
-    <footer className="border-t border-cream/8 bg-ink-deep/60 py-14">
+    <footer className="border-t border-cream/8 bg-ink-deep/60 py-6 lg:py-5">
       <div className="container-bl">
-        <div className={`grid gap-10 ${gridCols}`}>
-          <div>
-            <Wordmark />
-            <p className="mt-4 max-w-xs font-display text-lg italic text-cream-dim">
-              {tagline}
-            </p>
-            {!ar && (
-              <>
-                <p className="mt-3 text-sm text-muted">
-                  Xerxes Duane · Dubai, UAE
-                </p>
-                <p className="mt-1 text-xs text-muted-dark">
-                  Serving Dubai &amp; the wider UAE.
-                </p>
-              </>
-            )}
-            <div className="mt-5 flex gap-3">
+        {/* Desktop: four stacked columns cost ~450px, which no page can spare
+            if it is to fit one screen. The footer is still navigation — it is
+            just one row of it here. */}
+        <nav
+          aria-label={ar ? AR_CHROME.footerServicesHeading : "Footer"}
+          className="hidden flex-wrap items-center gap-x-5 gap-y-2 text-sm lg:flex"
+        >
+          {(ar ? serviceItems.slice(0, 6) : NAV_LINKS).map((l) => (
+            <a key={l.href} href={l.href} className={linkCls}>
+              {l.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Phone: the same links, folded rather than stacked. Four full
+            columns ran 1,431px — three times the page above them — and the
+            five primary destinations already live in the bottom bar, so here
+            they are a wrapped row, the service pages sit behind a disclosure
+            (still in the markup, still crawlable), and contact is one line. */}
+        <div className="lg:hidden">
+          <div className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <Wordmark />
+              <p className="mt-2.5 max-w-xs font-display text-base italic text-cream-dim">
+                {tagline}
+              </p>
+              {!ar && (
+                <p className="mt-2 text-xs text-muted">Xerxes Duane · Dubai, UAE</p>
+              )}
+            </div>
+            <div className="flex shrink-0 gap-2">
               <a
                 href="https://www.linkedin.com/in/xerxesduane"
                 target="_blank"
@@ -58,55 +70,45 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
             </div>
           </div>
 
-          {/* Studio column (English only — no Arabic equivalents yet) */}
           {!ar && (
-            <div>
-              <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
-                Navigate
-              </h3>
-              <ul className="mt-4 space-y-2.5 text-sm">
-                {NAV_LINKS.map((l) => (
-                  <li key={l.href}>
-                    <a href={l.href} className={linkCls}>
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-                <li>
-                  <a href="/case-studies" className={linkCls}>
-                    Case studies
-                  </a>
-                </li>
-                <li>
-                  <a href="/insights" className="inline-flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
-                    Insights
-                    <span aria-hidden>→</span>
-                  </a>
-                </li>
-              </ul>
-            </div>
+            <nav aria-label="Footer" className="mt-4 flex flex-wrap gap-x-4 gap-y-0.5 text-sm">
+              {NAV_LINKS.map((l) => (
+                <a key={l.href} href={l.href} className={linkCls}>
+                  {l.label}
+                </a>
+              ))}
+              <a href="/case-studies" className={linkCls}>
+                Case studies
+              </a>
+              <a href="/insights" className="link-grow inline-block py-1 text-gold transition-colors hover:text-gold-soft">
+                Insights
+              </a>
+            </nav>
           )}
 
-          <div>
-            <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
+          <details className="group mt-3 rounded-xl border border-cream/10 px-4 pb-2.5">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-2.5 font-mono text-xs uppercase tracking-wider text-muted-dark [&::-webkit-details-marker]:hidden">
               {ar ? AR_CHROME.footerServicesHeading : "Services in Dubai"}
-            </h3>
-            <ul className={`mt-4 text-sm ${ar ? "space-y-2.5" : "grid grid-cols-2 gap-x-4 gap-y-2.5"}`}>
-              {serviceItems.map((s) => (
-                <li key={s.href}>
-                  <a href={s.href} className={linkCls}>
-                    {s.label}
+              <span aria-hidden className="transition-transform group-open:rotate-180">
+                ▾
+              </span>
+            </summary>
+            <ul className="mt-1 grid grid-cols-2 gap-x-4 gap-y-1 text-sm">
+              {serviceItems.map((item) => (
+                <li key={item.href}>
+                  <a href={item.href} className={linkCls}>
+                    {item.label}
                   </a>
                 </li>
               ))}
             </ul>
-          </div>
+          </details>
 
-          <div>
+          <div className="mt-3">
             <h3 className="font-mono text-xs uppercase tracking-wider text-muted-dark">
               {ar ? AR_CHROME.footerContactHeading : "Get in touch"}
             </h3>
-            <ul className="mt-4 space-y-2.5 text-sm">
+            <ul className="mt-1 flex flex-wrap gap-x-4 gap-y-0.5 text-sm">
               <li>
                 <a
                   href={`https://wa.me/${CONTACT.whatsapp}`}
@@ -127,12 +129,12 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
                   {ar ? "تحديثات واتساب" : "Get WhatsApp updates"}
                 </a>
               </li>
-              <li className="text-muted">{ar ? "دبي، الإمارات" : CONTACT.location}</li>
+              <li className="py-1 text-muted">{ar ? "دبي، الإمارات" : CONTACT.location}</li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-cream/8 pt-6 text-xs text-muted-dark sm:flex-row">
+        <div className="mt-5 flex flex-col items-center justify-between gap-2 border-t border-cream/8 pt-4 text-xs text-muted-dark sm:flex-row lg:mt-4 lg:border-t-0 lg:pt-0">
           {ar ? (
             <>
               <span>© {new Date().getFullYear()} {AR_CHROME.footerRights}</span>
@@ -142,11 +144,11 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
             <>
               <span>© {new Date().getFullYear()} Xerxes Duane. Built with care in Dubai.</span>
               <span className="flex items-center gap-3">
-                <a href="/privacy" className="transition-colors hover:text-gold">
+                <a href="/privacy" className="inline-block py-1 transition-colors hover:text-gold lg:py-0">
                   Privacy
                 </a>
                 <span aria-hidden>·</span>
-                <a href="/terms" className="transition-colors hover:text-gold">
+                <a href="/terms" className="inline-block py-1 transition-colors hover:text-gold lg:py-0">
                   Terms
                 </a>
                 <span aria-hidden>·</span>

@@ -15,8 +15,10 @@ import { EASE, fadeUp, stagger, VIEWPORT } from "../lib/motion";
  * The height animation is on a wrapper with `overflow: hidden`; the answer
  * itself never animates, so text never reflows mid-transition.
  */
-export default function FAQ() {
-  const [open, setOpen] = useState<number | null>(0);
+export default function FAQ({ compact = false }: { compact?: boolean }) {
+  // Collapsed by default in compact mode: beside the form it only has to
+  // be scannable, not pre-opened.
+  const [open, setOpen] = useState<number | null>(compact ? null : 0);
   const id = useId();
 
   return (
@@ -26,12 +28,12 @@ export default function FAQ() {
       initial="hidden"
       whileInView="show"
       viewport={VIEWPORT}
-      className="scroll-mt-24 py-14 sm:py-16"
+      className={compact ? "scroll-mt-24" : "scroll-mt-24 py-14 sm:py-16"}
       aria-label="Common questions"
     >
-      <m.header variants={fadeUp} className="mb-6 max-w-2xl">
+      <m.header variants={fadeUp} className={compact ? "mb-3 max-w-2xl" : "mb-6 max-w-2xl"}>
         <span className="eyebrow">Common questions</span>
-        <h2 className="mt-3 font-display text-3xl font-extrabold tracking-tight text-fg sm:text-4xl">
+        <h2 className={`mt-1.5 font-display font-extrabold tracking-tight text-fg ${compact ? "text-xl" : "mt-3 text-3xl sm:text-4xl"}`}>
           The honest answers.
         </h2>
       </m.header>
@@ -53,7 +55,7 @@ export default function FAQ() {
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
-                  className="flex w-full items-center justify-between gap-4 px-5 py-4 text-start transition-colors hover:bg-panel-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent sm:px-6 sm:py-5"
+                  className={`flex w-full items-center justify-between gap-4 text-start transition-colors hover:bg-panel-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent ${compact ? "px-4 py-2.5" : "px-5 py-4 sm:px-6 sm:py-5"}`}
                 >
                   <span
                     className={`font-display text-[1.02rem] font-bold transition-colors sm:text-lg ${

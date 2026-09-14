@@ -1,11 +1,10 @@
-import { m } from "framer-motion";
-import { ArrowUpRight, MessageCircle, CalendarCheck, FlaskConical, ChevronDown } from "lucide-react";
+import { ArrowUpRight, CalendarCheck, ChevronDown, FlaskConical, HelpCircle, LayoutGrid, MessageCircle } from "lucide-react";
 import { SERVICE_PAGES_AR } from "../data/servicePagesAr";
 import { CONTACT } from "../data/content";
 import PageHeader from "../components/page/PageHeader";
+import Panel from "../components/page/Panel";
+import PanelBoard from "../components/page/PanelBoard";
 import { GhostAction } from "../components/page/PageActions";
-import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
-import Reveal from "../components/ui/Reveal";
 
 const waHref = `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(
   "مرحبًا Xerxes، أودّ حجز تدقيق مجاني لأنظمتي.",
@@ -30,6 +29,15 @@ const FAQ_AR = [
   },
 ];
 
+/**
+ * `/ar` — the Arabic homepage, on the same board as the English one.
+ *
+ * It used to be the old stacked page: five full-height sections of services,
+ * AI Lab, FAQs and a closing CTA, 2,290px of scroll for what the English home
+ * now says in one screen. Same copy, same links, same order — laid out as the
+ * bento board the rest of the site uses, with the audit CTA lifted into the
+ * header where it is the first thing on the page rather than the last.
+ */
 export default function HomeAr() {
   return (
     <>
@@ -39,151 +47,119 @@ export default function HomeAr() {
         titleClass="text-3xl leading-[1.45] sm:text-4xl"
         lede={<>معظم الأعمال الصغيرة في دبي تجمع بين موقع وجداول بيانات وعدّة تطبيقات لا تتحدث مع بعضها. نبني المواقع والتطبيقات وأنظمة أودو والأتمتة والذكاء الاصطناعي التي تعمل معًا فعلًا، بصدق، تحت سقف واحد، لتتوقف عن إدارة الأدوات وتعود إلى تنمية عملك.</>}
         actions={
-          <GhostAction href="/">
-            <span lang="en">English</span>
-          </GhostAction>
+          <>
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-fg-onSolid shadow-solid transition hover:bg-navy-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+            >
+              <MessageCircle size={16} aria-hidden />
+              احجز تدقيق أنظمتك المجاني
+            </a>
+            <GhostAction href="/">
+              <span lang="en">English</span>
+            </GhostAction>
+          </>
         }
       />
 
-      <section className="pb-8">
-        <div className="flex flex-wrap items-center gap-3">
-          <a
-            href={waHref}
-            target="_blank"
-            rel="noopener"
-            className="inline-flex items-center justify-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-fg-onSolid shadow-solid transition duration-300 hover:bg-navy-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
-          >
-            <MessageCircle size={17} aria-hidden />
-            احجز تدقيق أنظمتك المجاني
-          </a>
-          <a
-            href={CONTACT.calendar}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-panel px-6 py-3 text-sm font-semibold text-fg transition duration-300 hover:border-accent/40 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
-          >
-            <CalendarCheck size={16} aria-hidden />
-            احجز موعدًا فورًا
-          </a>
-        </div>
-      </section>
+      <PanelBoard rail cols="board:grid-cols-4">
+        <Panel
+          icon={FlaskConical}
+          label="مختبر الذكاء الاصطناعي"
+          blurb="جرّب الذكاء الاصطناعي، لا تكتفِ بالقراءة عنه."
+          href="/ai-lab"
+          span="sm:col-span-2 board:col-span-1"
+          footer={
+            <p className="font-mono text-xs uppercase tracking-[0.15em] text-fg-faint board:text-[11px]">
+              بلا تسجيل · تستجيب فعلًا
+            </p>
+          }
+        >
+          <p className="text-[0.9rem] leading-relaxed text-fg-soft">
+            هذه أدوات ذكاء اصطناعي حقيقية وعاملة، من النوع الذي أبنيه لعملائي: مساعدون آليون،
+            وأتمتة واتساب، وإنشاء المحتوى، وحلول ثنائية اللغة بالعربية والإنجليزية. جرّبها مباشرةً
+            الآن، فهي تستجيب لك فعلًا لا في عرضٍ مسجّل.
+          </p>
+        </Panel>
 
-      {/* Services */}
-      <section id="services" className="scroll-mt-24 py-10 sm:py-14">
-        <div>
-          <Reveal className="max-w-3xl">
-            <h2 className="font-display text-2xl font-semibold text-fg sm:text-3xl">
-              خدماتنا في <span className="text-gradient-gold">دبي</span>
-            </h2>
-          </Reveal>
-          <m.div
-            variants={stagger}
-            initial="hidden"
-            whileInView="show"
-            viewport={VIEWPORT}
-            className="mx-auto mt-12 grid max-w-4xl gap-4 sm:grid-cols-2"
-          >
+        <Panel
+          icon={LayoutGrid}
+          label="خدماتنا في دبي"
+          id="services"
+          className="scroll-mt-24"
+          span="sm:col-span-2 board:col-span-1"
+        >
+          <ul className="grid gap-1.5">
             {SERVICE_PAGES_AR.map((s) => (
-              <m.a
-                key={s.slug}
-                href={`/ar/${s.slug}`}
-                variants={fadeUp}
-                className="glass glass-hover group flex items-center justify-between gap-3 rounded-2xl p-6"
-              >
-                <span>
-                  <span className="font-display text-lg text-cream transition-colors group-hover:text-gold">
-                    {s.navLabel}
+              <li key={s.slug}>
+                <a
+                  href={`/ar/${s.slug}`}
+                  className="group/link flex items-center justify-between gap-3 rounded-xl border border-line bg-panel-alt px-3 py-2 transition hover:border-accent/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                >
+                  <span className="min-w-0">
+                    <span className="block text-[0.9rem] font-bold leading-snug text-fg transition-colors group-hover/link:text-accent-deep">
+                      {s.navLabel}
+                    </span>
+                    <span className="block text-xs leading-snug text-fg-faint">{s.eyebrow}</span>
                   </span>
-                  <span className="mt-1 block font-mono text-xs uppercase tracking-wider text-muted">
-                    {s.eyebrow}
-                  </span>
-                </span>
-                <ArrowUpRight size={18} className="rtl-flip shrink-0 text-muted-dark transition-colors group-hover:text-gold" aria-hidden />
-              </m.a>
+                  <ArrowUpRight
+                    size={16}
+                    aria-hidden
+                    className="rtl-flip shrink-0 text-accent opacity-0 transition group-hover/link:opacity-100"
+                  />
+                </a>
+              </li>
             ))}
-          </m.div>
-        </div>
-      </section>
+          </ul>
+        </Panel>
 
-      {/* AI Lab */}
-      <section className="py-14 sm:py-20">
-        <div>
-          <Reveal>
-            <div className="glass border-glow mx-auto max-w-3xl rounded-3xl p-8 text-center sm:p-12">
-              <span className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.15em] text-gold">
-                <FlaskConical size={14} />
-                مختبر الذكاء الاصطناعي
-              </span>
-              <h2 className="mt-5 text-2xl leading-[1.5] sm:text-3xl">
-                جرّب الذكاء الاصطناعي <span className="text-gradient-gold">لا تكتفِ بالقراءة عنه.</span>
-              </h2>
-              <p className="mx-auto mt-5 max-w-xl leading-loose text-muted">
-                هذه أدوات ذكاء اصطناعي حقيقية وعاملة، من النوع الذي أبنيه لعملائي: مساعدون آليون،
-                وأتمتة واتساب، وإنشاء المحتوى، وحلول ثنائية اللغة بالعربية والإنجليزية. جرّبها مباشرةً
-                الآن، فهي تستجيب لك فعلًا لا في عرضٍ مسجّل.
-              </p>
-              <a
-                href="/ai-lab"
-                className="mt-8 inline-flex items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep transition duration-300 hover:bg-gold-soft"
-              >
-                <FlaskConical size={16} />
-                جرّب أكثر من ٣٠ أداة حية
-                <ArrowUpRight size={15} className="rtl-flip" />
-              </a>
-              <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.15em] text-muted-dark">
-                بلا تسجيل · تستجيب فعلًا
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="py-14 sm:py-20">
-        <div>
-          <Reveal className="max-w-3xl">
-            <h2 className="font-display text-2xl font-semibold text-fg sm:text-3xl">
-              أسئلة <span className="text-gradient-gold">شائعة</span>
-            </h2>
-          </Reveal>
-          <div className="mx-auto mt-10 flex max-w-2xl flex-col gap-3">
+        <Panel icon={HelpCircle} label="أسئلة شائعة" span="sm:col-span-2 board:col-span-1">
+          <div className="flex flex-col gap-1.5">
             {FAQ_AR.map((f) => (
-              <details key={f.q} className="group rounded-2xl border border-cream/10 bg-ink-deep/40 px-5 py-4">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 text-base font-medium text-cream [&::-webkit-details-marker]:hidden">
+              <details key={f.q} className="group/faq rounded-xl border border-line bg-panel-alt px-3 pb-2">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-2 text-[0.9rem] font-medium text-fg [&::-webkit-details-marker]:hidden">
                   {f.q}
-                  <ChevronDown size={18} className="shrink-0 text-gold/70 transition-transform group-open:rotate-180" />
+                  <ChevronDown
+                    size={16}
+                    aria-hidden
+                    className="shrink-0 text-accent transition-transform group-open/faq:rotate-180"
+                  />
                 </summary>
-                <p className="mt-3 leading-loose text-muted">{f.a}</p>
+                <p className="pb-1 text-[0.85rem] leading-relaxed text-fg-soft">{f.a}</p>
               </details>
             ))}
           </div>
-        </div>
-      </section>
+        </Panel>
 
-      {/* Contact CTA */}
-      <section id="contact" className="scroll-mt-24 py-16 sm:py-24">
-        <div>
-          <div className="glass border-glow mx-auto max-w-2xl rounded-3xl p-8 text-center sm:p-10">
-            <h2 className="font-display text-2xl font-semibold text-fg sm:text-3xl">
-              مستعد للبدء؟ <span className="text-gradient-gold">احجز تدقيقك المجاني.</span>
-            </h2>
-            <p className="mx-auto mt-4 max-w-md text-muted">
-              ٦٠ دقيقة، بلا ضغط. تخرج بخريطة واضحة لأنظمتك وثلاثة مكاسب سريعة يمكنك تطبيقها فورًا.
-            </p>
-            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a
-                href={waHref}
-                target="_blank"
-                rel="noopener"
-                className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-ink-deep transition duration-300 hover:bg-gold-soft sm:w-auto"
-              >
-                <MessageCircle size={17} />
-                {CONTACT.whatsappDisplay}
-              </a>
-            </div>
+        <Panel icon={MessageCircle} label="احجز تدقيقك المجاني" id="contact" className="scroll-mt-24" span="sm:col-span-2 board:col-span-1">
+          <p className="text-[0.9rem] leading-relaxed text-fg-soft">
+            ٦٠ دقيقة، بلا ضغط. تخرج بخريطة واضحة لأنظمتك وثلاثة مكاسب سريعة يمكنك تطبيقها فورًا.
+          </p>
+          <div className="mt-auto flex flex-wrap gap-2 pt-1">
+            <a
+              href={waHref}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-navy px-5 py-2.5 text-sm font-bold text-fg-onSolid shadow-solid transition hover:bg-navy-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+            >
+              <MessageCircle size={16} aria-hidden />
+              {CONTACT.whatsappDisplay}
+            </a>
+            <a
+              href={CONTACT.calendar}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-full border border-line bg-panel px-5 py-2.5 text-sm font-bold text-fg transition hover:border-accent/40 hover:text-accent-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+            >
+              <CalendarCheck size={15} aria-hidden />
+              احجز موعدًا فورًا
+            </a>
           </div>
-        </div>
-      </section>
+        </Panel>
+      </PanelBoard>
+
     </>
   );
 }

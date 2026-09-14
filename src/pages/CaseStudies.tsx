@@ -1,7 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { CASE_STUDIES } from "../data/content";
 import CaseStudyCard from "../components/CaseStudyCard";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import PanelBoard from "../components/page/PanelBoard";
 import ProjectShowcase from "../components/showcase/ProjectShowcase";
@@ -16,7 +15,7 @@ export default function CaseStudies() {
         lede="A closer look at the work, from full Odoo deployments to ad campaigns that pay for themselves, across the UAE, the Philippines and beyond."
         actions={
           <>
-            <PrimaryAction href="/#contact">Book a free audit</PrimaryAction>
+            <PrimaryAction href="/contact">Book a free audit</PrimaryAction>
             <GhostAction href="/" icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}>
               Home
             </GhostAction>
@@ -26,17 +25,16 @@ export default function CaseStudies() {
 
       <ProjectShowcase className="mb-4" />
 
-      <PanelBoard cols="lg:grid-cols-2">
+      <PanelBoard cols="board:grid-cols-4">
         {CASE_STUDIES.map((c) => (
-          <CaseStudyCard key={c.client} c={c} />
+          <CaseStudyCard key={c.client} c={c} compact />
         ))}
       </PanelBoard>
 
-      <p className="mt-5 text-sm text-fg-faint">
+      <p className="mt-3 text-[0.8rem] text-fg-faint">
         Some client work is under NDA and not shown here. Ask in your audit.
       </p>
 
-      <Contact />
     </>
   );
 }
