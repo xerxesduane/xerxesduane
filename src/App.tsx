@@ -7,6 +7,7 @@ import MobileTabBar from "./components/shell/MobileTabBar";
 import ConsentBanner from "./components/ConsentBanner";
 import SmoothScroll from "./components/fx/SmoothScroll";
 import PageTransition from "./components/fx/PageTransition";
+import IntroSequence from "./components/fx/IntroSequence";
 
 // Route-level code splitting: each page ships as its own chunk, so a visitor
 // only downloads the JS for the route they're on. The streaming prerender
@@ -108,6 +109,7 @@ export default function App({ path = "/" }: { path?: string }) {
 
         <SmoothScroll />
         <PageTransition />
+        <IntroSequence />
 
         <ShellLayout path={path} lang={lang} locale={isArabic ? "ar" : "en"}>
           <main className="relative z-10">
