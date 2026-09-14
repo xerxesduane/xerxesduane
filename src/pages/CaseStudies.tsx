@@ -1,7 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { CASE_STUDIES } from "../data/content";
 import CaseStudyCard from "../components/CaseStudyCard";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import PanelBoard from "../components/page/PanelBoard";
 import ProjectShowcase from "../components/showcase/ProjectShowcase";
@@ -36,7 +35,6 @@ export default function CaseStudies() {
         Some client work is under NDA and not shown here. Ask in your audit.
       </p>
 
-      <Contact />
     </>
   );
 }

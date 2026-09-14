@@ -1,7 +1,6 @@
 import { ArrowLeft, ArrowUpRight, Check, ExternalLink, Quote, Target, TrendingUp, Wrench } from "lucide-react";
 import type { CaseStudy } from "../data/content";
 import { SERVICE_PAGES } from "../data/servicePages";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import Panel from "../components/page/Panel";
 import PanelBoard from "../components/page/PanelBoard";
@@ -148,7 +147,6 @@ export default function CaseStudyPage({ study }: { study: CaseStudy }) {
         ))}
       </PanelBoard>
 
-      <Contact />
     </>
   );
 }

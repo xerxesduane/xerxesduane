@@ -2,7 +2,6 @@ import PageHeader from "../components/page/PageHeader";
 import Panel from "../components/page/Panel";
 import PanelBoard from "../components/page/PanelBoard";
 import SystemDiagram from "../components/home/SystemDiagram";
-import Contact from "../components/Contact";
 import { PrimaryAction } from "../components/page/PageActions";
 import { SERVICE_PAGES } from "../data/servicePages";
 import { PRICING, priceForSlug, priceLabel } from "../data/pricing";
@@ -33,6 +32,5 @@ export default function Services() {
       </a>
       , the budget package, and half price for churches and charities.
     </p>
-    <Contact />
   </>;
 }

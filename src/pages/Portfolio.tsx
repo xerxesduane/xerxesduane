@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ArrowUpRight, Clapperboard, Grid2X2, LayoutTemplate, Palette, Star } from "lucide-react";
 import WorkGallery from "../components/WorkGallery";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 import { WORK_ITEMS } from "../data/workItems";
@@ -153,7 +152,6 @@ export default function Portfolio() {
         </div>
       </section>
 
-      <Contact />
     </>
   );
 }

@@ -1,7 +1,6 @@
 import { m } from "framer-motion";
 import { ArrowUpRight, Check, X } from "lucide-react";
 import PageHeader from "../components/page/PageHeader";
-import Contact from "../components/Contact";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 import { NONPROFIT, STARTER, aed, priceFor, priceLabel } from "../data/pricing";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -170,7 +169,6 @@ export default function Starter() {
         </m.div>
       </m.section>
 
-      <Contact />
     </>
   );
 }

@@ -1,7 +1,6 @@
 import { m } from "framer-motion";
 import { Check } from "lucide-react";
 import PageHeader from "../components/page/PageHeader";
-import Contact from "../components/Contact";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 import { PACKAGES } from "../data/content";
 import { NONPROFIT, RATE_CARD, aed, priceLabel } from "../data/pricing";
@@ -178,7 +177,6 @@ export default function Pricing() {
         </m.ul>
       </Block>
 
-      <Contact />
     </>
   );
 }

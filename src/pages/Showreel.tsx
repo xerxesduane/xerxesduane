@@ -1,6 +1,5 @@
 import { Clapperboard } from "lucide-react";
 import VideoGallery from "../components/VideoGallery";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 
@@ -30,7 +29,6 @@ export default function Showreel() {
         until you choose to watch.
       </p>
 
-      <Contact />
     </>
   );
 }

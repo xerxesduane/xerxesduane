@@ -4,7 +4,6 @@ import { Send, Sparkles, Search, FileSpreadsheet, Inbox, ArrowRight, ShieldCheck
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import Reveal from "../components/ui/Reveal";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import { PrimaryAction } from "../components/page/PageActions";
 import { fadeUp, stagger } from "../lib/motion";
@@ -557,7 +556,6 @@ export default function Demos() {
         </div>
       </section>
 
-      <Contact />
     </>
   );
 }

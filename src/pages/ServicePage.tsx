@@ -10,7 +10,6 @@ import Reveal from "../components/ui/Reveal";
 import Process from "../components/Process";
 import Promise from "../components/Promise";
 import FaqList from "../components/FaqList";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 import ServiceVisual from "../components/ServiceVisual";
@@ -268,7 +267,6 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         </section>
       )}
 
-      <Contact />
     </>
   );
 }

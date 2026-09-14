@@ -2,7 +2,6 @@ import { ArrowLeft, Check } from "lucide-react";
 import { type InsightPost as Post, formatDate } from "../data/insights";
 import { INSIGHTS } from "../data/insights";
 import { getServicePage } from "../data/servicePages";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 
@@ -140,7 +139,6 @@ export default function InsightPost({ post }: { post: Post }) {
         </div>
       </article>
 
-      <Contact />
     </>
   );
 }

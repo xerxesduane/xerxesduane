@@ -1,6 +1,5 @@
 import { ArrowLeft, Check, Compass, ListChecks, Quote } from "lucide-react";
 import AboutIntro from "../components/about/AboutIntro";
-import Contact from "../components/Contact";
 import PageHeader from "../components/page/PageHeader";
 import Panel from "../components/page/Panel";
 import PanelBoard from "../components/page/PanelBoard";
@@ -103,7 +102,6 @@ export default function About() {
         </Panel>
       </PanelBoard>
 
-      <Contact />
     </>
   );
 }
