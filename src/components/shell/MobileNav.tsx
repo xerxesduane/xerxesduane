@@ -130,6 +130,24 @@ export default function MobileNav({
           <div className="mt-4 flex items-center gap-2">
             <SocialLinks />
           </div>
+
+          {/* Same reason as the sidebar: without the footer these three have
+              no other link on a phone. */}
+          <p className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-0 border-t border-line pt-2 text-xs text-fg-faint">
+            {!ar && (
+              <>
+                <a href="/privacy" className="py-1.5 transition-colors hover:text-accent-deep">
+                  Privacy
+                </a>
+                <a href="/terms" className="py-1.5 transition-colors hover:text-accent-deep">
+                  Terms
+                </a>
+              </>
+            )}
+            <a href="/whatsapp-optin.html" className="py-1.5 transition-colors hover:text-accent-deep">
+              {ar ? "تحديثات واتساب" : "WhatsApp updates"}
+            </a>
+          </p>
         </div>
       </div>
     </div>
