@@ -148,7 +148,7 @@ export default function Portfolio() {
           <Panel
             icon={LayoutTemplate}
             label={LABELS.web}
-            blurb={`${WEB_DESIGNS.length} builds — sites, stores and landing pages.`}
+            blurb={`${WEB_DESIGNS.length} builds: sites, stores and landing pages.`}
             href="/portfolio?cat=web"
             onClick={open("web")}
             span="sm:col-span-2"
@@ -159,7 +159,7 @@ export default function Portfolio() {
           <Panel
             icon={Palette}
             label={LABELS.graphic}
-            blurb={`${GRAPHIC_DESIGNS.length} pieces — identity, print and social.`}
+            blurb={`${GRAPHIC_DESIGNS.length} pieces: identity, print and social.`}
             href="/portfolio?cat=graphic"
             onClick={open("graphic")}
           >
@@ -189,14 +189,14 @@ export default function Portfolio() {
           <Panel
             icon={Clapperboard}
             label="Video & motion"
-            blurb={`${VIDEOS.length} pieces — production, editing, grading and animation.`}
+            blurb={`${VIDEOS.length} pieces: production, editing, grading and animation.`}
             href="/showreel"
           />
 
           <Panel
             icon={Grid2X2}
             label={LABELS.all}
-            blurb={`Everything at once — all ${WORK_ITEMS.length} pieces in one gallery.`}
+            blurb={`Everything at once: all ${WORK_ITEMS.length} pieces in one gallery.`}
             href="/portfolio?cat=all"
             onClick={open("all")}
           />

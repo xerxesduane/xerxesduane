@@ -25,7 +25,7 @@ export default function Starter() {
       <PageHeader
         eyebrow="The Starter"
         title={<>{STARTER.tagline}</>}
-        lede="A finished one-page website at a price fixed before we begin — not a deposit, and not a template with someone else's logo swapped out."
+        lede="A finished one-page website at a price fixed before we begin. Not a deposit, and not a template with someone else's logo swapped out."
         meta={
           <span>
             <strong className="font-bold text-accent-deep">{aed(STARTER.price)}</strong>

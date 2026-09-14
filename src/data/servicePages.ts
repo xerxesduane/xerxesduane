@@ -10,7 +10,6 @@ import {
   ShoppingBag,
   Target,
   Palette,
-  Video,
   Film,
   type LucideIcon,
 } from "lucide-react";
@@ -747,76 +746,18 @@ export const SERVICE_PAGES: ServicePageData[] = [
     ],
   },
   {
-    slug: "videography-photography-dubai",
-    navLabel: "Video & Photography",
-    icon: Video,
-    metaTitle: "Videography & Photography in Dubai - Xerxes Duane",
-    metaDescription:
-      "Videography and photography in Dubai for brands, products, events, and campaigns. Purposeful production planned for the channels where the work will be used.",
-    ogTitle: "Videography & Photography in Dubai",
-    jsonLdName: "Videography & Photography",
-    eyebrow: "Video & Photography · Dubai",
-    h1Lead: "Create the visuals people need",
-    h1Accent: "to understand and trust you.",
-    lede: "Videography and photography in Dubai for brands that need useful campaign assets, not footage without a plan. I shape the story, capture the right moments, and produce content around where and how it will actually be used.",
-    bulletsHeading: "Production with a purpose",
-    bullets: [
-      {
-        title: "Planned around the outcome",
-        body: "I define the audience, message, channels, and required deliverables before the shoot so every setup earns its time.",
-      },
-      {
-        title: "Brand, product, and people",
-        body: "Professional photography and video show the real product, experience, team, or event with clarity and credibility.",
-      },
-      {
-        title: "Content captured for multiple channels",
-        body: "I plan framing, formats, and coverage so one production day can support websites, ads, social media, and presentations.",
-      },
-      {
-        title: "Clean handoff into editing",
-        body: "Footage, selects, editing, captions, and final exports are organised around the agreed deliverables and deadlines.",
-      },
-    ],
-    forWhoHeading: "Who this is for",
-    forWho: [
-      "Brands needing credible website and campaign visuals",
-      "Products and services that need to be demonstrated clearly",
-      "Events that need useful coverage beyond a highlight reel",
-      "Teams planning content across multiple channels",
-    ],
-    faqs: [
-      {
-        q: "What does a production day include?",
-        a: "The exact scope is agreed beforehand and can include planning, filming or photography, equipment, direction, and a defined set of edited deliverables.",
-      },
-      {
-        q: "Can you create both photos and video in one shoot?",
-        a: "Often, yes. I plan the schedule and shot list carefully so both formats receive enough attention and the final assets remain useful.",
-      },
-      {
-        q: "Do you cover events?",
-        a: "Yes, when the coverage has a clear purpose and deliverable plan, including highlights, interviews, social clips, or future campaign assets.",
-      },
-      {
-        q: "Can you help with the concept and script?",
-        a: "Yes. I can help shape the message, story, shot list, interview prompts, and channel-specific deliverables before production.",
-      },
-    ],
-  },
-  {
     slug: "video-editing-dubai",
-    navLabel: "Video Editing",
+    navLabel: "Photo & Video Editing",
     icon: Film,
-    metaTitle: "Video Editing in Dubai - Xerxes Duane",
+    metaTitle: "Photo & Video Editing in Dubai - Xerxes Duane",
     metaDescription:
-      "Video editing in Dubai for social reels, ads, interviews, events, and brand films. Clean pacing, captions, motion graphics, and channel-ready exports.",
-    ogTitle: "Video Editing in Dubai",
-    jsonLdName: "Video Editing & Post-Production",
-    eyebrow: "Video Editing · Dubai",
-    h1Lead: "Turn footage into something",
-    h1Accent: "people keep watching.",
-    lede: "Video editing in Dubai for brands and teams that already have footage but need it shaped into clear, engaging content. I edit for attention, understanding, and the platform where the finished piece will live.",
+      "Photo and video editing in Dubai for social reels, ads, interviews, events and brand films, plus product and campaign photo retouching. Clean pacing, captions, colour, and channel-ready exports.",
+    ogTitle: "Photo & Video Editing in Dubai",
+    jsonLdName: "Photo & Video Editing",
+    eyebrow: "Photo & Video Editing · Dubai",
+    h1Lead: "Turn what you shot into something",
+    h1Accent: "worth publishing.",
+    lede: "Photo and video editing in Dubai for brands and teams who already have the material but need it finished. I edit for attention, understanding, and the platform the piece will actually live on, whether that is a thirty-second reel or a product shot that has to look right in a grid.",
     bulletsHeading: "What happens in the edit",
     bullets: [
       {
@@ -832,21 +773,30 @@ export const SERVICE_PAGES: ServicePageData[] = [
         body: "Clean captions, graphics, callouts, and transitions improve understanding without turning the edit into visual noise.",
       },
       {
+        title: "Photos are retouched and matched",
+        body: "Product and campaign stills get cleanup, colour and exposure brought into line across a set, and backgrounds handled, so a grid of them looks like one shoot rather than twelve.",
+      },
+      {
         title: "Exports arrive ready to publish",
-        body: "Final files are prepared in the agreed aspect ratios, lengths, and technical formats for each channel.",
+        body: "Final files are prepared in the agreed aspect ratios, sizes, lengths, and technical formats for each channel.",
       },
     ],
     forWhoHeading: "Who this is for",
     forWho: [
-      "Brands with footage sitting unused",
+      "Brands with footage or shots sitting unused",
       "Teams producing regular reels and social content",
       "Campaigns needing multiple edits from one shoot",
       "Events and interviews that need a clear finished story",
+      "Product photos that need to look consistent across a catalogue",
     ],
     faqs: [
       {
-        q: "Can you edit footage filmed by someone else?",
-        a: "Yes. I first review the footage quality, audio, available coverage, and intended deliverables, then confirm what can be produced well.",
+        q: "Can you edit footage or photos taken by someone else?",
+        a: "Yes, and most of this work is exactly that. I first review the quality, audio, coverage and intended deliverables, then confirm what can be produced well before anything is agreed.",
+      },
+      {
+        q: "Do you shoot as well as edit?",
+        a: "No. This is post-production: you bring the footage and the photos, I finish them. If you still need the shoot itself, I would rather point you at someone who does that properly than take it on.",
       },
       {
         q: "How are revisions handled?",

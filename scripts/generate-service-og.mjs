@@ -139,13 +139,6 @@ const cards = [
     subtitle: "Practical identities, collateral, campaigns &amp; brand consistency.",
   },
   {
-    slug: "videography-photography-dubai",
-    eyebrow: "VIDEO AND PHOTO - DUBAI",
-    line1: "Content planned",
-    line2: "for where it lives.",
-    subtitle: "Brand, product, event &amp; campaign production for real channels.",
-  },
-  {
     slug: "video-editing-dubai",
     eyebrow: "VIDEO EDITING - DUBAI",
     line1: "Edits with pace,",

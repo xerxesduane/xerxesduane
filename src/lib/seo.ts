@@ -52,7 +52,6 @@ const SERVICE_OG_IMAGES = new Set([
   "ecommerce-development-dubai",
   "landing-page-design-dubai",
   "branding-graphic-design-dubai",
-  "videography-photography-dubai",
   "video-editing-dubai",
 ]);
 
@@ -392,7 +391,7 @@ const ABOUT_META: PageMeta = {
 const PROJECTS_META: PageMeta = {
   title: "Projects - Xerxes Duane",
   description:
-    "Client systems, websites, brand and video work, and the live AI tools \u2014 built for small businesses in Dubai, the UAE and beyond.",
+    "Client systems, websites, brand and video work, and the live AI tools, built for small businesses in Dubai, the UAE and beyond.",
   canonical: `${SITE_ORIGIN}/projects`,
   ogTitle: "Projects - Xerxes Duane",
 };

@@ -51,9 +51,11 @@ export interface PricePoint {
  * approachable numbers first rather than bouncing off AED 25,000.
  */
 export const RATE_CARD: PricePoint[] = [
-  { service: "Video Editing", pageSlug: "video-editing-dubai", from: 750, unit: "video" },
+  // Priced as a project rather than "per video": the service now covers photo
+  // work too, and a per-video figure beside a name that says photo reads as a
+  // price for a photo, which is not what AED 750 buys.
+  { service: "Photo & Video Editing", pageSlug: "video-editing-dubai", from: 750, unit: "project" },
   { service: "Graphic Design & Branding", pageSlug: "branding-graphic-design-dubai", from: 1500, unit: "project" },
-  { service: "Videography & Photography", pageSlug: "videography-photography-dubai", from: 1500, unit: "day" },
   { service: "Landing Pages & Funnels", pageSlug: "landing-page-design-dubai", from: 2500, unit: "project" },
   { service: "AEO (Answer Engine Optimization)", pageSlug: "answer-engine-optimization-dubai", from: 2500, unit: "month" },
   { service: "GEO (Generative Engine Optimization)", pageSlug: "generative-engine-optimization-dubai", from: 3000, unit: "month" },

@@ -142,13 +142,12 @@ const ROUTES: Route[] = [
     path: "/branding-graphic-design-dubai",
     keywords: ["branding", "brand", "logo", "identity", "graphic", "graphics", "print", "collateral", "visual"],
   },
+
   {
-    path: "/videography-photography-dubai",
-    keywords: ["video", "videography", "photo", "photography", "shoot", "camera", "content", "reels"],
-  },
-  {
+    // Shoot words land here too. He no longer films, and this is the page that
+    // says so: better an honest "post-production only" than a 404 or silence.
     path: "/video-editing-dubai",
-    keywords: ["editing", "editor", "edit", "post", "production", "cut", "subtitles", "captions"],
+    keywords: ["video", "videos", "edit", "editing", "footage", "reel", "reels", "clip", "clips", "photo", "photos", "photography", "videography", "retouch", "retouching", "shoot", "camera", "post-production", "captions", "colour", "color"],
   },
 ];
 

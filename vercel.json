@@ -7,6 +7,16 @@
       "source": "/demos",
       "destination": "/ai-lab",
       "permanent": true
+    },
+    {
+      "source": "/videography-photography-dubai",
+      "destination": "/video-editing-dubai",
+      "permanent": true
+    },
+    {
+      "source": "/ar/videography-photography-dubai",
+      "destination": "/ar",
+      "permanent": true
     }
   ],
   "headers": [
