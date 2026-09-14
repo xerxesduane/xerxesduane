@@ -55,12 +55,17 @@ export default function FAQ({ compact = false }: { compact?: boolean }) {
                   onClick={() => setOpen(isOpen ? null : i)}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
-                  className={`flex w-full items-center justify-between gap-4 text-start transition-colors hover:bg-panel-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent ${compact ? "px-4 py-2.5" : "px-5 py-4 sm:px-6 sm:py-5"}`}
+                  /* Tighter from the board breakpoint up, compact only. Nine
+                     rows set the height of the contact page, and at 8px a row
+                     that is the difference between fitting a laptop screen and
+                     not. Left alone below it, where the row is a touch target
+                     rather than a line in a list. */
+                  className={`flex w-full items-center justify-between gap-4 text-start transition-colors hover:bg-panel-alt focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent ${compact ? "px-4 py-2.5 board:py-1.5" : "px-5 py-4 sm:px-6 sm:py-5"}`}
                 >
                   <span
                     className={`font-display text-[1.02rem] font-bold transition-colors sm:text-lg ${
-                      isOpen ? "text-accent-deep" : "text-fg"
-                    }`}
+                      compact ? "board:text-[0.95rem] board:leading-snug" : ""
+                    } ${isOpen ? "text-accent-deep" : "text-fg"}`}
                   >
                     {faq.q}
                   </span>
@@ -69,6 +74,8 @@ export default function FAQ({ compact = false }: { compact?: boolean }) {
                     transition={{ duration: 0.3, ease: EASE }}
                     aria-hidden
                     className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border ${
+                      compact ? "board:h-6 board:w-6" : ""
+                    } ${
                       isOpen
                         ? "border-transparent bg-accent text-accent-ink"
                         : "border-line bg-panel-alt text-fg-soft"
