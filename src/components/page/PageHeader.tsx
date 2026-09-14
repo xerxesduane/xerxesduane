@@ -16,6 +16,12 @@ interface PageHeaderProps {
   /** Override the title classes — Arabic needs looser leading than the
       Latin hero scale allows. */
   titleClass?: string;
+  /**
+   * Appended to the header element. Opt-in, and only for a page that has to
+   * buy back vertical space it cannot find anywhere else: the default rhythm
+   * is shared by every route and should stay that way.
+   */
+  className?: string;
 }
 
 /**
@@ -34,6 +40,7 @@ export default function PageHeader({
   actions,
   meta,
   titleClass = "text-hero",
+  className = "",
 }: PageHeaderProps) {
   return (
     <m.header
@@ -41,7 +48,7 @@ export default function PageHeader({
       variants={stagger}
       initial="hidden"
       animate="show"
-      className="mb-4"
+      className={`mb-4 ${className}`}
     >
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8">
         <div className="min-w-0">

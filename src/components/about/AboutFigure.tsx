@@ -60,7 +60,16 @@ export default function AboutFigure() {
             // the reference does. Not oversized: the figure runs to 92% of the
             // frame, so any bleed off the card's right edge takes his sleeve
             // with the chair. The artwork carries its own margins.
-            className="mx-auto block w-full select-none"
+            // Capped from the board breakpoint up. At w-full in a half-card
+            // column the 1200x851 artwork renders 512px tall and sets the
+            // height of the whole intro, which is most of why this page did
+            // not fit a laptop. The cap is the tallest the figure can be
+            // without driving that height: with its column's top padding it
+            // comes to 312px against the text column's 319, so the words set
+            // the card and the figure is as large as it can be for free.
+            // Below that breakpoint it still fills its column, where the card
+            // is stacked and the height is free.
+            className="mx-auto block w-full select-none board:h-[17.5rem] board:w-auto board:object-contain"
             draggable={false}
           />
         )}

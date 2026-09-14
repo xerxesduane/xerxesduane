@@ -26,6 +26,7 @@ export default function About() {
     <>
       <PageHeader
         eyebrow="About"
+        className="board:mb-2"
         title={<>Hi, I&rsquo;m Xerxes.</>}
         lede="I build the systems that keep a small business running when nobody is watching them."
         actions={
@@ -40,9 +41,15 @@ export default function About() {
 
       <AboutIntro />
 
-      <PanelBoard cols="board:grid-cols-4 board:gap-3" className="mt-2">
+      {/* Twelfths, with each panel given the width its content wants, rather
+          than four equal columns. At four equal the panels measured 341, 302,
+          230 and 172px and the row takes the tallest, so a third of the board
+          was air. Six columns was worse (the narrow panels wrapped more than
+          the wide one saved) and so were proportional fractions, because the
+          work list is a fixed number of rows and does not answer to width. */}
+      <PanelBoard cols="board:grid-cols-12 board:gap-3" className="mt-2 board:mt-1 board:p-3">
         {/* Bio */}
-        <Panel icon={Compass} label="How I work">
+        <Panel icon={Compass} label="How I work" span="board:col-span-4" className="board:gap-2 board:p-3">
           <div className="space-y-1.5 text-[0.8rem] leading-snug text-fg-soft">
             <p>
               I help growing businesses run on systems that actually work
@@ -64,7 +71,7 @@ export default function About() {
         </Panel>
 
         {/* Approach */}
-        <Panel icon={ListChecks} label="My approach">
+        <Panel icon={ListChecks} label="My approach" span="board:col-span-3" className="board:gap-2 board:p-3">
           <ul className="space-y-1.5">
             {FOCUS.map((f) => (
               <li key={f} className="flex items-start gap-2 text-[0.8rem] leading-snug text-fg-soft">
@@ -76,12 +83,16 @@ export default function About() {
         </Panel>
 
         {/* Recent work */}
-        <Panel icon={Compass} label="Recent work spans">
-          <ul className="grid gap-1.5">
+        <Panel icon={Compass} label="Recent work spans" span="board:col-span-3" className="board:gap-2 board:p-3">
+          {/* A wrapping cloud rather than one row per item. As a grid it was
+              six rows whatever width it had, which made it the tallest panel
+              on the board; wrapped, the short labels share a line and it packs
+              into four. */}
+          <ul className="flex flex-wrap gap-1.5">
             {PROJECTS.map((p) => (
               <li
                 key={p}
-                className="rounded-lg border border-line bg-panel-alt px-2.5 py-1 text-[0.78rem] text-fg-soft"
+                className="rounded-lg border border-line bg-panel-alt px-2.5 py-1 text-[0.78rem] leading-snug text-fg-soft board:py-0.5"
               >
                 {p}
               </li>
@@ -93,7 +104,7 @@ export default function About() {
             client card is also commented out in data/content.ts. */}
 
         {/* Closing note */}
-        <Panel icon={Quote} label="Why I do it">
+        <Panel icon={Quote} label="Why I do it" span="board:col-span-2" className="board:gap-2 board:p-3">
           <p className="font-display text-[0.95rem] italic leading-snug text-fg">
             I don't just create things. I help your business run, and I stay for
             the parts of your life it touches. Serving comes first; the build is
