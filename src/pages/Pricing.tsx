@@ -1,7 +1,8 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { Check } from "lucide-react";
 import PageHeader from "../components/page/PageHeader";
-import { GhostAction, PrimaryAction } from "../components/page/PageActions";
+import { PrimaryAction } from "../components/page/PageActions";
 import { PACKAGES } from "../data/content";
 import { NONPROFIT, RATE_CARD, aed, priceLabel } from "../data/pricing";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -17,205 +18,233 @@ import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
  * actually type, and the same numbers go out as Schema.org offers from
  * lib/seo.ts. See RATE_CARD in data/pricing.ts, which both read from.
  *
- * It is also why the page compresses by laying the three blocks out as a board
- * and tightening the rows rather than folding the table away: every figure
- * stays visible plain text, which is the only reason the page works at all.
+ * The packages, the rate card and the charity terms do not share a laptop
+ * screen. Stacked they ran 1,235px inside a 768px one, and laid out as a board
+ * the table was squeezed until the charity column clipped. So they are three
+ * views of one page instead, and the rate card is the one that opens, because
+ * it is the reason the page exists.
+ *
+ * Every view stays in the DOM and only its `hidden` attribute changes, so the
+ * prerendered HTML still carries every package, every row and the charity
+ * terms as plain text whether or not the visitor ever switches.
  */
 
-/** One column of the board; announces itself to a screen reader. */
-function Block({
-  id,
-  eyebrow,
-  title,
-  lede,
-  className = "",
-  children,
-}: {
-  id: string;
-  eyebrow: string;
-  title: string;
-  lede?: string;
-  /** Where the block sits on the board. */
-  className?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <m.section
-      id={id}
-      variants={stagger}
-      initial="hidden"
-      whileInView="show"
-      viewport={VIEWPORT}
-      aria-labelledby={`${id}-heading`}
-      className={`scroll-mt-24 ${className}`}
-    >
-      <m.header variants={fadeUp} className="mb-2 max-w-2xl">
-        <p className="flex flex-wrap items-baseline gap-x-3">
-          <span className="eyebrow">{eyebrow}</span>
-          <span
-            id={`${id}-heading`}
-            className="font-display text-lg font-extrabold tracking-tight text-fg"
-          >
-            {title}
-          </span>
-        </p>
-        {lede && <p className="mt-1 text-[0.85rem] leading-snug text-fg-soft">{lede}</p>}
-      </m.header>
-      {children}
-    </m.section>
-  );
+type Tab = "rate-card" | "packages" | "nonprofit";
+
+const TABS: { id: Tab; label: string; count?: string }[] = [
+  { id: "rate-card", label: "Rate card", count: `${RATE_CARD.length} services` },
+  { id: "packages", label: "Packages", count: `${PACKAGES.length} ways to start` },
+  { id: "nonprofit", label: "Charity rates", count: "half price" },
+];
+
+const TAB_IDS = TABS.map((t) => t.id);
+
+/** The view named by the URL fragment, so the old #anchors still land. */
+function tabFromHash(): Tab | null {
+  if (typeof window === "undefined") return null;
+  const hash = window.location.hash.slice(1);
+  return (TAB_IDS as string[]).includes(hash) ? (hash as Tab) : null;
 }
 
 export default function Pricing() {
+  const [tab, setTab] = useState<Tab>("rate-card");
+  const tabs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const sync = useCallback(() => setTab(tabFromHash() ?? "rate-card"), []);
+
+  useEffect(() => {
+    // The fragment is client state: reading it during render would break
+    // hydration, and `hashchange` keeps a pasted #nonprofit link working.
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- resolve the URL after matching the server snapshot
+    sync();
+    window.addEventListener("hashchange", sync);
+    return () => window.removeEventListener("hashchange", sync);
+  }, [sync]);
+
+  const show = (next: Tab) => {
+    setTab(next);
+    if (typeof window !== "undefined") {
+      const url = new URL(window.location.href);
+      url.hash = next === "rate-card" ? "" : next;
+      window.history.replaceState(null, "", url);
+    }
+  };
+
+  /** Roving focus: a tablist moves between tabs with the arrow keys. */
+  const onKey = (index: number) => (event: React.KeyboardEvent) => {
+    const step = event.key === "ArrowRight" ? 1 : event.key === "ArrowLeft" ? -1 : 0;
+    if (step === 0) return;
+    event.preventDefault();
+    const next = (index + step + TABS.length) % TABS.length;
+    show(TABS[next].id);
+    tabs.current[next]?.focus();
+  };
+
+  const panel = (id: Tab) => ({
+    id: `${id}-panel`,
+    role: "tabpanel",
+    "aria-labelledby": id,
+    hidden: tab !== id,
+    tabIndex: 0,
+  });
+
   return (
     <>
       <PageHeader
         eyebrow="Pricing"
         title={<>What it costs.</>}
         lede="Real starting prices, published up front. Every figure below is a floor a project actually starts at, not a quote: what you pay depends on scope, and you get that in writing after a free audit."
-        actions={
-          <>
-            <PrimaryAction href="/contact">Book a free audit</PrimaryAction>
-            <GhostAction href="#nonprofit">Charity rates</GhostAction>
-          </>
-        }
+        actions={<PrimaryAction href="/contact">Book a free audit</PrimaryAction>}
       />
 
-      <div className="grid gap-3 board:grid-cols-12">
-        <Block
-          className="board:col-span-5"
-          id="packages"
-          eyebrow="Packages"
-          title="Four ways to start"
-          lede="Most people start with the audit. If the budget is tight, The Starter is a finished thing at a fixed price rather than a deposit on something bigger."
-        >
-          <ul className="grid gap-2">
-            {PACKAGES.map((pkg) => (
-              <m.li
-                key={pkg.name}
-                variants={fadeUp}
-                className={`rounded-card border bg-panel p-3 shadow-card transition duration-300 ease-smooth hover:-translate-y-[2px] hover:shadow-card-hover ${
-                  pkg.featured ? "border-accent/60" : "border-line hover:border-accent/45"
-                }`}
-              >
-                <div className="flex flex-wrap items-baseline justify-between gap-x-3">
-                  <h3 className="font-display text-base font-extrabold text-fg">
-                    {pkg.name}{" "}
-                    <span className="font-technical text-xs font-semibold text-fg-faint">
-                      {pkg.pitch}
-                    </span>
-                  </h3>
-                  <p className="font-display text-lg font-extrabold text-accent-deep">
-                    {pkg.price}{" "}
-                    <span className="font-technical text-xs font-semibold text-fg-faint">
-                      {pkg.note}
-                    </span>
-                  </p>
-                </div>
-                <p className="text-[0.82rem] leading-snug text-fg-soft">
-                  {pkg.body}{" "}
-                  {/* The Starter carries its own page, so its row sends people
-                      to read the scope rather than straight to a form. */}
-                  <a
-                    href={"href" in pkg && pkg.href ? pkg.href : "/contact"}
-                    className="whitespace-nowrap font-bold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
-                  >
-                    {pkg.cta}
-                  </a>
-                </p>
-              </m.li>
-            ))}
-          </ul>
-        </Block>
-
-        <Block
-          className="board:col-span-7"
-          id="rate-card"
-          eyebrow="Rate card"
-          title="Starting prices by service"
-          lede="What each piece of work starts at. A real table, so you can compare it against any other quote you are holding."
-        >
-          {/* Two halves side by side on the board: the rate card in a single
-              column cost 465px, and every figure still has to be visible
-              plain text. Each half is its own scroller, because the page body
-              must never scroll sideways and a table is the one thing allowed
-              to be wider than the screen. */}
-          <div className="grid gap-3 board:grid-cols-2">
-            {[RATE_CARD.slice(0, Math.ceil(RATE_CARD.length / 2)), RATE_CARD.slice(Math.ceil(RATE_CARD.length / 2))].map(
-              (half, h) => (
-                <m.div
-                  key={h}
-                  variants={fadeUp}
-                  className="overflow-x-auto rounded-card border border-line bg-panel shadow-card"
-                >
-                  <table className="w-full min-w-[18rem] border-collapse text-start">
-                    <caption className="sr-only">
-                      Starting prices in UAE dirhams, part {h + 1} of 2
-                    </caption>
-                    <thead>
-                      <tr className="border-b border-line">
-                        <th scope="col" className="px-3 py-2 text-start font-technical text-eyebrow font-extrabold uppercase tracking-[0.14em] text-accent-deep">
-                          Service
-                        </th>
-                        <th scope="col" className="px-3 py-2 text-end font-technical text-eyebrow font-extrabold uppercase tracking-[0.14em] text-accent-deep">
-                          From
-                        </th>
-                        <th scope="col" className="px-3 py-2 text-end font-technical text-eyebrow font-extrabold uppercase tracking-[0.14em] text-accent-deep">
-                          Charity
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {half.map((point) => (
-                        <tr key={point.service} className="border-b border-line-soft last:border-0">
-                          <th scope="row" className="px-3 py-1.5 text-start text-[0.85rem] font-bold text-fg">
-                            {point.service}
-                          </th>
-                          <td className="whitespace-nowrap px-3 py-1.5 text-end text-[0.85rem] font-semibold text-fg-soft">
-                            {priceLabel(point)}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-1.5 text-end text-[0.85rem] font-semibold text-accent-deep">
-                            {aed(point.from * NONPROFIT.rate)}
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </m.div>
-              ),
-            )}
-          </div>
-          <m.p variants={fadeUp} className="mt-2 text-[0.82rem] leading-snug text-fg-soft">
-            Every figure is a starting point. Scope moves it, which is what the free 60-minute audit
-            is for: you leave with a written proposal at a fixed price.
-          </m.p>
-        </Block>
-
-        <Block
-          className="board:col-span-12"
-          id="nonprofit"
-          eyebrow="Non-profits"
-          title="Half price for churches and charities"
-          lede={NONPROFIT.body}
-        >
-          <m.ul variants={fadeUp} className="grid gap-2 sm:grid-cols-3">
-            {[
-              "Registered non-profits and NGOs",
-              "Churches and places of worship",
-              "Registered charities and foundations",
-            ].map((who) => (
-              <li
-                key={who}
-                className="flex items-start gap-2 rounded-card border border-line bg-panel px-4 py-2.5 text-sm font-semibold text-fg shadow-card"
-              >
-                <Check size={16} strokeWidth={2.6} aria-hidden className="mt-0.5 shrink-0 text-accent-deep" />
-                {who}
-              </li>
-            ))}
-          </m.ul>
-        </Block>
+      <div
+        role="tablist"
+        aria-label="Pricing"
+        className="mb-3 flex flex-wrap gap-1.5 rounded-full border border-line bg-panel p-1 sm:w-fit"
+      >
+        {TABS.map((t, i) => (
+          <button
+            key={t.id}
+            ref={(el) => {
+              tabs.current[i] = el;
+            }}
+            id={t.id}
+            type="button"
+            role="tab"
+            aria-selected={tab === t.id}
+            aria-controls={`${t.id}-panel`}
+            tabIndex={tab === t.id ? 0 : -1}
+            onClick={() => show(t.id)}
+            onKeyDown={onKey(i)}
+            className={`flex min-h-9 flex-1 items-baseline justify-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold transition sm:flex-none ${
+              tab === t.id
+                ? "bg-navy text-fg-onSolid shadow-solid"
+                : "text-fg-soft hover:bg-panel-alt hover:text-accent-deep"
+            }`}
+          >
+            {t.label}
+            <span className={`font-technical text-xs font-semibold ${tab === t.id ? "text-fg-onSolid/60" : "text-fg-faint"}`}>
+              {t.count}
+            </span>
+          </button>
+        ))}
       </div>
 
+      {/* ---- the rate card ---- */}
+      <m.section {...panel("rate-card")} variants={stagger} initial="hidden" whileInView="show" viewport={VIEWPORT}>
+        <h2 className="sr-only">Starting prices by service</h2>
+        {/* Split in two so the card sits side by side rather than one column
+            deep; the halves are computed from RATE_CARD, so adding or removing
+            a service rebalances them. Each half is still its own scroller,
+            because the page body must never scroll sideways and a table is the
+            one thing allowed to be wider than the screen. */}
+        <div className="grid gap-3 board:grid-cols-2">
+          {[RATE_CARD.slice(0, Math.ceil(RATE_CARD.length / 2)), RATE_CARD.slice(Math.ceil(RATE_CARD.length / 2))].map(
+            (half, h) => (
+              <m.div
+                key={h}
+                variants={fadeUp}
+                className="overflow-x-auto rounded-card border border-line bg-panel shadow-card"
+              >
+                <table className="w-full border-collapse text-start">
+                  <caption className="sr-only">
+                    Starting prices in UAE dirhams, part {h + 1} of 2
+                  </caption>
+                  <thead>
+                    <tr className="border-b border-line">
+                      <th scope="col" className="px-3 py-1.5 text-start font-technical text-eyebrow font-extrabold uppercase tracking-[0.1em] text-accent-deep">
+                        Service
+                      </th>
+                      <th scope="col" className="px-3 py-1.5 text-end font-technical text-eyebrow font-extrabold uppercase tracking-[0.1em] text-accent-deep">
+                        From
+                      </th>
+                      <th scope="col" className="px-3 py-1.5 text-end font-technical text-eyebrow font-extrabold uppercase tracking-[0.1em] text-accent-deep">
+                        Charity
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {half.map((point) => (
+                      <tr key={point.service} className="border-b border-line-soft last:border-0">
+                        <th scope="row" className="px-3 py-1 text-start text-[0.85rem] font-bold leading-tight text-fg">
+                          {point.service}
+                        </th>
+                        <td className="whitespace-nowrap px-3 py-1 text-end text-[0.85rem] font-semibold text-fg-soft">
+                          {priceLabel(point)}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-1 text-end text-[0.85rem] font-semibold text-accent-deep">
+                          {aed(point.from * NONPROFIT.rate)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </m.div>
+            ),
+          )}
+        </div>
+        <m.p variants={fadeUp} className="mt-2 text-[0.82rem] leading-snug text-fg-soft">
+          Every figure is a starting point. Scope moves it, which is what the free 60-minute audit
+          is for: you leave with a written proposal at a fixed price.
+        </m.p>
+      </m.section>
+
+      {/* ---- the four packages ---- */}
+      <m.section {...panel("packages")} variants={stagger} initial="hidden" whileInView="show" viewport={VIEWPORT}>
+        <h2 className="sr-only">Four ways to start</h2>
+        <ul className="grid gap-3 sm:grid-cols-2 board:grid-cols-4">
+          {PACKAGES.map((pkg) => (
+            <m.li
+              key={pkg.name}
+              variants={fadeUp}
+              className={`flex flex-col rounded-card border bg-panel p-4 shadow-card transition duration-300 ease-smooth hover:-translate-y-[2px] hover:shadow-card-hover ${
+                pkg.featured ? "border-accent/60" : "border-line hover:border-accent/45"
+              }`}
+            >
+              <h3 className="font-display text-base font-extrabold leading-tight text-fg">
+                {pkg.name}{" "}
+                <span className="font-technical text-xs font-semibold text-fg-faint">{pkg.pitch}</span>
+              </h3>
+              <p className="mt-1 font-display text-xl font-extrabold leading-none text-accent-deep">
+                {pkg.price}{" "}
+                <span className="font-technical text-xs font-semibold text-fg-faint">{pkg.note}</span>
+              </p>
+              <p className="mt-1.5 text-[0.82rem] leading-snug text-fg-soft">{pkg.body}</p>
+              {/* The Starter carries its own page, so its card sends people to
+                  read the scope rather than straight to a form. */}
+              <a
+                href={"href" in pkg && pkg.href ? pkg.href : "/contact"}
+                className="mt-auto inline-block pt-2 text-[0.82rem] font-bold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
+              >
+                {pkg.cta}
+              </a>
+            </m.li>
+          ))}
+        </ul>
+      </m.section>
+
+      {/* ---- charity rates ---- */}
+      <m.section {...panel("nonprofit")} variants={stagger} initial="hidden" whileInView="show" viewport={VIEWPORT}>
+        <h2 className="sr-only">Half price for churches and charities</h2>
+        <m.p variants={fadeUp} className="max-w-[68ch] text-[0.95rem] leading-relaxed text-fg-soft">
+          {NONPROFIT.body}
+        </m.p>
+        <m.ul variants={fadeUp} className="mt-3 grid gap-2 sm:grid-cols-3">
+          {[
+            "Registered non-profits and NGOs",
+            "Churches and places of worship",
+            "Registered charities and foundations",
+          ].map((who) => (
+            <li
+              key={who}
+              className="flex items-start gap-2 rounded-card border border-line bg-panel px-4 py-2.5 text-sm font-semibold text-fg shadow-card"
+            >
+              <Check size={16} strokeWidth={2.6} aria-hidden className="mt-0.5 shrink-0 text-accent-deep" />
+              {who}
+            </li>
+          ))}
+        </m.ul>
+      </m.section>
     </>
   );
 }
