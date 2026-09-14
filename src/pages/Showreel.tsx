@@ -12,7 +12,7 @@ export default function Showreel() {
         lede="Video production, editing, colour grading, animation and social content: shot and cut across events, documentaries and brand work in the UAE and beyond. Tap any thumbnail to play."
         actions={
           <>
-            <PrimaryAction href="#contact">Start a video project</PrimaryAction>
+            <PrimaryAction href="/contact">Start a video project</PrimaryAction>
             <GhostAction href="/portfolio" icon={<Clapperboard size={15} aria-hidden />}>
               Portfolio
             </GhostAction>

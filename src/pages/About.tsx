@@ -40,10 +40,10 @@ export default function About() {
 
       <AboutIntro />
 
-      <PanelBoard cols="board:grid-cols-4" className="mt-3">
+      <PanelBoard cols="board:grid-cols-4 board:gap-3" className="mt-2">
         {/* Bio */}
         <Panel icon={Compass} label="How I work">
-          <div className="space-y-2 text-[0.82rem] leading-snug text-fg-soft">
+          <div className="space-y-1.5 text-[0.8rem] leading-snug text-fg-soft">
             <p>
               I help growing businesses run on systems that actually work
               together. Instead of a website in one place, spreadsheets in
@@ -65,9 +65,9 @@ export default function About() {
 
         {/* Approach */}
         <Panel icon={ListChecks} label="My approach">
-          <ul className="space-y-2">
+          <ul className="space-y-1.5">
             {FOCUS.map((f) => (
-              <li key={f} className="flex items-start gap-2 text-[0.82rem] leading-snug text-fg-soft">
+              <li key={f} className="flex items-start gap-2 text-[0.8rem] leading-snug text-fg-soft">
                 <Check size={16} className="mt-0.5 shrink-0 text-accent" aria-hidden />
                 {f}
               </li>
@@ -81,7 +81,7 @@ export default function About() {
             {PROJECTS.map((p) => (
               <li
                 key={p}
-                className="rounded-lg border border-line bg-panel-alt px-2.5 py-1.5 text-[0.78rem] text-fg-soft"
+                className="rounded-lg border border-line bg-panel-alt px-2.5 py-1 text-[0.78rem] text-fg-soft"
               >
                 {p}
               </li>

@@ -92,7 +92,7 @@ export default function ProjectShowcase({ items = WEB_DESIGNS, className = "" }:
     setSelected(null);
   }, []);
 
-  const preview = items.slice(0, 3);
+  const preview = items.slice(0, 6);
 
   return (
     <>
@@ -117,7 +117,7 @@ export default function ProjectShowcase({ items = WEB_DESIGNS, className = "" }:
           {items.length} website designs from my portfolio archive. Open the reel and explore
           the screenshots, with live links where available.
         </p>
-        <span className="grid grid-cols-3 gap-2.5" aria-hidden>
+        <span className="grid grid-cols-3 gap-2.5 board:grid-cols-6" aria-hidden>
           {preview.map((item) => (
             <span
               key={item.src}

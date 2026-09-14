@@ -43,7 +43,7 @@ export default function ServicePackages({ page }: { page: ServicePageData }) {
                   </li>
                 ))}
               </ul>
-              <a href="#contact" className={`mt-7 inline-flex items-center gap-2 text-sm font-semibold ${item.featured ? "text-ink" : "text-gold"}`}>
+              <a href="/contact" className={`mt-7 inline-flex items-center gap-2 text-sm font-semibold ${item.featured ? "text-ink" : "text-gold"}`}>
                 Discuss this scope <ArrowUpRight size={14} />
               </a>
             </article>

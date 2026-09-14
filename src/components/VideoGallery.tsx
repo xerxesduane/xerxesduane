@@ -8,6 +8,10 @@ import { scaleIn, stagger, VIEWPORT } from "../lib/motion";
  * Click-to-play YouTube gallery. Renders lightweight thumbnails (no YouTube
  * cookies/scripts until the visitor clicks play). No-JS users get a normal
  * link to YouTube.
+ *
+ * Six across on the board: twelve videos in three rows of four ran 1,647px,
+ * and the thumbnail is a target to click, not something to read. The tag moves
+ * onto the still so the caption is a single line of title.
  */
 export default function VideoGallery() {
   const [active, setActive] = useState<string | null>(null);
@@ -18,7 +22,7 @@ export default function VideoGallery() {
       initial="hidden"
       whileInView="show"
       viewport={VIEWPORT}
-      className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+      className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 board:grid-cols-6"
     >
       {VIDEOS.map((v) => (
         <m.figure
@@ -27,6 +31,9 @@ export default function VideoGallery() {
           className="glass overflow-hidden rounded-2xl"
         >
           <div className="relative aspect-video">
+            <span className="pointer-events-none absolute end-2 top-2 z-10 rounded-full bg-ink-deep/75 px-2 py-0.5 font-mono text-xs uppercase tracking-wider text-gold/95 board:text-[0.7rem] backdrop-blur-sm">
+              {v.tag}
+            </span>
             {active === v.id ? (
               <iframe
                 className="absolute inset-0 h-full w-full"
@@ -62,10 +69,9 @@ export default function VideoGallery() {
               </a>
             )}
           </div>
-          <figcaption className="flex items-center justify-between gap-3 p-4">
-            <span className="text-sm text-cream">{v.title}</span>
-            <span className="shrink-0 rounded-full bg-gold/10 px-2.5 py-1 font-mono text-xs board:text-[10px] uppercase tracking-wider text-gold/90">
-              {v.tag}
+          <figcaption className="px-3 py-2">
+            <span className="block truncate text-sm text-cream board:text-[0.8rem]" title={v.title}>
+              {v.title}
             </span>
           </figcaption>
         </m.figure>

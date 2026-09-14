@@ -21,6 +21,8 @@ interface PanelProps {
    * ordinary left click.
    */
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void;
+  /** Anchor id, for cards a published #link still points at. */
+  id?: string;
   /** Tailwind grid spans, applied by the caller. */
   span?: string;
   /** `plain` drops the card chrome — for panels that only need the rhythm. */
@@ -78,6 +80,7 @@ export default function Panel({
   blurb,
   href,
   onClick,
+  id,
   span = "",
   tone = "card",
   footer,
@@ -126,6 +129,7 @@ export default function Panel({
         whileHover={LIFT}
         whileFocus={LIFT}
         transition={LIFT_TRANSITION}
+        id={id}
         href={href}
         onClick={onClick}
         className={`${shell} ${PANEL_HOVER} ${span} ${className}`}
@@ -139,6 +143,7 @@ export default function Panel({
       variants={fadeUp}
       whileHover={LIFT}
       transition={LIFT_TRANSITION}
+      id={id}
       aria-label={label}
       className={`${shell} ${tone === "card" ? "transition duration-300 ease-smooth hover:border-accent/45 hover:shadow-card-hover" : ""} ${span} ${className}`}
     >

@@ -615,6 +615,16 @@ html[data-theme-vt="active"]::view-transition-new(root) {
   }
 
   /* Mirror directional icons (arrows) under RTL so they point the reading way. */
+  /* Arabic is cursive: the Latin display scales carry tracking to open up
+     uppercase runs, and the same letter-spacing pulls Arabic joins apart.
+     Reset it for the headings and eyebrows that inherit those scales. */
+  [dir="rtl"] .eyebrow,
+  [dir="rtl"] h1,
+  [dir="rtl"] h2,
+  [dir="rtl"] h3 {
+    letter-spacing: normal;
+  }
+
   [dir="rtl"] .rtl-flip {
     transform: scaleX(-1);
   }

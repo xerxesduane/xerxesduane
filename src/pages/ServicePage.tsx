@@ -59,7 +59,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         }
         actions={
           <>
-            <PrimaryAction href="#contact">Book a free audit</PrimaryAction>
+            <PrimaryAction href="/contact">Book a free audit</PrimaryAction>
             {hasArabicPage && (
               <GhostAction href={`/ar/${page.slug}`}>
                 <span lang="ar">العربية</span>
@@ -196,7 +196,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
               <span className="font-mono text-[10px] uppercase tracking-wider text-ink/55">Before you spend</span>
               <h2 className="mt-3 max-w-2xl text-2xl !text-ink sm:text-3xl">Let’s find the smallest build that creates the biggest useful change.</h2>
             </div>
-            <a href="#contact" className="mt-6 inline-flex shrink-0 items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream sm:mt-0">
+            <a href="/contact" className="mt-6 inline-flex shrink-0 items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream sm:mt-0">
               Scope it honestly <ArrowUpRight size={15} />
             </a>
           </Reveal>

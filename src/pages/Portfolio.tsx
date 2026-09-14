@@ -46,6 +46,30 @@ function Thumbs({ items }: { items: WorkItem[] }) {
   );
 }
 
+/** The published case studies' own client marks, contained so nothing crops. */
+function CaseThumbs() {
+  const shown = CASE_STUDIES.filter((c) => c.image).slice(0, 4);
+  if (shown.length === 0) return null;
+  return (
+    <ul className="grid grid-cols-4 gap-1.5">
+      {shown.map((study) => (
+        <li
+          key={study.client}
+          className="flex h-12 items-center justify-center overflow-hidden rounded-lg border border-line bg-plate"
+        >
+          <img
+            src={study.image}
+            alt={study.client}
+            loading="lazy"
+            decoding="async"
+            className="max-h-full max-w-full object-contain p-1"
+          />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /**
  * The filter carried in `?cat=`. Read after mount, never during render, so the
  * hydrated markup still matches the prerendered hub.
@@ -159,7 +183,7 @@ export default function Portfolio() {
             href="/case-studies"
             span="sm:col-span-2"
           >
-            <Thumbs items={WEB_DESIGNS.slice(4, 8)} />
+            <CaseThumbs />
           </Panel>
 
           <Panel

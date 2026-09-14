@@ -598,7 +598,7 @@ export default function Demos() {
           <Panel
             icon={LayoutGrid}
             label="Every tool"
-            blurb={`All ${rest.length} tools in one list, newest capability first.`}
+            blurb={`Every tool beyond the flagship — all ${rest.length}, in one list.`}
             href="/ai-lab?cat=all"
             onClick={open("all")}
           />
