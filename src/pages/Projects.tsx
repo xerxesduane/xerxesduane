@@ -46,7 +46,7 @@ function Thumbs({
 /** Small pill, used for the tool and video-tag lists. */
 function Pill({ children, href }: { children: React.ReactNode; href?: string }) {
   const cls =
-    "inline-flex items-center gap-1.5 rounded-full border border-line bg-panel-alt px-2.5 py-1 text-[0.7rem] font-medium text-fg-soft";
+    "inline-flex items-center gap-1.5 rounded-full border border-line bg-panel-alt px-3 py-1.5 text-xs font-medium text-fg-soft board:text-[0.72rem]";
   return href ? (
     <a
       href={href}
@@ -146,8 +146,8 @@ export default function Projects() {
           <ul className="grid gap-1.5 sm:grid-cols-2">
             {FEATURED_RESULTS.map((r) => (
               <li key={r.slug} className="rounded-lg border border-line bg-panel-alt px-3 py-2">
-                <p className="truncate text-[0.7rem] font-semibold text-fg">{r.client}</p>
-                <p className="mt-0.5 flex flex-wrap gap-x-2 text-[0.68rem] text-fg-soft">
+                <p className="truncate text-xs font-semibold text-fg board:text-[0.7rem]">{r.client}</p>
+                <p className="mt-0.5 flex flex-wrap gap-x-2 text-xs text-fg-soft board:text-[0.68rem]">
                   {r.stats.slice(0, 2).map((s) => (
                     <span key={s.label}>
                       <span className="font-display font-semibold text-accent">{s.value}</span>{" "}

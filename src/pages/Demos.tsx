@@ -210,10 +210,10 @@ function LazyDemo({ id, children }: { id: string; children: ReactNode }) {
 function DemoCta({ demo }: { demo: Demo }) {
   return (
     <a
-      href="/#contact"
+      href="/contact"
       data-cursor="link"
       onClick={() => track("demo_cta", { demo: demo.id })}
-      className="group mt-5 inline-flex items-center gap-2 text-sm font-medium text-gold transition-colors hover:text-gold-soft"
+      className="group mt-5 inline-flex items-center gap-2 py-1 text-sm font-medium text-gold transition-colors hover:text-gold-soft"
     >
       Build this for my business
       <ArrowRight size={14} className="transition-transform group-hover:translate-x-0.5" />
@@ -293,7 +293,7 @@ function ProductionPipeline() {
           Meta-approved templates, billed per conversation. Built for you in days, wired into the tools you already use.
         </p>
         <a
-          href="/#contact"
+          href="/contact"
           data-cursor="link"
           className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-gold px-5 py-2.5 text-sm font-semibold text-ink-deep transition-colors hover:bg-navy-hover"
         >
@@ -443,7 +443,7 @@ export default function Demos() {
         title={<>Try the AI. Not just read about it.</>}
         lede="Practical AI tools for real business workflows. Type into them and see what useful AI can do inside sales, service, content, operations and reporting work."
         meta={<span>Practical demos · No sign-up · Your input isn't stored</span>}
-        actions={<PrimaryAction href="/#contact">Book a free audit</PrimaryAction>}
+        actions={<PrimaryAction href="/contact">Book a free audit</PrimaryAction>}
       />
 
       {/* flagship offer */}
@@ -504,7 +504,7 @@ export default function Demos() {
               <p className="text-cream">No tools match “{query.trim()}”.</p>
               <p className="mt-2 text-sm text-muted">
                 Try another word, or{" "}
-                <a href="/#contact" className="text-gold underline underline-offset-2 hover:text-gold-soft">
+                <a href="/contact" className="text-gold underline underline-offset-2 hover:text-gold-soft">
                   tell me what you need
                 </a>{" "}
                 and I'll build it.
@@ -544,7 +544,7 @@ export default function Demos() {
                 tone, then wire them into what you already use.
               </p>
               <a
-                href="/#contact"
+                href="/contact"
                 data-cursor="link"
                 className="group mt-7 inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-bold text-fg-onSolid shadow-solid transition-colors hover:bg-navy-hover"
               >

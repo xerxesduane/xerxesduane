@@ -14,7 +14,7 @@ export default function NotFound() {
         lede="The page you're after doesn't exist or has moved. Here's the way back to something useful."
         actions={
           <>
-            <PrimaryAction href="/#contact">Book a free audit</PrimaryAction>
+            <PrimaryAction href="/contact">Book a free audit</PrimaryAction>
             <GhostAction href="/" icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}>
               Home
             </GhostAction>

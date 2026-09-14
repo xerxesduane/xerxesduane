@@ -434,7 +434,7 @@ export default function DemoWhatsApp() {
                         onClick={(e) => e.stopPropagation()}
                         disabled={running}
                         aria-label={`Interest for ${lead.name}`}
-                        className="w-full bg-transparent text-[12.5px] text-cream-dim outline-none placeholder:text-muted-dark focus:text-cream disabled:opacity-70"
+                        className="w-full bg-transparent py-1 text-[12.5px] text-cream-dim outline-none placeholder:text-muted-dark focus:text-cream disabled:opacity-70"
                       />
                     </span>
                   </span>
@@ -463,7 +463,7 @@ export default function DemoWhatsApp() {
             href="/whatsapp-optin.html"
             target="_blank"
             rel="noopener"
-            className="text-gold/90 underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold"
+            className="inline-block py-1 text-gold/90 underline decoration-gold/40 underline-offset-2 transition-colors hover:text-gold"
           >
             Collect opt-ins →
           </a>

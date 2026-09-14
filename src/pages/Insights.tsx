@@ -25,7 +25,7 @@ export default function Insights() {
             <h2 className="font-display text-[0.95rem] font-semibold leading-snug text-fg transition-colors group-hover:text-accent-deep">
               {post.title}
             </h2>
-            <p className="flex items-center gap-2 font-technical text-[0.66rem] text-fg-faint">
+            <p className="flex items-center gap-2 font-technical text-xs text-fg-faint board:text-[0.66rem]">
               <span>{formatDate(post.date)}</span>
               <span aria-hidden>·</span>
               <span>{post.readingMinutes} min</span>

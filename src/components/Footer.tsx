@@ -15,7 +15,8 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
   const gridCols = ar
     ? "sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr]"
     : "sm:grid-cols-2 lg:grid-cols-[1.25fr_0.8fr_1.55fr_1fr]";
-  const linkCls = "link-grow text-cream-dim transition-colors hover:text-gold";
+  const linkCls =
+    "link-grow inline-block py-1 text-cream-dim transition-colors hover:text-gold lg:py-0";
 
   return (
     <footer className="border-t border-cream/8 bg-ink-deep/60 py-10 lg:py-5">
@@ -93,7 +94,7 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
                   </a>
                 </li>
                 <li>
-                  <a href="/insights" className="inline-flex items-center gap-1.5 text-gold transition-colors hover:text-gold-soft">
+                  <a href="/insights" className="inline-flex items-center gap-1.5 py-1 text-gold transition-colors hover:text-gold-soft lg:py-0">
                     Insights
                     <span aria-hidden>→</span>
                   </a>
@@ -157,11 +158,11 @@ export default function Footer({ locale = "en" }: { locale?: "en" | "ar" }) {
             <>
               <span>© {new Date().getFullYear()} Xerxes Duane. Built with care in Dubai.</span>
               <span className="flex items-center gap-3">
-                <a href="/privacy" className="transition-colors hover:text-gold">
+                <a href="/privacy" className="inline-block py-1 transition-colors hover:text-gold lg:py-0">
                   Privacy
                 </a>
                 <span aria-hidden>·</span>
-                <a href="/terms" className="transition-colors hover:text-gold">
+                <a href="/terms" className="inline-block py-1 transition-colors hover:text-gold lg:py-0">
                   Terms
                 </a>
                 <span aria-hidden>·</span>
