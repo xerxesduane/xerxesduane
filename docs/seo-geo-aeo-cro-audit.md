@@ -477,10 +477,14 @@ is what "nothing was painting in Inter" predicts.
 - **Thumbnails are not oversized.** The 800px cap looked wasteful next to a
   322px render on the home board, until the portfolio grid was measured at 490px
   — which at 2× DPR wants 980px. The cap is right; the hypothesis was wrong.
-- **All 30 work thumbnails lazy-load**, and the portfolio grid ones carry
-  intrinsic `width`/`height`. The six on the home board do not, which is a CLS
-  risk in principle, though measured CLS there is 0 because they sit in a
-  fixed-height clipped reel.
+- **All 30 work thumbnails lazy-load**, and none can shift layout: every one sits
+  in a box whose size is fixed in CSS (`aspect-[16/10] w-full`, or `h-full w-full`
+  inside a sized parent), so the missing intrinsic `width`/`height` on the home
+  board costs nothing. Measured CLS there is 0, and it is 0 by construction.
+- **No full-size image loads where a thumbnail would do.** `ProjectReel` has a
+  branch that serves `item.src` rather than `item.thumb` for portrait captures;
+  checked on `/`, `/projects` and `/portfolio` and it never fires on load — 0
+  non-thumbnail work images requested on any of the three.
 - **The intro sequence is already once per tab** (`sessionStorage`), skipped
   under `prefers-reduced-motion`, dismissible by any click or key, `aria-hidden`,
   and never in the prerendered HTML.
