@@ -351,6 +351,7 @@ phone numbers or message text are ever sent — `label` is the CTA's own wording
 | `whatsapp_click` | Click on any `wa.me` link | `location`, `label`, `cta_slot` |
 | `calendar_click` | Click on the `zcal.co` booking link | `location`, `label`, `cta_slot` |
 | `email_click` | Click on any `mailto:` link | `location`, `label`, `cta_slot` |
+| `whatsapp_click` (`cta_slot: service-header`) | The new WhatsApp action in every service page header | `location`, `label`, `cta_slot` |
 | `form_start` | First focus on any field of the audit form, once per mount | `form_id`, `page` |
 | `form_submit` | Submit attempt that got past the browser's own validation | `form_id`, `page` |
 | `form_error` | A field failed validation | `form_id`, `page`, `source` (`browser` / `server`), `field`/`fields`, `reason`/`codes` |
@@ -507,6 +508,42 @@ I have not moved or deleted them: `scripts/process-hero-video.mjs` writes to
 The repo already has `brand-kit/` and `work-raw/` for source assets that are not
 deployed — say the word and both move there, which keeps them in the repo and out
 of the deploy.
+
+---
+
+## CRO — where the second conversion path was
+
+WhatsApp is the stated secondary conversion, and in the UAE it is often the one a
+small-business owner actually uses. Counted the links by destination, in the first
+screen and on the whole page, on the service pages — where buying intent is
+highest, because that is what someone searching "odoo erp dubai" lands on.
+
+| | `/seo-dubai` desktop | `/seo-dubai` **mobile** |
+| --- | --- | --- |
+| Book-an-audit links in the first screen | 2 | 2 |
+| WhatsApp links in the first screen | 1 (the rail icon) | **0** |
+| Email in the first screen | 1 | 0 |
+
+On a phone the rail is hidden, so WhatsApp took **two navigations**: tap Contact,
+scroll, tap WhatsApp. Meanwhile the most prominent persistent control on mobile —
+the floating action button — opens the AI assistant ("Ask a question about this
+site"), and the bottom nav offers Home / Contact / Services / About.
+
+**Fixed:** a WhatsApp action now sits in the service page header beside "Book a
+free audit", on all 13 pages. First-screen WhatsApp links go 0 → 1 on mobile and
+1 → 2 on desktop. It carries `data-cta="service-header"`, and a headless click
+confirms `whatsapp_click {location: "/seo-dubai", label: "WhatsApp", cta_slot:
+"service-header"}` — so whether it earns its place is measurable rather than
+assumed. Page heights are unchanged at 1280×800.
+
+**Not changed, deliberately:** the floating action button still opens the
+assistant rather than WhatsApp. Which of the two deserves the most prominent
+persistent control on a phone is a judgement call about the business, not a
+defect, and the new header action means WhatsApp is one tap either way.
+
+**No calendar link on service pages** (`zcal.co` appears only on `/contact`). That
+looks intentional — the audit CTA points at `/contact`, which carries the calendar
+— so it is recorded rather than changed.
 
 ## Facts needed from the owner
 

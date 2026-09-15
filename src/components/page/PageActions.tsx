@@ -25,14 +25,22 @@ export function GhostAction({
   href,
   children,
   icon,
+  external = false,
+  cta,
 }: {
   href: string;
   children: ReactNode;
   icon?: ReactNode;
+  /** Opens in a new tab, for links that leave the site (WhatsApp, calendar). */
+  external?: boolean;
+  /** Names the slot for `initCtaTracking`, via `data-cta`. */
+  cta?: string;
 }) {
   return (
     <a
       href={href}
+      {...(external ? { target: "_blank", rel: "noopener" } : {})}
+      {...(cta ? { "data-cta": cta } : {})}
       className={`${base} border border-line bg-panel text-fg hover:border-accent/40 hover:text-accent`}
     >
       {icon}

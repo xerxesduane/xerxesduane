@@ -1,8 +1,8 @@
 import { m } from "framer-motion";
-import { ArrowUpRight, ArrowLeft, Check } from "lucide-react";
+import { ArrowUpRight, ArrowLeft, Check, MessageCircle } from "lucide-react";
 import { SERVICE_PAGES, type ServicePageData } from "../data/servicePages";
 import { getServicePageAr } from "../data/servicePagesAr";
-import { CASE_STUDIES, PRICING } from "../data/content";
+import { CASE_STUDIES, CONTACT, PRICING } from "../data/content";
 import { priceForSlug, priceLabel } from "../data/pricing";
 import { INSIGHTS } from "../data/insights";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
@@ -61,6 +61,20 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         actions={
           <>
             <PrimaryAction href="/contact">Book a free audit</PrimaryAction>
+            {/*
+              WhatsApp is the stated second conversion path, and on a phone it
+              was two navigations from here: Contact, then scroll, then tap. The
+              service pages are where intent is highest, so it belongs in the
+              header rather than only on /contact.
+            */}
+            <GhostAction
+              href={`https://wa.me/${CONTACT.whatsapp}`}
+              external
+              cta="service-header"
+              icon={<MessageCircle size={15} strokeWidth={2.2} aria-hidden />}
+            >
+              WhatsApp
+            </GhostAction>
             {hasArabicPage && (
               <GhostAction href={`/ar/${page.slug}`}>
                 <span lang="ar">العربية</span>
