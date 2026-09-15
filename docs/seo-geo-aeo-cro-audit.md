@@ -236,7 +236,30 @@ Not yet implemented. Listed with the evidence so they can be picked up.
   case-insensitive, so it parses as `datetime`). `dateModified` is now emitted
   **only** when a post carries an explicit `updated` date — it used to be set equal
   to `datePublished` on every post, which tells a reader and a crawler nothing.
-  **Still open:** no post yet links a primary source for its factual claims.
+  **Sources — now done.** `InsightPost` gained an optional `sources` list, rendered
+  as a Sources section at the foot of the post. Five of the eleven posts make
+  checkable third-party claims and now cite the vendor's own documentation or
+  pricing page — never a blog summarising it:
+
+  | Post | Sources |
+  | --- | --- |
+  | `whatsapp-automation-not-spam-dubai` | WhatsApp Business Messaging Policy (opt-in), Cloud API docs, Conversation types (the 24-hour window), Message templates, Messaging limits (quality rating) |
+  | `odoo-enterprise-vs-community` | Odoo editions comparison, Odoo pricing |
+  | `how-much-does-odoo-cost-dubai` | Odoo pricing, Odoo editions comparison |
+  | `odoo-vs-zoho-uae` | Odoo pricing, Zoho CRM pricing, Zoho One pricing |
+  | `website-cost-dubai` | the site's own `/pricing` |
+
+  All 13 links were fetched and returned 200, and each target page was checked for
+  the term it is cited for (the policy page for "opt-in", the limits page for
+  "quality rating", and so on).
+
+  The other six posts are judgement, not fact, and carry no sources. Inventing a
+  citation for an opinion is worse than having none.
+
+  `/insights/website-cost-dubai` also had its opener reworded. It stated the AED
+  ranges as impersonal market fact — "a professional website in Dubai usually
+  costs..." — when they are the author's own quoted figures. It now says so and
+  points at `/pricing`, which is the only version of that number anyone can check.
 - **P2-3 · Unverifiable claims — FIXED.** Three pieces of copy promised outcomes the
   site's own FAQs correctly refuse to guarantee:
 

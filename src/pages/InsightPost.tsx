@@ -115,6 +115,33 @@ export default function InsightPost({ post }: { post: Post }) {
               </div>
             </div>
 
+            {post.sources && post.sources.length > 0 && (
+              <div className="mt-14">
+                <h2 className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
+                  Sources
+                </h2>
+                {/* Vendor documentation and pricing pages, so the third-party
+                    claims above can be checked rather than taken on trust. */}
+                <ul className="mt-4 space-y-3">
+                  {post.sources.map((source) => {
+                    const external = source.url.startsWith("http");
+                    return (
+                      <li key={source.url} className="text-[15px] leading-relaxed text-muted">
+                        <a
+                          href={source.url}
+                          {...(external ? { target: "_blank", rel: "noopener" } : {})}
+                          className="font-semibold text-fg-soft underline decoration-accent/40 underline-offset-4 transition hover:text-accent-deep hover:decoration-accent"
+                        >
+                          {source.label}
+                        </a>
+                        {source.note && <span className="ml-2">{source.note}</span>}
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
+
             {related.length > 0 && (
               <div className="mt-14">
                 <h2 className="font-technical text-[0.62rem] font-bold uppercase tracking-[0.16em] text-accent-deep">
