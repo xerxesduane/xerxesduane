@@ -56,6 +56,24 @@ export interface ServicePageData {
   bullets: ServiceBullet[];
   forWhoHeading: string;
   forWho: string[];
+  /**
+   * Sibling services worth a link from this one. It used to be the first six
+   * entries of SERVICE_PAGES on every page, so /video-editing-dubai pointed at
+   * Odoo and GEO and never at branding, and all thirteen pages shipped the same
+   * six links.
+   */
+  related: string[];
+  /**
+   * Only the three search-visibility pages carry this. They compete for
+   * overlapping queries, so each one states plainly what all three are for and
+   * which to start with, rather than each quietly claiming the same ground.
+   */
+  compare?: {
+    heading: string;
+    intro: string;
+    options: { slug: string; label: string; when: string }[];
+    footnote: string;
+  };
   /** Matches a CASE_STUDIES client name to show as proof, if any. */
   caseStudyClient?: string;
   /** Service-specific FAQs (rendered on the page + FAQPage JSON-LD). */
@@ -65,6 +83,7 @@ export interface ServicePageData {
 export const SERVICE_PAGES: ServicePageData[] = [
   {
     slug: "odoo-erp-dubai",
+    related: ["crm-development-dubai", "custom-software-development-dubai", "ai-automation-dubai"],
     navLabel: "Odoo / ERP",
     icon: Boxes,
     metaTitle: "Odoo ERP Implementation in Dubai - Xerxes Duane",
@@ -135,6 +154,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "web-development-dubai",
+    related: ["landing-page-design-dubai", "ecommerce-development-dubai", "seo-dubai"],
     navLabel: "Web Development",
     icon: Code2,
     metaTitle: "Web Development in Dubai - Xerxes Duane",
@@ -204,6 +224,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "ai-automation-dubai",
+    related: ["crm-development-dubai", "odoo-erp-dubai", "custom-software-development-dubai"],
     navLabel: "AI Automation",
     icon: Bot,
     metaTitle: "AI Automation in Dubai - Xerxes Duane",
@@ -273,6 +294,31 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "seo-dubai",
+    related: ["answer-engine-optimization-dubai", "generative-engine-optimization-dubai", "web-development-dubai"],
+    compare: {
+      heading: "SEO, AEO or GEO: which one do you actually need?",
+      intro:
+        "The three overlap more than the acronyms suggest, and almost nobody needs all three at once. Here is the split, in the order I would do them.",
+      options: [
+        {
+          slug: "seo-dubai",
+          label: "SEO",
+          when: "You want to show up in the blue links and on Google Maps for the searches people type when they are ready to buy. If you are only doing one of the three, it is this one.",
+        },
+        {
+          slug: "answer-engine-optimization-dubai",
+          label: "AEO",
+          when: "You already show up, and you want to be a candidate for the answer box above the links, where a question gets answered before anyone scrolls.",
+        },
+        {
+          slug: "generative-engine-optimization-dubai",
+          label: "GEO",
+          when: "Your buyers research in ChatGPT, Gemini or Perplexity, and what those tools say about you matters as much as where you sit on a results page.",
+        },
+      ],
+      footnote:
+        "Most of the underlying work is shared — the technical foundations, the content and the entity signals feed all three — so starting with one is not wasted if you add another later.",
+    },
     navLabel: "SEO",
     icon: Search,
     metaTitle: "SEO Services in Dubai - Xerxes Duane",
@@ -343,6 +389,31 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "answer-engine-optimization-dubai",
+    related: ["seo-dubai", "generative-engine-optimization-dubai", "web-development-dubai"],
+    compare: {
+      heading: "SEO, AEO or GEO: which one do you actually need?",
+      intro:
+        "The three overlap more than the acronyms suggest, and almost nobody needs all three at once. Here is the split, in the order I would do them.",
+      options: [
+        {
+          slug: "seo-dubai",
+          label: "SEO",
+          when: "You want to show up in the blue links and on Google Maps for the searches people type when they are ready to buy. If you are only doing one of the three, it is this one.",
+        },
+        {
+          slug: "answer-engine-optimization-dubai",
+          label: "AEO",
+          when: "You already show up, and you want to be a candidate for the answer box above the links, where a question gets answered before anyone scrolls.",
+        },
+        {
+          slug: "generative-engine-optimization-dubai",
+          label: "GEO",
+          when: "Your buyers research in ChatGPT, Gemini or Perplexity, and what those tools say about you matters as much as where you sit on a results page.",
+        },
+      ],
+      footnote:
+        "Most of the underlying work is shared — the technical foundations, the content and the entity signals feed all three — so starting with one is not wasted if you add another later.",
+    },
     navLabel: "AEO",
     icon: ScanSearch,
     metaTitle: "Answer Engine Optimization (AEO) in Dubai - Xerxes Duane",
@@ -412,6 +483,31 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "generative-engine-optimization-dubai",
+    related: ["seo-dubai", "answer-engine-optimization-dubai", "web-development-dubai"],
+    compare: {
+      heading: "SEO, AEO or GEO: which one do you actually need?",
+      intro:
+        "The three overlap more than the acronyms suggest, and almost nobody needs all three at once. Here is the split, in the order I would do them.",
+      options: [
+        {
+          slug: "seo-dubai",
+          label: "SEO",
+          when: "You want to show up in the blue links and on Google Maps for the searches people type when they are ready to buy. If you are only doing one of the three, it is this one.",
+        },
+        {
+          slug: "answer-engine-optimization-dubai",
+          label: "AEO",
+          when: "You already show up, and you want to be a candidate for the answer box above the links, where a question gets answered before anyone scrolls.",
+        },
+        {
+          slug: "generative-engine-optimization-dubai",
+          label: "GEO",
+          when: "Your buyers research in ChatGPT, Gemini or Perplexity, and what those tools say about you matters as much as where you sit on a results page.",
+        },
+      ],
+      footnote:
+        "Most of the underlying work is shared — the technical foundations, the content and the entity signals feed all three — so starting with one is not wasted if you add another later.",
+    },
     navLabel: "GEO",
     icon: Sparkles,
     metaTitle: "Generative Engine Optimization (GEO) in Dubai - Xerxes Duane",
@@ -481,6 +577,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "custom-software-development-dubai",
+    related: ["odoo-erp-dubai", "crm-development-dubai", "mobile-app-development-dubai"],
     navLabel: "Custom Software",
     icon: Code2,
     metaTitle: "Custom Software Development in Dubai - Xerxes Duane",
@@ -550,6 +647,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "crm-development-dubai",
+    related: ["odoo-erp-dubai", "ai-automation-dubai", "custom-software-development-dubai"],
     navLabel: "CRM & Dashboards",
     icon: LayoutDashboard,
     metaTitle: "CRM Development & Setup in Dubai - Xerxes Duane",
@@ -619,6 +717,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "mobile-app-development-dubai",
+    related: ["custom-software-development-dubai", "web-development-dubai", "ecommerce-development-dubai"],
     navLabel: "Mobile & Web Apps",
     icon: Smartphone,
     metaTitle: "Mobile App Development in Dubai - Xerxes Duane",
@@ -688,6 +787,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "ecommerce-development-dubai",
+    related: ["web-development-dubai", "odoo-erp-dubai", "landing-page-design-dubai"],
     navLabel: "E-Commerce",
     icon: ShoppingBag,
     metaTitle: "E-Commerce Development in Dubai - Xerxes Duane",
@@ -758,6 +858,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "landing-page-design-dubai",
+    related: ["web-development-dubai", "seo-dubai", "branding-graphic-design-dubai"],
     navLabel: "Landing Pages",
     icon: Target,
     metaTitle: "Landing Page Design in Dubai - Xerxes Duane",
@@ -827,6 +928,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "branding-graphic-design-dubai",
+    related: ["video-editing-dubai", "landing-page-design-dubai", "web-development-dubai"],
     navLabel: "Branding & Design",
     icon: Palette,
     metaTitle: "Branding & Graphic Design in Dubai - Xerxes Duane",
@@ -896,6 +998,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
   },
   {
     slug: "video-editing-dubai",
+    related: ["branding-graphic-design-dubai", "landing-page-design-dubai", "web-development-dubai"],
     navLabel: "Photo & Video Editing",
     icon: Film,
     metaTitle: "Photo & Video Editing in Dubai - Xerxes Duane",

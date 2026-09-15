@@ -259,9 +259,32 @@ Not yet implemented. Listed with the evidence so they can be picked up.
   real Google rating, four documented case studies). Recommend replacing it; it is
   a content/judgement call for the owner, and the counter itself is honest (it
   renders nothing rather than a zero when the store is unavailable).
-- **P2-5 · Query-to-page map.** `/seo-dubai`, `/answer-engine-optimization-dubai` and
-  `/generative-engine-optimization-dubai` risk cannibalising each other. Each needs a
-  stated distinct use case and honest explanation of the overlap.
+- **P2-5 · Query-to-page map — FIXED.** Two problems, one root: nothing on the site
+  said which of the three search pages was for which job, and nothing linked them
+  as alternatives.
+
+  **The disambiguation block.** All three pages now carry the same block — heading
+  "SEO, AEO or GEO: which one do you actually need?" — listing all three with the
+  buyer situation each one fits, marking the current page "this page" and linking
+  the other two. It states the overlap rather than hiding it, and names SEO as the
+  one to do first, which is the answer that costs me work on two of the three pages.
+
+  | Page | Stated use case |
+  | --- | --- |
+  | `/seo-dubai` | Blue links and Google Maps for ready-to-buy searches. The one to start with. |
+  | `/answer-engine-optimization-dubai` | Already ranking, now a candidate for the answer box above the links. |
+  | `/generative-engine-optimization-dubai` | Buyers researching in ChatGPT, Gemini or Perplexity. |
+
+  **Internal links.** The "Other services" grid was
+  `SERVICE_PAGES.filter(...).slice(0, 6)` — the first six of the list, on every
+  page. So all 13 service pages shipped the same six links, and
+  `/video-editing-dubai` linked to Odoo, SEO, AEO and GEO but never to branding.
+  `ServicePageData` gained a required `related: string[]`, curated per page, and the
+  grid now renders that.
+
+  Verified in `dist/`: 13 distinct related-link sets (no two pages share one), the
+  compare block present on exactly the 3 search pages, each with exactly one "this
+  page" marker and links to the other two.
 - **P2-6 · Mobile swipe rails.** Several boards become horizontally-swiped rails below
   `sm`. The offer, proof and next step must be understandable without discovering
   off-screen cards. Not re-verified in this pass.

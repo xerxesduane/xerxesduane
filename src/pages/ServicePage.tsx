@@ -13,6 +13,7 @@ import FaqList from "../components/FaqList";
 import PageHeader from "../components/page/PageHeader";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
 import ServiceVisual from "../components/ServiceVisual";
+import ServiceCompare from "../components/ServiceCompare";
 import ServicePackages from "../components/ServicePackages";
 
 export default function ServicePage({ page }: { page: ServicePageData }) {
@@ -73,6 +74,8 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
       />
 
       <ServiceVisual page={page} />
+
+      <ServiceCompare page={page} />
 
       {page.slug === "ai-automation-dubai" && (
         <section className="pb-10 sm:pb-14">
@@ -219,26 +222,29 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
             </h2>
           </Reveal>
           <div className="mx-auto mt-8 grid max-w-3xl gap-4 sm:grid-cols-3">
-            {SERVICE_PAGES.filter((p) => p.slug !== page.slug).slice(0, 6).map((p) => {
-              const PIcon = p.icon;
-              return (
-                <a
-                  key={p.slug}
-                  href={`/${p.slug}`}
-                  className="glass glass-hover group flex items-center gap-3 rounded-2xl p-5"
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold ring-1 ring-gold/20">
-                    <PIcon size={18} strokeWidth={1.8} />
-                  </span>
-                  <span className="text-sm font-medium text-cream transition-colors group-hover:text-gold">
-                    {p.navLabel}
-                    <span className="mt-0.5 block font-mono text-[11px] uppercase tracking-wider text-muted">
-                      in Dubai
+            {page.related
+              .map((slug) => SERVICE_PAGES.find((p) => p.slug === slug))
+              .filter((p): p is ServicePageData => Boolean(p))
+              .map((p) => {
+                const PIcon = p.icon;
+                return (
+                  <a
+                    key={p.slug}
+                    href={`/${p.slug}`}
+                    className="glass glass-hover group flex items-center gap-3 rounded-2xl p-5"
+                  >
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gold/10 text-gold ring-1 ring-gold/20">
+                      <PIcon size={18} strokeWidth={1.8} />
                     </span>
-                  </span>
-                </a>
-              );
-            })}
+                    <span className="text-sm font-medium text-cream transition-colors group-hover:text-gold">
+                      {p.navLabel}
+                      <span className="mt-0.5 block font-mono text-[11px] uppercase tracking-wider text-muted">
+                        in Dubai
+                      </span>
+                    </span>
+                  </a>
+                );
+              })}
           </div>
         </div>
       </section>
