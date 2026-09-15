@@ -386,6 +386,93 @@ definition):
 
 ---
 
+---
+
+## Performance
+
+The first pass listed Lighthouse and Core Web Vitals as **not measured**, because
+this sandbox has no browser egress to the live site. It does have a browser and
+the production build, so these are **lab measurements of the built site served
+locally** — they are not field data, and they must not be reported as CrUX or as
+what a real visitor in Dubai experiences. What they are good for is finding
+things that are wrong by construction, and one was.
+
+### The largest contentful element was invisible until JavaScript ran — **FIXED**
+
+Framer Motion writes a variant's `initial` state into the server render. The page
+header used `fadeUp`, whose hidden state is `opacity: 0`, so **every prerendered
+route shipped its `h1` as `style="opacity:0;transform:translateY(28px)"`** — and
+40 elements on a service page carried `opacity:0` in the HTML.
+
+Traced on `/seo-dubai`, frame by frame:
+
+| | Before | After |
+| --- | --- | --- |
+| First contentful paint | 160ms | 104ms |
+| `h1` opacity at 73ms | **0** | **1** |
+| `h1` still invisible at | 613ms | — |
+| **LCP** | **1348ms** | **496ms** |
+
+Ruled out first, by measuring rather than guessing: the intro sequence (LCP was
+1292ms with `prefers-reduced-motion`, which skips it entirely) and font loading
+(1324ms with every `woff2` blocked). Both were innocent. The cause was the
+header's own entrance animation, and the prerendered `opacity: 0` proved it.
+
+**The fix** is a new `riseIn` variant for above-the-fold content: it keeps the
+14px rise and drops the fade, so the text is legible in the prerendered HTML and
+from the first paint. `y` is a transform, so it neither hides the element from
+LCP nor shifts layout. Verified after: the `h1` is at opacity 1 from 73ms and
+still animates, sliding from `translateY(14px)` to 0 between 458ms and ~750ms.
+
+Applied to `PageHeader` (the LCP element on every inner route) and `HeroBlock`
+(the homepage). Scroll reveals below the fold keep `fadeUp` — that is what a
+reveal is for.
+
+### After, across eight routes
+
+| Route | LCP before | LCP after | CLS |
+| --- | --- | --- | --- |
+| `/` | 1216ms | **492ms** | 0 |
+| `/ar` | 1548ms | **492ms** | 0 |
+| `/seo-dubai` | 1304ms | **536ms** | 0 |
+| `/pricing` | 1496ms | **464ms** | 0 |
+| `/contact` | 1308ms | **464ms** | 0 |
+| `/ai-lab` | 1340ms | **460ms** | 0 |
+| `/case-studies` | 1324ms | **476ms** | 0 |
+| `/insights/website-cost-dubai` | 472ms | **504ms** | 0 |
+
+**CLS is 0 on every route sampled**, before and after.
+
+### Checked and found fine
+
+- **Thumbnails are not oversized.** The 800px cap looked wasteful next to a
+  322px render on the home board, until the portfolio grid was measured at 490px
+  — which at 2× DPR wants 980px. The cap is right; the hypothesis was wrong.
+- **All 30 work thumbnails lazy-load**, and the portfolio grid ones carry
+  intrinsic `width`/`height`. The six on the home board do not, which is a CLS
+  risk in principle, though measured CLS there is 0 because they sit in a
+  fixed-height clipped reel.
+- **The intro sequence is already once per tab** (`sessionStorage`), skipped
+  under `prefers-reduced-motion`, dismissible by any click or key, `aria-hidden`,
+  and never in the prerendered HTML.
+- **JavaScript is split per route.** The vendor chunk is 320KB and the shared
+  entry 166KB uncompressed, with route chunks of 9–23KB.
+
+### Open, for the owner
+
+**5.4MB of the 11.2MB media payload is never requested by any route:**
+`public/brand/xerxes-magdaluyo-photo.jpeg` (2.88MB, 3764×4160 — the unprocessed
+original behind the 19KB `portrait-560.webp` the site actually uses) and
+`public/hero/hero-1080.mp4` (2.48MB) with its poster, left behind when the hero
+video was removed. They cost visitors nothing, because nothing requests them, but
+they are deployed on every push and the portrait sits at a guessable public URL.
+
+I have not moved or deleted them: `scripts/process-hero-video.mjs` writes to
+`public/hero/` by design, and the portrait is the only copy outside git history.
+The repo already has `brand-kit/` and `work-raw/` for source assets that are not
+deployed — say the word and both move there, which keeps them in the repo and out
+of the deploy.
+
 ## Facts needed from the owner
 
 Nothing here is blocking a deploy. Each one is a claim the site makes, or a
@@ -462,7 +549,8 @@ have assumed consent. Say if any should be anonymised.
   `<script>` stripped.
 - **Page heights, tap targets, text size, overflow:** headless Chromium
   (Playwright) at 1880×900, 1536×864, 1440×900, 1280×800, 1280×720 and 390×844.
-- **Not measured in this pass:** Lighthouse, Core Web Vitals, image weight, JS/CSS
+- **Measured later, in the Performance section below** (lab, not field): LCP, CLS,
+  per-route transfer weight and image weight. Still not measured: Lighthouse, JS/CSS
   bundle deltas, automated axe checks. The sandbox has no browser egress to the
   live site, so no field data was available and none is claimed.
 

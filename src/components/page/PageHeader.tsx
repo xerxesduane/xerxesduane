@@ -1,7 +1,7 @@
 import { m } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
-import { fadeUp, stagger } from "../../lib/motion";
+import { riseIn, stagger } from "../../lib/motion";
 
 interface PageHeaderProps {
   eyebrow: string;
@@ -53,7 +53,7 @@ export default function PageHeader({
       */}
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between sm:gap-8 board:grid board:grid-cols-[1fr_auto] board:gap-x-8 board:gap-y-0">
         <div className="min-w-0 board:contents">
-          <m.span variants={fadeUp} className="eyebrow board:col-start-1 board:row-start-1 board:self-center">
+          <m.span variants={riseIn} className="eyebrow board:col-start-1 board:row-start-1 board:self-center">
             {Icon ? (
               <Icon size={14} strokeWidth={2.1} aria-hidden />
             ) : (
@@ -62,14 +62,14 @@ export default function PageHeader({
             {eyebrow}
           </m.span>
           <m.h1
-            variants={fadeUp}
+            variants={riseIn}
             className={`mt-3 max-w-[20ch] text-balance font-display font-semibold text-fg board:col-span-2 board:row-start-2 board:mt-2 board:max-w-[26ch] ${titleClass}`}
           >
             {title}
           </m.h1>
           {meta && (
             <m.div
-              variants={fadeUp}
+              variants={riseIn}
               className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 font-technical text-xs text-fg-faint board:col-span-2 board:row-start-3 board:mt-2"
             >
               {meta}
@@ -78,7 +78,7 @@ export default function PageHeader({
         </div>
 
         {actions && (
-          <m.div variants={fadeUp} className="flex shrink-0 flex-wrap items-center gap-2 board:col-start-2 board:row-start-1 board:justify-end">
+          <m.div variants={riseIn} className="flex shrink-0 flex-wrap items-center gap-2 board:col-start-2 board:row-start-1 board:justify-end">
             {actions}
           </m.div>
         )}
@@ -86,7 +86,7 @@ export default function PageHeader({
 
       {lede && (
         <m.p
-          variants={fadeUp}
+          variants={riseIn}
           className="mt-4 max-w-[68ch] text-[1.02rem] leading-relaxed text-fg-soft board:mt-2.5 board:text-[0.95rem] board:leading-[1.5]"
         >
           {lede}
