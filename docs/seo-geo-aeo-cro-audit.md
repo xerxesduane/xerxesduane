@@ -103,6 +103,13 @@ precise business location that does not exist.
 **Done:** the `geo` node is deleted. `areaServed` (Dubai, Sharjah, UAE,
 Philippines) and the locality-level address are kept, both truthful.
 
+⚠️ **This fix was incomplete, found later.** Removing the `geo` block from the
+JSON-LD left `<meta name="ICBM" content="25.2048, 55.2708" />` in `index.html` —
+the same Dubai city centroid, the same invented precision, injected into all 47
+routes. It survived because it is a meta tag rather than schema, and the original
+check only looked at JSON-LD. **Now removed.** `geo.region` (`AE-DU`) and
+`geo.placename` (`Dubai`) stay: they are locality-level and true.
+
 ⚠️ **Owner decision still needed** — see [Facts needed from the owner](#facts-needed-from-the-owner), item 1. The entity is still
 typed `ProfessionalService + LocalBusiness`, which implies a visitable premises. If
 there is no customer-facing address, this should become `Organization` +
@@ -622,6 +629,30 @@ results, which is the owner's to supply. Also worth a look: `/seo-dubai` shows t
 Wellington Cash for Cars study, which is **Google Ads** — paid search, not SEO. The
 category is displayed, so nothing is misrepresented, but it is adjacent proof
 rather than proof.
+
+---
+
+## Arabic pages
+
+Five routes are Arabic: `/ar` and four service pages. All five declare
+`lang="ar"`, `dir="rtl"` and `og:locale: ar_AR` correctly, and the service pages
+carry `Service` + `BreadcrumbList` with `inLanguage: "ar"`.
+
+Two things were wrong.
+
+**The site-wide `WebSite` node said `inLanguage: "en"`.** That `@graph` is
+injected into every prerendered page, so all five Arabic routes carried schema
+declaring the site they are on is English. It now lists `["en", "ar"]`, which is
+what a bilingual site actually is.
+
+**The skip link was untranslated.** It is the first thing a keyboard or
+screen-reader user reaches, and on a page declaring `lang="ar"` it announced
+"Skip to content" in English. Now `تخطَّ إلى المحتوى`, from `AR_CHROME`.
+
+Extracted every visible text node on `/ar` that contains Latin characters and no
+Arabic. After the fix the complete list is: `Xerxes Duane`, `@xerxesduane`, and
+`English` — the brand, the handle, and the language switch, which is correctly in
+the language it switches to.
 
 ## Facts needed from the owner
 
