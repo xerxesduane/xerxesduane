@@ -5,6 +5,13 @@ commit `0cf13d8`, not from the running dev server and not from the live site.
 Every number below came from a script over that output or from headless
 Chromium; where something was not measured, it says so.
 
+This started as the Phase 1 baseline and has been kept current as each item was
+fixed. Sections below the P0/P1/P2 lists — one-screen fit, performance, CRO, the
+regression guard and the facts needed from the owner — were added as that work
+was done. Every claim carries the measurement behind it, and where something was
+checked and turned out to be fine, or where an earlier claim of mine turned out
+to be wrong, it says so rather than being quietly dropped.
+
 Re-run the baseline with:
 
 ```bash
@@ -26,9 +33,19 @@ npm run build
 | Content | `src/data/*.ts` — services, case studies, insights, pricing, AI Lab |
 | Analytics | GA4 via `gtag`, consent-gated (`src/components/ConsentBanner.tsx`), thin wrapper in `src/lib/analytics.ts` |
 
-**Content does not depend on client JavaScript.** Titles, descriptions,
-canonicals, hreflang, headings, body copy, internal links and JSON-LD are all in
-the prerendered HTML. Verified by reading `dist/**/index.html` directly.
+**Content does not depend on client JavaScript** — for a crawler. Titles,
+descriptions, canonicals, hreflang, headings, body copy, internal links and
+JSON-LD are all in the prerendered HTML, verified by reading `dist/**/index.html`
+directly.
+
+⚠️ **Correction to that, found later.** Being *in* the HTML is not the same as
+being *visible* in it. Framer Motion writes each variant's initial state into the
+server render, so the page header shipped its `h1` as `style="opacity:0"` and 40
+elements on a service page carried `opacity:0`. A crawler that reads the DOM was
+fine; a visitor whose JavaScript was slow or blocked saw an empty header, and LCP
+landed at 1348ms instead of 160ms. Fixed for the header and hero — see
+[Performance](#performance). Scroll reveals below the fold still start hidden,
+which is what a reveal is.
 
 ---
 
