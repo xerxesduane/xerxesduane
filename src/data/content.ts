@@ -702,7 +702,12 @@ export const PACKAGES = [
   {
     name: "The Systems Audit",
     price: "Free",
-    note: "for a limited time",
+    // Was "for a limited time". There is no deadline — the free audit is the
+    // standing primary CTA on every page of the site — so the scarcity was
+    // manufactured, and it sat oddly next to a page that elsewhere says "I'll
+    // tell you when you don't need me". The sibling notes are factual
+    // ("fixed price, not a deposit"); this one is now too.
+    note: "no obligation",
     pitch: "Start here",
     body: "A 60-minute diagnostic of your whole stack: website, leads, CRM, WhatsApp, spreadsheets, automation. You leave with a plain-English map of what's disconnected and a prioritised roadmap of what to fix first. No pressure, no lock-in.",
     cta: "Book your free systems audit",

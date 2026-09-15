@@ -682,6 +682,64 @@ Arabic. After the fix the complete list is: `Xerxes Duane`, `@xerxesduane`, and
 `English` — the brand, the handle, and the language switch, which is correctly in
 the language it switches to.
 
+---
+
+## Claims audit
+
+Scanned every copy data file and page component for guarantees, superlatives,
+ranking promises, unsourced statistics and urgency. Most hits were the site doing
+the right thing — "guarantee" appears mostly inside FAQs that **refuse** to
+guarantee, and "best" mostly inside quoted search queries. Two things were real.
+
+### Manufactured urgency — **FIXED**
+
+`/pricing` presented the free systems audit as **"Free · for a limited time"**.
+There is no deadline: the free audit is the standing primary CTA on every page of
+the site, and has been throughout. The scarcity was invented, and it sat oddly on
+a site that elsewhere says "I'll tell you when you don't need me, and I mean it".
+
+Now `"no obligation"` — factual, and in the same register as the sibling notes
+("fixed price, not a deposit").
+
+### Three headline results have nothing behind them — **for the owner**
+
+`FEATURED_RESULTS` carries seven numbers, rendered on the home page and
+`/projects`. Four of them trace to a documented case study — the figures match
+exactly:
+
+| Result | Case study |
+| --- | --- |
+| 791 customer conversations | AYA Home Spa |
+| 610 conversions from 1,530+ clicks | Wellington Cash for Cars |
+| 452 direction requests in one month | Saladmaster UAE |
+| 8 → 1 workflows in one operating system | Blocktec Philippines |
+
+**Three do not**, and a reader has no way to check them:
+
+| Result | Attributed to | What is missing |
+| --- | --- | --- |
+| **800%** increase in organic visits | "SEO campaign · UAE" | client, period, baseline |
+| **300%** increase in leads | "Lead generation · Dubai" | client, period, baseline |
+| **50%+** increase in overall sales | "Growth campaign · UAE" | client, period, baseline |
+
+A percentage with no client, no timeframe and no baseline is the kind of claim
+that costs more trust than it earns with the careful buyer this site is written
+for — and 800% is large enough to invite the doubt.
+
+**Not changed.** I will not delete a client result on the assumption it is false,
+and I cannot add a source I do not have. What is needed from you, per number: the
+client (even anonymised as "a Dubai logistics firm"), the period it covers, and
+the baseline it grew from. With those three facts each one becomes defensible and
+I will rewrite them. Without them, the honest options are to anonymise them
+further into a range or to retire them — your call, and I have not made it.
+
+The four platform-metric case studies (Meta Ads reach, Google Ads CTR and CPC,
+Google Business Profile views) read like genuine exports — `8.28%` and `$6.89`
+have the texture of real data rather than round invented numbers — and each is
+attributed to a named client with a category and location. Worth confirming you
+can still produce the platform screenshots behind them, since that is what a
+sceptical prospect would ask for.
+
 ## Facts needed from the owner
 
 Nothing here is blocking a deploy. Each one is a claim the site makes, or a
@@ -757,7 +815,13 @@ Writing one means real client results, which only you can supply — and I will 
 invent them. Tell me which builds you can document and I will write them up from
 what you give me.
 
-**11. `/seo-dubai` shows a Google Ads case study.** Wellington Cash for Cars is
+**11. The three headline results with no case study behind them** — 800% organic
+visits, 300% leads, 50%+ sales. See [Claims audit](#claims-audit). Per number I
+need the client (anonymised is fine), the period, and the baseline. Until then
+they stand as written, because deleting a client result on a hunch is as wrong as
+inventing one.
+
+**12. `/seo-dubai` shows a Google Ads case study.** Wellington Cash for Cars is
 paid search, not SEO. The category is displayed so nothing is misrepresented, but
 it is adjacent proof rather than proof. Either it stays as the honest best
 available, or an SEO engagement gets written up instead. Your call.
