@@ -169,10 +169,34 @@ found a gap where a level should be.
 `h3` where a board genuinely sits beneath its own `h2`. *After: 0/47 routes skip a
 level.*
 
-### P1-7 · Metadata length — **OPEN**
+### P1-7 · Metadata length — **FIXED**
 
-8 titles exceed 60 characters and 7 descriptions exceed 165 (they will be truncated
-in the SERP, not penalised). Longest: `/video-editing-dubai` (194 chars).
+8 titles ran past 60 characters and 7 descriptions past 165, so the SERP cut them.
+Worse, the generated case-study descriptions used a hard `.slice(0, 160)`, which
+ended `/case-studies/wellington-cash-for-cars-google-ads` on `"...and convers"`.
+
+Three changes, in `src/lib/seo.ts`:
+
+- `brandedTitle()` appends `" - Xerxes Duane"` only when the result still fits in
+  60 characters. The domain already sits beside the title in the SERP, so the
+  brand suffix is the redundant half and the only one worth dropping. Applied to
+  insight posts, case studies, `/services`, `/contact` and `/starter`.
+- `clampDescription()` replaces the hard slice. It cuts at the last sentence end
+  inside the limit, or failing that at a word boundary with an ellipsis, and is
+  applied in `buildHeadTags` so it covers generated and hand-written descriptions
+  alike. It is a no-op below 160 characters.
+- The seven over-length hand-written descriptions were rewritten rather than left
+  to the clamp, so nothing meaningful is dropped. `/generative-engine-optimization-dubai`
+  needed it twice over: its description still promised "become the business
+  ChatGPT, Gemini, and Perplexity recommend" and "AI engines surface and cite
+  you", which the page's own lede had already stopped claiming under P2-3.
+
+The four case studies now carry an authored `metaDescription` (new optional field
+on `CaseStudy`), so no case study relies on the clamp at all.
+
+**Verified across all 47 routes in `dist/`:** 0 titles over 60, 0 descriptions
+over 160, 0 descriptions ending in an ellipsis, 0 duplicate titles, 0 duplicate
+descriptions.
 
 ---
 

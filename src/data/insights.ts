@@ -602,7 +602,7 @@ export const INSIGHTS: InsightPost[] = [
     slug: "how-much-does-odoo-cost-dubai",
     title: "How much does Odoo cost for a small business in Dubai?",
     description:
-      "A plain-English breakdown of what Odoo actually costs a Dubai small business, licenses, implementation, and the hidden costs, so you can budget without surprises.",
+      "A plain-English breakdown of what Odoo actually costs a Dubai small business: licences, implementation and the costs nobody mentions up front.",
     date: "2026-06-01",
     author: "Xerxes Duane",
     readingMinutes: 6,

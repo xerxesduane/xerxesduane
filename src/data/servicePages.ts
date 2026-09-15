@@ -139,7 +139,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     icon: Code2,
     metaTitle: "Web Development in Dubai - Xerxes Duane",
     metaDescription:
-      "Custom websites, web apps, and high-converting landing pages for Dubai small businesses. Fast, mobile-first, SEO-ready, with fixed quotes and no lock-in. Book a free systems audit.",
+      "Websites, web apps and landing pages for Dubai small businesses. Fast, mobile-first and search-ready, with fixed quotes and no lock-in. Book a free systems audit.",
     ogTitle: "Web Development in Dubai",
     jsonLdName: "Web Development & Web Applications",
     eyebrow: "Web Development · Dubai",
@@ -416,7 +416,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     icon: Sparkles,
     metaTitle: "Generative Engine Optimization (GEO) in Dubai - Xerxes Duane",
     metaDescription:
-      "GEO in Dubai: become the business ChatGPT, Gemini, and Perplexity recommend. I shape content, entities, and citations so AI engines surface and cite you. Book a free systems audit.",
+      "GEO in Dubai. I shape your content, entities and citations so ChatGPT, Gemini and Perplexity have accurate material to draw on. Book a free systems audit.",
     ogTitle: "Generative Engine Optimization (GEO) in Dubai",
     jsonLdName: "Generative Engine Optimization (GEO)",
     eyebrow: "GEO · Dubai",
@@ -485,7 +485,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     icon: Code2,
     metaTitle: "Custom Software Development in Dubai - Xerxes Duane",
     metaDescription:
-      "Custom software development in Dubai for growing businesses: internal tools, client portals, workflow systems, and integrations built around how your team actually works.",
+      "Custom software development in Dubai: internal tools, client portals, workflow systems and integrations built around how your team actually works.",
     ogTitle: "Custom Software Development in Dubai",
     jsonLdName: "Custom Software Development",
     eyebrow: "Custom Software · Dubai",
@@ -900,7 +900,7 @@ export const SERVICE_PAGES: ServicePageData[] = [
     icon: Film,
     metaTitle: "Photo & Video Editing in Dubai - Xerxes Duane",
     metaDescription:
-      "Photo and video editing in Dubai for social reels, ads, interviews, events and brand films, plus product and campaign photo retouching. Clean pacing, captions, colour, and channel-ready exports.",
+      "Photo and video editing in Dubai for reels, ads, interviews, events and brand films, plus photo retouching. Clean pacing, captions, colour, ready-to-post exports.",
     ogTitle: "Photo & Video Editing in Dubai",
     jsonLdName: "Photo & Video Editing",
     eyebrow: "Photo & Video Editing · Dubai",

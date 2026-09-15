@@ -286,7 +286,7 @@ const PRICING_META: PageMeta = {
   title: "Pricing - Xerxes Duane",
   ogTitle: "Pricing - Xerxes Duane",
   canonical: `${SITE_ORIGIN}/pricing`,
-  description: `Published starting prices for websites, Odoo ERP, CRM, automation and AI in Dubai. Landing pages from ${aed(2500)}, Odoo from ${aed(12000)}. ${NONPROFIT.label} for registered non-profits, churches and charities.`,
+  description: `Published starting prices for websites, Odoo ERP, CRM, automation and AI in Dubai. Landing pages from ${aed(2500)}, Odoo from ${aed(12000)}. ${NONPROFIT.label} for charities.`,
   jsonLd: [
     offerCatalog(),
     {
@@ -303,7 +303,7 @@ const PRICING_META: PageMeta = {
 };
 
 const STARTER_META: PageMeta = {
-  title: `${STARTER.name} - a complete website for ${aed(STARTER.price)} - Xerxes Duane`,
+  title: brandedTitle(`${STARTER.name} - a complete website for ${aed(STARTER.price)}`),
   ogTitle: `${STARTER.name} - a complete website for ${aed(STARTER.price)}`,
   canonical: `${SITE_ORIGIN}/${STARTER.slug}`,
   description: `A finished one-page website in Dubai for a fixed ${aed(STARTER.price)}. Mobile-first, WhatsApp contact, and yours outright. ${aed(STARTER.price * NONPROFIT.rate)} for churches and charities.`,
@@ -446,12 +446,48 @@ const SHOWREEL_META: PageMeta = {
 const AI_LAB_META: PageMeta = {
   title: "AI Lab - Live AI Tools You Can Try - Xerxes Duane",
   description:
-    "Try live AI tools built for real business workflows: WhatsApp automation, bilingual Arabic/English assistants, lead qualification, invoices, content, and more. No sign-up.",
+    "Try live AI tools built for real business workflows: WhatsApp automation, bilingual Arabic/English assistants, lead qualification, invoices and more.",
   canonical: `${SITE_ORIGIN}/ai-lab`,
   ogTitle: "AI Lab - Xerxes Duane",
   ogImage: `${SITE_ORIGIN}/brand/og/demos.png`,
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "AI Lab", url: `${SITE_ORIGIN}/ai-lab` }])],
 };
+
+/**
+ * Google cuts the SERP title at roughly 600px, which is about 60 characters at
+ * typical widths. Where "<page> - Xerxes Duane" would run past that, the brand
+ * suffix is the half worth dropping: the domain is already shown beside the
+ * title, so the suffix is the only redundant part.
+ */
+const TITLE_MAX = 60;
+function brandedTitle(title: string): string {
+  const full = `${title} - Xerxes Duane`;
+  return full.length <= TITLE_MAX ? full : title;
+}
+
+/**
+ * Descriptions past ~160 characters get cut mid-word in the SERP. Cutting here
+ * instead means the cut lands on a sentence or at worst a word boundary. A hard
+ * `.slice(0, 160)` on the generated case-study descriptions had been ending one
+ * of them on "...and convers".
+ *
+ * Applied in `buildHeadTags` so it covers generated and hand-written
+ * descriptions alike; it is a no-op for anything already short enough.
+ */
+const DESCRIPTION_MAX = 160;
+export function clampDescription(text: string): string {
+  if (text.length <= DESCRIPTION_MAX) return text;
+  const window = text.slice(0, DESCRIPTION_MAX + 1);
+  const sentence = Math.max(
+    window.lastIndexOf(". "),
+    window.lastIndexOf("? "),
+    window.lastIndexOf("! "),
+  );
+  if (sentence > DESCRIPTION_MAX / 2) return text.slice(0, sentence + 1);
+  const word = window.lastIndexOf(" ");
+  const cut = text.slice(0, word > 0 ? word : DESCRIPTION_MAX);
+  return `${cut.replace(/[,;:\s]+$/, "")}...`;
+}
 
 export function getPageMeta(path: string): PageMeta {
   const slug = pathToSlug(path);
@@ -459,7 +495,7 @@ export function getPageMeta(path: string): PageMeta {
   if (slug === "services" || slug === "contact") {
     const title = slug === "services" ? "Services" : "FAQs & Contact";
     return {
-      title: `${title} - Xerxes Duane`,
+      title: brandedTitle(title),
       ogTitle: `${title} - Xerxes Duane`,
       canonical: `${SITE_ORIGIN}/${slug}`,
       description: slug === "services"
@@ -489,8 +525,10 @@ export function getPageMeta(path: string): PageMeta {
       // the article has to be chosen at render time rather than stored.
       const article = sector && /^[aeiou]/i.test(sector) ? "an" : "a";
       return {
-        title: `${study.client} - ${study.category} case study - Xerxes Duane`,
-        description: `${study.category} for ${study.client}${sector ? `, ${article} ${sector.toLowerCase()} business` : ""}. ${study.summary}`.slice(0, 160),
+        title: brandedTitle(`${study.client} - ${study.category} case study`),
+        description:
+          study.metaDescription ??
+          `${study.category} for ${study.client}${sector ? `, ${article} ${sector.toLowerCase()} business` : ""}. ${study.summary}`,
         canonical,
         ogTitle: `${study.client} - ${study.category} case study`,
         jsonLd: [
@@ -559,7 +597,7 @@ export function getPageMeta(path: string): PageMeta {
     if (post) {
       const canonical = `${SITE_ORIGIN}/insights/${post.slug}`;
       return {
-        title: `${post.title} - Xerxes Duane`,
+        title: brandedTitle(post.title),
         description: post.description,
         canonical,
         ogTitle: post.title,
@@ -647,6 +685,7 @@ function esc(s: string): string {
 /** Build the per-route <head> markup injected into the prerendered HTML. */
 export function buildHeadTags(path: string): string {
   const m = getPageMeta(path);
+  const description = clampDescription(m.description);
   const ogImage = ogImageUrl(m.ogImage);
   const locale = m.locale ?? "en_US";
   const localeAlternates = new Set<string>();
@@ -655,7 +694,7 @@ export function buildHeadTags(path: string): string {
   }
   const tags = [
     `<title>${esc(m.title)}</title>`,
-    `<meta name="description" content="${esc(m.description)}" />`,
+    `<meta name="description" content="${esc(description)}" />`,
     `<link rel="canonical" href="${esc(m.canonical)}" />`,
     `<meta name="robots" content="${m.noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}" />`,
     `<meta name="googlebot" content="${m.noindex ? "noindex, follow" : "index, follow"}" />`,
@@ -663,7 +702,7 @@ export function buildHeadTags(path: string): string {
     `<meta property="og:locale" content="${esc(locale)}" />`,
     ...[...localeAlternates].map((alt) => `<meta property="og:locale:alternate" content="${esc(alt)}" />`),
     `<meta property="og:title" content="${esc(m.ogTitle)}" />`,
-    `<meta property="og:description" content="${esc(m.description)}" />`,
+    `<meta property="og:description" content="${esc(description)}" />`,
     `<meta property="og:image" content="${esc(ogImage)}" />`,
     `<meta property="og:image:secure_url" content="${esc(ogImage)}" />`,
     `<meta property="og:image:type" content="image/png" />`,
