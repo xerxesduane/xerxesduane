@@ -279,12 +279,36 @@ phone numbers or message text are ever sent — `label` is the CTA's own wording
 | `whatsapp_click` | Click on any `wa.me` link | `location`, `label`, `cta_slot` |
 | `calendar_click` | Click on the `zcal.co` booking link | `location`, `label`, `cta_slot` |
 | `email_click` | Click on any `mailto:` link | `location`, `label`, `cta_slot` |
+| `form_start` | First focus on any field of the audit form, once per mount | `form_id`, `page` |
+| `form_submit` | Submit attempt that got past the browser's own validation | `form_id`, `page` |
+| `form_error` | A field failed validation | `form_id`, `page`, `source` (`browser` / `server`), `field`/`fields`, `reason`/`codes` |
 | `generate_lead` | **Confirmed** successful form submission | existing |
 | `demo_run`, `demo_engage`, `demo_cta` | AI Lab tool use | existing |
 | `ai_lab_filter` | AI Lab category switch | existing |
 
-**Still missing:** `form_start` and a validation-failure event. Not added in this
-pass.
+The funnel previously had only its last step, so "nobody opens the form" and "people
+open it and give up" were indistinguishable — opposite problems with opposite fixes.
+`form_start` / `form_submit` / `generate_lead` now give the two drop-off rates, and
+`form_error` says which field is doing the damage.
+
+`invalid` does not bubble, so the browser-side handler runs on the capture phase;
+otherwise a failed `required` field is invisible to the page.
+
+**Privacy:** the payloads carry field *names* and error *codes* only. Verified in a
+headless run that a submission of `Test Person` / `+971500000000` produced
+`form_start`, `form_submit`, `generate_lead` with neither string anywhere in any
+payload.
+
+**Verified in a headless run** (`/contact`, gtag re-spied after the page's own
+definition):
+
+| Action | Events |
+| --- | --- |
+| Focus two fields in turn | one `form_start` |
+| Submit empty | `form_error` × 2 — `name`/`missing`, `phone`/`missing` |
+| Submit with `not-an-email` | `form_error` — `email`/`format` |
+| Submit valid, server rejects | `form_submit`, then `form_error` `source: server` |
+| Submit valid, server accepts | `form_submit`, then `generate_lead` |
 
 ---
 
