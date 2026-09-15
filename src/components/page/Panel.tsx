@@ -107,7 +107,7 @@ export default function Panel({
 }: PanelProps) {
   const shell =
     tone === "card"
-      ? "group relative flex flex-col gap-2.5 rounded-card border border-line bg-panel p-4 shadow-card sm:p-[1.15rem]"
+      ? "group relative flex flex-col gap-2.5 rounded-card border border-line bg-panel p-4 shadow-card sm:p-[1.15rem] board:gap-1.5 board:p-[0.85rem]"
       : "group relative flex flex-col gap-2.5";
 
   const head = (label || Icon || iconNode) && (

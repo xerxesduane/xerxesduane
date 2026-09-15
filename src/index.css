@@ -1,21 +1,19 @@
 /* Self-hosted fonts (latin subset) — removes the Google Fonts round-trip */
+/*
+ * Only the families the site actually sets are declared here. Inter, Fraunces
+ * and Space Mono are still named in the stacks below them as fallbacks, but
+ * their @font-face rules are gone on purpose: a fallback declared as a webfont
+ * is not a fallback, it is a second download. Chrome was fetching
+ * inter-600.woff2 (47KB) on every route and four Inter weights plus Space Mono
+ * on /ar (262KB of fonts on one page) to stand in for glyphs it then never
+ * rendered in them - measured with CSS.getPlatformFontsForNode: zero elements
+ * were painting in Inter. Named without an @font-face they resolve to a local
+ * copy when the visitor has one and cost nothing when they do not, which is
+ * what a metric-compatible fallback is for.
+ *
+ * The woff2 files are still in public/fonts/ rather than deleted.
+ */
 @font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('/fonts/plus-jakarta-sans-var.woff2') format('woff2'); }
-@font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/fraunces-400.woff2') format('woff2'); }
-@font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/fraunces-500.woff2') format('woff2'); }
-@font-face { font-family: 'Fraunces'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/fraunces-600.woff2') format('woff2'); }
-@font-face { font-family: 'Fraunces'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/fraunces-italic-400.woff2') format('woff2'); }
-@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/space-mono-400.woff2') format('woff2'); }
-@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/space-mono-700.woff2') format('woff2'); }
-@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/space-mono-700.woff2') format('woff2'); }
-@font-face { font-family: 'Space Mono'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/space-mono-700.woff2') format('woff2'); }
-@font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 400; font-display: swap; src: url('/fonts/space-mono-italic-400.woff2') format('woff2'); }
-@font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 500; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
-@font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 600; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
-@font-face { font-family: 'Space Mono'; font-style: italic; font-weight: 700; font-display: swap; src: url('/fonts/space-mono-italic-700.woff2') format('woff2'); }
-@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/inter-400.woff2') format('woff2'); }
-@font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/inter-500.woff2') format('woff2'); }
-@font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/inter-600.woff2') format('woff2'); }
-@font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('/fonts/inter-700.woff2') format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url('/fonts/jetbrains-mono-400.woff2') format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 500; font-display: swap; src: url('/fonts/jetbrains-mono-500.woff2') format('woff2'); }
 @font-face { font-family: 'JetBrains Mono'; font-style: normal; font-weight: 600; font-display: swap; src: url('/fonts/jetbrains-mono-600.woff2') format('woff2'); }

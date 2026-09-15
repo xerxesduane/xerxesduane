@@ -635,13 +635,13 @@ export default function Demos() {
                     each pill smaller: at the board breakpoint the list is the
                     whole height of the card, and the card sets the height of
                     the row. Tap targets keep their 24px line box below sm. */}
-                <ul className="-mt-1 flex flex-wrap gap-1 board:gap-[0.2rem]">
+                <ul className="-mt-1 flex flex-wrap gap-1 board:gap-x-[0.2rem] board:gap-y-[0.12rem]">
                   {tools.map((d) => (
                     <li key={d.id}>
                       <a
                         href={`/ai-lab#${d.id}`}
                         onClick={openDemo(d)}
-                        className="inline-block rounded-full border border-cream/12 bg-cream/5 px-2.5 py-1 text-xs leading-snug text-cream-dim transition hover:border-gold/40 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent board:px-2 board:py-[0.1rem] board:text-[0.68rem]"
+                        className="inline-block rounded-full border border-cream/12 bg-cream/5 px-2.5 py-1 text-xs leading-snug text-cream-dim transition hover:border-gold/40 hover:text-gold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent board:px-1 board:py-[0.1rem] board:text-[0.68rem]"
                       >
                         {d.eyebrow}
                       </a>

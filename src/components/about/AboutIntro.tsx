@@ -92,7 +92,7 @@ export default function AboutIntro() {
             `min-w-0`: a grid item defaults to `min-width: auto`, so a long
             unbroken string inside would size the column and overflow the card
             on a phone. */}
-        <div className="order-2 min-w-0 p-5 sm:p-6 lg:order-1 lg:py-5 lg:pe-4 lg:ps-8">
+        <div className="order-2 min-w-0 p-5 sm:p-6 lg:order-1 lg:py-5 lg:pe-4 lg:ps-8 board:py-3.5">
           <m.p
             variants={fadeUp}
             className="max-w-[44ch] font-display text-[1.4rem] font-extrabold leading-[1.25] tracking-tight text-fg sm:text-[1.65rem]"
@@ -105,7 +105,7 @@ export default function AboutIntro() {
 
           <m.p
             variants={fadeUp}
-            className="mt-3 max-w-[52ch] text-[0.95rem] leading-snug text-fg-soft"
+            className="mt-3 max-w-[52ch] text-[0.95rem] leading-snug text-fg-soft board:mt-2"
           >
             <span className="font-bold text-fg">Independent since {TRUST.since}</span>, and
             hands-on. My work sits between off-the-shelf tools that never quite fit and enterprise
@@ -119,7 +119,7 @@ export default function AboutIntro() {
               two-column grid that left the title 70px at 1536 and 4px at 1280,
               so every discipline read as "System…". The title gets its own
               line now and cannot be squeezed by anything beside it. */}
-          <m.ol variants={fadeUp} className="mt-4 grid gap-2 sm:grid-cols-2">
+          <m.ol variants={fadeUp} className="mt-4 grid gap-2 sm:grid-cols-2 board:mt-3">
             {DISCIPLINES.map((item, i) => (
               <li key={item.title}>
                 <a

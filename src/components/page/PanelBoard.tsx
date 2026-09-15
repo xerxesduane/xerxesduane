@@ -71,8 +71,8 @@ export default function PanelBoard({
       // sub-full card width means one card always settles in view with the
       // next one peeking, and the scrollbar is hidden because the peek is the
       // affordance.
-      `flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] max-sm:[&>*]:w-[84%] max-sm:[&>*]:shrink-0 max-sm:[&>*]:snap-center [&::-webkit-scrollbar]:hidden sm:grid sm:snap-none sm:grid-cols-2 sm:gap-4 sm:overflow-visible ${cols}`
-    : `grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 ${cols}`;
+      `flex snap-x snap-mandatory gap-3 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] max-sm:[&>*]:w-[84%] max-sm:[&>*]:shrink-0 max-sm:[&>*]:snap-center [&::-webkit-scrollbar]:hidden sm:grid sm:snap-none sm:grid-cols-2 sm:gap-4 sm:overflow-visible board:gap-3 ${cols}`
+    : `grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 board:gap-3 ${cols}`;
   return (
     <m.div
       variants={stagger}
@@ -80,7 +80,7 @@ export default function PanelBoard({
       whileInView="show"
       viewport={VIEWPORT}
       style={washed ? { background: BOARD_WASH } : undefined}
-      className={washed ? `rounded-panel p-3 sm:p-4 ${className}` : className}
+      className={washed ? `rounded-panel p-3 sm:p-4 board:p-1.5 ${className}` : className}
     >
       <div
         ref={scroller}

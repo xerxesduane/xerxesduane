@@ -99,7 +99,7 @@ export default function TabbedViews({ views, label, className = "" }: TabbedView
               tabIndex={on ? 0 : -1}
               onClick={() => show(view.id)}
               onKeyDown={onKey(i)}
-              className={`flex min-h-9 flex-1 items-baseline justify-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold transition sm:flex-none ${
+              className={`flex min-h-9 flex-1 items-baseline justify-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold transition board:min-h-8 board:py-1 sm:flex-none ${
                 on
                   ? "bg-navy text-fg-onSolid shadow-solid"
                   : "text-fg-soft hover:bg-panel-alt hover:text-accent-deep"
