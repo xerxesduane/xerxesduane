@@ -562,6 +562,67 @@ defect, and the new header action means WhatsApp is one tap either way.
 looks intentional — the audit CTA points at `/contact`, which carries the calendar
 — so it is recorded rather than changed.
 
+---
+
+## Internal linking and the built-output QA pass
+
+Built a link graph over all 47 prerendered routes (JSON-LD stripped, so schema
+URLs do not count as links) and validated the rest of the output.
+
+**No orphans.** Every route has at least one internal inbound link. Three things
+were thin enough to be worth fixing:
+
+- **`/starter` was reachable from one page**, `/pricing` — and it is the cheapest
+  way in, the likeliest first purchase for a small business. `/services` already
+  had the words "the budget package" sitting in its header as plain text; they are
+  now the link. 1 → 2 inbound.
+  Separately, `homeBento.ts` carries `href: "/starter"` on that row, and it is
+  never rendered: the home Services card is one card-wide anchor, and nesting a
+  link inside it would be invalid HTML. The field is dead data, left in place.
+- **`/case-studies/saladmaster-crm-web` was reachable only from the index.** The
+  study is "CRM, Web & Brand — a clearer lead-to-demo journey, organised around
+  the way the sales team actually works", which is `/crm-development-dubai`'s
+  promise written down by a client. That page now shows it as proof: 1 → 2
+  inbound, and a service page that had no proof now has some.
+- **`/case-studies/aya-home-spa-meta-ads` still has one inbound link.** It is a
+  Meta Ads campaign and there is no paid-ads service page to host it. Left alone
+  rather than attached to a page it does not fit.
+
+### A proof block that silently rendered nothing — **FIXED**
+
+`/ecommerce-development-dubai` declared `caseStudyClient: "Gilani Mobility"`.
+Gilani Mobility is a **portfolio** client, not a case study, so
+`CASE_STUDIES.find()` returned `undefined` and the page rendered no proof at all —
+while the source looked exactly like a page that had some.
+
+The dead reference is gone, and `npm run check:pricing` — the script for data
+joins that fail silently — now asserts every `caseStudyClient` resolves.
+**Verified by putting the bug back:** it fails with the exact page and name, and
+a non-zero exit.
+
+Type-level alternatives were tried first and rejected, each for a concrete
+reason: `: CaseStudy[]` widens `client` to `string`; `satisfies` alone does not
+stop that widening; `as const` narrows the array into a tuple whose members no
+longer share the optional `scope` and `stats` fields `ServicePage` reads, which
+breaks the build.
+
+### Everything else in the built output
+
+| Check | Result |
+| --- | --- |
+| JSON-LD blocks parse | all, across 47 routes |
+| Canonical points at its own URL | 47/47 |
+| hreflang reciprocal between `en` and `ar` pairs | yes — `/` and `/ar` carry identical, complete sets |
+| Sitemap vs built indexable routes | exact match, 47 = 47 |
+| Orphan pages | none |
+
+**Still only 4 of 13 service pages show a case study** (Odoo, SEO, e-commerce → no,
+CRM). That is a content gap, not a defect: writing a case study means real client
+results, which is the owner's to supply. Also worth a look: `/seo-dubai` shows the
+Wellington Cash for Cars study, which is **Google Ads** — paid search, not SEO. The
+category is displayed, so nothing is misrepresented, but it is adjacent proof
+rather than proof.
+
 ## Facts needed from the owner
 
 Nothing here is blocking a deploy. Each one is a claim the site makes, or a
@@ -628,6 +689,19 @@ case studies. My recommendation is to drop it. Your call; I have not touched it.
 
 **9. Case-study client names.** All four are named publicly and already live, so I
 have assumed consent. Say if any should be anonymised.
+
+**10. Nine of thirteen service pages show no case study**, because there is no
+study that fits them. `/ecommerce-development-dubai` is the sharpest example: it
+used to name Gilani Mobility, who is a real e-commerce client with a live site in
+the portfolio but no written case study, so the page rendered no proof at all.
+Writing one means real client results, which only you can supply — and I will not
+invent them. Tell me which builds you can document and I will write them up from
+what you give me.
+
+**11. `/seo-dubai` shows a Google Ads case study.** Wellington Cash for Cars is
+paid search, not SEO. The category is displayed so nothing is misrepresented, but
+it is adjacent proof rather than proof. Either it stays as the honest best
+available, or an SEO engagement gets written up instead. Your call.
 
 ## How the numbers were taken
 
