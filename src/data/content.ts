@@ -130,14 +130,14 @@ const SERVICE_DEFS: Service[] = [
     title: "AEO (Answer Engine Optimization)",
     tagline: "Be the answer, not a blue link.",
     description:
-      "Optimize your content so voice assistants and Google's AI Overviews quote you directly, with structured data, concise answers, and FAQ schema that win featured snippets and 'position zero'.",
+      "Structure your pages so an answer engine can parse them: question-led headings, the answer stated first, and markup that matches what the page shows. Aimed at being a candidate for the answer box, which is the engine's call to make.",
   },
   {
     icon: Sparkles,
     title: "GEO (Generative Engine Optimization)",
     tagline: "Get cited by ChatGPT & Perplexity.",
     description:
-      "Make your business the source AI engines recommend. I shape your content, entities, and citations so ChatGPT, Gemini, and Perplexity surface and recommend you when buyers ask.",
+      "Give ChatGPT, Gemini and Perplexity something accurate to draw on when your category comes up: sourced content, consistent entity signals, and presence in the places those engines actually read. Measured by how often and how accurately you are surfaced.",
   },
   {
     icon: Film,

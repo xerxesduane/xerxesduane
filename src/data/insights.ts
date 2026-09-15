@@ -13,6 +13,13 @@ export interface InsightPost {
   description: string;
   /** ISO date, YYYY-MM-DD. */
   date: string;
+  /**
+   * ISO date of a meaningful revision — new facts, corrected figures, a
+   * rewritten section. Absent unless that happened: `dateModified` equal to
+   * `datePublished` on every post tells a reader and a crawler nothing, and
+   * bumping it for a typo is the kind of freshness signal that earns distrust.
+   */
+  updated?: string;
   author: string;
   readingMinutes: number;
   body: Block[];

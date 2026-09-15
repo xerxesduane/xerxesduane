@@ -24,6 +24,14 @@ interface PanelProps {
   /** Anchor id, for cards a published #link still points at. */
   id?: string;
   /**
+   * The card's label is a section heading, and on most pages the board sits
+   * directly under the page `h1` — so `h2` is the level that keeps the outline
+   * intact. It was hard-coded to `h3`, which made ten routes jump h1 -> h3 and
+   * left a screen-reader user navigating by heading with a gap where a level
+   * should be. Pass `h3` where a board genuinely sits beneath its own `h2`.
+   */
+  headingLevel?: "h2" | "h3";
+  /**
    * Makes the heading the link instead of the whole card. For panels whose
    * body holds its own links — nesting anchors is invalid, and a card-wide
    * anchor would swallow them.
@@ -87,6 +95,7 @@ export default function Panel({
   blurb,
   href,
   onClick,
+  headingLevel: Heading = "h2",
   labelHref,
   onLabelClick,
   id,
@@ -107,7 +116,7 @@ export default function Panel({
         <IconTile>{iconNode ?? (Icon ? <Icon size={20} strokeWidth={2.2} aria-hidden /> : null)}</IconTile>
       )}
       {label && (
-        <h3 className="min-w-0 flex-1 font-display text-card font-extrabold uppercase tracking-[0.045em] text-fg transition-colors duration-300 group-hover:text-accent-deep group-focus-visible:text-accent-deep">
+        <Heading className="min-w-0 flex-1 font-display text-card font-extrabold uppercase tracking-[0.045em] text-fg transition-colors duration-300 group-hover:text-accent-deep group-focus-visible:text-accent-deep">
           {labelHref ? (
             <a
               href={labelHref}
@@ -127,7 +136,7 @@ export default function Panel({
           ) : (
             label
           )}
-        </h3>
+        </Heading>
       )}
       {href && (
         <ArrowUpRight

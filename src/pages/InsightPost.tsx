@@ -62,9 +62,29 @@ export default function InsightPost({ post }: { post: Post }) {
           title={post.title}
           meta={
             <>
-              <span>{post.author}</span>
+              {/* The byline links to the page that actually describes the
+                  author, which is the same entity the Article schema names by
+                  @id. A name in plain text asserts authorship to a reader and
+                  proves nothing to anyone. */}
+              <a
+                href="/about"
+                rel="author"
+                className="font-semibold text-accent-deep underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
+              >
+                {post.author}
+              </a>
               <span aria-hidden>·</span>
-              <span>{formatDate(post.date)}</span>
+              {/* Machine-readable, so the date a crawler reads and the date a
+                  person reads cannot drift apart. */}
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
+              {post.updated && (
+                <>
+                  <span aria-hidden>·</span>
+                  <span>
+                    Updated <time dateTime={post.updated}>{formatDate(post.updated)}</time>
+                  </span>
+                </>
+              )}
               <span aria-hidden>·</span>
               <span>{post.readingMinutes} min read</span>
             </>
