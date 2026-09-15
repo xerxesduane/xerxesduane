@@ -337,6 +337,12 @@ export interface CaseStudy {
   category: string;
   challenge: string;
   summary: string;
+  /**
+   * SERP description, written to fit inside 160 characters. Without it the
+   * description is assembled from `category`, `client`, `location` and
+   * `summary`, which runs past the limit on every study and gets cut.
+   */
+  metaDescription?: string;
   approach: string[];
   relatedServices: string[];
   image?: string;
@@ -352,6 +358,8 @@ export interface CaseStudy {
 export const CASE_STUDIES: CaseStudy[] = [
   {
     slug: "blocktec-odoo-erp",
+    metaDescription:
+      "Odoo ERP for Blocktec Philippines, a construction materials business: enquiry, quotation, purchasing, inventory and project delivery in one system.",
     client: "Blocktec Philippines",
     location: "Philippines · Construction Materials",
     category: "Odoo ERP",
@@ -382,6 +390,8 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "saladmaster-crm-web",
+    metaDescription:
+      "CRM, web and brand work for Saladmaster UAE, a premium cookware business: a clearer lead-to-demo journey built around how the sales team actually works.",
     client: "Saladmaster UAE",
     location: "UAE · Premium Cookware",
     category: "CRM, Web & Brand",
@@ -435,6 +445,8 @@ export const CASE_STUDIES: CaseStudy[] = [
   */
   {
     slug: "aya-home-spa-meta-ads",
+    metaDescription:
+      "Meta Ads for AYA Home Spa, a Dubai wellness business: a focused paid-social campaign built around strong creative, measured on reach and enquiries.",
     client: "AYA Home Spa",
     location: "Dubai · Wellness",
     category: "Meta Ads",
@@ -461,6 +473,8 @@ export const CASE_STUDIES: CaseStudy[] = [
   },
   {
     slug: "wellington-cash-for-cars-google-ads",
+    metaDescription:
+      "Google Ads for Wellington Cash for Cars, an automotive business: a search campaign built around high-intent queries, disciplined spend and conversions.",
     client: "Wellington Cash for Cars",
     location: "New Zealand · Automotive",
     category: "Google Ads",

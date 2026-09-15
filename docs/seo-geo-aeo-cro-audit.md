@@ -169,10 +169,34 @@ found a gap where a level should be.
 `h3` where a board genuinely sits beneath its own `h2`. *After: 0/47 routes skip a
 level.*
 
-### P1-7 · Metadata length — **OPEN**
+### P1-7 · Metadata length — **FIXED**
 
-8 titles exceed 60 characters and 7 descriptions exceed 165 (they will be truncated
-in the SERP, not penalised). Longest: `/video-editing-dubai` (194 chars).
+8 titles ran past 60 characters and 7 descriptions past 165, so the SERP cut them.
+Worse, the generated case-study descriptions used a hard `.slice(0, 160)`, which
+ended `/case-studies/wellington-cash-for-cars-google-ads` on `"...and convers"`.
+
+Three changes, in `src/lib/seo.ts`:
+
+- `brandedTitle()` appends `" - Xerxes Duane"` only when the result still fits in
+  60 characters. The domain already sits beside the title in the SERP, so the
+  brand suffix is the redundant half and the only one worth dropping. Applied to
+  insight posts, case studies, `/services`, `/contact` and `/starter`.
+- `clampDescription()` replaces the hard slice. It cuts at the last sentence end
+  inside the limit, or failing that at a word boundary with an ellipsis, and is
+  applied in `buildHeadTags` so it covers generated and hand-written descriptions
+  alike. It is a no-op below 160 characters.
+- The seven over-length hand-written descriptions were rewritten rather than left
+  to the clamp, so nothing meaningful is dropped. `/generative-engine-optimization-dubai`
+  needed it twice over: its description still promised "become the business
+  ChatGPT, Gemini, and Perplexity recommend" and "AI engines surface and cite
+  you", which the page's own lede had already stopped claiming under P2-3.
+
+The four case studies now carry an authored `metaDescription` (new optional field
+on `CaseStudy`), so no case study relies on the clamp at all.
+
+**Verified across all 47 routes in `dist/`:** 0 titles over 60, 0 descriptions
+over 160, 0 descriptions ending in an ellipsis, 0 duplicate titles, 0 duplicate
+descriptions.
 
 ---
 
@@ -180,9 +204,30 @@ in the SERP, not penalised). Longest: `/video-editing-dubai` (194 chars).
 
 Not yet implemented. Listed with the evidence so they can be picked up.
 
-- **P2-1 · Templated service-page sections.** SEO/AEO/GEO pages repeat a generic
-  "Capture, Qualify, Assign, Follow up" process block that does not describe those
-  services. Needs page-specific process, deliverables and objections.
+- **P2-1 · Templated service-page sections — FIXED.** The flow block under every
+  service header (`src/components/ServiceVisual.tsx`) picked one of six templates by
+  matching a substring of the slug, so all 13 pages collapsed into six, and
+  `/seo-dubai`, `/answer-engine-optimization-dubai` and
+  `/generative-engine-optimization-dubai` were identical. Worse, the block carried
+  invented data:
+
+  | Element | Was | Now |
+  | --- | --- | --- |
+  | Progress bars | `width: ${52 + index * 13}%` — bars at 52 / 65 / 78 / 91% on every page, measuring nothing | removed |
+  | Status indicator | a pulsing dot labelled **"live flow"**, connected to nothing | removed |
+  | Icon row | three fixed icons (`Bot`, `CircleDollarSign`, `Film`) on all 13 pages, including the ones about branding and SEO | removed |
+  | Body copy | one identical sentence on all 13 pages: "Every build starts with the real journey..." | per-page `flow.note` |
+  | Stage names | 4 generic stages shared across 6 slug groups | 13 authored `flow.stages`, each with a name and a sentence describing what happens |
+
+  Verified in `dist/`: `live flow` 0 occurrences (was 13), `Working model` 0 (was 13),
+  the shared paragraph 0 (was 13), the invented bar widths 0, and 13 distinct flow
+  headings across the 13 service pages. The stage markup is now an `<ol>`, so the
+  01–04 numbering is real list semantics rather than decoration.
+
+  **Still templated, but honestly so:** `ServicePackages` shows the same three scope
+  shapes (Focused / Connected / Ongoing) on every page. It invents nothing and its
+  own copy says "These are starting shapes, not rigid boxes, and none of them has a
+  price on it", so it is left alone.
 - **P2-2 · Article dates and authorship — PARTLY FIXED.** The byline now links to
   `/about` with `rel="author"` — the same entity the `Article` schema names by
   `@id`, so the claim of authorship is checkable rather than asserted in plain
@@ -191,7 +236,30 @@ Not yet implemented. Listed with the evidence so they can be picked up.
   case-insensitive, so it parses as `datetime`). `dateModified` is now emitted
   **only** when a post carries an explicit `updated` date — it used to be set equal
   to `datePublished` on every post, which tells a reader and a crawler nothing.
-  **Still open:** no post yet links a primary source for its factual claims.
+  **Sources — now done.** `InsightPost` gained an optional `sources` list, rendered
+  as a Sources section at the foot of the post. Five of the eleven posts make
+  checkable third-party claims and now cite the vendor's own documentation or
+  pricing page — never a blog summarising it:
+
+  | Post | Sources |
+  | --- | --- |
+  | `whatsapp-automation-not-spam-dubai` | WhatsApp Business Messaging Policy (opt-in), Cloud API docs, Conversation types (the 24-hour window), Message templates, Messaging limits (quality rating) |
+  | `odoo-enterprise-vs-community` | Odoo editions comparison, Odoo pricing |
+  | `how-much-does-odoo-cost-dubai` | Odoo pricing, Odoo editions comparison |
+  | `odoo-vs-zoho-uae` | Odoo pricing, Zoho CRM pricing, Zoho One pricing |
+  | `website-cost-dubai` | the site's own `/pricing` |
+
+  All 13 links were fetched and returned 200, and each target page was checked for
+  the term it is cited for (the policy page for "opt-in", the limits page for
+  "quality rating", and so on).
+
+  The other six posts are judgement, not fact, and carry no sources. Inventing a
+  citation for an opinion is worse than having none.
+
+  `/insights/website-cost-dubai` also had its opener reworded. It stated the AED
+  ranges as impersonal market fact — "a professional website in Dubai usually
+  costs..." — when they are the author's own quoted figures. It now says so and
+  points at `/pricing`, which is the only version of that number anyone can check.
 - **P2-3 · Unverifiable claims — FIXED.** Three pieces of copy promised outcomes the
   site's own FAQs correctly refuse to guarantee:
 
@@ -214,12 +282,61 @@ Not yet implemented. Listed with the evidence so they can be picked up.
   real Google rating, four documented case studies). Recommend replacing it; it is
   a content/judgement call for the owner, and the counter itself is honest (it
   renders nothing rather than a zero when the store is unavailable).
-- **P2-5 · Query-to-page map.** `/seo-dubai`, `/answer-engine-optimization-dubai` and
-  `/generative-engine-optimization-dubai` risk cannibalising each other. Each needs a
-  stated distinct use case and honest explanation of the overlap.
-- **P2-6 · Mobile swipe rails.** Several boards become horizontally-swiped rails below
-  `sm`. The offer, proof and next step must be understandable without discovering
-  off-screen cards. Not re-verified in this pass.
+- **P2-5 · Query-to-page map — FIXED.** Two problems, one root: nothing on the site
+  said which of the three search pages was for which job, and nothing linked them
+  as alternatives.
+
+  **The disambiguation block.** All three pages now carry the same block — heading
+  "SEO, AEO or GEO: which one do you actually need?" — listing all three with the
+  buyer situation each one fits, marking the current page "this page" and linking
+  the other two. It states the overlap rather than hiding it, and names SEO as the
+  one to do first, which is the answer that costs me work on two of the three pages.
+
+  | Page | Stated use case |
+  | --- | --- |
+  | `/seo-dubai` | Blue links and Google Maps for ready-to-buy searches. The one to start with. |
+  | `/answer-engine-optimization-dubai` | Already ranking, now a candidate for the answer box above the links. |
+  | `/generative-engine-optimization-dubai` | Buyers researching in ChatGPT, Gemini or Perplexity. |
+
+  **Internal links.** The "Other services" grid was
+  `SERVICE_PAGES.filter(...).slice(0, 6)` — the first six of the list, on every
+  page. So all 13 service pages shipped the same six links, and
+  `/video-editing-dubai` linked to Odoo, SEO, AEO and GEO but never to branding.
+  `ServicePageData` gained a required `related: string[]`, curated per page, and the
+  grid now renders that.
+
+  Verified in `dist/`: 13 distinct related-link sets (no two pages share one), the
+  compare block present on exactly the 3 search pages, each with exactly one "this
+  page" marker and links to the other two.
+- **P2-6 · Mobile swipe rails — VERIFIED, one defect fixed.** Five boards become
+  horizontal rails below `sm`: `/`, `/ar`, `/portfolio`, `/projects`, `/ai-lab`.
+
+  **Comprehension: passes.** Measured at 390×844, every rail keeps a 41–47px peek
+  of the next card as the affordance, and each page shows its primary CTA on the
+  first screen with no horizontal scrolling — "Book a free audit" on the four
+  English rails, WhatsApp on `/ar`. Nothing about the offer or the next step is
+  hidden behind a swipe. No horizontal page overflow on any of the five.
+
+  **Keyboard access: was broken, now fixed.** The scroll container had no
+  `tabindex`, so it could only be scrolled by a keyboard incidentally, when the
+  browser scrolled a focused card into view. Four of the five rails got away with
+  that because every card is itself an anchor; `/ar` has one card that is not, and
+  nothing stops the next card added anywhere from being plain content. A scroll
+  region that is neither focusable nor full of focusable children fails
+  **WCAG 2.1.1 (Keyboard)**.
+
+  `PanelBoard` now measures its own overflow with a `ResizeObserver` and, only
+  while it actually overflows, sets `tabindex="0"`, `role="group"` and a per-board
+  `aria-label`. Measured rather than always-on because above `sm` the rail is an
+  ordinary grid with nothing to scroll, and a tab stop there would stop nothing.
+
+  | Route | Label | `tabindex` at 390px | Arrow key moves it | `tabindex` at 1280px |
+  | --- | --- | --- | --- | --- |
+  | `/` | Explore the site | 0 | 280px | −1 |
+  | `/ar` | تصفح الموقع | 0 | 266px (RTL, ArrowLeft) | — |
+  | `/portfolio` | Portfolio categories | 0 | 266px | −1 |
+  | `/projects` | Project categories | 0 | 266px | −1 |
+  | `/ai-lab` | AI Lab tools | 0 | 266px | — |
 
 ---
 
@@ -234,12 +351,36 @@ phone numbers or message text are ever sent — `label` is the CTA's own wording
 | `whatsapp_click` | Click on any `wa.me` link | `location`, `label`, `cta_slot` |
 | `calendar_click` | Click on the `zcal.co` booking link | `location`, `label`, `cta_slot` |
 | `email_click` | Click on any `mailto:` link | `location`, `label`, `cta_slot` |
+| `form_start` | First focus on any field of the audit form, once per mount | `form_id`, `page` |
+| `form_submit` | Submit attempt that got past the browser's own validation | `form_id`, `page` |
+| `form_error` | A field failed validation | `form_id`, `page`, `source` (`browser` / `server`), `field`/`fields`, `reason`/`codes` |
 | `generate_lead` | **Confirmed** successful form submission | existing |
 | `demo_run`, `demo_engage`, `demo_cta` | AI Lab tool use | existing |
 | `ai_lab_filter` | AI Lab category switch | existing |
 
-**Still missing:** `form_start` and a validation-failure event. Not added in this
-pass.
+The funnel previously had only its last step, so "nobody opens the form" and "people
+open it and give up" were indistinguishable — opposite problems with opposite fixes.
+`form_start` / `form_submit` / `generate_lead` now give the two drop-off rates, and
+`form_error` says which field is doing the damage.
+
+`invalid` does not bubble, so the browser-side handler runs on the capture phase;
+otherwise a failed `required` field is invisible to the page.
+
+**Privacy:** the payloads carry field *names* and error *codes* only. Verified in a
+headless run that a submission of `Test Person` / `+971500000000` produced
+`form_start`, `form_submit`, `generate_lead` with neither string anywhere in any
+payload.
+
+**Verified in a headless run** (`/contact`, gtag re-spied after the page's own
+definition):
+
+| Action | Events |
+| --- | --- |
+| Focus two fields in turn | one `form_start` |
+| Submit empty | `form_error` × 2 — `name`/`missing`, `phone`/`missing` |
+| Submit with `not-an-email` | `form_error` — `email`/`format` |
+| Submit valid, server rejects | `form_submit`, then `form_error` `source: server` |
+| Submit valid, server accepts | `form_submit`, then `generate_lead` |
 
 ---
 

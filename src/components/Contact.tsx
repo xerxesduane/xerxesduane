@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { m } from "framer-motion";
 import { useForm, ValidationError } from "@formspree/react";
 import { ArrowUpRight, CalendarCheck, Check, Mail, MapPin, MessageCircle } from "lucide-react";
@@ -29,6 +29,61 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
       track("generate_lead", { method: "formspree", page: source.page });
     }
   }, [state.succeeded, source.page]);
+
+  // The funnel only had its last step. Without a start and a failure event
+  // there is no way to tell "nobody opens the form" apart from "people open it
+  // and give up", which are opposite problems with opposite fixes.
+  //
+  // Every event below carries field *names* and error *codes* only. No value a
+  // visitor typed, and no message text, is ever passed to analytics.
+  const started = useRef(false);
+  const onFirstFocus = useCallback(() => {
+    if (started.current) return;
+    started.current = true;
+    track("form_start", { form_id: "audit", page: source.page });
+  }, [source.page]);
+
+  // `invalid` does not bubble, so this has to run on the capture phase to see
+  // a child field fail the browser's own required/type checks.
+  const onFieldInvalid = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      // The handler sits on the form, so `target` is the field that failed.
+      const el = e.target as HTMLInputElement | HTMLTextAreaElement;
+      const field = el.name;
+      const validity = el.validity;
+      track("form_error", {
+        form_id: "audit",
+        page: source.page,
+        source: "browser",
+        field,
+        reason: validity.valueMissing ? "missing" : validity.typeMismatch ? "format" : "other",
+      });
+    },
+    [source.page],
+  );
+
+  // Formspree rejections, which land after the browser has already passed the
+  // submission. Codes are Formspree's own enum values, not message text.
+  useEffect(() => {
+    if (!state.errors) return;
+    const fields = state.errors.getAllFieldErrors().map(([field]) => String(field));
+    const codes = [
+      ...state.errors.getFormErrors().map((err) => err.code),
+      ...state.errors.getAllFieldErrors().flatMap(([, errs]) => errs.map((err) => err.code)),
+    ];
+    track("form_error", {
+      form_id: "audit",
+      page: source.page,
+      source: "server",
+      fields: fields.join(","),
+      codes: codes.join(","),
+    });
+  }, [state.errors, source.page]);
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    track("form_submit", { form_id: "audit", page: source.page });
+    void handleSubmit(e);
+  };
 
   const whatsappMessage = [
     `Hi Xerxes, I'd like to book a free systems audit.`,
@@ -157,7 +212,9 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
             <m.form
               action={`https://formspree.io/f/${CONTACT.formspreeId}`}
               method="POST"
-              onSubmit={handleSubmit}
+              onSubmit={onSubmit}
+              onFocusCapture={onFirstFocus}
+              onInvalidCapture={onFieldInvalid}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
