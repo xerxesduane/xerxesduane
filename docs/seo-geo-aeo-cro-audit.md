@@ -443,6 +443,35 @@ reveal is for.
 
 **CLS is 0 on every route sampled**, before and after.
 
+### Webfonts were being downloaded to stand in for each other — **FIXED**
+
+Inter, Fraunces and Space Mono were each named as the *fallback* behind a primary
+family — and each also had its own `@font-face` rules. A fallback declared as a
+webfont is not a fallback, it is a second download. Chrome was fetching
+`inter-600.woff2` (47KB) on every route, and on `/ar` four Inter weights plus
+Space Mono: **262KB of fonts on one page**.
+
+None of it was used. Measured with `CSS.getPlatformFontsForNode` on `/contact`:
+**zero elements were painting a single glyph in Inter.** Nothing in the app names
+Inter either — the seven `src/**/*.tsx` matches for it are all "Intercepts",
+"Interest" and "Noor Interiors".
+
+The `@font-face` rules for the three fallback families are gone; the families are
+still named in the stacks. Named without an `@font-face` they resolve to a local
+copy when the visitor has one — which is exactly what the config comment means by
+"metric-compatible fallback" — and cost nothing when they do not.
+
+| Route | Font bytes before | after |
+| --- | --- | --- |
+| `/` | 74KB | **27KB** |
+| `/contact` | 74KB | **27KB** |
+| `/seo-dubai` | 166KB | **119KB** |
+| `/ar` | 262KB | **57KB** (−78%) |
+
+Total transfer follows: `/contact` 95KB → 47KB, `/ar` 283KB → 78KB, `/ai-lab`
+142KB → 48KB. Verified visually — `/seo-dubai` and `/ar` render identically, which
+is what "nothing was painting in Inter" predicts.
+
 ### Checked and found fine
 
 - **Thumbnails are not oversized.** The 800px cap looked wasteful next to a
@@ -464,7 +493,9 @@ reveal is for.
 `public/brand/xerxes-magdaluyo-photo.jpeg` (2.88MB, 3764×4160 — the unprocessed
 original behind the 19KB `portrait-560.webp` the site actually uses) and
 `public/hero/hero-1080.mp4` (2.48MB) with its poster, left behind when the hero
-video was removed. They cost visitors nothing, because nothing requests them, but
+video was removed. The fallback webfonts join them: `inter-*.woff2` (4 × 47KB),
+`fraunces-*.woff2` (4 × 67KB) and `space-mono-*.woff2` now have no `@font-face`
+pointing at them. They cost visitors nothing, because nothing requests them, but
 they are deployed on every push and the portrait sits at a guessable public URL.
 
 I have not moved or deleted them: `scripts/process-hero-video.mjs` writes to
