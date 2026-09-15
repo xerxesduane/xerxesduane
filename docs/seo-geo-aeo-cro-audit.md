@@ -42,7 +42,12 @@ directly.
 being *visible* in it. Framer Motion writes each variant's initial state into the
 server render, so the page header shipped its `h1` as `style="opacity:0"` and 40
 elements on a service page carried `opacity:0`. A crawler that reads the DOM was
-fine; a visitor whose JavaScript was slow or blocked saw an empty header, and LCP
+fine; a visitor whose JavaScript was slow or blocked saw an empty header for 2.2
+seconds — `index.html` carries a "pre-hydration reveal fallback" stylesheet that
+force-reveals anything with inline `opacity:0` after 2.2s while `<html>` still
+lacks `.js-ready`, so the page was never permanently blank and the author had
+clearly seen this coming. It just does not help LCP, which is measured long
+before 2.2s. LCP
 landed at 1348ms instead of 160ms. Fixed for the header and hero — see
 [Performance](#performance). Scroll reveals below the fold still start hidden,
 which is what a reveal is.
