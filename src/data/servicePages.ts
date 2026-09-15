@@ -19,6 +19,21 @@ export interface ServiceBullet {
   body: string;
 }
 
+export interface ServiceFlow {
+  /** Small label above the block heading. */
+  label: string;
+  /** The block heading. */
+  title: string;
+  /** One sentence of context under it. */
+  note: string;
+  /**
+   * The four stages this particular service moves through. These are
+   * descriptions of the work, not measurements — the block used to render
+   * progress bars at made-up percentages, which meant nothing on any page.
+   */
+  stages: { name: string; detail: string }[];
+}
+
 export interface ServicePageData {
   slug: string;
   navLabel: string;
@@ -35,6 +50,8 @@ export interface ServicePageData {
   h1Lead: string;
   h1Accent: string;
   lede: string;
+  /** Page-specific flow rendered under the header. */
+  flow: ServiceFlow;
   bulletsHeading: string;
   bullets: ServiceBullet[];
   forWhoHeading: string;
@@ -59,6 +76,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Run your whole business on one system,",
     h1Accent: "not five that don't talk.",
     lede: "Odoo ERP implementation in Dubai, set up and run properly. I wire inventory, sales, purchasing, invoicing, and CRM into a single source of truth, then stay on to support it. No bloated rollout you can't use, no consultant who disappears after go-live.",
+    flow: {
+      label: "One record, four stages",
+      title: "What a single Odoo record passes through.",
+      note: "The same order object carries through every stage, so nobody re-types a number that already exists.",
+      stages: [
+        { name: "Enquiry", detail: "A lead or order is raised once, against a customer record the whole system shares." },
+        { name: "Quotation", detail: "Pricing, revisions and approvals stay attached to that record instead of scattering across email." },
+        { name: "Inventory", detail: "Stock is committed when the order confirms, so the system and the shelf agree." },
+        { name: "Delivery", detail: "The delivery note and invoice are generated from the order, not rebuilt by hand." },
+      ],
+    },
     bulletsHeading: "What an Odoo build with me looks like",
     bullets: [
       {
@@ -118,6 +146,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "A website that brings in customers,",
     h1Accent: "not one that just sits there.",
     lede: "Web development in Dubai for small businesses that need their site to do real work. Fast, mobile-first websites, custom web apps, and landing pages that load quickly, rank well, and turn visitors into booked enquiries, built honestly, by one trusted partner.",
+    flow: {
+      label: "What the site has to carry",
+      title: "From first tap to a booked enquiry.",
+      note: "Each stage is a place a visitor can quietly leave, so each one gets built and tested on its own.",
+      stages: [
+        { name: "Load", detail: "Built mobile-first and kept light, so the page is usable before the visitor decides to wait." },
+        { name: "Understand", detail: "The offer, the proof and the price sit where someone scanning can find them." },
+        { name: "Trust", detail: "Real work, real names and clear terms, rather than stock claims." },
+        { name: "Enquire", detail: "One obvious next step, wired to a form, a calendar or WhatsApp that actually reaches me." },
+      ],
+    },
     bulletsHeading: "What I build",
     bullets: [
       {
@@ -176,6 +215,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Let AI do the repetitive work,",
     h1Accent: "so you can do the real work.",
     lede: "AI automation in Dubai, built around your business instead of bolted on for show. I design AI workflows, chatbots, and custom assistants that quietly run in the background, answering questions, qualifying leads, and giving you back the hours you've been losing.",
+    flow: {
+      label: "Where the automation sits",
+      title: "What happens between the trigger and you.",
+      note: "Automation earns its place only where a step is repetitive and the rules are clear enough to write down.",
+      stages: [
+        { name: "Trigger", detail: "A form, an inbox, a WhatsApp message or a scheduled run starts the workflow." },
+        { name: "Read", detail: "The model extracts what matters from the message, document or record." },
+        { name: "Decide", detail: "Rules you set decide what happens next, with the edge cases routed to a person." },
+        { name: "Hand off", detail: "The result lands in your CRM, sheet or inbox with a trail you can check." },
+      ],
+    },
     bulletsHeading: "Where AI actually pays off",
     bullets: [
       {
@@ -234,6 +284,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Get found by people ready to buy,",
     h1Accent: "not just ready to browse.",
     lede: "SEO in Dubai focused on the keywords that actually bring in customers. I fix the technical foundations, sharpen your local search presence, and build content that ranks, then show you, in plain numbers, what it's doing for the business.",
+    flow: {
+      label: "The order the work runs in",
+      title: "Foundations first, then the pages that earn the click.",
+      note: "Ranking is decided by search engines, so the work targets the things on your side of the line.",
+      stages: [
+        { name: "Fix", detail: "Crawlability, speed, duplicate pages, broken metadata and anything blocking indexing." },
+        { name: "Local", detail: "Your Google Business Profile, service pages and location signals made consistent." },
+        { name: "Content", detail: "Pages written for the searches that come from people ready to buy, not vanity terms." },
+        { name: "Report", detail: "What moved, what did not, and what I would change next, in plain numbers." },
+      ],
+    },
     bulletsHeading: "How I approach SEO",
     bullets: [
       {
@@ -293,6 +354,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Be the answer customers hear,",
     h1Accent: "not the link they scroll past.",
     lede: "Answer Engine Optimization (AEO) in Dubai. When someone asks a question your business can answer, the box above the links is what they read. I structure your pages to be a candidate for it: question-led headings, the answer in the first sentence, and markup an engine can parse. Whether it quotes you on a given day is the engine's decision, not a promise I can make.",
+    flow: {
+      label: "How a page becomes a candidate",
+      title: "Structured so the answer is easy to lift.",
+      note: "Whether an engine quotes you on a given day is its decision. This is the part that is in your control.",
+      stages: [
+        { name: "Question", detail: "The page is built around a question a buyer actually types, phrased the way they type it." },
+        { name: "Answer", detail: "The answer sits in the first sentence under the heading, complete on its own." },
+        { name: "Markup", detail: "Schema describes what is visibly on the page, so the markup and the content agree." },
+        { name: "Check", detail: "The questions get re-run over time to see what the engines are showing instead." },
+      ],
+    },
     bulletsHeading: "What the work involves",
     bullets: [
       {
@@ -351,6 +423,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Be accurate where the AI tools",
     h1Accent: "your customers ask are reading.",
     lede: "Generative Engine Optimization (GEO) in Dubai. Some buyers now research with ChatGPT, Gemini or Perplexity before they open a search box at all. I shape your content, entities and citations so those engines have something accurate to draw on when your category comes up. No one controls what a model outputs, so this is measured by how often and how accurately you are surfaced, and reported either way.",
+    flow: {
+      label: "What a model can draw on",
+      title: "Accurate source material, checked over time.",
+      note: "No one controls what a model outputs. What can be controlled is whether the material it reads is right.",
+      stages: [
+        { name: "Source", detail: "Pages that state facts plainly, so a summary of them is still accurate." },
+        { name: "Entity", detail: "Name, services, location and links made consistent everywhere they appear." },
+        { name: "Presence", detail: "Profiles, directories and third-party pages corrected where they already exist." },
+        { name: "Monitor", detail: "Real prompts re-run on a schedule, and reported whether the answer flatters you or not." },
+      ],
+    },
     bulletsHeading: "What the work involves",
     bullets: [
       {
@@ -409,6 +492,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Software shaped around your business,",
     h1Accent: "not the other way around.",
     lede: "Custom software development in Dubai for businesses that have outgrown generic tools. I build practical internal systems, client portals, workflow platforms, and integrations around how your team already operates, then keep them maintainable as you grow.",
+    flow: {
+      label: "Where a custom build fits",
+      title: "Built around the work, not around a template.",
+      note: "Most of this is deciding what not to build. The smallest system that removes the bottleneck wins.",
+      stages: [
+        { name: "Map", detail: "I sit with the actual process, including the spreadsheet everyone pretends is temporary." },
+        { name: "Prototype", detail: "A rough version you can click, so the disagreements happen before the code does." },
+        { name: "Build", detail: "The working system, with the integrations to whatever you already run." },
+        { name: "Hand over", detail: "Documented and explained, so another developer could pick it up if you ever needed one." },
+      ],
+    },
     bulletsHeading: "What custom software can solve",
     bullets: [
       {
@@ -467,6 +561,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Know every lead, customer, and next step,",
     h1Accent: "without chasing spreadsheets.",
     lede: "CRM development and setup in Dubai for growing businesses that need a clear view of sales and customers. I organise your pipeline, connect your enquiry sources, automate follow-ups, and build dashboards your team will actually use.",
+    flow: {
+      label: "The path a lead takes",
+      title: "One record, one pipeline, one place to look.",
+      note: "A CRM is only worth having if the next action on every deal is visible without asking anyone.",
+      stages: [
+        { name: "Capture", detail: "Website forms, WhatsApp, calls and referrals all land as one record, not four." },
+        { name: "Qualify", detail: "The questions that decide whether a lead is worth time are asked in the same order every time." },
+        { name: "Assign", detail: "Ownership is explicit, so no enquiry sits waiting for someone else to pick it up." },
+        { name: "Follow up", detail: "Reminders and sequences fire on the record, and the dashboard shows what has stalled." },
+      ],
+    },
     bulletsHeading: "What a useful CRM should give you",
     bullets: [
       {
@@ -525,6 +630,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "An app people have a reason to use,",
     h1Accent: "built for the work it needs to do.",
     lede: "Mobile and web app development in Dubai for businesses that need more than a website. I build booking platforms, customer portals, membership experiences, and internal apps with a focused first release and a clear path to grow.",
+    flow: {
+      label: "What ships in release one",
+      title: "A first release small enough to finish.",
+      note: "The first version exists to be used by real people, not to contain everything on the wishlist.",
+      stages: [
+        { name: "Core journey", detail: "The one thing the app must do well, built properly before anything else is added." },
+        { name: "Accounts & data", detail: "Sign-in, records and the backend behind the screens people see." },
+        { name: "Release", detail: "Store submission, review notes, and the unglamorous parts of actually shipping." },
+        { name: "Iterate", detail: "What people do with it decides the next build, rather than what we assumed." },
+      ],
+    },
     bulletsHeading: "What I build into the right app",
     bullets: [
       {
@@ -583,6 +699,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "An online store that makes buying easy,",
     h1Accent: "and running it manageable.",
     lede: "E-commerce development in Dubai for businesses that need the storefront and the operations behind it to work together. I build fast customer journeys, connect payments and inventory, and reduce the manual work between order and delivery.",
+    flow: {
+      label: "Order to doorstep",
+      title: "The storefront and the operations behind it.",
+      note: "Most store problems sit after the checkout button, where the customer cannot see them but feels them.",
+      stages: [
+        { name: "Browse", detail: "Search, filters and product pages that answer the question before it is asked." },
+        { name: "Checkout", detail: "UAE payment methods and a checkout with as few steps as the order really needs." },
+        { name: "Fulfil", detail: "Stock, order status and delivery connected, so the team is not copying orders by hand." },
+        { name: "Measure", detail: "Tracking that shows where orders are lost, set up to respect analytics consent." },
+      ],
+    },
     bulletsHeading: "What a strong online store needs",
     bullets: [
       {
@@ -642,6 +769,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Turn campaign clicks into enquiries,",
     h1Accent: "not expensive exits.",
     lede: "Landing page design in Dubai for campaigns that need a clear job and measurable result. I shape the offer, remove distractions, connect lead capture and analytics, and make the follow-up happen quickly.",
+    flow: {
+      label: "One page, one job",
+      title: "Everything on the page serves one action.",
+      note: "A landing page fails at whichever step is weakest, so all four get built together rather than in turn.",
+      stages: [
+        { name: "Offer", detail: "What is being offered, to whom, and why now, decided before any design starts." },
+        { name: "Page", detail: "A fast, single-purpose page with the distractions and extra links removed." },
+        { name: "Capture", detail: "The form or booking step wired to wherever your leads are actually worked." },
+        { name: "Follow up", detail: "The reply that goes out immediately, so interest is not left to cool." },
+      ],
+    },
     bulletsHeading: "What makes the page convert",
     bullets: [
       {
@@ -700,6 +838,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Look as credible as the work",
     h1Accent: "you already deliver.",
     lede: "Branding and graphic design in Dubai for businesses that need clarity and consistency, not decoration for its own sake. I build useful visual identities and everyday marketing assets that help people recognise, understand, and trust you.",
+    flow: {
+      label: "From idea to everyday use",
+      title: "A system your team can keep using without me.",
+      note: "An identity is only finished when someone who was not in the room can apply it correctly.",
+      stages: [
+        { name: "Foundations", detail: "Logo, type, colour and the rules for using them, kept short enough to be read." },
+        { name: "Core assets", detail: "The pieces you use constantly: profile, proposal, deck, social frames." },
+        { name: "Templates", detail: "Editable files so routine work does not come back to a designer every time." },
+        { name: "Handover", detail: "Source files, fonts and a guide that lives with you, not with me." },
+      ],
+    },
     bulletsHeading: "Design that earns its place",
     bullets: [
       {
@@ -758,6 +907,17 @@ export const SERVICE_PAGES: ServicePageData[] = [
     h1Lead: "Turn what you shot into something",
     h1Accent: "worth publishing.",
     lede: "Photo and video editing in Dubai for brands and teams who already have the material but need it finished. I edit for attention, understanding, and the platform the piece will actually live on, whether that is a thirty-second reel or a product shot that has to look right in a grid.",
+    flow: {
+      label: "From rushes to ready to post",
+      title: "Cut for the platform it will actually live on.",
+      note: "The same footage becomes a different edit depending on where it is going and who is watching it.",
+      stages: [
+        { name: "Select", detail: "I work through the rushes to find the takes that actually carry the point." },
+        { name: "Cut", detail: "Structure and pacing set for the length and platform the piece is for." },
+        { name: "Finish", detail: "Colour, sound, captions and motion, plus photo retouching matched to the same look." },
+        { name: "Export", detail: "Correct sizes and formats for each destination, delivered ready to upload." },
+      ],
+    },
     bulletsHeading: "What happens in the edit",
     bullets: [
       {

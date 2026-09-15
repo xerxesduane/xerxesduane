@@ -180,9 +180,30 @@ in the SERP, not penalised). Longest: `/video-editing-dubai` (194 chars).
 
 Not yet implemented. Listed with the evidence so they can be picked up.
 
-- **P2-1 · Templated service-page sections.** SEO/AEO/GEO pages repeat a generic
-  "Capture, Qualify, Assign, Follow up" process block that does not describe those
-  services. Needs page-specific process, deliverables and objections.
+- **P2-1 · Templated service-page sections — FIXED.** The flow block under every
+  service header (`src/components/ServiceVisual.tsx`) picked one of six templates by
+  matching a substring of the slug, so all 13 pages collapsed into six, and
+  `/seo-dubai`, `/answer-engine-optimization-dubai` and
+  `/generative-engine-optimization-dubai` were identical. Worse, the block carried
+  invented data:
+
+  | Element | Was | Now |
+  | --- | --- | --- |
+  | Progress bars | `width: ${52 + index * 13}%` — bars at 52 / 65 / 78 / 91% on every page, measuring nothing | removed |
+  | Status indicator | a pulsing dot labelled **"live flow"**, connected to nothing | removed |
+  | Icon row | three fixed icons (`Bot`, `CircleDollarSign`, `Film`) on all 13 pages, including the ones about branding and SEO | removed |
+  | Body copy | one identical sentence on all 13 pages: "Every build starts with the real journey..." | per-page `flow.note` |
+  | Stage names | 4 generic stages shared across 6 slug groups | 13 authored `flow.stages`, each with a name and a sentence describing what happens |
+
+  Verified in `dist/`: `live flow` 0 occurrences (was 13), `Working model` 0 (was 13),
+  the shared paragraph 0 (was 13), the invented bar widths 0, and 13 distinct flow
+  headings across the 13 service pages. The stage markup is now an `<ol>`, so the
+  01–04 numbering is real list semantics rather than decoration.
+
+  **Still templated, but honestly so:** `ServicePackages` shows the same three scope
+  shapes (Focused / Connected / Ongoing) on every page. It invents nothing and its
+  own copy says "These are starting shapes, not rigid boxes, and none of them has a
+  price on it", so it is left alone.
 - **P2-2 · Article dates and authorship — PARTLY FIXED.** The byline now links to
   `/about` with `rel="author"` — the same entity the `Article` schema names by
   `@id`, so the claim of authorship is checkable rather than asserted in plain
