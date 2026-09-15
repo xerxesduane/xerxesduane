@@ -68,10 +68,15 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
             </span>
           </span>
 
-          <h2 className="mt-4 board:mt-2.5 flex items-center justify-center gap-1.5 font-display text-[1.6rem] board:text-[1.3rem] font-extrabold leading-none tracking-tight text-fg">
+          {/* Branding, not a section heading. As an <h2> this sat in the rail
+              on all 47 routes, which put "Xerxes Duane" above every page's own
+              <h1> in the document outline — so each page announced the site
+              name before it announced what the page was about. Same type, same
+              weight, no longer a heading. */}
+          <p className="mt-4 board:mt-2.5 flex items-center justify-center gap-1.5 font-display text-[1.6rem] board:text-[1.3rem] font-extrabold leading-none tracking-tight text-fg">
             {SHELL_IDENTITY.name}
             {SHELL_IDENTITY.verified && <VerifiedTick size={19} />}
-          </h2>
+          </p>
           {/* Handle only. The location and the positioning line came off:
               on a one-screen home every line has to earn its space, and the
               board says what the work is better than a job title does.

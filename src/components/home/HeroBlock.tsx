@@ -35,19 +35,27 @@ export default function HeroBlock() {
         {HERO.subhead}
       </m.p>
 
-      <m.a
+      <m.div
         variants={fadeUp}
-        href={HERO.ctaHref}
-        className="group order-2 inline-flex w-fit shrink-0 items-center gap-2 self-start rounded-full bg-navy px-6 py-3.5 text-[0.95rem] font-bold text-fg-onSolid shadow-solid transition duration-300 ease-smooth hover:-translate-y-0.5 hover:bg-navy-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas sm:order-none sm:col-start-2 sm:row-start-1"
+        className="order-2 flex w-fit shrink-0 flex-col items-start gap-1.5 self-start sm:order-none sm:col-start-2 sm:row-start-1"
       >
-        {HERO.ctaLabel}
-        <ArrowUpRight
-          size={17}
-          strokeWidth={2.6}
-          aria-hidden
-          className="text-accent transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
-        />
-      </m.a>
+        <a
+          href={HERO.ctaHref}
+          data-cta="primary"
+          className="group inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3.5 text-[0.95rem] font-bold text-fg-onSolid shadow-solid transition duration-300 ease-smooth hover:-translate-y-0.5 hover:bg-navy-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+        >
+          {HERO.ctaLabel}
+          <ArrowUpRight
+            size={17}
+            strokeWidth={2.6}
+            aria-hidden
+            className="text-accent transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+          />
+        </a>
+        {/* What happens after the click. A named, bounded offer converts better
+            than an open invitation, and this is the same promise /contact makes. */}
+        <p className="max-w-[24ch] text-[0.78rem] leading-snug text-fg-faint">{HERO.ctaNote}</p>
+      </m.div>
     </m.header>
   );
 }

@@ -5,6 +5,7 @@ import { PrimaryAction } from "../components/page/PageActions";
 import TabbedViews from "../components/page/TabbedViews";
 import { PACKAGES } from "../data/content";
 import { NONPROFIT, RATE_CARD, aed, priceLabel } from "../data/pricing";
+import { PRICING_FAQS } from "../lib/seo";
 import { fadeUp, stagger, VIEWPORT } from "../lib/motion";
 
 /**
@@ -182,6 +183,33 @@ export default function Pricing() {
                     </m.li>
                   ))}
                 </ul>
+              </m.section>
+            ),
+          },
+          {
+            id: "questions",
+            label: "Common questions",
+            note: `${PRICING_FAQS.length} answered`,
+            content: (
+              <m.section variants={stagger} initial="hidden" whileInView="show" viewport={VIEWPORT}>
+                <h2 className="sr-only">Common questions about pricing</h2>
+                {/* These are the questions people type into a search box, and
+                    the page emits them as FAQPage markup. That markup is only
+                    honest while they are on the page, so both read PRICING_FAQS. */}
+                <dl className="grid gap-2 board:grid-cols-2">
+                  {PRICING_FAQS.map((faq) => (
+                    <m.div
+                      key={faq.q}
+                      variants={fadeUp}
+                      className="rounded-card border border-line bg-panel p-4 shadow-card"
+                    >
+                      <dt className="font-display text-[0.95rem] font-extrabold leading-tight text-fg">
+                        {faq.q}
+                      </dt>
+                      <dd className="mt-1.5 text-[0.85rem] leading-snug text-fg-soft">{faq.a}</dd>
+                    </m.div>
+                  ))}
+                </dl>
               </m.section>
             ),
           },

@@ -89,7 +89,15 @@ function breadcrumb(trail: { name: string; url: string }[]): Record<string, unkn
 
 const HOME_CRUMB = { name: "Home", url: `${SITE_ORIGIN}/` };
 
-/** FAQPage schema, derived from the FAQ content actually rendered on the home page. */
+/**
+ * FAQPage schema for the page that actually renders these questions.
+ *
+ * It used to sit on `/`, which was true when the home page carried the FAQ
+ * list. The list moved to `/contact` when the home page was compressed, and
+ * the markup did not follow — so `/` was declaring nine questions a visitor
+ * could not see there, which is exactly what Google's structured data policy
+ * forbids. It is attached to `/contact` now, where FAQS is rendered.
+ */
 const FAQ_SCHEMA = {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -175,7 +183,12 @@ function offerCatalog(): Record<string, unknown> {
  * table: an assistant that lifts one of these answers should come away with a
  * figure and a currency, not a promise that someone will get back to them.
  */
-const PRICING_FAQS: { q: string; a: string }[] = [
+/**
+ * Exported because /pricing renders them. The FAQPage node below is only
+ * legitimate while the page shows these questions to a visitor, so the data
+ * and the markup read from the same array.
+ */
+export const PRICING_FAQS: { q: string; a: string }[] = [
   {
     q: "How much does a website cost in Dubai?",
     a: `A landing page starts at ${aed(2500)} and an e-commerce build at ${aed(9000)}. If the budget is tight, The Starter package is a fixed ${aed(2500)} for a complete one-page site. Every figure is a starting point; the exact price comes in a written proposal after a free 60-minute audit.`,
@@ -210,7 +223,6 @@ const HOME_META: PageMeta = {
     { hreflang: "x-default", href: `${SITE_ORIGIN}/` },
   ],
   // Note: the global #org + #website graph lives in index.html (applies to all routes).
-  jsonLd: [FAQ_SCHEMA],
 };
 
 /** Normalise a pathname to a bare slug (no leading/trailing slashes). */
@@ -321,36 +333,11 @@ const STARTER_META: PageMeta = {
         },
       },
     },
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: `What do you get for ${aed(STARTER.price)}?`,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: `${STARTER.includes.join(". ")}. The price is fixed before work starts, so it cannot move.`,
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What is not included?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: `${STARTER.excludes.map((e) => e.what).join("; ")}. Each of those is priced separately on the rate card, so a fixed scope stays fixed.`,
-          },
-        },
-        {
-          "@type": "Question",
-          name: `Is ${aed(STARTER.price)} a deposit?`,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: `No. It is the whole price for the scope described, agreed before anything begins. Churches, charities and registered non-profits pay ${aed(STARTER.price * NONPROFIT.rate)}.`,
-          },
-        },
-      ],
-    },
+    // The FAQPage node that used to sit here asked "What do you get for
+    // AED 2,500?" and two more. The answers are on the page — as an includes
+    // list and an excludes list — but the questions are not, and marking up
+    // Q&A a visitor cannot see is what Google's policy forbids. Restore it
+    // only alongside a visible question-and-answer block.
     breadcrumb([HOME_CRUMB, { name: STARTER.name, url: `${SITE_ORIGIN}/${STARTER.slug}` }]),
   ],
 };
@@ -477,8 +464,12 @@ export function getPageMeta(path: string): PageMeta {
       canonical: `${SITE_ORIGIN}/${slug}`,
       description: slug === "services"
         ? "Explore website development, Odoo ERP, CRM, automation and AI services for businesses in Dubai, with scope and starting prices."
-        : "Contact Xerxes Duane in Dubai. Book a free systems audit, send an enquiry, or find answers to common questions.",
-      jsonLd: [breadcrumb([HOME_CRUMB, { name: title, url: `${SITE_ORIGIN}/${slug}` }])],
+        : "Contact Xerxes Duane in Dubai. Book a free 60-minute systems audit, message on WhatsApp, or read the questions people ask first.",
+      jsonLd: [
+        breadcrumb([HOME_CRUMB, { name: title, url: `${SITE_ORIGIN}/${slug}` }]),
+        // The FAQ list renders here, so the markup belongs here.
+        ...(slug === "contact" ? [FAQ_SCHEMA] : []),
+      ],
     };
   }
   if (slug === "pricing") return PRICING_META;
@@ -491,17 +482,22 @@ export function getPageMeta(path: string): PageMeta {
     const study = CASE_STUDIES.find((item) => item.slug === slug.slice("case-studies/".length));
     if (study) {
       const canonical = `${SITE_ORIGIN}/case-studies/${study.slug}`;
+      // Built from the study's own fields. All four used to share one generic
+      // sentence, which gave Google four pages it could not tell apart.
+      const sector = study.location.split("·").pop()?.trim();
+      // "a automotive business" otherwise — the sectors are author-written, so
+      // the article has to be chosen at render time rather than stored.
+      const article = sector && /^[aeiou]/i.test(sector) ? "an" : "a";
       return {
-        title: `${study.client} - Xerxes Duane`,
-        description:
-          "A practical look at how connected systems, automation, websites, CRM, or AI improved a real business workflow.",
+        title: `${study.client} - ${study.category} case study - Xerxes Duane`,
+        description: `${study.category} for ${study.client}${sector ? `, ${article} ${sector.toLowerCase()} business` : ""}. ${study.summary}`.slice(0, 160),
         canonical,
-        ogTitle: `${study.client} - Xerxes Duane`,
+        ogTitle: `${study.client} - ${study.category} case study`,
         jsonLd: [
           {
             "@context": "https://schema.org",
             "@type": "Article",
-            headline: `${study.client} case study`,
+            headline: `${study.client}: ${study.category}`,
             description: study.summary,
             author: { "@id": `${SITE_ORIGIN}/#xerxes` },
             publisher: { "@id": `${SITE_ORIGIN}/#org` },
@@ -535,6 +531,25 @@ export function getPageMeta(path: string): PageMeta {
         ogImage: serviceOgImage(ar.slug),
         locale: "ar_AR",
         alternates: serviceAlternates(ar.slug),
+        // Matches what the Arabic page actually renders, in Arabic. The English
+        // twin has had this since it was written; the Arabic one had only the
+        // site-wide organisation graph.
+        jsonLd: [
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: ar.navLabel,
+            description: ar.lede,
+            inLanguage: "ar",
+            provider: { "@id": `${SITE_ORIGIN}/#org` },
+            areaServed: { "@type": "City", name: "Dubai" },
+            url: `${SITE_ORIGIN}/ar/${ar.slug}`,
+          },
+          breadcrumb([
+            { name: "الرئيسية", url: `${SITE_ORIGIN}/ar` },
+            { name: ar.navLabel, url: `${SITE_ORIGIN}/ar/${ar.slug}` },
+          ]),
+        ],
       };
     }
   }
