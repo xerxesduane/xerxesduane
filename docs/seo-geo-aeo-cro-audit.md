@@ -158,13 +158,16 @@ distinct dates, stable across rebuilds.*
 **Done:** `Service` (with `inLanguage: "ar"`, name and description from the Arabic
 copy that renders on the page) and an Arabic `BreadcrumbList`.
 
-### P1-6 · Heading-level skips — **OPEN**
+### P1-6 · Heading-level skips — **FIXED**
 
-10 routes jump `h1` → `h3`. The shared `Panel` card component uses `<h3>` for its
-label with no `<h2>` section heading above it. Not a ranking issue; it is an
-`AA`-adjacent structure issue for screen-reader users navigating by heading.
-Deferred because it touches the card component used on most pages and deserves its
-own pass.
+10 routes jumped `h1` → `h3`, all from one cause: the shared `Panel` card
+hard-coded `<h3>` for its label, and on most pages the board sits directly under
+the page `h1` with no `<h2>` between. A screen-reader user navigating by heading
+found a gap where a level should be.
+
+**Done:** `Panel` takes a `headingLevel` prop defaulting to `h2`; callers can pass
+`h3` where a board genuinely sits beneath its own `h2`. *After: 0/47 routes skip a
+level.*
 
 ### P1-7 · Metadata length — **OPEN**
 
@@ -180,12 +183,32 @@ Not yet implemented. Listed with the evidence so they can be picked up.
 - **P2-1 · Templated service-page sections.** SEO/AEO/GEO pages repeat a generic
   "Capture, Qualify, Assign, Follow up" process block that does not describe those
   services. Needs page-specific process, deliverables and objections.
-- **P2-2 · Article sourcing.** Insight posts make factual and time-sensitive claims
-  (AI search behaviour, Odoo licensing) without linked primary sources, and have no
-  linked author profile or `<time datetime>` markup.
-- **P2-3 · Unverifiable claims.** Copy including *"AI tools will quote you directly"*
-  and *"more buyers start with AI than search"* needs a source, a qualifier, or a
-  rewrite. **Not yet changed — flagged, not fixed.**
+- **P2-2 · Article dates and authorship — PARTLY FIXED.** The byline now links to
+  `/about` with `rel="author"` — the same entity the `Article` schema names by
+  `@id`, so the claim of authorship is checkable rather than asserted in plain
+  text. Dates are `<time datetime>` (verified in the parsed DOM: React 19
+  serialises the attribute camelCase, and HTML attribute names are
+  case-insensitive, so it parses as `datetime`). `dateModified` is now emitted
+  **only** when a post carries an explicit `updated` date — it used to be set equal
+  to `datePublished` on every post, which tells a reader and a crawler nothing.
+  **Still open:** no post yet links a primary source for its factual claims.
+- **P2-3 · Unverifiable claims — FIXED.** Three pieces of copy promised outcomes the
+  site's own FAQs correctly refuse to guarantee:
+
+  | Where | Was | Now |
+  | --- | --- | --- |
+  | `/answer-engine-optimization-dubai` lede | "...AI Overviews, voice assistants, and featured snippets **quote you directly**" | describes the structuring work; states plainly that whether an engine quotes you is its decision |
+  | `/generative-engine-optimization-dubai` lede | "**more buyers now start with ChatGPT, Gemini, and Perplexity than a search box**" — an unsourced statistic, and not true as stated | "Some buyers now research with ChatGPT, Gemini or Perplexity before they open a search box at all" — unquantified and true |
+  | AEO bullet | "**Win 'position zero'**" | "Aimed at the questions, not the keyword" |
+
+  Also corrected a **factual error**: the services list claimed "FAQ schema that win
+  featured snippets and 'position zero'". Google restricted FAQ rich results to
+  well-known government and health sites in August 2023. The AEO page now says so,
+  and describes FAQ markup as machine readability rather than a snippet tactic.
+
+  The insight posts were already careful on this — they state outright that no one
+  can guarantee placement in an AI answer. The service-page ledes contradicted
+  them; they no longer do.
 - **P2-4 · Visit counter.** The "N visits this month" figure under the profile is a
   weak vanity signal next to stronger available proof (independent since 2019, the
   real Google rating, four documented case studies). Recommend replacing it; it is

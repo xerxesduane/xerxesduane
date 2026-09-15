@@ -292,24 +292,24 @@ export const SERVICE_PAGES: ServicePageData[] = [
     eyebrow: "AEO · Dubai",
     h1Lead: "Be the answer customers hear,",
     h1Accent: "not the link they scroll past.",
-    lede: "Answer Engine Optimization (AEO) in Dubai: I structure your content so Google's AI Overviews, voice assistants, and featured snippets quote you directly, the moment someone asks a question your business can answer.",
-    bulletsHeading: "How I win the answer box",
+    lede: "Answer Engine Optimization (AEO) in Dubai. When someone asks a question your business can answer, the box above the links is what they read. I structure your pages to be a candidate for it: question-led headings, the answer in the first sentence, and markup an engine can parse. Whether it quotes you on a given day is the engine's decision, not a promise I can make.",
+    bulletsHeading: "What the work involves",
     bullets: [
       {
         title: "Answer-first content",
         body: "I reshape your key pages to answer real questions clearly and concisely, the exact format answer engines lift word-for-word.",
       },
       {
-        title: "Structured data & FAQ schema",
-        body: "I mark up your pages so search engines can understand, trust, and surface your answers, not just crawl them.",
+        title: "Structured data that matches the page",
+        body: "I mark up what the page actually shows, so an engine can parse your answers rather than guess at them. Note that FAQ rich results have been limited to well-known government and health sites since Google's August 2023 change, so FAQ markup here is for machine readability, not a snippet tactic.",
       },
       {
         title: "Topic & entity authority",
         body: "I build the depth and internal links that make your site the obvious source on the questions that matter to your buyers.",
       },
       {
-        title: "Win 'position zero'",
-        body: "I target the featured snippets and 'People Also Ask' boxes your competitors leave on the table.",
+        title: "Aimed at the questions, not the keyword",
+        body: "I work from the questions your buyers actually type, including the 'People Also Ask' cluster around them, so the page answers the thing being asked rather than ranking for a phrase near it.",
       },
     ],
     forWhoHeading: "Who this is for",
@@ -348,14 +348,14 @@ export const SERVICE_PAGES: ServicePageData[] = [
     ogTitle: "Generative Engine Optimization (GEO) in Dubai",
     jsonLdName: "Generative Engine Optimization (GEO)",
     eyebrow: "GEO · Dubai",
-    h1Lead: "Get recommended by the AI tools",
-    h1Accent: "your customers now ask first.",
-    lede: "Generative Engine Optimization (GEO) in Dubai: more buyers now start with ChatGPT, Gemini, and Perplexity than a search box. I shape your content, entities, and citations so those engines surface, trust, and recommend your business by name.",
-    bulletsHeading: "How I get you cited by AI",
+    h1Lead: "Be accurate where the AI tools",
+    h1Accent: "your customers ask are reading.",
+    lede: "Generative Engine Optimization (GEO) in Dubai. Some buyers now research with ChatGPT, Gemini or Perplexity before they open a search box at all. I shape your content, entities and citations so those engines have something accurate to draw on when your category comes up. No one controls what a model outputs, so this is measured by how often and how accurately you are surfaced, and reported either way.",
+    bulletsHeading: "What the work involves",
     bullets: [
       {
-        title: "Citation-worthy content",
-        body: "I create the clear, factual, well-sourced content generative engines prefer to quote, with the specifics they need to recommend you.",
+        title: "Content worth citing",
+        body: "Clear, factual, sourced content with the specifics a model needs — real figures, real scope, real limits. Vague copy gives an engine nothing to quote.",
       },
       {
         title: "Entity & authority signals",
@@ -366,8 +366,8 @@ export const SERVICE_PAGES: ServicePageData[] = [
         body: "I get your business represented in the directories, profiles, and sources these engines actually draw their answers from.",
       },
       {
-        title: "Prompt testing & monitoring",
-        body: "I test the prompts your buyers really use and track when and how the major AI engines mention you.",
+        title: "Prompt testing and monitoring",
+        body: "I run the prompts your buyers actually use across the major engines and record what comes back, including the runs where you are not mentioned. Answers shift between runs, so this is a trend line, not a scoreboard.",
       },
     ],
     forWhoHeading: "Who this is for",

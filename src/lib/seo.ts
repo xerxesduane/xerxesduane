@@ -571,7 +571,7 @@ export function getPageMeta(path: string): PageMeta {
             headline: post.title,
             description: post.description,
             datePublished: post.date,
-            dateModified: post.date,
+            ...(post.updated ? { dateModified: post.updated } : {}),
             author: { "@type": "Person", name: post.author, "@id": `${SITE_ORIGIN}/#xerxes` },
             publisher: { "@id": `${SITE_ORIGIN}/#org` },
             mainEntityOfPage: canonical,
