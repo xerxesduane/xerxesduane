@@ -202,7 +202,7 @@ descriptions.
 
 ## P2 — content depth, entity signals, editorial
 
-Not yet implemented. Listed with the evidence so they can be picked up.
+All but P2-4 are now done; P2-4 is a judgement call that belongs to the owner.
 
 - **P2-1 · Templated service-page sections — FIXED.** The flow block under every
   service header (`src/components/ServiceVisual.tsx`) picked one of six templates by
@@ -454,3 +454,34 @@ What moved:
 Two things this does **not** claim: pages still scroll at 1180 (the narrowest
 `board` width, where there is simply less room), and mobile still scrolls, which
 is the intended behaviour there.
+
+---
+
+## Regression guard
+
+Every rule below was a real bug in this repo, found by hand, and every one of them
+is invisible while it is happening: the page renders, the build passes, and the
+damage only shows in a search result or a screen reader weeks later. They are now
+asserted against `dist/` by `scripts/check-seo.mjs`, wired into `npm run build`,
+so none of them can ship a second time.
+
+| Assertion | The bug it guards against |
+| --- | --- |
+| `<title>` ≤ 60 chars | 8 titles ran past what Google shows |
+| description ≤ 160 chars | 7 descriptions ran past it |
+| description does not end in `...` | a hard `.slice(0, 160)` ended a case study on "and convers" |
+| no duplicate title across indexable routes | — |
+| no duplicate description across indexable routes | 4 case studies shared one description |
+| `<title>`, description and canonical all present | — |
+| exactly one `<h1>` per route | — |
+| the outline opens with the `h1` | the profile rail's `<h2>` opened all 47 |
+| no skipped heading level | one hard-coded `<h3>` in `Panel` made 10 routes jump h1 → h3 |
+
+Checked against `dist/` rather than the source, because the source is not what
+ships. `noindex` routes are exempt from the duplicate checks — they are not
+competing for anything.
+
+**Verified by planting the bugs back in.** A too-long title, a removed `h1`, a
+heading skip, an over-length description and a truncated one produced five named
+failures and a non-zero exit; a duplicated title produced its own. The check went
+back to green the moment the files were restored.
