@@ -532,6 +532,14 @@ video was removed. The fallback webfonts join them: `inter-*.woff2` (4 × 47KB),
 pointing at them. They cost visitors nothing, because nothing requests them, but
 they are deployed on every push and the portrait sits at a guessable public URL.
 
+**Also dead, and left alone:** a whole `studio-*` design system in `index.css` —
+10 class rules, `.font-studio-pixel`, and 31 `--studio-*` custom properties, none
+referenced anywhere in `src/`, `index.html` or `scripts/`. It is roughly 3KB
+uncompressed, about 1KB over the wire. Not removed because the declarations are
+scattered across 600 lines rather than sitting in one block, so excising them is a
+surgical multi-site edit for a kilobyte. Worth doing next time that file is opened
+for another reason.
+
 I have not moved or deleted them: `scripts/process-hero-video.mjs` writes to
 `public/hero/` by design, and the portrait is the only copy outside git history.
 The repo already has `brand-kit/` and `work-raw/` for source assets that are not
