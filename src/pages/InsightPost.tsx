@@ -130,7 +130,7 @@ export default function InsightPost({ post }: { post: Post }) {
                         <a
                           href={source.url}
                           {...(external ? { target: "_blank", rel: "noopener" } : {})}
-                          className="font-semibold text-fg-soft underline decoration-accent/40 underline-offset-4 transition hover:text-accent-deep hover:decoration-accent"
+                          className="inline-block rounded py-0.5 font-semibold text-fg-soft underline decoration-accent/40 underline-offset-4 transition hover:text-accent-deep hover:decoration-accent"
                         >
                           {source.label}
                         </a>
@@ -152,7 +152,7 @@ export default function InsightPost({ post }: { post: Post }) {
                     <li key={s.slug}>
                       <a
                         href={`/${s.slug}`}
-                        className="text-fg-soft transition-colors hover:text-accent-deep"
+                        className="inline-block rounded py-0.5 text-fg-soft transition-colors hover:text-accent-deep"
                       >
                         {s.navLabel} in Dubai
                       </a>
@@ -172,7 +172,7 @@ export default function InsightPost({ post }: { post: Post }) {
                     <li key={p.slug}>
                       <a
                         href={`/insights/${p.slug}`}
-                        className="text-fg-soft transition-colors hover:text-accent-deep"
+                        className="inline-block rounded py-0.5 text-fg-soft transition-colors hover:text-accent-deep"
                       >
                         {p.title}
                       </a>

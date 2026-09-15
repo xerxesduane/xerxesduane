@@ -34,7 +34,7 @@ export default function ServiceCompare({ page }: { page: ServicePageData }) {
                     ) : (
                       <a
                         href={`/${option.slug}`}
-                        className="inline-flex items-center gap-1 underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
+                        className="inline-flex items-center gap-1 rounded py-1 underline decoration-accent/40 underline-offset-4 transition hover:decoration-accent"
                       >
                         {option.label}
                         <ArrowUpRight size={13} strokeWidth={2.4} aria-hidden />

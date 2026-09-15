@@ -740,6 +740,39 @@ attributed to a named client with a category and location. Worth confirming you
 can still produce the platform screenshots behind them, since that is what a
 sceptical prospect would ask for.
 
+---
+
+## Tap targets — WCAG 2.2 Target Size (Minimum)
+
+SC 2.5.8 (Level AA) asks for 24×24 CSS px, with a real exception for a target
+that is **inline in a sentence**. Measured every `a[href]` and `button` on 19
+representative routes at 1280×800 and 390×844.
+
+**61 failures, now 12 — and all 12 are genuinely exempt.**
+
+| Fixed | Was | Now |
+| --- | --- | --- |
+| AEO / GEO links in the SEO-AEO-GEO compare block | 20px | 28px |
+| "Read the full case study" on service pages | 18px | 26px |
+| "Discuss this scope" on each package card | 20px | 28px |
+| Related-service and related-post links in insight posts | 21px | 25px |
+| Source links in insight posts | 19px | 25px |
+| "Want a result like this?" on case study pages | 20px | 28px |
+| **The 36 AI Lab tool pills** | 20px | 24px |
+
+The AI Lab pills were the only real trade-off, because the board they sit on is
+the one page that does not fit 1280×800. So it was measured rather than argued:
+a 24px floor costs **+19px at 1280**, where the page is already 77px over, and
+**nothing at 1440**, where it still fits. 36 links with no inline exception to
+lean on, for 19px on a page that already scrolls, is not a close call.
+
+**The 12 that remain, and why each is exempt:** the contact form's honeypot
+(1×1, off-screen, not a target anyone can hit); "See the full rate card" and "the
+budget package" inside `/services`' meta sentence; "all pricing" inside a service
+page's price line; and the author byline link inside "Xerxes Duane · <date>". All
+sit in running prose where the line-height constrains them — which is exactly what
+the exception is for.
+
 ## Facts needed from the owner
 
 Nothing here is blocking a deploy. Each one is a claim the site makes, or a

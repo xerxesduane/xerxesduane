@@ -195,7 +195,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                 </p>
                 <a
                   href={`/case-studies/${proof.slug}`}
-                  className="mt-5 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-wider text-gold transition-colors hover:text-gold-soft"
+                  className="mt-5 inline-flex items-center gap-2 rounded py-1 font-mono text-[11px] uppercase tracking-wider text-gold transition-colors hover:text-gold-soft"
                 >
                   Read the full case study
                   <ArrowUpRight size={13} />
@@ -275,7 +275,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
                   <li key={p.slug}>
                     <a
                       href={`/insights/${p.slug}`}
-                      className="text-cream-dim transition-colors hover:text-gold"
+                      className="inline-block rounded py-0.5 text-cream-dim transition-colors hover:text-gold"
                     >
                       {p.title}
                     </a>
