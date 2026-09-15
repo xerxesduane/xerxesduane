@@ -86,7 +86,7 @@ precise business location that does not exist.
 **Done:** the `geo` node is deleted. `areaServed` (Dubai, Sharjah, UAE,
 Philippines) and the locality-level address are kept, both truthful.
 
-⚠️ **Owner decision still needed** — see "Facts needed", item 1. The entity is still
+⚠️ **Owner decision still needed** — see [Facts needed from the owner](#facts-needed-from-the-owner), item 1. The entity is still
 typed `ProfessionalService + LocalBusiness`, which implies a visitable premises. If
 there is no customer-facing address, this should become `Organization` +
 `ProfessionalService` without `PostalAddress`. I did not change it unilaterally
@@ -383,6 +383,75 @@ definition):
 | Submit valid, server accepts | `form_submit`, then `generate_lead` |
 
 ---
+
+---
+
+## Facts needed from the owner
+
+Nothing here is blocking a deploy. Each one is a claim the site makes, or a
+decision the site has already made by default, that only you can settle. Where a
+fact was missing I kept the safest truthful wording rather than guessing, so the
+site is correct as it stands — these would make it sharper, or confirm it should
+stay as it is.
+
+**1. Is there a customer-facing address in Dubai?** *(the one with real SEO
+consequences)*
+
+`index.html` types the entity `["ProfessionalService", "LocalBusiness"]` with a
+locality-level `PostalAddress` (Dubai, AE). `LocalBusiness` tells Google there is
+a place a customer could visit. If the work is done remotely and from home, the
+honest typing is `Organization` + `ProfessionalService` with no `PostalAddress`,
+and `areaServed` carrying the geography instead.
+
+I did not change it unilaterally because `sameAs` includes a `share.google` link
+that implies a real Google Business Profile, and a GBP with a verified address
+would make the current typing correct. I also cannot see, and under your
+instructions must not touch, that profile.
+
+- If there **is** a visitable address → send me the full street address so the
+  `PostalAddress` matches the GBP exactly. A mismatch between the two is worse
+  than either alone.
+- If there **is not** → say so and I will retype the entity. This is the single
+  change most likely to affect local ranking, in either direction.
+
+**2. The Google rating is hard-coded.** `src/data/trust.ts` carries
+`rating: 5, reviewCount: 5`. It is not fetched, so it will silently go stale the
+next time someone reviews you. It is shown visibly with a link to the real
+profile and is **not** claimed in `AggregateRating` schema, which is the correct
+and conservative choice — self-serving review markup is a policy risk and I would
+not add it. Confirm the numbers are current, and tell me whenever they change.
+
+**3. `clientCount: 50` is set but nothing renders it.** No "50 clients" claim is
+anywhere on the site. Left in place rather than deleted, but flagged: if it is
+ever wired up it becomes a business statistic that needs to be defensible.
+
+**4. Which insight posts have actually been revised since publication?**
+`dateModified` is now emitted only for posts carrying an explicit `updated` date,
+and none do. If you have genuinely rewritten a post — new figures, a corrected
+section — tell me which and when, and I will set it. A freshness signal is only
+worth having if it is true.
+
+**5. `readingMinutes` on each post is authored, not computed.** If any are wrong
+the estimate misleads. Say the word and I will compute them from word count
+instead.
+
+**6. The Arabic pages are pending a native-speaker review.** They are live and
+indexed with `hreflang`. `src/data/servicePagesAr.ts` also notes the copy uses
+first-person plural (نحن) while the English site is first-person singular — the
+two read as different businesses. That conversion belongs in the same review, not
+in a mechanical find-and-replace.
+
+**7. Prices.** Every published figure and the charity rate are asserted by
+`npm run check:pricing`, so they are internally consistent. Confirm they are still
+what you charge.
+
+**8. The visit counter** (P2-4). It is honest — it renders nothing rather than a
+zero when the store is unavailable — but "N visits this month" is a weak signal
+sitting next to independent since 2019, a real Google rating and four documented
+case studies. My recommendation is to drop it. Your call; I have not touched it.
+
+**9. Case-study client names.** All four are named publicly and already live, so I
+have assumed consent. Say if any should be anonymised.
 
 ## How the numbers were taken
 
