@@ -626,6 +626,21 @@ stop that widening; `as const` narrows the array into a tuple whose members no
 longer share the optional `scope` and `stats` fields `ServicePage` reads, which
 breaks the build.
 
+### Crawl mechanics, checked against production
+
+Nothing to fix here — recorded because "we checked" is worth more than silence,
+and because a prerendered SPA gets most of these wrong by default.
+
+| | |
+| --- | --- |
+| `robots.txt` | `Allow: /`, and points at the sitemap |
+| Unknown URLs | **real 404s**, not soft-404s — `/this-page-does-not-exist`, `/seo-dubai/nope` and `/insights/fake-post` all return 404, not 200 with a 404 page |
+| apex → www | 308, one hop |
+| `http` → `https` | 308, one hop |
+| trailing slash → canonical | 308, one hop |
+| Redirect chains | none; every form reaches the canonical URL in a single hop |
+| Sitemap URL form | matches the 200 form exactly — 8 of 8 sampled return 200 with no redirect, and the only trailing slash is the home page's |
+
 ### Everything else in the built output
 
 | Check | Result |
