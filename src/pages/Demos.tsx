@@ -588,6 +588,7 @@ export default function Demos() {
       {onHub && (
         <PanelBoard
           rail
+          railLabel="AI Lab tools"
           cols="board:grid-cols-4"
           /* Tighter than the shared default at the board breakpoint only:
              this board carries seven cards where the others carry five, and

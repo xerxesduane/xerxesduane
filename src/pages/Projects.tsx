@@ -78,7 +78,7 @@ export default function Projects() {
         actions={<PrimaryAction href="/contact">Book a free audit</PrimaryAction>}
       />
 
-      <PanelBoard rail cols="board:grid-cols-4">
+      <PanelBoard rail railLabel="Project categories" cols="board:grid-cols-4">
         <Panel
           icon={FolderOpen}
           label="Case studies"

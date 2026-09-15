@@ -285,9 +285,35 @@ Not yet implemented. Listed with the evidence so they can be picked up.
   Verified in `dist/`: 13 distinct related-link sets (no two pages share one), the
   compare block present on exactly the 3 search pages, each with exactly one "this
   page" marker and links to the other two.
-- **P2-6 · Mobile swipe rails.** Several boards become horizontally-swiped rails below
-  `sm`. The offer, proof and next step must be understandable without discovering
-  off-screen cards. Not re-verified in this pass.
+- **P2-6 · Mobile swipe rails — VERIFIED, one defect fixed.** Five boards become
+  horizontal rails below `sm`: `/`, `/ar`, `/portfolio`, `/projects`, `/ai-lab`.
+
+  **Comprehension: passes.** Measured at 390×844, every rail keeps a 41–47px peek
+  of the next card as the affordance, and each page shows its primary CTA on the
+  first screen with no horizontal scrolling — "Book a free audit" on the four
+  English rails, WhatsApp on `/ar`. Nothing about the offer or the next step is
+  hidden behind a swipe. No horizontal page overflow on any of the five.
+
+  **Keyboard access: was broken, now fixed.** The scroll container had no
+  `tabindex`, so it could only be scrolled by a keyboard incidentally, when the
+  browser scrolled a focused card into view. Four of the five rails got away with
+  that because every card is itself an anchor; `/ar` has one card that is not, and
+  nothing stops the next card added anywhere from being plain content. A scroll
+  region that is neither focusable nor full of focusable children fails
+  **WCAG 2.1.1 (Keyboard)**.
+
+  `PanelBoard` now measures its own overflow with a `ResizeObserver` and, only
+  while it actually overflows, sets `tabindex="0"`, `role="group"` and a per-board
+  `aria-label`. Measured rather than always-on because above `sm` the rail is an
+  ordinary grid with nothing to scroll, and a tab stop there would stop nothing.
+
+  | Route | Label | `tabindex` at 390px | Arrow key moves it | `tabindex` at 1280px |
+  | --- | --- | --- | --- | --- |
+  | `/` | Explore the site | 0 | 280px | −1 |
+  | `/ar` | تصفح الموقع | 0 | 266px (RTL, ArrowLeft) | — |
+  | `/portfolio` | Portfolio categories | 0 | 266px | −1 |
+  | `/projects` | Project categories | 0 | 266px | −1 |
+  | `/ai-lab` | AI Lab tools | 0 | 266px | — |
 
 ---
 

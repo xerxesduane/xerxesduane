@@ -1,4 +1,5 @@
 import { m } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { stagger, VIEWPORT } from "../../lib/motion";
 
@@ -15,6 +16,12 @@ interface PanelBoardProps {
    * Explore rail you swipe, with the next card peeking in as the affordance.
    */
   rail?: boolean;
+  /**
+   * Names the rail for the keyboard user who focuses it. Required in practice
+   * whenever `rail` is set — a focusable scroll region with no name is just an
+   * unexplained tab stop.
+   */
+  railLabel?: string;
 }
 
 /**
@@ -37,7 +44,28 @@ export default function PanelBoard({
   className = "",
   washed = true,
   rail = false,
+  railLabel,
 }: PanelBoardProps) {
+  // A scroll container that is not focusable and whose cards are not all
+  // focusable cannot be scrolled with a keyboard, so anything past the first
+  // card is unreachable. Most cards here are themselves anchors, which carries
+  // it by accident; the /ar board has one that is not, and nothing guarantees
+  // the next card added anywhere will be a link.
+  //
+  // Measured rather than always on: above `sm` the rail is an ordinary grid
+  // with nothing to scroll, and a tab stop there would stop nothing.
+  const scroller = useRef<HTMLDivElement>(null);
+  const [scrollable, setScrollable] = useState(false);
+  useEffect(() => {
+    const el = scroller.current;
+    if (!el || !rail) return;
+    const measure = () => setScrollable(el.scrollWidth > el.clientWidth + 1);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [rail]);
+
   const layout = rail
     ? // A rail below sm; the ordinary grid from sm up. `snap-mandatory` plus a
       // sub-full card width means one card always settles in view with the
@@ -54,7 +82,17 @@ export default function PanelBoard({
       style={washed ? { background: BOARD_WASH } : undefined}
       className={washed ? `rounded-panel p-3 sm:p-4 ${className}` : className}
     >
-      <div className={layout}>{children}</div>
+      <div
+        ref={scroller}
+        className={
+          scrollable
+            ? `${layout} rounded-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas`
+            : layout
+        }
+        {...(scrollable ? { tabIndex: 0, role: "group", "aria-label": railLabel } : {})}
+      >
+        {children}
+      </div>
     </m.div>
   );
 }
