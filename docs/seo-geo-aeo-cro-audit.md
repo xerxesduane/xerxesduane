@@ -396,3 +396,61 @@ definition):
 - **Not measured in this pass:** Lighthouse, Core Web Vitals, image weight, JS/CSS
   bundle deltas, automated axe checks. The sandbox has no browser egress to the
   live site, so no field data was available and none is claimed.
+
+---
+
+## One-screen fit at laptop widths
+
+The brief asked for every page to fit one screen. It did at 1880 and 1536; below
+that it did not, and the measurements that said otherwise had been taken at
+1880×900 only.
+
+**The consent banner was the first thing found.** It sits in flow at the end of
+the document, so on a **first** visit it added 84px to every page and put a
+scrollbar on layouts built to fit exactly. Every height below is therefore taken
+with consent already answered, which is the state a visitor is in from their
+second page view on; the banner is also tighter at `board` now.
+
+Everything changed here is scoped to the `board` breakpoint (≥1180px), where
+vertical room is the scarce resource. Nothing below it moved, and the mobile
+rails, tap targets and stacking are untouched.
+
+| Page | Was (1280×800) | Now | Was (1440×820) | Now |
+| --- | --- | --- | --- | --- |
+| `/` | 949 | **801** | 879 | **820** |
+| `/ar` | 975 | **800** | 880 | **820** |
+| `/starter` | 956 | **806** | 897 | **820** |
+| `/about` | 953 | **807** | 885 | **820** |
+| `/contact` | 1241 | **800** | 1016 | **820** |
+| `/ai-lab` | 1043 | 877 | 964 | **820** |
+| `/services` | 850 | **800** | 837 | **820** |
+| the other six | fit | fit | fit | fit |
+
+**13/13 fit at 1536×864 and 1880×900. 13/13 at 1440×820. 12/13 at 1280×800.**
+
+What moved:
+
+- **`PageHeader`** — from `board` up the actions sit on the eyebrow's row and the
+  title spans the full width beneath. Beside the title they were taking ~350px of
+  a 908px header, pushing short headings onto extra lines: 48px of height bought
+  with a row only 46px tall. `/ar`'s title went 3 lines → 2, `/starter`'s 2 → 1.
+- **`/contact`, −441px.** The page grid gave the contact panel 636px, which its
+  own two-column split turned into 253px columns; the "What happens next" and
+  "You walk away with" lists were then two columns inside 253px, so every cell
+  wrapped to five lines. One column each at `board` was worth 176px on its own.
+  The panel split also went `1fr 1fr` → `1.1fr 0.9fr`: the pitch column carries
+  nine blocks and the form seven fields, and an even split starved the wrong one.
+  The form still gets 227px and the FAQ 269px.
+- **`/ai-lab`** is the one that does not fit at 1280. Its board carries a flagship
+  card with a real description plus all 37 tool names as a text index, and the
+  pills are already at 10.88px — shrinking them further would cost legibility for
+  77px. Tested and rejected: 3, 5 and 6-column grids (all taller), spanning the
+  largest card (taller), and dropping the pill chrome entirely (883px, still
+  over). It fits from 1440 up.
+- **Shared tightening at `board`:** panel padding and gaps, board container
+  padding, action-button height, tab-strip height, the AI Lab pill padding, and
+  the Home hero CTA.
+
+Two things this does **not** claim: pages still scroll at 1180 (the narrowest
+`board` width, where there is simply less room), and mobile still scrolls, which
+is the intended behaviour there.

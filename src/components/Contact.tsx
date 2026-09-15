@@ -109,26 +109,26 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
   return (
     <section id="contact" className={compact ? "scroll-mt-24" : "scroll-mt-24 py-20 sm:py-28"}>
       <div className="container-bl">
-        <div className={`glass border-glow grid overflow-hidden rounded-3xl lg:grid-cols-2 ${compact ? "gap-4 p-4 lg:gap-6" : "gap-10 p-7 sm:p-10 lg:gap-14"}`}>
+        <div className={`glass border-glow grid overflow-hidden rounded-3xl lg:grid-cols-2 ${compact ? "gap-4 p-4 board:grid-cols-[1.1fr_0.9fr] lg:gap-6" : "gap-10 p-7 sm:p-10 lg:gap-14"}`}>
           {/* Left: pitch + contacts */}
           <Reveal>
             <span className="eyebrow">
               <span className="h-px w-6 bg-gold/60" aria-hidden />
               Free Business Systems Audit
             </span>
-            <h2 className={compact ? "mt-2 board:mt-1.5 text-2xl" : "mt-4 text-3xl sm:text-4xl"}>
+            <h2 className={compact ? "mt-2 board:mt-1.5 text-2xl board:text-xl" : "mt-4 text-3xl sm:text-4xl"}>
               Just curious what{" "}
               <span className="text-gradient-gold">I'd say?</span>
             </h2>
-            <p className={compact ? "mt-2 board:mt-1.5 max-w-md text-sm text-muted" : "mt-4 max-w-md text-muted"}>
+            <p className={compact ? "mt-2 board:mt-1.5 max-w-md text-sm text-muted board:text-[0.83rem] board:leading-[1.45]" : "mt-4 max-w-md text-muted"}>
               60 minutes, zero pressure. You walk away with a clear map of your
               systems and three quick wins you can use right away.
             </p>
 
             <p className={`font-display text-xs font-extrabold uppercase tracking-[0.16em] text-accent-deep board:text-[0.68rem] ${compact ? "mt-4 board:mt-2.5" : "mt-8"}`}>What happens next</p>
-            <ol className={compact ? "mt-2 board:mt-1.5 grid gap-1 board:gap-0.5 sm:grid-cols-2" : "mt-3 space-y-4"}>
+            <ol className={compact ? "mt-2 board:mt-1.5 grid gap-1 board:gap-0.5 sm:grid-cols-2 board:grid-cols-1" : "mt-3 space-y-4"}>
               {AUDIT_STEPS.map((s, i) => (
-                <li key={s} className="flex gap-3 text-sm text-cream-dim">
+                <li key={s} className="flex gap-3 text-sm text-cream-dim board:text-[0.8rem] board:leading-[1.35]">
                   <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent text-xs font-bold text-accent-ink">
                     {i + 1}
                   </span>
@@ -139,9 +139,9 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
 
             <div className={`rounded-2xl border border-cream/10 bg-ink-deep/40 ${compact ? "mt-3 board:mt-2 p-3 board:p-2.5" : "mt-6 p-4"}`}>
               <p className="font-display text-xs board:text-[0.68rem] font-extrabold uppercase tracking-[0.16em] text-accent-deep">You walk away with</p>
-              <ul className={compact ? "mt-2 board:mt-1.5 grid gap-1 board:gap-0.5 sm:grid-cols-2" : "mt-2.5 space-y-1.5"}>
+              <ul className={compact ? "mt-2 board:mt-1.5 grid gap-1 board:gap-0.5 sm:grid-cols-2 board:grid-cols-1" : "mt-2.5 space-y-1.5"}>
                 {AUDIT_DELIVERABLES.map((d) => (
-                  <li key={d} className="flex items-start gap-2 text-sm text-cream-dim">
+                  <li key={d} className="flex items-start gap-2 text-sm text-cream-dim board:text-[0.8rem] board:leading-[1.35]">
                     <Check size={14} className="mt-0.5 shrink-0 text-gold" />
                     {d}
                   </li>
@@ -153,7 +153,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
               href={CONTACT.calendar}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold/15 ${compact ? "mt-4 board:mt-2.5" : "mt-8"}`}
+              className={`inline-flex items-center gap-2.5 rounded-full border border-gold/30 bg-gold/10 px-5 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold/15 board:py-2 board:text-[0.8rem] ${compact ? "mt-4 board:mt-2.5" : "mt-8"}`}
             >
               <CalendarCheck size={17} />
               Prefer to pick a time? Book instantly

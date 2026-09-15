@@ -19,7 +19,7 @@ export default function HeroBlock() {
       variants={stagger}
       initial="hidden"
       animate="show"
-      className="mb-6 board:mb-2 flex flex-col gap-3 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-x-10 sm:gap-y-0"
+      className="mb-6 board:mb-1 flex flex-col gap-3 sm:grid sm:grid-cols-[minmax(0,1fr)_auto] sm:gap-x-10 sm:gap-y-0"
     >
       <m.h1
         variants={fadeUp}
@@ -42,7 +42,7 @@ export default function HeroBlock() {
         <a
           href={HERO.ctaHref}
           data-cta="primary"
-          className="group inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3.5 text-[0.95rem] font-bold text-fg-onSolid shadow-solid transition duration-300 ease-smooth hover:-translate-y-0.5 hover:bg-navy-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
+          className="group inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3.5 text-[0.95rem] font-bold text-fg-onSolid shadow-solid board:py-2.5 transition duration-300 ease-smooth hover:-translate-y-0.5 hover:bg-navy-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
         >
           {HERO.ctaLabel}
           <ArrowUpRight

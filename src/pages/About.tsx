@@ -66,7 +66,7 @@ export default function About() {
       <AboutIntro />
 
       <TabbedViews
-        className="mt-3"
+        className="mt-3 board:mt-2"
         label="About Xerxes"
         views={[
           {
