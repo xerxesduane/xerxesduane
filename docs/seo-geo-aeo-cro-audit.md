@@ -42,7 +42,12 @@ directly.
 being *visible* in it. Framer Motion writes each variant's initial state into the
 server render, so the page header shipped its `h1` as `style="opacity:0"` and 40
 elements on a service page carried `opacity:0`. A crawler that reads the DOM was
-fine; a visitor whose JavaScript was slow or blocked saw an empty header, and LCP
+fine; a visitor whose JavaScript was slow or blocked saw an empty header for 2.2
+seconds — `index.html` carries a "pre-hydration reveal fallback" stylesheet that
+force-reveals anything with inline `opacity:0` after 2.2s while `<html>` still
+lacks `.js-ready`, so the page was never permanently blank and the author had
+clearly seen this coming. It just does not help LCP, which is measured long
+before 2.2s. LCP
 landed at 1348ms instead of 160ms. Fixed for the header and hero — see
 [Performance](#performance). Scroll reveals below the fold still start hidden,
 which is what a reveal is.
@@ -102,6 +107,13 @@ precise business location that does not exist.
 
 **Done:** the `geo` node is deleted. `areaServed` (Dubai, Sharjah, UAE,
 Philippines) and the locality-level address are kept, both truthful.
+
+⚠️ **This fix was incomplete, found later.** Removing the `geo` block from the
+JSON-LD left `<meta name="ICBM" content="25.2048, 55.2708" />` in `index.html` —
+the same Dubai city centroid, the same invented precision, injected into all 47
+routes. It survived because it is a meta tag rather than schema, and the original
+check only looked at JSON-LD. **Now removed.** `geo.region` (`AE-DU`) and
+`geo.placename` (`Dubai`) stay: they are locality-level and true.
 
 ⚠️ **Owner decision still needed** — see [Facts needed from the owner](#facts-needed-from-the-owner), item 1. The entity is still
 typed `ProfessionalService + LocalBusiness`, which implies a visitable premises. If
@@ -520,6 +532,14 @@ video was removed. The fallback webfonts join them: `inter-*.woff2` (4 × 47KB),
 pointing at them. They cost visitors nothing, because nothing requests them, but
 they are deployed on every push and the portrait sits at a guessable public URL.
 
+**Also dead, and left alone:** a whole `studio-*` design system in `index.css` —
+10 class rules, `.font-studio-pixel`, and 31 `--studio-*` custom properties, none
+referenced anywhere in `src/`, `index.html` or `scripts/`. It is roughly 3KB
+uncompressed, about 1KB over the wire. Not removed because the declarations are
+scattered across 600 lines rather than sitting in one block, so excising them is a
+surgical multi-site edit for a kilobyte. Worth doing next time that file is opened
+for another reason.
+
 I have not moved or deleted them: `scripts/process-hero-video.mjs` writes to
 `public/hero/` by design, and the portrait is the only copy outside git history.
 The repo already has `brand-kit/` and `work-raw/` for source assets that are not
@@ -561,6 +581,91 @@ defect, and the new header action means WhatsApp is one tap either way.
 **No calendar link on service pages** (`zcal.co` appears only on `/contact`). That
 looks intentional — the audit CTA points at `/contact`, which carries the calendar
 — so it is recorded rather than changed.
+
+---
+
+## Internal linking and the built-output QA pass
+
+Built a link graph over all 47 prerendered routes (JSON-LD stripped, so schema
+URLs do not count as links) and validated the rest of the output.
+
+**No orphans.** Every route has at least one internal inbound link. Three things
+were thin enough to be worth fixing:
+
+- **`/starter` was reachable from one page**, `/pricing` — and it is the cheapest
+  way in, the likeliest first purchase for a small business. `/services` already
+  had the words "the budget package" sitting in its header as plain text; they are
+  now the link. 1 → 2 inbound.
+  Separately, `homeBento.ts` carries `href: "/starter"` on that row, and it is
+  never rendered: the home Services card is one card-wide anchor, and nesting a
+  link inside it would be invalid HTML. The field is dead data, left in place.
+- **`/case-studies/saladmaster-crm-web` was reachable only from the index.** The
+  study is "CRM, Web & Brand — a clearer lead-to-demo journey, organised around
+  the way the sales team actually works", which is `/crm-development-dubai`'s
+  promise written down by a client. That page now shows it as proof: 1 → 2
+  inbound, and a service page that had no proof now has some.
+- **`/case-studies/aya-home-spa-meta-ads` still has one inbound link.** It is a
+  Meta Ads campaign and there is no paid-ads service page to host it. Left alone
+  rather than attached to a page it does not fit.
+
+### A proof block that silently rendered nothing — **FIXED**
+
+`/ecommerce-development-dubai` declared `caseStudyClient: "Gilani Mobility"`.
+Gilani Mobility is a **portfolio** client, not a case study, so
+`CASE_STUDIES.find()` returned `undefined` and the page rendered no proof at all —
+while the source looked exactly like a page that had some.
+
+The dead reference is gone, and `npm run check:pricing` — the script for data
+joins that fail silently — now asserts every `caseStudyClient` resolves.
+**Verified by putting the bug back:** it fails with the exact page and name, and
+a non-zero exit.
+
+Type-level alternatives were tried first and rejected, each for a concrete
+reason: `: CaseStudy[]` widens `client` to `string`; `satisfies` alone does not
+stop that widening; `as const` narrows the array into a tuple whose members no
+longer share the optional `scope` and `stats` fields `ServicePage` reads, which
+breaks the build.
+
+### Everything else in the built output
+
+| Check | Result |
+| --- | --- |
+| JSON-LD blocks parse | all, across 47 routes |
+| Canonical points at its own URL | 47/47 |
+| hreflang reciprocal between `en` and `ar` pairs | yes — `/` and `/ar` carry identical, complete sets |
+| Sitemap vs built indexable routes | exact match, 47 = 47 |
+| Orphan pages | none |
+
+**Still only 4 of 13 service pages show a case study** (Odoo, SEO, e-commerce → no,
+CRM). That is a content gap, not a defect: writing a case study means real client
+results, which is the owner's to supply. Also worth a look: `/seo-dubai` shows the
+Wellington Cash for Cars study, which is **Google Ads** — paid search, not SEO. The
+category is displayed, so nothing is misrepresented, but it is adjacent proof
+rather than proof.
+
+---
+
+## Arabic pages
+
+Five routes are Arabic: `/ar` and four service pages. All five declare
+`lang="ar"`, `dir="rtl"` and `og:locale: ar_AR` correctly, and the service pages
+carry `Service` + `BreadcrumbList` with `inLanguage: "ar"`.
+
+Two things were wrong.
+
+**The site-wide `WebSite` node said `inLanguage: "en"`.** That `@graph` is
+injected into every prerendered page, so all five Arabic routes carried schema
+declaring the site they are on is English. It now lists `["en", "ar"]`, which is
+what a bilingual site actually is.
+
+**The skip link was untranslated.** It is the first thing a keyboard or
+screen-reader user reaches, and on a page declaring `lang="ar"` it announced
+"Skip to content" in English. Now `تخطَّ إلى المحتوى`, from `AR_CHROME`.
+
+Extracted every visible text node on `/ar` that contains Latin characters and no
+Arabic. After the fix the complete list is: `Xerxes Duane`, `@xerxesduane`, and
+`English` — the brand, the handle, and the language switch, which is correctly in
+the language it switches to.
 
 ## Facts needed from the owner
 
@@ -628,6 +733,19 @@ case studies. My recommendation is to drop it. Your call; I have not touched it.
 
 **9. Case-study client names.** All four are named publicly and already live, so I
 have assumed consent. Say if any should be anonymised.
+
+**10. Nine of thirteen service pages show no case study**, because there is no
+study that fits them. `/ecommerce-development-dubai` is the sharpest example: it
+used to name Gilani Mobility, who is a real e-commerce client with a live site in
+the portfolio but no written case study, so the page rendered no proof at all.
+Writing one means real client results, which only you can supply — and I will not
+invent them. Tell me which builds you can document and I will write them up from
+what you give me.
+
+**11. `/seo-dubai` shows a Google Ads case study.** Wellington Cash for Cars is
+paid search, not SEO. The category is displayed so nothing is misrepresented, but
+it is adjacent proof rather than proof. Either it stays as the honest best
+available, or an SEO engagement gets written up instead. Your call.
 
 ## How the numbers were taken
 

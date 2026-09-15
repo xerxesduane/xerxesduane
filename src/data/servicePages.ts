@@ -74,7 +74,21 @@ export interface ServicePageData {
     options: { slug: string; label: string; when: string }[];
     footnote: string;
   };
-  /** Matches a CASE_STUDIES client name to show as proof, if any. */
+  /**
+   * The client whose case study renders as proof on this page. Must match a
+   * `CASE_STUDIES` entry exactly.
+   *
+   * It is a plain `string` because the type-level alternatives cost more than
+   * they are worth: a `: CaseStudy[]` annotation widens `client` to `string`,
+   * `satisfies` alone does not stop that widening, and `as const` turns the
+   * array into a tuple whose members no longer share the optional `scope` and
+   * `stats` fields that `ServicePage` reads. So the join is asserted in
+   * `npm run check:pricing` instead, which is where the other silent data joins
+   * are checked. It needed to be: `/ecommerce-development-dubai` named "Gilani
+   * Mobility", a portfolio client with no case study, so `CASE_STUDIES.find`
+   * returned undefined and the page rendered no proof while the source looked
+   * as though it had some.
+   */
   caseStudyClient?: string;
   /** Service-specific FAQs (rendered on the page + FAQPage JSON-LD). */
   faqs: { q: string; a: string }[];
@@ -696,6 +710,10 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Businesses with a CRM nobody consistently uses",
       "Growing sales teams that need repeatable follow-up",
     ],
+    // "CRM, Web & Brand ... a clearer lead-to-demo journey, organised around the
+    // way the sales team actually works" is this page's promise, written down
+    // by a client. It was reachable only from /case-studies.
+    caseStudyClient: "Saladmaster UAE",
     faqs: [
       {
         q: "Which CRM should my business use?",
@@ -836,7 +854,6 @@ export const SERVICE_PAGES: ServicePageData[] = [
       "Teams manually processing online orders",
       "Brands that need better checkout conversion and reporting",
     ],
-    caseStudyClient: "Gilani Mobility",
     faqs: [
       {
         q: "Which e-commerce platform should I use?",

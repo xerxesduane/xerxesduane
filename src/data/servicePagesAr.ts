@@ -163,6 +163,7 @@ export const AR_NAV_LINKS = [
 ];
 
 export const AR_CHROME = {
+  skipToContent: "تخطَّ إلى المحتوى",
   homeAria: "Xerxes Duane، الصفحة الرئيسية",
   bookAudit: "احجز تدقيقًا مجانيًا",
   openMenu: "افتح القائمة",

@@ -36,6 +36,7 @@ const Showreel = lazy(() => import("./pages/Showreel"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
 const Demos = lazy(() => import("./pages/Demos"));
 import { getServicePage } from "./data/servicePages";
+import { AR_CHROME } from "./data/servicePagesAr";
 import { getServicePageAr } from "./data/servicePagesAr";
 import { getInsight } from "./data/insights";
 import { CASE_STUDIES } from "./data/content";
@@ -100,12 +101,17 @@ export default function App({ path = "/" }: { path?: string }) {
     <LazyMotion features={domAnimation} strict>
       <MotionConfig reducedMotion="user">
       <div className="grain relative min-h-dvh" dir={isArabic ? "rtl" : "ltr"} lang={isArabic ? "ar" : "en"}>
+        {/*
+          The skip link is the first thing a keyboard or screen-reader user
+          reaches. On a page that declares `lang="ar"` it was still announcing
+          "Skip to content" in English.
+        */}
         <a
           href="#top"
           data-lenis-ignore
           className="skip-link"
         >
-          Skip to content
+          {isArabic ? AR_CHROME.skipToContent : "Skip to content"}
         </a>
 
         <SmoothScroll />
