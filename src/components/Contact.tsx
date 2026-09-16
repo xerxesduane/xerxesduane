@@ -80,6 +80,15 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
     });
   }, [state.errors, source.page]);
 
+  // Formspree's <ValidationError> renders a bare <div> — no role, no aria-live,
+  // and no association to the input it describes (verified by reading
+  // @formspree/react's bundled source). So a screen-reader user got no
+  // announcement when a submission was rejected, and no way to tell which
+  // field the message belonged to. It does spread extra props onto that div,
+  // which is enough to fix both from here.
+  const fieldHasError = (name: string) =>
+    Boolean(state.errors && state.errors.getFieldErrors(name).length > 0);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     track("form_submit", { form_id: "audit", page: source.page });
     void handleSubmit(e);
@@ -187,7 +196,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
 
           {/* Right: form, or success state */}
           {state.succeeded ? (
-            <div className="flex flex-col justify-center rounded-2xl bg-ink-deep/40 p-8 text-center">
+            <div role="status" aria-live="polite" className="flex flex-col justify-center rounded-2xl bg-ink-deep/40 p-8 text-center">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-accent-soft text-accent-deep">
                 <CalendarCheck size={24} />
               </div>
@@ -278,11 +287,14 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
                   onChange={update("email")}
                   className={field}
                   placeholder="you@yourbusiness.ae"
+                  aria-invalid={fieldHasError("email") || undefined}
+                  aria-describedby="email-error"
                 />
                 <ValidationError
                   field="email"
-                  prefix="Email"
                   errors={state.errors}
+                  id="email-error"
+                  role="alert"
                   className="mt-1 text-xs text-gold"
                 />
               </div>
@@ -299,8 +311,16 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
                   onChange={update("phone")}
                   className={field}
                   placeholder="+971 5X XXX XXXX"
+                  aria-invalid={fieldHasError("phone") || undefined}
+                  aria-describedby="phone-error"
                 />
-                <ValidationError field="phone" prefix="Phone" errors={state.errors} className="mt-1 text-xs text-gold" />
+                <ValidationError
+                  field="phone"
+                  errors={state.errors}
+                  id="phone-error"
+                  role="alert"
+                  className="mt-1 text-xs text-gold"
+                />
               </div>
               <div>
                 <label htmlFor="message" className="mb-1 block text-xs text-muted board:mb-0.5">
@@ -316,7 +336,7 @@ export default function Contact({ compact = false }: { compact?: boolean } = {})
                   placeholder="Our site doesn't bring in leads and our invoicing is a mess…"
                 />
               </div>
-              <ValidationError errors={state.errors} className="text-xs text-gold" />
+              <ValidationError errors={state.errors} role="alert" className="text-xs text-gold" />
               <button
                 type="submit"
                 disabled={state.submitting}
