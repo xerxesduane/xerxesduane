@@ -39,7 +39,7 @@ function ToolMark({ tool }: { tool: Tool }) {
       <span
         aria-hidden
         style={{ height, width: height }}
-        className="grid shrink-0 place-items-center rounded-[0.3rem] bg-accent text-[0.55rem] font-extrabold leading-none text-accent-ink"
+        className="grid shrink-0 place-items-center rounded-[0.3rem] bg-[#a6410a] text-[0.55rem] font-extrabold leading-none text-white"
       >
         {tool.monogram}
       </span>

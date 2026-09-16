@@ -583,6 +583,49 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     background-color: #e8e1d2;
   }
 
+  /*
+   * An inverted panel: a card whose surface is the page's *foreground* colour,
+   * so it reads as a dark slab on the light theme and a light one on the dark
+   * theme. `bg-cream` + `text-ink` already pair correctly for that, because
+   * both legacy aliases flip together.
+   *
+   * The accent does not. `--c-accent-deep` is tuned to sit on the page, so on
+   * an inverted surface it lands the wrong way round: rust on navy at 2.53:1 in
+   * light, peach on cream at 1.64:1 in dark. Swapping the accent per theme
+   * inside the panel puts it back on the right side of the surface — 10.4:1 and
+   * 6.1:1 — without touching a single utility class in the markup.
+   */
+  .panel-invert {
+    --c-accent-deep: 255 171 128;
+    --c-accent: 255 171 128;
+  }
+  :root[data-theme="dark"] .panel-invert {
+    --c-accent-deep: 166 65 10;
+    --c-accent: 166 65 10;
+  }
+
+  /*
+   * A solid accent slab that does not follow the theme.
+   *
+   * The service-page CTA band used `bg-gold`, which is `--c-accent-deep` — a
+   * colour tuned to be read *as text on the page*, not used as a fill. In the
+   * dark theme it is a pale peach, so the band became a light slab while its
+   * foreground (`--c-accent-ink`, white in both themes) stayed white: 1.64:1.
+   * In the light theme it was a rust slab carrying dimmed page-ink at 2.60:1.
+   * Neither theme worked.
+   *
+   * Pinning it makes the band a stable brand moment, the way the navy buttons
+   * already are, and white on this rust is 5.11:1 at every size.
+   */
+  .band-accent {
+    --c-accent-deep: 166 65 10;
+    --c-accent: 249 112 22;
+    --c-accent-ink: 255 255 255;
+    --c-canvas-sunk: 17 34 68;
+    --c-fg: 255 255 255;
+    background-color: rgb(166 65 10);
+  }
+
   .eyebrow {
     @apply inline-flex items-center gap-2 uppercase text-accent-deep;
     font-family: theme("fontFamily.display");
