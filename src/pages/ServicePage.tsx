@@ -35,7 +35,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
         icon={Icon}
         title={
           <>
-            {page.h1Lead} <span className="italic text-accent">{page.h1Accent}</span>
+            {page.h1Lead} <span className="italic text-accent-deep">{page.h1Accent}</span>
           </>
         }
         lede={page.lede}
@@ -166,7 +166,7 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
           {proof && (
             <Reveal delay={0.15} className="mx-auto mt-6 max-w-2xl">
               <div className="glass border-glow rounded-2xl p-7">
-                <span className="font-mono text-xs uppercase tracking-wider text-gold/80">
+                <span className="font-mono text-xs uppercase tracking-wider text-gold">
                   {proof.location} · {proof.category}
                 </span>
                 <p className="mt-3 text-base text-cream-dim">{proof.challenge}</p>
@@ -208,10 +208,10 @@ export default function ServicePage({ page }: { page: ServicePageData }) {
 
       <section className="py-12 sm:py-16">
         <div className="container-bl">
-          <Reveal className="mx-auto max-w-4xl rounded-3xl border border-gold/25 bg-gold p-7 text-ink shadow-solid sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
+          <Reveal className="band-accent mx-auto max-w-4xl rounded-3xl border border-gold/25 p-7 shadow-solid sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-9">
             <div>
-              <span className="font-mono text-[10px] uppercase tracking-wider text-ink/55">Before you spend</span>
-              <h2 className="mt-3 max-w-2xl text-2xl !text-ink sm:text-3xl">Let’s find the smallest build that creates the biggest useful change.</h2>
+              <span className="font-mono text-[10px] uppercase tracking-wider text-accent-ink">Before you spend</span>
+              <h2 className="mt-3 max-w-2xl text-2xl !text-accent-ink sm:text-3xl">Let’s find the smallest build that creates the biggest useful change.</h2>
             </div>
             <a href="/contact" className="mt-6 inline-flex shrink-0 items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm font-semibold text-cream sm:mt-0">
               Scope it honestly <ArrowUpRight size={15} />

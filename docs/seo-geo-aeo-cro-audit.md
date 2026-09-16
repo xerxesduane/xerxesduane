@@ -840,6 +840,64 @@ theme-inverted legacy aliases, a contrast check must resolve **which element
 owns the text node**, wait for entrance animations to finish, and composite the
 full background stack. Two of those three were missing from each earlier attempt.
 
+---
+
+## Colour contrast — 43 failures to zero
+
+Having found the Process band, I swept every text node on 19 routes in **both**
+themes, measuring the element that owns the text, compositing the full background
+stack, and only after scroll reveals had fired and settled.
+
+**43 failures: 34 in light, 9 in dark. Now 0 and 0.**
+
+Every one had the same shape: a surface that does not follow the theme, paired
+with text tokens that do. The legacy aliases are the mechanism — `text-ink` is
+`--c-canvas-sunk` (a *surface* colour), `text-gold` is `--c-accent-deep` (a
+colour tuned to be read *on the page*). Put either on a surface that inverts
+differently and it lands on the wrong side.
+
+| Where | Was | Now |
+| --- | --- | --- |
+| `ServiceVisual` flow label (13 pages) | 2.53:1 light, 1.64:1 dark | **10.4:1 / 6.1:1** |
+| `ServiceVisual` stage numbers | 2.93:1 light | **passes both** |
+| `ServiceVisual` stage detail | 3.92:1 light | **passes both** |
+| Service-page h1 accent | 2.57:1 light | **6.3:1 / 9.4:1** |
+| Service-page CTA band eyebrow | 2.60:1 light, 3.57:1 dark | **5.11:1 both** |
+| Service-page CTA band heading | 1.84:1 dark | **5.11:1 both** |
+| `ServicePackages` featured note | 2.53:1 light, 1.64:1 dark | **passes both** |
+| Case-study proof label | 4.17:1 light | **passes both** |
+| Case-study CTA | 2.85:1 light | **passes both** |
+| `/projects` result figures | 2.71:1 light | **passes both** |
+| Tool-logo monograms | 2.85:1 light, 3.21:1 dark | **5.11:1 both** |
+
+### Two reusable classes, rather than eleven patches
+
+- **`.panel-invert`** — for a card whose surface is the page *foreground*
+  (`bg-cream` + `text-ink`, which pair correctly because both flip together).
+  The accent does not flip with them, so this swaps the accent tokens per theme
+  inside the card. Used by `ServiceVisual`'s left column and the featured
+  package card.
+- **`.band-accent`** — a solid accent slab pinned in both themes, like the navy
+  buttons already are. The CTA band had used `bg-gold`, i.e. `--c-accent-deep`,
+  which in the dark theme is a pale peach, so the slab went light while its white
+  foreground stayed white.
+- **`.band-paper`** — the Process band, above.
+
+### Two mistakes worth recording
+
+Both were caught by re-measuring rather than by reasoning:
+
+1. **Scoping `.panel-invert` to the whole `ServiceVisual` card** fixed the label
+   and broke the stage numbers, because the inner `<ol>` is `bg-ink` — page-like
+   again, not inverted. The swap had to stop at the inverted column.
+2. **Moving the monograms to `bg-accent-deep`** to fix 2.85:1 in light made dark
+   *worse*, 3.21:1 → 1.84:1, because `accent-deep` inverts too. A logo substitute
+   should not follow the theme at all, so both its colours are now pinned.
+
+**Verified after:** 0 contrast failures across 19 routes in both themes; the
+one-screen fit unchanged at 12/13 for 1280×800; tap targets unchanged at the same
+12 inline-exempt links.
+
 ## Facts needed from the owner
 
 Nothing here is blocking a deploy. Each one is a claim the site makes, or a
