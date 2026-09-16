@@ -550,6 +550,39 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     overflow: hidden;
   }
 
+  /*
+   * A paper band whose colour does not follow the theme.
+   *
+   * The Process section is a deliberate cream interlude: `bg-[#E8E1D2]` is
+   * hard-coded, so the surface is the same in both themes. Its text was not.
+   * `ink`, `cream` and `gold` are legacy aliases pointing at theme tokens that
+   * invert, and `text-ink` resolves to `--c-canvas-sunk` — a *surface* colour,
+   * which in the light theme is cream. So on the cream band, in the site's
+   * default theme, the heading, the subtitle and all five process steps
+   * rendered cream-on-cream at 1.08:1. Measured on every text node in the band:
+   * only the eyebrow and the accent word cleared AA, and in dark mode exactly
+   * those two failed instead.
+   *
+   * Pinning the tokens inside the band fixes every utility in it at once and
+   * leaves the markup alone. The values are the light theme's, because the
+   * paper is always light.
+   */
+  .band-paper {
+    --c-canvas: 245 243 236;
+    --c-canvas-sunk: 17 34 68;
+    --c-fg: 17 34 68;
+    --c-fg-soft: 74 90 116;
+    --c-fg-faint: 94 109 135;
+    --c-fg-on-solid: 255 255 255;
+    --c-line: 216 221 228;
+    --c-line-soft: 232 235 239;
+    --c-accent: 249 112 22;
+    --c-accent-soft: 253 236 225;
+    --c-accent-deep: 166 65 10;
+    --c-accent-hover: 154 71 8;
+    background-color: #e8e1d2;
+  }
+
   .eyebrow {
     @apply inline-flex items-center gap-2 uppercase text-accent-deep;
     font-family: theme("fontFamily.display");

@@ -773,6 +773,73 @@ page's price line; and the author byline link inside "Xerxes Duane · <date>". A
 sit in running prose where the line-height constrains them — which is exactly what
 the exception is for.
 
+---
+
+## The Process band was invisible in the default theme
+
+Found while checking colour contrast, and it took four attempts to measure
+correctly — worth recording, because the first three answers were all wrong in
+different ways.
+
+### The bug
+
+`src/components/Process.tsx` renders a deliberate cream interlude:
+`bg-[#E8E1D2]`, hard-coded, the same in both themes. Its **text** is not pinned.
+`ink`, `cream` and `gold` are legacy aliases repointed onto theme tokens, and
+`text-ink` resolves to `--c-canvas-sunk` — a **surface** colour, which in the
+light theme is `237 234 225`, i.e. cream.
+
+So on the cream band, in the site's **default** theme, the text was cream.
+
+Measured on every text node in the band, with the kinetic reveal allowed to
+finish:
+
+| Element | Light | Dark |
+| --- | --- | --- |
+| "How I work" eyebrow | 4.77:1 | **1.42:1** |
+| "Listen deeply. Plan honestly." (46px) | **1.08:1** | 14.73:1 |
+| "Build calmly." accent (46px) | 4.77:1 | **1.42:1** |
+| Subtitle (18px) | **1.08:1** | 14.73:1 |
+| All five step titles and bodies | **1.08:1** | 14.73:1 |
+
+In light mode everything except the eyebrow and one accent word was invisible.
+In dark mode exactly those two failed instead. `<Process />` renders on all 13
+service pages.
+
+### The fix
+
+A `.band-paper` class that pins the theme tokens **inside** the band to the
+light theme's values, since the paper is always light. Every utility in the
+section then resolves correctly in both themes with no markup changes. The one
+exception: with `ink` pinned to navy the step-number circle becomes navy, and
+the gold numeral on it would be 2.2:1 — so that numeral moves to the bright
+accent, 5.6:1 on navy, which keeps the look.
+
+### Four measurements, three of them wrong
+
+Worth writing down, because the failure modes are general:
+
+1. **Computed styles, first opaque ancestor.** Reported the failure in the
+   *dark* theme. Wrong: it stopped at the first opaque background instead of
+   compositing the translucent stack, so it compared against a colour no pixel
+   ever had.
+2. **Computed styles, full compositing.** Same verdict. Still wrong, for a
+   different reason — it had the right background but the element it sampled
+   was not the one carrying the text.
+3. **Rendered pixels, element screenshot.** Said 1.06:1 in *light* — right
+   theme, right number, but attributed to the wrong element: `#process h2 span`
+   matched the first of **eleven** spans, because `Kinetic` splits the heading
+   into word-level spans for a mask reveal. It was reading the h2's inherited
+   colour by accident.
+4. **Every text node in the band, both themes, after the reveal settles.** The
+   table above. Only this one shows the real shape: it is not one accent word,
+   it is the entire section.
+
+The lesson that generalises: on a site with a kinetic type component and
+theme-inverted legacy aliases, a contrast check must resolve **which element
+owns the text node**, wait for entrance animations to finish, and composite the
+full background stack. Two of those three were missing from each earlier attempt.
+
 ## Facts needed from the owner
 
 Nothing here is blocking a deploy. Each one is a claim the site makes, or a
