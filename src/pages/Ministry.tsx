@@ -290,6 +290,15 @@ const SERMONS = [
   },
 ];
 
+/**
+ * Re-encoded from the Cargo uploads (H.264, metadata stripped). Posters are
+ * frames from each clip, so the card reads before anything is played.
+ */
+const WORSHIP_VIDEOS = [
+  { src: "worship-sharjah", caption: "Fellowship Sharjah, United Arab Emirates, 2026", w: 832, h: 464 },
+  { src: "worship-ccac", caption: "Capital City Alliance Church, 2023", w: 960, h: 540 },
+];
+
 const SOUTHERN_PH_PHOTO: Photo = {
   src: "project-southern-ph",
   alt: "Riding the Waves of Education: the Floating School Project among coastal communities in the southern Philippines",
@@ -753,15 +762,48 @@ export default function Ministry() {
                       Whatever the room, my heart is the same: to help people meet Jesus and respond
                       to Him honestly.
                     </p>
-                    <ul className="space-y-1">
-                      <li>Fellowship Sharjah, United Arab Emirates · 2026</li>
-                      <li>Capital City Alliance Church · 2023</li>
-                      <li>
-                        Angeles City Alliance Church · 2022 ·{" "}
-                        <Ext href="https://youtu.be/aEjb5TPdt9M">Watch King of Kings</Ext>
-                      </li>
-                    </ul>
                   </div>
+                  <ul className="mt-4 space-y-4">
+                    {WORSHIP_VIDEOS.map((v) => (
+                      <li key={v.src}>
+                        {/* preload="none": nothing downloads until someone presses play. */}
+                        <video
+                          controls
+                          playsInline
+                          preload="none"
+                          poster={`/ministry/${v.src}.webp`}
+                          width={v.w}
+                          height={v.h}
+                          className="h-auto w-full rounded-card border border-line bg-black"
+                        >
+                          <source src={`/ministry/${v.src}.mp4`} type="video/mp4" />
+                        </video>
+                        <p className="mt-1 text-[0.9rem] text-fg-soft">{v.caption}</p>
+                      </li>
+                    ))}
+                    <li>
+                      <a
+                        href="https://youtu.be/aEjb5TPdt9M"
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        className="block"
+                      >
+                        <img
+                          src="/ministry/worship-kok.webp"
+                          alt="Leading King of Kings with the worship team at Angeles City Alliance Church"
+                          width={480}
+                          height={270}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-auto w-full rounded-card border border-line"
+                        />
+                      </a>
+                      <p className="mt-1 text-[0.9rem] text-fg-soft">
+                        Angeles City Alliance Church, 2022 ·{" "}
+                        <Ext href="https://youtu.be/aEjb5TPdt9M">Watch King of Kings on YouTube</Ext>
+                      </p>
+                    </li>
+                  </ul>
                 </Card>
               </div>
             ),
