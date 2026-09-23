@@ -58,6 +58,9 @@ const decode = (s) =>
     .replace(/&amp;/g, "&");
 
 const titles = new Map();
+/** Routes marked unlisted (noindex + nosnippet), and every page's HTML. */
+const unlisted = [];
+const htmlByRoute = new Map();
 const descriptions = new Map();
 
 for (const file of pages) {
@@ -69,6 +72,8 @@ for (const file of pages) {
   const canonical = html.match(/<link rel="canonical" href="(.*?)"/s);
   const robots = html.match(/<meta name="robots" content="(.*?)"/s);
   const noindex = (robots?.[1] ?? "").includes("noindex");
+  htmlByRoute.set(route, html);
+  if (noindex && (robots?.[1] ?? "").includes("nosnippet")) unlisted.push(route);
 
   check(Boolean(titleMatch), `${route}: no <title>`);
   check(Boolean(descMatch), `${route}: no meta description`);
@@ -119,6 +124,20 @@ for (const file of pages) {
       break;
     }
     previous = level;
+  }
+}
+
+// Unlisted pages only stay unlisted while nothing advertises them: not the
+// sitemap, and not a link from any other page a crawler can follow.
+const sitemap = readFileSync(join(dist, "sitemap.xml"), "utf8");
+for (const route of unlisted) {
+  check(!sitemap.includes(`${route}</loc>`), `${route}: unlisted but listed in sitemap.xml`);
+  for (const [other, html] of htmlByRoute) {
+    if (other === route) continue;
+    check(
+      !new RegExp(`href="(https://www\\.xerxesduane\\.com)?${route}["/#?]`).test(html),
+      `${route}: unlisted but linked from ${other}`,
+    );
   }
 }
 

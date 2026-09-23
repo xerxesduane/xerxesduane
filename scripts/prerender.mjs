@@ -14,7 +14,7 @@ const root = resolve(here, "..");
 const distDir = join(root, "dist");
 const serverEntry = join(root, ".ssr-dist", "entry-server.js");
 
-const { render, allRoutes, routeLastmod } = await import(pathToFileURL(serverEntry).href);
+const { render, allRoutes, routeLastmod, isIndexable } = await import(pathToFileURL(serverEntry).href);
 
 const template = await readFile(join(distDir, "index.html"), "utf-8");
 
@@ -99,7 +99,8 @@ function contentDate(route) {
   if (!dateCache.has(key)) dateCache.set(key, lastCommitDate(sourcesFor(route)) ?? today);
   return dateCache.get(key);
 }
-const indexableRoutes = routes;
+// Unlisted and noindex routes are prerendered but never advertised.
+const indexableRoutes = routes.filter(isIndexable);
 const urls = indexableRoutes
   .map((route) => {
     const loc = route === "/" ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${route}`;
