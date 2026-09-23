@@ -321,6 +321,11 @@ const DIGITAL_WORK: { title: string; body: string; href?: string; link?: string 
     link: "View on GitHub",
   },
   {
+    // No link: the repository is private and would 404 for visitors.
+    title: "20th Anniversary Timeline",
+    body: "For Fellowship Dubai's 20th anniversary: a looping display for an 8 × 2 m LED wall. Photos of more than 1,800 members of the congregation rotate through the grapes of a grapevine timeline, each beside the year their Fellowship journey began. It runs fully offline, with an operator page to import, preview, go live and roll back.",
+  },
+  {
     title: "Custom web apps for church ministries",
     body: "Purpose-built tools for Fellowship Dubai's ministries, made as a volunteer in Communications and Digital & Online Ministry, so teams can spend less time on admin and more on people.",
   },
