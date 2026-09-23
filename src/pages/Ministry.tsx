@@ -317,8 +317,8 @@ const DIGITAL_WORK: { title: string; body: string; href?: string; link?: string 
   {
     title: "S.H.A.P.E. Discovery & SERVE Dashboard",
     body: "For Fellowship Dubai's SERVE Ministry: an interactive adaptation of the 24-page S.H.A.P.E. workbook that helps people understand how God has shaped them, and a dashboard that gives ministry leaders a scoped, auditable view of who is ready for a serving conversation. Discover, connect, serve.",
-    href: "https://github.com/xerxesduane/fellowship-serve-ministry",
-    link: "View on GitHub",
+    href: "https://fellowship-serve-demo.vercel.app/",
+    link: "Try the demo",
   },
   {
     // No link: the repository is private and would 404 for visitors.
