@@ -481,8 +481,9 @@ export default function Ministry() {
                       web apps that help the church&rsquo;s ministries care for people well. Most
                       recently that has been the S.H.A.P.E. Discovery and SERVE Dashboard for the
                       SERVE Ministry. I co-lead Alpha Youth Lab, equipping teenagers and university
-                      students to run Alpha Youth for their own friends, and I serve with the Alpha
-                      Film Series in churches and communities across the UAE. I also help lead{" "}
+                      students to run Alpha Youth for their own friends, and I lead and facilitate
+                      Alpha courses, using the Alpha Film Series, in churches and communities across
+                      the UAE. I also help lead{" "}
                       <Ext href="https://www.faithtech.com/communities/dubai">FaithTech Dubai</Ext>,
                       a community of Christians working at the intersection of faith and technology.
                     </p>
