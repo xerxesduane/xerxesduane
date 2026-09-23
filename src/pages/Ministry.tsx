@@ -169,11 +169,11 @@ const FOCUS = [
 const MILESTONES = [
   {
     title: "Indigitous #HACK",
-    body: "Champion in 2023 and a coach in 2024 in Manila, and now a coach with #HACK in Dubai. Through it I was nominated to the Fourth Lausanne Congress in Seoul (2024), and have since been selected for the Young Leaders Gathering in 2027.",
+    body: "Champion in 2023 and a coach in 2024 in Manila, and now a #HACK champion in Dubai. Through it I was nominated to the Fourth Lausanne Congress in Seoul (2024), and have since been selected for the Young Leaders Gathering in 2027.",
   },
   {
     title: "Fellowship Dubai apprenticeship",
-    body: "Hired as an apprentice in September 2025: coordinating Alpha and discipleship, coaching leaders to run Alpha themselves, and helping with communications and digital outreach. I now continue at Fellowship Dubai as a volunteer.",
+    body: "September 2025 to September 2026: coordinating Alpha and discipleship, coaching leaders to run Alpha themselves, and helping with communications and digital outreach. I now continue at Fellowship Dubai as a volunteer.",
   },
   {
     title: "Cru Digital Strategies",
@@ -378,7 +378,7 @@ const COLLABORATIONS: { title: string; body: string; href: string; link: string;
   },
   {
     title: "Indigitous #HACK",
-    body: "Indigitous #HACK, a global Christian hackathon. Champion in 2023 and a coach in 2024 in Manila, and now a coach with #HACK in Dubai.",
+    body: "Indigitous #HACK, a global Christian hackathon. Champion in 2023 and a coach in 2024 in Manila, and now a #HACK champion in Dubai.",
     href: "https://indigitous.org/",
     link: "indigitous.org",
     photos: [
@@ -493,7 +493,7 @@ export default function Ministry() {
                       of God.
                     </p>
                     <p>
-                      I served an apprenticeship with{" "}
+                      From September 2025 to September 2026 I served an apprenticeship with{" "}
                       <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext>, coordinating
                       Alpha and discipleship across the church, coaching leaders to run Alpha
                       themselves, and helping with the church&rsquo;s communications and digital
