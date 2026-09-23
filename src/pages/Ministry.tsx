@@ -79,6 +79,19 @@ const CALLING_PHOTOS: Photo[] = [
   { src: "lausanne-4", alt: "The Philippine delegation with their flag outside the Lausanne Congress venue in Seoul", w: 1600, h: 1200 },
 ];
 
+const MEETING_PHOTOS: Photo[] = [
+  { src: "calling-a", alt: "Xerxes with Pastor Bhaveshkumar Nagda over coffee at the Congress", w: 1600, h: 2133 },
+  { src: "calling-b", alt: "Delegates talking between sessions at the Congress venue in Seoul", w: 1600, h: 2133 },
+  { src: "calling-c", alt: "Xerxes beside the Lausanne 50 sign: Accelerating Global Mission Together", w: 1600, h: 1600 },
+  { src: "calling-d", alt: "Xerxes at the Fourth Lausanne Congress backdrop holding a Let the Church Declare and Display Christ Together sign", w: 1600, h: 1200 },
+];
+
+const DUBAI_PHOTOS: Photo[] = [
+  { src: "calling-e", alt: "Xerxes and Loraine on their wedding day, December 2024", w: 1600, h: 1066 },
+  { src: "calling-f", alt: "Xerxes and Loraine in front of the Fellowship Dubai sign: a place for everyone", w: 1600, h: 1200 },
+  { src: "calling-g", alt: "Portrait of Xerxes", w: 1600, h: 1768 },
+];
+
 /**
  * A swipeable strip rather than an autoplaying slideshow: no JS, nothing
  * moving on its own, and every photo is in the prerendered HTML. Each keeps
@@ -108,6 +121,23 @@ function Gallery({ photos, label, eager = false }: { photos: Photo[]; label: str
         </li>
       ))}
     </ul>
+  );
+}
+
+/** One photo at the top of a card, at its own proportions. */
+function Figure({ photo }: { photo: Photo }) {
+  return (
+    <img
+      src={`/ministry/${photo.src}-800.webp`}
+      srcSet={`/ministry/${photo.src}-800.webp 800w, /ministry/${photo.src}-1600.webp 1600w`}
+      sizes="(min-width: 1024px) 460px, 90vw"
+      alt={photo.alt}
+      width={photo.w}
+      height={photo.h}
+      loading="lazy"
+      decoding="async"
+      className="mb-3 h-auto w-full rounded-card border border-line"
+    />
   );
 }
 
@@ -166,33 +196,80 @@ const TOPICS = [
   "Faith, work & technology",
 ];
 
-const PLACES: { name: string; year: string; href?: string }[] = [
-  { name: "Digital Outreach, Greater Manila Conference, Norzagaray, Bulacan", year: "2024" },
-  { name: "Digital discipleship training, Hosanna Christian Church, Phayao, Thailand", year: "2024" },
-  { name: "Capital City Alliance Church", year: "2023" },
+const PLACES: { name: string; year: string; href?: string; photo: Photo }[] = [
+  {
+    name: "Digital Outreach, Greater Manila Conference, Norzagaray, Bulacan",
+    year: "2024",
+    photo: { src: "gmc", alt: "A packed hall at the Greater Manila Conference digital outreach", w: 1600, h: 903 },
+  },
+  {
+    name: "Digital discipleship training, Hosanna Christian Church, Phayao, Thailand",
+    year: "2024",
+    photo: { src: "place-thailand", alt: "Digital discipleship training at Hosanna Christian Church, Thailand", w: 960, h: 720 },
+  },
+  {
+    name: "Capital City Alliance Church",
+    year: "2023",
+    photo: { src: "place-ccac-2023", alt: "Training at Capital City Alliance Church", w: 1582, h: 890 },
+  },
   {
     name: "57th CAMACOP General Assembly",
     year: "2023",
     href: "https://www.youtube.com/watch?v=kJLqJkvmCpQ",
+    photo: { src: "place-camacop", alt: "Speaking at the 57th CAMACOP General Assembly", w: 1600, h: 1066 },
   },
-  { name: "Digital outreach, Alliance Bible Christian Church, Olongapo", year: "2023" },
+  {
+    name: "Digital outreach, Alliance Bible Christian Church, Olongapo",
+    year: "2023",
+    photo: { src: "place-olongapo", alt: "Digital outreach training at Alliance Bible Christian Church, Olongapo", w: 1600, h: 1200 },
+  },
   {
     name: "Youth Alive Connected, Luzon Youth Camp, Tarlac",
     year: "2023",
     href: "https://www.youtube.com/watch?v=T6zOJ0IFC8k",
+    photo: { src: "place-tarlac", alt: "Young people at the Youth Alive Connected Luzon Youth Camp", w: 1600, h: 900 },
   },
   {
     name: "Youth camp, Calintaan Evangelical Youth Churches Association, Mindoro Occidental",
     year: "2023",
     href: "https://www.youtube.com/watch?v=SySRiLbAHVw",
+    photo: { src: "place-calintaan", alt: "The Calintaan Evangelical Youth Churches Association youth camp", w: 1600, h: 900 },
   },
-  { name: "The Discovery Bible Project, Bradford United Church of Christ, Cebu", year: "2023" },
-  { name: "Capital City Alliance Church youth camp", year: "2023" },
-  { name: "Sharing the Discovery Bible Project, Cebu", year: "2023" },
-  { name: "Digital outreach, Bradford United Church of Christ, Cebu", year: "2023" },
+  {
+    name: "The Discovery Bible Project, Bradford United Church of Christ, Cebu",
+    year: "2023",
+    photo: { src: "place-bradford-db", alt: "The Discovery Bible Project at Bradford United Church of Christ, Cebu", w: 1600, h: 1200 },
+  },
+  {
+    name: "Capital City Alliance Church youth camp",
+    year: "2023",
+    photo: { src: "place-ccac-camp", alt: "The Capital City Alliance Church youth camp", w: 1600, h: 900 },
+  },
+  {
+    name: "Sharing the Discovery Bible Project, Cebu",
+    year: "2023",
+    photo: { src: "place-db-cebu", alt: "Sharing the Discovery Bible Project with church leaders in Cebu", w: 1600, h: 1008 },
+  },
+  {
+    name: "Digital outreach, Bradford United Church of Christ, Cebu",
+    year: "2023",
+    photo: { src: "place-bradford-outreach", alt: "Digital outreach training at Bradford United Church of Christ, Cebu", w: 1600, h: 1200 },
+  },
 ];
 
 const SERMONS = [
+  {
+    title: "The Cross of Christ",
+    date: "Calintaan Evangelical Youth Churches Association, 2023",
+    href: "https://www.youtube.com/watch?v=SySRiLbAHVw",
+    where: "YouTube",
+  },
+  {
+    title: "Narrative Preaching on Acts 16",
+    date: "Philippine Baptist Theological Seminary, 2020",
+    href: "https://www.youtube.com/watch?v=a6BP4kVUaXI",
+    where: "YouTube",
+  },
   {
     title: "God's Fatherly Heart",
     date: "June 18, 2023",
@@ -213,12 +290,18 @@ const SERMONS = [
   },
 ];
 
-const OUTREACH = [
-  "Sharing the gospel among unreached communities in the southern Philippines",
-  "Lanna Christian School, a ministry among the Thai",
-  "Church building project in Batanes",
-  "Church vision film in Pampanga",
-  "Teaching video with The Discovery Bible",
+const SOUTHERN_PH_PHOTO: Photo = {
+  src: "project-southern-ph",
+  alt: "Riding the Waves of Education: the Floating School Project among coastal communities in the southern Philippines",
+  w: 1366,
+  h: 768,
+};
+
+const OUTREACH: { title: string; href?: string }[] = [
+  { title: "Lanna Christian School, a ministry among the Thai", href: "https://youtu.be/-CH0mfTkfhU" },
+  { title: "Church Building Project in Batanes", href: "https://youtu.be/lyr5kgvR9gU" },
+  { title: "Church Vision Film in Pampanga", href: "https://www.youtube.com/watch?v=OO_0Fzx4pyM" },
+  { title: "Teaching Video with Discovery Bible", href: "https://youtu.be/YF4fhBL8xOA" },
 ];
 
 const DIGITAL_WORK = [
@@ -244,26 +327,44 @@ const DIGITAL_WORK = [
   },
 ];
 
-const COLLABORATIONS = [
+const COLLABORATIONS: { title: string; body: string; href: string; link: string; photos: Photo[] }[] = [
   {
     title: "Christian-Muslim Dialogue",
-    body: "A one-month intensive with the Silsilah Dialogue Movement in Zamboanga, alongside Catholic priests and nuns, Muslim teachers, campus Catholic ministers, and seminarians.",
+    body: "A one-month intensive on Christian-Muslim dialogue, Silsilah Dialogue Movement, Zamboanga. Alongside Catholic priests and nuns, Muslim teachers, campus Catholic ministers, and seminarians.",
     href: "https://silsilahdialogue.com/38th-silsilah-summer-course-on-muslim-christian-dialogue/",
+    link: "silsilahdialogue.com",
+    photos: [
+      { src: "collab-silsilah", alt: "Participants of the Silsilah summer course on Muslim-Christian dialogue in Zamboanga", w: 1600, h: 900 },
+    ],
   },
   {
     title: "4th Lausanne Congress",
-    body: "A gathering of 5,000+ global church leaders collaborating to fulfil the Great Commission together. Through it, I was later selected for the Young Leaders Gathering in 2027.",
+    body: "A gathering of 5,000+ global church leaders to collaborate in fulfilling the Great Commission together. Through it, I was later selected for the Young Leaders Gathering in 2027.",
     href: "https://congress.lausanne.org/",
+    link: "congress.lausanne.org",
+    photos: [
+      { src: "lausanne-4", alt: "The Philippine delegation with their flag outside the Lausanne Congress venue in Seoul", w: 1600, h: 1200 },
+      { src: "collab-lausanne-b", alt: "The signed Collaborative Action Commitment from the Fourth Lausanne Congress", w: 810, h: 1166 },
+      { src: "lausanne-3", alt: "Xerxes with fellow delegates at a table during the Lausanne Congress", w: 1600, h: 1200 },
+    ],
   },
   {
     title: "Indigitous #HACK",
-    body: "A global Christian hackathon. Champion in 2023 and a coach in 2024.",
+    body: "Indigitous #HACK, a global Christian hackathon. Champion in 2023 and a coach in 2024.",
     href: "https://hack.indigitous.org/",
+    link: "hack.indigitous.org",
+    photos: [
+      { src: "collab-hack", alt: "#HACK2024 certificate of appreciation presented to Xerxes Duane Magdaluyo for mentoring the champions", w: 1600, h: 1131 },
+    ],
   },
   {
     title: "The Innovation Launchpad",
-    body: "Training in how to think and work as an innovator.",
+    body: "Learned a lot about being an Innovator.",
     href: "https://www.theinnovationlaunchpad.com/",
+    link: "theinnovationlaunchpad.com",
+    photos: [
+      { src: "collab-launchpad", alt: "Innovation Launchpad certificate commissioning Xerxes Magdaluyo as an Innovation Designer", w: 1600, h: 1245 },
+    ],
   },
 ];
 
@@ -442,15 +543,22 @@ export default function Ministry() {
                     After prayer, my parents&rsquo; wise counsel, and the encouragement of my
                     community, I took a step of faith. I paid the USD 100 reservation and trusted
                     God with the rest. Not long after, an email from Lausanne told me everything was
-                    fully covered. It was a clear reminder that when God calls, He also provides.
+                    fully covered. All that remained was to apply for my Korean visa and book my
+                    flight. It was a clear reminder that when God calls, He also provides. Praise
+                    God.
                   </p>
                   <p>
-                    Out of more than 5,000 people at the Congress, I met Pastor Bhaveshkumar Nagda,
+                    What happened next still feels mind-blowing. Out of more than 5,000 people at the Congress, I met Pastor Bhaveshkumar Nagda,
                     and that one encounter opened doors I could never have planned. Pastor Bhavesh
                     turned out to be my fiancée&rsquo;s teacher in Tribes and Mission, and through
                     him I was connected to pastors serving in Dubai. Those relationships eventually
                     led me to Pastor Bill Koogler of Fellowship Dubai.
                   </p>
+                </div>
+                <div className="my-4">
+                  <Gallery photos={MEETING_PHOTOS} label="Photos from the Congress in Seoul" />
+                </div>
+                <div className={prose}>
                   <p>
                     At the same time, God was shaping my personal life. I married my wife, Loraine,
                     on December 18, 2024, and we began preparing for a new season together. After
@@ -458,12 +566,25 @@ export default function Ministry() {
                     months. In May 2025, Pastor Bill invited me to apply as an apprentice at
                     Fellowship Dubai, and in September 2025 I was officially hired.
                   </p>
+                </div>
+                <div className="my-4">
+                  <Gallery photos={DUBAI_PHOTOS} label="Photos from the move to Dubai" />
+                </div>
+                <div className={prose}>
                   <p>
                     Looking back, what first felt like an impossible invitation became the doorway
                     God used to lead me into missions in the Middle East. From faith, to provision,
                     to relationships, to calling, every step was clearly His. This conviction
                     continues to shape how I live and serve in Dubai today, trusting God to use
                     ordinary faithfulness for extraordinary purposes.
+                  </p>
+                  <p>
+                    This is the work I&rsquo;m giving my life to now. If the story stirs something
+                    in you, I&rsquo;d love for you to{" "}
+                    <a className={linkCls} href="#partner">
+                      pray and partner with me
+                    </a>
+                    .
                   </p>
                 </div>
               </Card>
@@ -479,7 +600,11 @@ export default function Ministry() {
                     <p>
                       I speak and lead training on digital ministry, discipleship, and missions, for
                       churches, youth camps, and conferences across the Philippines, the Gulf, and
-                      beyond. Beyond the stage, much of my work is hands-on: coaching leaders and
+                      beyond. Along the way I&rsquo;ve had the joy of training around 2,000 youths
+                      and students and equipping more than 5,000 leaders for digital outreach.
+                    </p>
+                    <p>
+                      Beyond the stage, much of my work is hands-on training: coaching leaders and
                       students to run Alpha and Alpha Youth themselves, helping churches disciple
                       people in everyday life, and equipping believers to use digital tools for
                       ministry.
@@ -499,9 +624,10 @@ export default function Ministry() {
 
                 <div className="grid gap-2 sm:grid-cols-2">
                   <Card>
+                    <Figure photo={{ src: "talk-movement-day", alt: "Workshop participants at Movement Day Middle East", w: 1342, h: 1125 }} />
                     <H3>Movement Day Middle East · 2026</H3>
                     <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">
-                      A workshop on FaithTech and discipleship through sports, exploring how
+                      I led a workshop on FaithTech and discipleship through sports, exploring how
                       technology and sport can open everyday doors for the gospel across the region.
                     </p>
                     <p className="mt-2 text-[0.9rem]">
@@ -524,44 +650,53 @@ export default function Ministry() {
                     </blockquote>
                   </Card>
                   <Card>
+                    <Figure photo={{ src: "talk-apologetics", alt: "Young people gathered outside a church after the apologetics training", w: 681, h: 372 }} />
                     <H3>Apologetics for youth · 2022</H3>
                     <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">
-                      Teaching young people to be Christian thinkers and lovers, so that when the
+                      I taught young people to be Christian thinkers and lovers, so that when the
                       world tells them lies, they can answer with truth and with love, in the power
-                      of the Spirit. Five questions: What is absolutely true? What is our identity
-                      and purpose? Where can we find our confidence? Who transforms us? How can we
-                      share the gospel in the digital world?
+                      of the Spirit. We explored five questions:
                     </p>
+                    <ul className="mt-1 list-disc pl-5 text-[0.9rem] leading-snug text-fg-soft">
+                      <li>What is absolutely true?</li>
+                      <li>What is our identity and purpose?</li>
+                      <li>Where can we find our confidence?</li>
+                      <li>Who transforms us?</li>
+                      <li>How can we share the gospel in the digital world?</li>
+                    </ul>
                     <p className="mt-2 text-[0.9rem]">
                       <Ext href="https://www.facebook.com/share/v/17RCB3mMw6/">Watch on Facebook</Ext>
                     </p>
                   </Card>
                   <Card>
+                    <Figure photo={{ src: "talk-better-sermon", alt: "Preachers at the Practical Ways for a Better Sermon workshop", w: 1500, h: 1125 }} />
                     <H3>Practical Ways for a Better Sermon · 2022</H3>
                     <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">
                       A workshop helping preachers grow in their craft, with brothers and sisters
                       from Capiz Alliance Fellowship, Bethel Alliance Community, and Roxas City
-                      Alliance Church.
+                      Alliance Church. We praise God for a fruitful time together.
                     </p>
                   </Card>
                 </div>
 
-                <Card>
-                  <H2>More places I&rsquo;ve served</H2>
-                  <ul className="mt-3 divide-y divide-line">
-                    {PLACES.map((p) => (
-                      <li
-                        key={p.name}
-                        className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2 text-[0.9rem] text-fg-soft"
-                      >
-                        <span>
+                <H2>More places I&rsquo;ve served</H2>
+                <ul className="grid gap-2 sm:grid-cols-2 board:grid-cols-3">
+                  {PLACES.map((p) => (
+                    <li key={p.name}>
+                      <Card className="h-full">
+                        <Figure photo={p.photo} />
+                        <p className="text-[0.9rem] leading-snug text-fg-soft">
                           {p.name} <span className="text-fg-faint">· {p.year}</span>
-                        </span>
-                        {p.href && <Ext href={p.href}>Watch</Ext>}
-                      </li>
-                    ))}
-                  </ul>
-                </Card>
+                        </p>
+                        {p.href && (
+                          <p className="mt-2 text-[0.9rem]">
+                            <Ext href={p.href}>Watch video</Ext>
+                          </p>
+                        )}
+                      </Card>
+                    </li>
+                  ))}
+                </ul>
               </div>
             ),
           },
@@ -575,9 +710,8 @@ export default function Ministry() {
                     <H2>Sermons</H2>
                     <p>
                       Preaching is a sacred trust. I&rsquo;ve had the privilege of opening
-                      God&rsquo;s Word in local churches, youth gatherings, and the seminary pulpit,
-                      including the Calintaan Evangelical Youth Churches Association (2023) and the
-                      Philippine Baptist Theological Seminary (2020).
+                      God&rsquo;s Word in local churches, youth gatherings, and the seminary pulpit.
+                      Here are a few of those moments, with several you can watch.
                     </p>
                   </div>
                   <ul className="mt-3 divide-y divide-line">
@@ -609,7 +743,10 @@ export default function Ministry() {
                     <ul className="space-y-1">
                       <li>Fellowship Sharjah, United Arab Emirates · 2026</li>
                       <li>Capital City Alliance Church · 2023</li>
-                      <li>Angeles City Alliance Church · 2022</li>
+                      <li>
+                        Angeles City Alliance Church · 2022 ·{" "}
+                        <Ext href="https://youtu.be/aEjb5TPdt9M">Watch King of Kings</Ext>
+                      </li>
                     </ul>
                   </div>
                 </Card>
@@ -629,13 +766,26 @@ export default function Ministry() {
                       outreach to films, websites, and discipleship platforms built to help the
                       church reach people.
                     </p>
-                    <ul className="list-disc space-y-1 pl-5">
-                      {OUTREACH.map((o) => (
-                        <li key={o}>{o}</li>
-                      ))}
-                    </ul>
                   </div>
+                  <div className="mt-4 max-w-2xl">
+                    <Figure photo={SOUTHERN_PH_PHOTO} />
+                    <p className="text-[0.9rem] text-fg-soft">
+                      Sharing the gospel among unreached communities in the southern Philippines
+                    </p>
+                  </div>
+                  <ul className="mt-4 divide-y divide-line">
+                    {OUTREACH.map((o) => (
+                      <li
+                        key={o.title}
+                        className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2 text-[0.9rem] text-fg-soft"
+                      >
+                        <span>{o.title}</span>
+                        {o.href && <Ext href={o.href}>Watch on YouTube</Ext>}
+                      </li>
+                    ))}
+                  </ul>
                 </Card>
+                <H2>Selected digital work</H2>
                 <ul className="grid gap-2 sm:grid-cols-2 board:grid-cols-3">
                   {DIGITAL_WORK.map((d) => (
                     <li key={d.title}>
@@ -665,22 +815,51 @@ export default function Ministry() {
                       ambassador, I&rsquo;ve trained pastors, churches, and denominations to use it:
                       the software itself, and the careful, prayerful study behind it.
                     </p>
-                    <p>
+                    <p className="flex flex-wrap gap-x-5 gap-y-1">
+                      <Ext href="https://discoverybible.com/">Explore The Discovery Bible</Ext>
                       <Ext href={mail("The Discovery Bible intro or training")}>
                         Ask me for an intro or training
                       </Ext>
                     </p>
                   </div>
+                  <ul className="mt-3 divide-y divide-line">
+                    <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2 text-[0.9rem] text-fg-soft">
+                      <span>
+                        <strong className="font-bold text-fg">Discovering John 3:16</strong>{" "}
+                        <span className="text-fg-faint">· The Discovery Bible, 2021</span>
+                      </span>
+                      <Ext href="https://youtu.be/jNr5tH6j6GQ">Watch on YouTube</Ext>
+                    </li>
+                    <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2 text-[0.9rem] text-fg-soft">
+                      <span>
+                        <strong className="font-bold text-fg">Pistis Christou Dialogue</strong>{" "}
+                        <span className="text-fg-faint">· 2020</span>
+                      </span>
+                      <Ext href="https://youtu.be/c1Yo6VPZcGQ">Watch on YouTube</Ext>
+                    </li>
+                  </ul>
                 </Card>
                 <H2>Training & collaboration</H2>
+                <p className="max-w-[72ch] text-[0.95rem] leading-relaxed text-fg-soft">
+                  Some of the trainings I&rsquo;ve completed and the networks I&rsquo;ve been
+                  privileged to learn and collaborate with, from the global church to neighbors of
+                  other faiths.
+                </p>
                 <ul className="grid gap-2 sm:grid-cols-2">
                   {COLLABORATIONS.map((c) => (
                     <li key={c.title}>
                       <Card className="h-full">
+                        {c.photos.length === 1 ? (
+                          <Figure photo={c.photos[0]} />
+                        ) : (
+                          <div className="mb-3">
+                            <Gallery photos={c.photos} label={`Photos: ${c.title}`} />
+                          </div>
+                        )}
                         <H3>{c.title}</H3>
                         <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">{c.body}</p>
                         <p className="mt-2 text-[0.9rem]">
-                          <Ext href={c.href}>Learn more</Ext>
+                          <Ext href={c.href}>{c.link}</Ext>
                         </p>
                       </Card>
                     </li>
@@ -706,7 +885,7 @@ export default function Ministry() {
                     <H3>Pray with me</H3>
                     <p>
                       Prayer is not the lesser way to partner. It is full partnership, and I treasure
-                      it just as much as any other.
+                      it just as much as any other. Would you stand with me in prayer?
                     </p>
                     <ul className="list-disc space-y-1 pl-5">
                       <li>Pray for the people I walk with as they meet Jesus</li>
@@ -733,8 +912,14 @@ export default function Ministry() {
                 <Card>
                   <div className={prose}>
                     <p>
-                      In person here in the UAE, or online with churches and teams anywhere.{" "}
-                      <Ext href={mail("Serving together")}>Let&rsquo;s talk</Ext>
+                      If any of these would serve your church or organization, I&rsquo;d be glad to
+                      talk, whether in person here in the UAE or online with churches and teams
+                      anywhere. <Ext href={mail("Serving together")}>Let&rsquo;s talk</Ext>
+                    </p>
+                    <p className="text-fg-faint">
+                      Over seven years of ministry, around 2,000 youths and students trained, 5,000+
+                      leaders equipped for digital outreach, and tools built for churches and
+                      denominations.
                     </p>
                     <H3>Support the wider work</H3>
                     <p>
@@ -752,6 +937,11 @@ export default function Ministry() {
                     </p>
                   </div>
                 </Card>
+
+                <p className="max-w-[60ch] rounded-card border border-line bg-panel p-4 font-display text-[1.05rem] italic leading-snug text-fg shadow-card">
+                  Thank you for sharing in this with me. However we partner, in prayer, in ministry,
+                  or in giving, you are a true partner in the gospel.
+                </p>
               </div>
             ),
           },
