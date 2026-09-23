@@ -304,7 +304,17 @@ const OUTREACH: { title: string; href?: string }[] = [
   { title: "Teaching Video with Discovery Bible", href: "https://youtu.be/YF4fhBL8xOA" },
 ];
 
-const DIGITAL_WORK = [
+const DIGITAL_WORK: { title: string; body: string; href?: string; link?: string }[] = [
+  {
+    title: "S.H.A.P.E. Discovery & SERVE Dashboard",
+    body: "For Fellowship Dubai's SERVE Ministry: an interactive adaptation of the 24-page S.H.A.P.E. workbook that helps people understand how God has shaped them, and a dashboard that gives ministry leaders a scoped, auditable view of who is ready for a serving conversation. Discover, connect, serve.",
+    href: "https://github.com/xerxesduane/fellowship-serve-ministry",
+    link: "View on GitHub",
+  },
+  {
+    title: "Custom web apps for church ministries",
+    body: "Purpose-built tools for Fellowship Dubai's ministries, made as a volunteer in Communications and Digital & Online Ministry, so teams can spend less time on admin and more on people.",
+  },
   {
     title: "A digital front door for Alpha",
     body: "A warm, seeker-friendly invitation page that helps people take a first step toward an Alpha course.",
@@ -399,7 +409,7 @@ export default function Ministry() {
           <>
             <span className="inline-flex items-center gap-1.5">
               <MapPin size={14} strokeWidth={2.2} aria-hidden className="text-accent" />
-              Apprentice, Fellowship Dubai · Dubai, UAE
+              Volunteer, Fellowship Dubai · Dubai, UAE
             </span>
           </>
         }
@@ -465,11 +475,12 @@ export default function Ministry() {
                       of God.
                     </p>
                     <p>
-                      Today I serve as an apprentice with{" "}
-                      <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext>, coordinating
-                      Alpha and discipleship across the church, coaching leaders to run Alpha
-                      themselves, and helping with the church&rsquo;s communications and digital
-                      outreach. I co-lead Alpha Youth Lab, equipping teenagers and university
+                      Today I serve as a volunteer with{" "}
+                      <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext> in
+                      Communications and Digital &amp; Online Ministry, building dashboards and custom
+                      web apps that help the church&rsquo;s ministries care for people well. Most
+                      recently that has been the S.H.A.P.E. Discovery and SERVE Dashboard for the
+                      SERVE Ministry. I co-lead Alpha Youth Lab, equipping teenagers and university
                       students to run Alpha Youth for their own friends, and I help lead FaithTech
                       Dubai, a community of Christians working at the intersection of faith and
                       technology.
@@ -792,6 +803,11 @@ export default function Ministry() {
                       <Card className="h-full">
                         <H3>{d.title}</H3>
                         <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">{d.body}</p>
+                        {d.href && (
+                          <p className="mt-2 text-[0.9rem]">
+                            <Ext href={d.href}>{d.link}</Ext>
+                          </p>
+                        )}
                       </Card>
                     </li>
                   ))}
