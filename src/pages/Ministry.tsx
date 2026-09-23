@@ -662,6 +662,7 @@ export default function Ministry() {
                     </p>
                   </Card>
                   <Card>
+                    <Figure photo={{ src: "talk-faithtech", alt: "A participant smiling beside the website he is building with AI tools at the FaithTech Dubai workshop", w: 1600, h: 1200 }} />
                     <H3>FaithTech Dubai workshop · 2026</H3>
                     <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">
                       A practical session on personal branding and building websites with AI tools,
