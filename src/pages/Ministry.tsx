@@ -53,6 +53,64 @@ function H3({ children }: { children: ReactNode }) {
   return <h3 className="font-display text-[1.05rem] font-bold text-fg">{children}</h3>;
 }
 
+interface Photo {
+  /** Basename in public/ministry/, which ships as -800 and -1600 WebP. */
+  src: string;
+  alt: string;
+  w: number;
+  h: number;
+}
+
+/**
+ * Photos live under /ministry/ so the same robots.txt Disallow and
+ * X-Robots-Tag header that cover the page cover them too. Converted from the
+ * Cargo originals with all EXIF stripped (several carried GPS).
+ */
+const HERO_PHOTOS: Photo[] = [
+  { src: "gmc", alt: "A packed hall of young people at a youth conference in the Philippines", w: 1600, h: 903 },
+  { src: "ctmi", alt: "Hundreds of students cheering at the Fruitful youth camp, 2024", w: 1600, h: 900 },
+  { src: "outreach", alt: "Church leaders gathered around a table after a training session", w: 1600, h: 900 },
+];
+
+const CALLING_PHOTOS: Photo[] = [
+  { src: "lausanne-1", alt: "The main stage at the 4th Lausanne Congress: Let the Church Declare and Display Christ Together", w: 1600, h: 1067 },
+  { src: "lausanne-2", alt: "Thousands of delegates in the main hall of the 4th Lausanne Congress in Seoul", w: 1600, h: 591 },
+  { src: "lausanne-3", alt: "Xerxes with fellow delegates at a table during the Lausanne Congress", w: 1600, h: 1200 },
+  { src: "lausanne-4", alt: "The Philippine delegation with their flag outside the Lausanne Congress venue in Seoul", w: 1600, h: 1200 },
+];
+
+/**
+ * A swipeable strip rather than an autoplaying slideshow: no JS, nothing
+ * moving on its own, and every photo is in the prerendered HTML. Each keeps
+ * its own proportions at a shared height, so the panorama is not cropped.
+ */
+function Gallery({ photos, label, eager = false }: { photos: Photo[]; label: string; eager?: boolean }) {
+  return (
+    <ul
+      aria-label={label}
+      // Scrollable, so it has to be reachable by keyboard to be scrolled.
+      tabIndex={0}
+      className="flex snap-x snap-mandatory gap-2 overflow-x-auto overscroll-x-contain rounded-card pb-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+    >
+      {photos.map((p, i) => (
+        <li key={p.src} className="shrink-0 snap-start">
+          <img
+            src={`/ministry/${p.src}-800.webp`}
+            srcSet={`/ministry/${p.src}-800.webp 800w, /ministry/${p.src}-1600.webp 1600w`}
+            sizes="(min-width: 1024px) 480px, 80vw"
+            alt={p.alt}
+            width={p.w}
+            height={p.h}
+            loading={eager && i === 0 ? "eager" : "lazy"}
+            decoding="async"
+            className="h-48 w-auto max-w-none rounded-card border border-line object-cover shadow-card sm:h-64"
+          />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 const prose = "max-w-[72ch] space-y-3 text-[0.95rem] leading-relaxed text-fg-soft";
 
 const STATS = [
@@ -265,6 +323,8 @@ export default function Ministry() {
         ))}
       </ul>
 
+      <Gallery photos={HERO_PHOTOS} label="Photos from ministry" eager />
+
       <TabbedViews
         className="mt-3 board:mt-2"
         label="Ministry background"
@@ -351,6 +411,9 @@ export default function Ministry() {
             label: "Calling",
             content: (
               <Card>
+                <div className="mb-4">
+                  <Gallery photos={CALLING_PHOTOS} label="Photos from the 4th Lausanne Congress" />
+                </div>
                 <div className={prose}>
                   <H2>My call to missions in the Middle East</H2>
                   <p>
