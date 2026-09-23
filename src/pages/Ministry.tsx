@@ -15,8 +15,11 @@ import { CONTACT } from "../data/content";
  * link to it from the nav or any other page, and do not give it JSON-LD.
  */
 
-const mail = (subject: string) =>
-  `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}`;
+const mail = (subject: string, to: string = CONTACT.email) =>
+  `mailto:${to}?subject=${encodeURIComponent(subject)}`;
+
+/** Giving enquiries go to their own inbox, not the business address. */
+const SUPPORT_EMAIL = "support@xerxesduane.com";
 
 const linkCls = "inline-flex items-center gap-1 text-accent underline-offset-2 hover:underline";
 
@@ -677,7 +680,7 @@ export default function Ministry() {
                       like to give, monthly or one time, I would be grateful.
                     </p>
                     <p>
-                      <Ext href={mail("Partnering financially")}>Partner financially</Ext>
+                      <Ext href={mail("Partnering financially", SUPPORT_EMAIL)}>Partner financially</Ext>
                     </p>
                     <p className="text-fg-faint">
                       A note to my kababayan, and to anyone supporting family back home: please feel
