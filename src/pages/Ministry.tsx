@@ -290,6 +290,15 @@ const SERMONS = [
   },
 ];
 
+/**
+ * Re-encoded from the Cargo uploads (H.264, metadata stripped). Posters are
+ * frames from each clip, so the card reads before anything is played.
+ */
+const WORSHIP_VIDEOS = [
+  { src: "worship-sharjah", caption: "Fellowship Sharjah, United Arab Emirates, 2026", w: 832, h: 464 },
+  { src: "worship-ccac", caption: "Capital City Alliance Church, 2023", w: 960, h: 540 },
+];
+
 const SOUTHERN_PH_PHOTO: Photo = {
   src: "project-southern-ph",
   alt: "Riding the Waves of Education: the Floating School Project among coastal communities in the southern Philippines",
@@ -304,7 +313,22 @@ const OUTREACH: { title: string; href?: string }[] = [
   { title: "Teaching Video with Discovery Bible", href: "https://youtu.be/YF4fhBL8xOA" },
 ];
 
-const DIGITAL_WORK = [
+const DIGITAL_WORK: { title: string; body: string; href?: string; link?: string }[] = [
+  {
+    title: "S.H.A.P.E. Discovery & SERVE Dashboard",
+    body: "For Fellowship Dubai's SERVE Ministry: an interactive adaptation of the 24-page S.H.A.P.E. workbook that helps people understand how God has shaped them, and a dashboard that gives ministry leaders a scoped, auditable view of who is ready for a serving conversation. Discover, connect, serve.",
+    href: "https://github.com/xerxesduane/fellowship-serve-ministry",
+    link: "View on GitHub",
+  },
+  {
+    // No link: the repository is private and would 404 for visitors.
+    title: "20th Anniversary Timeline",
+    body: "For Fellowship Dubai's 20th anniversary: a looping display for an 8 × 2 m LED wall. Photos of more than 1,800 members of the congregation rotate through the grapes of a grapevine timeline, each beside the year their Fellowship journey began. It runs fully offline, with an operator page to import, preview, go live and roll back.",
+  },
+  {
+    title: "Custom web apps for church ministries",
+    body: "Purpose-built tools for Fellowship Dubai's ministries, made as a volunteer in Communications and Digital & Online Ministry, so teams can spend less time on admin and more on people.",
+  },
   {
     title: "A digital front door for Alpha",
     body: "A warm, seeker-friendly invitation page that helps people take a first step toward an Alpha course.",
@@ -399,7 +423,7 @@ export default function Ministry() {
           <>
             <span className="inline-flex items-center gap-1.5">
               <MapPin size={14} strokeWidth={2.2} aria-hidden className="text-accent" />
-              Apprentice, Fellowship Dubai · Dubai, UAE
+              Volunteer, Fellowship Dubai · Dubai, UAE
             </span>
           </>
         }
@@ -465,14 +489,17 @@ export default function Ministry() {
                       of God.
                     </p>
                     <p>
-                      Today I serve as an apprentice with{" "}
-                      <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext>, coordinating
-                      Alpha and discipleship across the church, coaching leaders to run Alpha
-                      themselves, and helping with the church&rsquo;s communications and digital
-                      outreach. I co-lead Alpha Youth Lab, equipping teenagers and university
-                      students to run Alpha Youth for their own friends, and I help lead FaithTech
-                      Dubai, a community of Christians working at the intersection of faith and
-                      technology.
+                      Today I serve as a volunteer with{" "}
+                      <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext> in
+                      Communications and Digital &amp; Online Ministry, building dashboards and custom
+                      web apps that help the church&rsquo;s ministries care for people well. Most
+                      recently that has been the S.H.A.P.E. Discovery and SERVE Dashboard for the
+                      SERVE Ministry. I co-lead Alpha Youth Lab, equipping teenagers and university
+                      students to run Alpha Youth for their own friends, and I lead and facilitate
+                      Alpha courses, using the Alpha Film Series, in churches and communities across
+                      the UAE. I also help lead{" "}
+                      <Ext href="https://www.faithtech.com/communities/dubai">FaithTech Dubai</Ext>,
+                      a community of Christians working at the intersection of faith and technology.
                     </p>
                   </div>
                 </Card>
@@ -740,15 +767,48 @@ export default function Ministry() {
                       Whatever the room, my heart is the same: to help people meet Jesus and respond
                       to Him honestly.
                     </p>
-                    <ul className="space-y-1">
-                      <li>Fellowship Sharjah, United Arab Emirates · 2026</li>
-                      <li>Capital City Alliance Church · 2023</li>
-                      <li>
-                        Angeles City Alliance Church · 2022 ·{" "}
-                        <Ext href="https://youtu.be/aEjb5TPdt9M">Watch King of Kings</Ext>
-                      </li>
-                    </ul>
                   </div>
+                  <ul className="mt-4 space-y-4">
+                    {WORSHIP_VIDEOS.map((v) => (
+                      <li key={v.src}>
+                        {/* preload="none": nothing downloads until someone presses play. */}
+                        <video
+                          controls
+                          playsInline
+                          preload="none"
+                          poster={`/ministry/${v.src}.webp`}
+                          width={v.w}
+                          height={v.h}
+                          className="h-auto w-full rounded-card border border-line bg-black"
+                        >
+                          <source src={`/ministry/${v.src}.mp4`} type="video/mp4" />
+                        </video>
+                        <p className="mt-1 text-[0.9rem] text-fg-soft">{v.caption}</p>
+                      </li>
+                    ))}
+                    <li>
+                      <a
+                        href="https://youtu.be/aEjb5TPdt9M"
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        className="block"
+                      >
+                        <img
+                          src="/ministry/worship-kok.webp"
+                          alt="Leading King of Kings with the worship team at Angeles City Alliance Church"
+                          width={480}
+                          height={270}
+                          loading="lazy"
+                          decoding="async"
+                          className="h-auto w-full rounded-card border border-line"
+                        />
+                      </a>
+                      <p className="mt-1 text-[0.9rem] text-fg-soft">
+                        Angeles City Alliance Church, 2022 ·{" "}
+                        <Ext href="https://youtu.be/aEjb5TPdt9M">Watch King of Kings on YouTube</Ext>
+                      </p>
+                    </li>
+                  </ul>
                 </Card>
               </div>
             ),
@@ -792,6 +852,11 @@ export default function Ministry() {
                       <Card className="h-full">
                         <H3>{d.title}</H3>
                         <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">{d.body}</p>
+                        {d.href && (
+                          <p className="mt-2 text-[0.9rem]">
+                            <Ext href={d.href}>{d.link}</Ext>
+                          </p>
+                        )}
                       </Card>
                     </li>
                   ))}
