@@ -17,6 +17,12 @@ export interface PageMeta {
   jsonLd?: Record<string, unknown>[];
   /** When true, emits robots noindex (e.g. 404). */
   noindex?: boolean;
+  /**
+   * Public by link but kept out of search and AI answers: noindex plus
+   * nofollow/noarchive/nosnippet/noimageindex, and left out of the sitemap.
+   * Implies `noindex`.
+   */
+  unlisted?: boolean;
   /** Open Graph locale for the route. Defaults to English. */
   locale?: "en_US" | "ar_AR";
   /** hreflang alternates (en/ar/x-default) for bilingual pages. */
@@ -262,7 +268,21 @@ export function allRoutes(): string[] {
     ...SERVICE_PAGES.map((p) => `/${p.slug}`),
     "/ar",
     ...SERVICE_PAGES_AR.map((p) => `/ar/${p.slug}`),
+    ...UNLISTED_ROUTES,
   ];
+}
+
+/**
+ * Prerendered so the link works, but never in the sitemap, never linked, and
+ * never indexed. Each one also needs its X-Robots-Tag header in vercel.json
+ * and its Disallow for AI crawlers in public/robots.txt.
+ */
+export const UNLISTED_ROUTES = ["/ministry"];
+
+/** Whether a route belongs in the sitemap. */
+export function isIndexable(path: string): boolean {
+  const m = getPageMeta(path);
+  return !m.noindex && !m.unlisted;
 }
 
 const HOME_ALTERNATES = [
@@ -433,6 +453,17 @@ const PORTFOLIO_META: PageMeta = {
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Portfolio", url: `${SITE_ORIGIN}/portfolio` }])],
 };
 
+/** Unlisted (see UNLISTED_ROUTES). No JSON-LD: nothing here should feed an entity graph. */
+const MINISTRY_META: PageMeta = {
+  title: "Ministry - Xerxes Duane",
+  ogTitle: "Ministry - Xerxes Duane",
+  description:
+    "Xerxes Duane's church and ministry background: digital discipleship, youth training, preaching, worship and missions in the Middle East.",
+  canonical: `${SITE_ORIGIN}/ministry`,
+  noindex: true,
+  unlisted: true,
+};
+
 const SHOWREEL_META: PageMeta = {
   title: "Showreel - Xerxes Duane",
   description:
@@ -555,6 +586,7 @@ export function getPageMeta(path: string): PageMeta {
   if (slug === "terms") return TERMS_META;
   if (slug === "portfolio") return PORTFOLIO_META;
   if (slug === "showreel") return SHOWREEL_META;
+  if (slug === "ministry") return MINISTRY_META;
   if (slug === "ar") return AR_HOME_META;
 
   // Arabic service pages.
@@ -682,6 +714,9 @@ function esc(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
+/** Robots directives for an unlisted page. Mirrored by X-Robots-Tag in vercel.json. */
+export const UNLISTED_ROBOTS = "noindex, nofollow, noarchive, nosnippet, noimageindex, notranslate";
+
 /** Build the per-route <head> markup injected into the prerendered HTML. */
 export function buildHeadTags(path: string): string {
   const m = getPageMeta(path);
@@ -692,12 +727,18 @@ export function buildHeadTags(path: string): string {
   if ((m.alternates ?? []).some((a) => a.hreflang === "ar") || locale === "ar_AR") {
     localeAlternates.add(locale === "ar_AR" ? "en_US" : "ar_AR");
   }
+  const robots = m.unlisted
+    ? UNLISTED_ROBOTS
+    : m.noindex
+      ? "noindex, follow"
+      : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
   const tags = [
     `<title>${esc(m.title)}</title>`,
     `<meta name="description" content="${esc(description)}" />`,
     `<link rel="canonical" href="${esc(m.canonical)}" />`,
-    `<meta name="robots" content="${m.noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"}" />`,
-    `<meta name="googlebot" content="${m.noindex ? "noindex, follow" : "index, follow"}" />`,
+    `<meta name="robots" content="${robots}" />`,
+    `<meta name="googlebot" content="${m.unlisted ? robots : m.noindex ? "noindex, follow" : "index, follow"}" />`,
+    ...(m.unlisted ? [`<meta name="bingbot" content="${robots}" />`] : []),
     `<meta property="og:url" content="${esc(m.canonical)}" />`,
     `<meta property="og:locale" content="${esc(locale)}" />`,
     ...[...localeAlternates].map((alt) => `<meta property="og:locale:alternate" content="${esc(alt)}" />`),
@@ -714,9 +755,6 @@ export function buildHeadTags(path: string): string {
     `<meta name="twitter:image" content="${esc(ogImage)}" />`,
     `<meta name="twitter:image:alt" content="${esc(m.ogTitle)}" />`,
   ];
-  if (m.noindex) {
-    tags.push(`<meta name="robots" content="noindex, follow" />`);
-  }
   for (const a of m.alternates ?? []) {
     tags.push(`<link rel="alternate" hreflang="${esc(a.hreflang)}" href="${esc(a.href)}" />`);
   }

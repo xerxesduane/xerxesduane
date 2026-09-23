@@ -35,6 +35,8 @@ const Terms = lazy(() =>
 const Showreel = lazy(() => import("./pages/Showreel"));
 const Portfolio = lazy(() => import("./pages/Portfolio"));
 const Demos = lazy(() => import("./pages/Demos"));
+// Unlisted: reachable by link, never linked or indexed. See pages/Ministry.tsx.
+const Ministry = lazy(() => import("./pages/Ministry"));
 import { getServicePage } from "./data/servicePages";
 import { AR_CHROME } from "./data/servicePagesAr";
 import { getServicePageAr } from "./data/servicePagesAr";
@@ -73,6 +75,7 @@ function Route({ path }: { path: string }) {
   if (slug === "showreel") return <Showreel />;
   if (slug === "portfolio") return <Portfolio />;
   if (slug === "ai-lab" || slug === "demos") return <Demos />;
+  if (slug === "ministry") return <Ministry />;
   if (slug === "ar") return <HomeAr />;
 
   // Arabic service pages: /ar/<service-slug>
