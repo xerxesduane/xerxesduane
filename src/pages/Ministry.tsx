@@ -147,7 +147,7 @@ const STATS = [
   "7+ years in ministry",
   "~2,000 youths & students trained",
   "5,000+ leaders equipped for digital outreach",
-  "Indigitous #HACK Champion",
+  "Indigitous #HACK Champion & Coach",
   "4th Lausanne Congress, 2024",
 ];
 
@@ -169,7 +169,11 @@ const FOCUS = [
 const MILESTONES = [
   {
     title: "Indigitous #HACK",
-    body: "Champion in 2023 and a coach in 2024. Through it I was nominated to the Fourth Lausanne Congress in Seoul (2024), and have since been selected for the Young Leaders Gathering in 2027.",
+    body: "Champion in 2023 and a coach in 2024 in Manila, and now a coach with #HACK in Dubai. Through it I was nominated to the Fourth Lausanne Congress in Seoul (2024), and have since been selected for the Young Leaders Gathering in 2027.",
+  },
+  {
+    title: "Fellowship Dubai apprenticeship",
+    body: "Hired as an apprentice in September 2025: coordinating Alpha and discipleship, coaching leaders to run Alpha themselves, and helping with communications and digital outreach. I now continue at Fellowship Dubai as a volunteer.",
   },
   {
     title: "Cru Digital Strategies",
@@ -374,9 +378,9 @@ const COLLABORATIONS: { title: string; body: string; href: string; link: string;
   },
   {
     title: "Indigitous #HACK",
-    body: "Indigitous #HACK, a global Christian hackathon. Champion in 2023 and a coach in 2024.",
-    href: "https://hack.indigitous.org/",
-    link: "hack.indigitous.org",
+    body: "Indigitous #HACK, a global Christian hackathon. Champion in 2023 and a coach in 2024 in Manila, and now a coach with #HACK in Dubai.",
+    href: "https://indigitous.org/",
+    link: "indigitous.org",
     photos: [
       { src: "collab-hack", alt: "#HACK2024 certificate of appreciation presented to Xerxes Duane Magdaluyo for mentoring the champions", w: 1600, h: 1131 },
     ],
@@ -489,8 +493,11 @@ export default function Ministry() {
                       of God.
                     </p>
                     <p>
-                      Today I serve as a volunteer with{" "}
-                      <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext> in
+                      I served an apprenticeship with{" "}
+                      <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext>, coordinating
+                      Alpha and discipleship across the church, coaching leaders to run Alpha
+                      themselves, and helping with the church&rsquo;s communications and digital
+                      outreach. With the apprenticeship complete, today I serve there as a volunteer in
                       Communications and Digital &amp; Online Ministry, building dashboards and custom
                       web apps that help the church&rsquo;s ministries care for people well. Most
                       recently that has been the S.H.A.P.E. Discovery and SERVE Dashboard for the
