@@ -17,7 +17,11 @@
 // Copy rule: no prices and no counts in the images. A figure baked into a
 // PNG goes stale silently the day pricing.ts changes; the page carries those.
 //
-// /ministry is deliberately absent: it is unlisted and keeps the default card.
+// /ministry has its own card, but it is saved under public/ministry/ rather
+// than brand/og/: the page is unlisted, and that folder is where the
+// X-Robots-Tag noindex/noimageindex header and the AI-crawler Disallow in
+// robots.txt already apply. The link-preview crawlers (WhatsApp, Messenger,
+// LinkedIn) can still fetch it; they are not in that Disallow.
 import { chromium } from "playwright-core";
 import sharp from "sharp";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -89,7 +93,8 @@ function headline(lines, rtl) {
 }
 
 // ---------------------------------------------------------------------------
-// The cards. `file` is public/brand/og/<file>.jpg, referenced from seo.ts.
+// The cards. `file` is public/brand/og/<file>.jpg unless `out` gives another
+// path under public/. Each is referenced from seo.ts.
 // ---------------------------------------------------------------------------
 const AUDIT = "Book your free systems audit";
 const AUDIT_AR = "احجز تدقيقًا مجانيًا";
@@ -145,6 +150,9 @@ const CARDS = [
   { file: "crm-setup-mistakes-dubai", icon: "book-open", eyebrow: "Insight · CRM", title: ["CRM setup", "mistakes to avoid."], subtitle: "What breaks CRM rollouts, and how to dodge it.", cta: "Read the guide" },
   { file: "odoo-enterprise-vs-community", icon: "book-open", eyebrow: "Insight · Odoo", title: ["Odoo Enterprise", "or Community?"], subtitle: "Which edition you actually need, honestly.", cta: "Read the guide" },
   { file: "choosing-a-web-developer-dubai", icon: "book-open", eyebrow: "Insight · Web development", title: ["Choosing a web", "developer in Dubai."], subtitle: "What to ask before you sign.", cta: "Read the guide" },
+
+  // Unlisted: see the note at the top of this file.
+  { file: "ministry", out: "ministry/share.jpg", icon: "church", eyebrow: "Ministry · Dubai", title: ["Making disciples", "in a digital age."], subtitle: "Helping churches, youth ministries and nonprofits meet people online, and walk with them toward Jesus.", cta: "Pray & partner" },
 
   // Arabic. Copy from HomeAr.tsx and servicePagesAr.ts, word for word, broken
   // into lines at natural pauses.
@@ -299,9 +307,10 @@ for (const card of selected) {
     .resize(1200, 630, { kernel: "lanczos3" })
     .jpeg({ quality: 84, mozjpeg: true, chromaSubsampling: "4:4:4" })
     .toBuffer();
-  writeFileSync(join(outDir, `${card.file}.jpg`), jpg);
-  console.log(`  og/${card.file}.jpg  (${(jpg.length / 1024).toFixed(0)} KB)`);
+  const out = card.out ?? `brand/og/${card.file}.jpg`;
+  writeFileSync(join(root, "public", out), jpg);
+  console.log(`  ${out}  (${(jpg.length / 1024).toFixed(0)} KB)`);
 }
 
 await browser.close();
-console.log(`${selected.length} share card${selected.length === 1 ? "" : "s"} written to public/brand/og/.`);
+console.log(`${selected.length} share card${selected.length === 1 ? "" : "s"} written.`);

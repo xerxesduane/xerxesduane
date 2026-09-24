@@ -48,7 +48,8 @@ function serviceAlternates(slug: string): { hreflang: string; href: string }[] {
  * Share cards, one per route, rendered by scripts/generate-og.mjs into
  * public/brand/og/. Every service page, insight and case study has its own;
  * the Arabic pages have Arabic ones. A route without a card of its own (the
- * legal pages, the 404, /ministry) shows the home card.
+ * legal pages, the 404) shows the home card. /ministry has its own, kept
+ * in /ministry/ (see MINISTRY_META).
  */
 const OG_DIR = `${SITE_ORIGIN}/brand/og`;
 const ogCard = (name: string) => `${OG_DIR}/${name}.jpg`;
@@ -452,6 +453,9 @@ const MINISTRY_META: PageMeta = {
   description:
     "Xerxes Duane's church and ministry background: digital discipleship, youth training, preaching, worship and missions in the Middle East.",
   canonical: `${SITE_ORIGIN}/ministry`,
+  // Its own share card, for the WhatsApp links the page travels by. Kept in
+  // /ministry/, under the same noindex/noimageindex header as the page.
+  ogImage: `${SITE_ORIGIN}/ministry/share.jpg`,
   noindex: true,
   unlisted: true,
 };
