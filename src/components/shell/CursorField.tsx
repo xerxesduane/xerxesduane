@@ -11,6 +11,14 @@ import { afterPageSettles } from "../../lib/afterPageSettles";
  * brand orange. A click sends a ripple out through the grid, and a soft
  * accent glow trails the pointer.
  *
+ * Two canvases share one simulation. The resting grid and the glow sit behind
+ * the page; any dot the cursor or a ripple has warmed is drawn on a second
+ * canvas above the content (z-15: over the cards and the sidebar, under the
+ * banners, nav, assistant and overlays, which all sit at z-20 or higher or
+ * are portaled), so the effect reads over the cards, not only in the gaps.
+ * Nothing interactive may render inside `main` above z-auto expecting to
+ * cover it; portal overlays to `document.body` instead.
+ *
  * Contrast: the glow is the accent at 10% (light) and 12% (dark), the same
  * peach and ember the mesh gradient already uses, and the dots are small
  * (1.4–2.8px) and sparse, so the text contrast measured for the mesh still
@@ -98,7 +106,8 @@ export default function CursorField() {
   const enabled = fine && !reduced;
   const { theme } = useTheme();
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const baseRef = useRef<HTMLCanvasElement>(null);
+  const topRef = useRef<HTMLCanvasElement>(null);
   const paletteRef = useRef<Palette | null>(null);
   const wakeRef = useRef<() => void>(() => {});
   const [ready, setReady] = useState(false);
@@ -119,10 +128,12 @@ export default function CursorField() {
   }, [theme]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!enabled || !ready || !canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
+    const base = baseRef.current;
+    const top = topRef.current;
+    if (!enabled || !ready || !base || !top) return;
+    const ctx = base.getContext("2d");
+    const topCtx = top.getContext("2d");
+    if (!ctx || !topCtx) return;
 
     let width = 0;
     let height = 0;
@@ -152,9 +163,14 @@ export default function CursorField() {
       const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
       width = window.innerWidth;
       height = window.innerHeight;
-      canvas.width = Math.round(width * dpr);
-      canvas.height = Math.round(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      for (const [canvas, context] of [
+        [base, ctx],
+        [top, topCtx],
+      ] as const) {
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        context.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
 
       const cols = Math.ceil(width / SPACING) + 1;
       const rows = Math.ceil(height / SPACING) + 1;
@@ -198,6 +214,7 @@ export default function CursorField() {
       }
 
       ctx.clearRect(0, 0, width, height);
+      topCtx.clearRect(0, 0, width, height);
 
       if (presence > 0.01) {
         const glow = ctx.createRadialGradient(glowX, glowY, 0, glowX, glowY, GLOW_RADIUS);
@@ -267,13 +284,15 @@ export default function CursorField() {
         paths[level].arc(x, y, r, 0, Math.PI * 2);
       }
 
+      // Resting dots stay behind the page; warmed ones go over the content.
       for (let l = 0; l <= LEVELS; l++) {
         const t = l / LEVELS;
-        ctx.fillStyle = rgba(
+        const layer = l === 0 ? ctx : topCtx;
+        layer.fillStyle = rgba(
           mix(palette.dot, palette.hot, Math.min(1, t * 1.6)),
           palette.restAlpha + (palette.hotAlpha - palette.restAlpha) * t,
         );
-        ctx.fill(paths[l]);
+        layer.fill(paths[l]);
       }
 
       const settling =
@@ -339,13 +358,13 @@ export default function CursorField() {
 
   if (!enabled || !ready) return null;
 
+  const fade = `pointer-events-none fixed inset-0 h-full w-full transition-opacity duration-[1200ms] ease-out ${
+    shown ? "opacity-100" : "opacity-0"
+  }`;
   return (
-    <canvas
-      ref={canvasRef}
-      aria-hidden
-      className={`pointer-events-none fixed inset-0 -z-10 h-full w-full transition-opacity duration-[1200ms] ease-out ${
-        shown ? "opacity-100" : "opacity-0"
-      }`}
-    />
+    <>
+      <canvas ref={baseRef} aria-hidden className={`${fade} -z-10`} />
+      <canvas ref={topRef} aria-hidden className={`${fade} z-[15]`} />
+    </>
   );
 }
