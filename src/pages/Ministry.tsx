@@ -1,9 +1,24 @@
 import type { ReactNode } from "react";
-import { ArrowLeft, ArrowUpRight, Church, MapPin } from "lucide-react";
+import {
+  ArrowUpRight,
+  Award,
+  Church,
+  HandHeart,
+  HeartHandshake,
+  Mail,
+  MapPin,
+  Mic,
+  MonitorSmartphone,
+  Presentation,
+  Sprout,
+  type LucideIcon,
+} from "lucide-react";
 import PageHeader from "../components/page/PageHeader";
 import TabbedViews from "../components/page/TabbedViews";
 import { GhostAction, PrimaryAction } from "../components/page/PageActions";
-import { CONTACT } from "../data/content";
+import { IconTile } from "../components/page/Panel";
+import WhatsAppGlyph from "../components/ui/WhatsAppGlyph";
+import { CONTACT, whatsappHref } from "../data/contact";
 
 /**
  * `/ministry` — church and ministry background. UNLISTED on purpose.
@@ -11,8 +26,13 @@ import { CONTACT } from "../data/content";
  * Reachable by anyone with the link, but kept out of search and AI answers:
  * noindex/nosnippet in the head (src/lib/seo.ts), an X-Robots-Tag header
  * (vercel.json), a Disallow for AI crawlers (public/robots.txt), no sitemap
- * entry, and no internal link or site-assistant route pointing at it. Do not
- * link to it from the nav or any other page, and do not give it JSON-LD.
+ * entry, and no internal link pointing at it. Do not link to it from the nav
+ * or any other page, and do not give it JSON-LD.
+ *
+ * It has its own chat assistant (api/ministry-assistant.ts, mounted by App.tsx
+ * on this route only) that answers from this page alone, and the business
+ * assistant never reads it. Whatever this page says is what that assistant
+ * knows, so keep the copy accurate.
  */
 
 const mail = (subject: string, to: string = CONTACT.email) =>
@@ -20,6 +40,80 @@ const mail = (subject: string, to: string = CONTACT.email) =>
 
 /** Giving enquiries go to their own inbox, not the business address. */
 const SUPPORT_EMAIL = "support@xerxesduane.com";
+
+/**
+ * What each WhatsApp button opens with, so the message arrives already saying
+ * what it is about. One per email action on the page.
+ */
+const WA = {
+  serve: "Hi Xerxes, I saw your ministry page and I'd love to talk about serving together.",
+  pray: "Hi Xerxes, I saw your ministry page and I'd like to commit to praying for you and your ministry.",
+  give: "Hi Xerxes, I saw your ministry page and I'd like to ask about partnering financially.",
+  discovery: "Hi Xerxes, I saw your ministry page and I'd like an intro or training on The Discovery Bible.",
+};
+
+const pill =
+  "inline-flex items-center gap-2 rounded-full px-4 py-2.5 text-[0.85rem] font-semibold transition duration-300 ease-smooth hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-panel";
+
+/**
+ * Email and WhatsApp side by side, for every ask on the page. A `mailto:` does
+ * nothing on a computer with no mail app set up, so it never stands alone.
+ */
+function Reach({
+  subject,
+  whatsapp,
+  to,
+  email = "Email me",
+}: {
+  subject: string;
+  whatsapp: string;
+  to?: string;
+  email?: string;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      <a href={mail(subject, to)} className={`${pill} bg-navy text-fg-onSolid shadow-solid hover:bg-navy-hover`}>
+        <Mail size={15} strokeWidth={2.3} aria-hidden />
+        {email}
+      </a>
+      <a
+        href={whatsappHref(whatsapp)}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${pill} border border-line bg-panel text-fg hover:border-[#1FA855]/50`}
+      >
+        <WhatsAppGlyph size={15} className="text-[#1FA855]" />
+        WhatsApp
+      </a>
+    </div>
+  );
+}
+
+/** Eyebrow, heading and one line of context at the top of each section. */
+function SectionIntro({
+  id,
+  eyebrow,
+  title,
+  lede,
+}: {
+  id: string;
+  eyebrow: string;
+  title: string;
+  lede?: ReactNode;
+}) {
+  return (
+    <div className="mb-3 max-w-[68ch]">
+      <span className="eyebrow">
+        <span className="h-px w-6 bg-accent/60" aria-hidden />
+        {eyebrow}
+      </span>
+      <h2 id={id} className="mt-2 text-balance font-display text-[1.6rem] font-bold leading-tight text-fg sm:text-[1.85rem]">
+        {title}
+      </h2>
+      {lede && <p className="mt-2 text-[0.95rem] leading-relaxed text-fg-soft">{lede}</p>}
+    </div>
+  );
+}
 
 const linkCls = "inline-flex items-center gap-1 text-accent underline-offset-2 hover:underline";
 
@@ -144,12 +238,12 @@ function Figure({ photo }: { photo: Photo }) {
 const prose = "max-w-[72ch] space-y-3 text-[0.95rem] leading-relaxed text-fg-soft";
 
 const STATS = [
-  "7+ years in ministry",
-  "~2,000 youths & students trained",
-  "5,000+ leaders equipped for digital outreach",
-  "Indigitous #HACK Champion & Coach",
-  "4th Lausanne Congress, 2024",
+  { value: "7+", label: "years in ministry" },
+  { value: "~2,000", label: "youths & students trained" },
+  { value: "5,000+", label: "leaders equipped for digital outreach" },
 ];
+
+const CREDENTIALS = ["Indigitous #HACK champion and coach", "4th Lausanne Congress, Seoul 2024"];
 
 const FOCUS = [
   {
@@ -387,7 +481,7 @@ const COLLABORATIONS: { title: string; body: string; href: string; link: string;
   },
   {
     title: "The Innovation Launchpad",
-    body: "Learned a lot about being an Innovator.",
+    body: "Trained and commissioned as an Innovation Designer.",
     href: "https://www.theinnovationlaunchpad.com/",
     link: "theinnovationlaunchpad.com",
     photos: [
@@ -396,20 +490,24 @@ const COLLABORATIONS: { title: string; body: string; href: string; link: string;
   },
 ];
 
-const SERVE = [
+const SERVE: { title: string; body: string; icon: LucideIcon }[] = [
   {
+    icon: Mic,
     title: "Preaching & speaking",
     body: "Invite me to open God's Word at your church, youth gathering, conference, or event. I love preaching that helps people meet Jesus and respond to Him honestly.",
   },
   {
+    icon: Presentation,
     title: "Training & workshops",
-    body: "Hands-on training in digital and online ministry for your team, leaders, or youth: digital tools for evangelism and discipleship, social media and storytelling, a warm digital front door for seekers, and disciple-making in everyday life. People often leave having built something real in the room.",
+    body: "Hands-on training in digital ministry for your team, leaders, or youth: digital tools for evangelism and discipleship, social media and storytelling, a warm digital front door for seekers, and disciple-making in everyday life. People often leave having built something real in the room.",
   },
   {
+    icon: MonitorSmartphone,
     title: "Digital strategy & build",
     body: "A digital ministry strategy for your church or organization, then the build: websites, online presence, content systems, e-learning and discipleship platforms, and clear pathways to welcome and follow up with people.",
   },
   {
+    icon: HeartHandshake,
     title: "Coaching & collaboration",
     body: "I can coach your leaders to run Alpha or disciple their friends and workmates themselves, or we can simply build something together.",
   },
@@ -424,123 +522,184 @@ export default function Ministry() {
         title="Making disciples in a digital age."
         lede="I help churches, youth ministries, and nonprofits meet people where they already are, online, and walk with them toward Jesus. My work lives where faith, missions, and technology meet."
         meta={
-          <>
-            <span className="inline-flex items-center gap-1.5">
-              <MapPin size={14} strokeWidth={2.2} aria-hidden className="text-accent" />
-              Volunteer, Fellowship Dubai · Dubai, UAE
-            </span>
-          </>
+          <span className="inline-flex items-center gap-1.5">
+            <MapPin size={14} strokeWidth={2.2} aria-hidden className="text-accent" />
+            Volunteer, Fellowship Dubai · Dubai, UAE
+          </span>
         }
         actions={
           <>
-            <PrimaryAction href={mail("Serving together")}>Work with me</PrimaryAction>
-            <GhostAction href="/" icon={<ArrowLeft size={15} strokeWidth={2.2} aria-hidden />}>
-              Home
+            <PrimaryAction href={mail("Serving together")}>Email me</PrimaryAction>
+            <GhostAction
+              href={whatsappHref(WA.serve)}
+              external
+              icon={<WhatsAppGlyph size={15} className="text-[#1FA855]" />}
+            >
+              WhatsApp
             </GhostAction>
           </>
         }
       />
 
-      <ul className="mb-3 flex flex-wrap gap-2">
+      {/* ---- the record, at a glance ---- */}
+      <dl className="mb-2 grid grid-cols-3 gap-2">
         {STATS.map((s) => (
-          <li
-            key={s}
-            className="rounded-full border border-line bg-panel px-3 py-1.5 text-[0.85rem] text-fg-soft shadow-card"
+          <div
+            key={s.label}
+            className="flex flex-col-reverse justify-end rounded-card border border-line bg-panel px-2.5 py-2.5 shadow-card sm:px-4 sm:py-3.5"
           >
-            {s}
+            <dt className="mt-1 text-[0.72rem] leading-tight text-fg-soft sm:text-[0.85rem] sm:leading-snug">{s.label}</dt>
+            <dd className="font-display text-[1.3rem] font-extrabold leading-none tracking-tight text-fg sm:text-[1.9rem]">
+              {s.value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <ul className="mb-3 flex flex-wrap gap-2">
+        {CREDENTIALS.map((c) => (
+          <li
+            key={c}
+            className="inline-flex items-center gap-1.5 rounded-full border border-line bg-panel px-3 py-1.5 text-[0.82rem] font-semibold text-fg-soft shadow-card"
+          >
+            <Award size={14} strokeWidth={2.2} aria-hidden className="text-accent" />
+            {c}
           </li>
         ))}
       </ul>
 
       <Gallery photos={HERO_PHOTOS} label="Photos from ministry" eager />
 
-      <TabbedViews
-        className="mt-3 board:mt-2"
-        label="Ministry background"
-        views={[
-          {
-            id: "about",
-            label: "About",
-            content: (
-              <div className="space-y-3">
-                <Card>
-                  <div className={prose}>
-                    <H2>For King and Kingdom</H2>
-                    <p className="font-display italic text-fg">
-                      Resolved: to live in a way that consistently reflects King Jesus&rsquo; beauty
-                      and excellence in every part of life.
-                    </p>
-                    <p>
-                      I&rsquo;m Xerxes Duane Magdaluyo, a Filipino minister serving in Dubai, with a
-                      heart for faith, missions, and technology. I grew up in a church-school
-                      community in Las Piñas, came to a clear call to full-time ministry at 21, and
-                      had that call set on fire by a mission trip to Myanmar and a growing burden for
-                      people who have never heard the gospel.
-                    </p>
-                    <p>
-                      Over the last seven-plus years I&rsquo;ve worked mostly with the young:
-                      developing youth, training leaders, and helping students grow into people who
-                      can disciple others. Across camps, conferences, and campuses, I&rsquo;ve had the
-                      joy of training around 2,000 youths and students, and of watching many of them
-                      begin to lead on their own.
-                    </p>
-                    <p>
-                      Alongside that, I kept finding myself at the meeting point of ministry and
-                      technology. During the pandemic I served as a digital-ministry pastor in a
-                      local Christian and Missionary Alliance church, building an e-learning platform
-                      so discipleship could continue when gatherings could not. That season clarified
-                      a conviction I still hold: the tools of our age are meant to serve the mission
-                      of God.
-                    </p>
-                    <p>
-                      From September 2025 to September 2026 I served an apprenticeship with{" "}
-                      <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext>, coordinating
-                      Alpha and discipleship across the church, coaching leaders to run Alpha
-                      themselves, and helping with the church&rsquo;s communications and digital
-                      outreach. With the apprenticeship complete, today I serve there as a volunteer in
-                      Communications and Digital &amp; Online Ministry, building dashboards and custom
-                      web apps that help the church&rsquo;s ministries care for people well. Most
-                      recently that has been the S.H.A.P.E. Discovery and SERVE Dashboard for the
-                      SERVE Ministry. I co-lead Alpha Youth Lab, equipping teenagers and university
-                      students to run Alpha Youth for their own friends, and I lead and facilitate
-                      Alpha courses, using the Alpha Film Series, in churches and communities across
-                      the UAE. I also help lead{" "}
-                      <Ext href="https://www.faithtech.com/communities/dubai">FaithTech Dubai</Ext>,
-                      a community of Christians working at the intersection of faith and technology.
-                    </p>
-                  </div>
-                </Card>
+      {/* ---- what I can do for a church: up front, not in the last tab ---- */}
+      <section aria-labelledby="serve-title" className="mt-7 board:mt-5">
+        <SectionIntro
+          id="serve-title"
+          eyebrow="Serve together"
+          title="How I can serve your church"
+          lede="In person here in the UAE, or online with churches and teams anywhere."
+        />
+        <ul className="grid gap-2 sm:grid-cols-2">
+          {SERVE.map((s) => (
+            <li key={s.title}>
+              <Card className="group h-full">
+                <div className="flex items-center gap-3">
+                  <IconTile>
+                    <s.icon size={20} strokeWidth={2.2} aria-hidden />
+                  </IconTile>
+                  <H3>{s.title}</H3>
+                </div>
+                <p className="mt-2 text-[0.9rem] leading-snug text-fg-soft">{s.body}</p>
+              </Card>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-3 flex flex-col gap-2 rounded-card border border-line bg-panel p-4 shadow-card sm:flex-row sm:items-center sm:justify-between sm:p-5">
+          <p className="text-[0.95rem] font-semibold text-fg">Tell me about your church or event.</p>
+          <Reach subject="Serving together" whatsapp={WA.serve} />
+        </div>
+      </section>
 
-                <ul className="grid gap-2 sm:grid-cols-3">
-                  {FOCUS.map((f) => (
-                    <li key={f.title}>
-                      <Card className="h-full">
-                        <H3>{f.title}</H3>
-                        <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">{f.body}</p>
-                      </Card>
-                    </li>
-                  ))}
-                </ul>
-
-                <Card>
-                  <H2>Along the way</H2>
-                  <ul className="mt-3 space-y-3">
-                    {MILESTONES.map((m) => (
-                      <li key={m.title} className="text-[0.95rem] leading-relaxed text-fg-soft">
-                        <strong className="font-bold text-fg">{m.title}.</strong> {m.body}
+      {/* ---- the story and the work ---- */}
+      <section aria-labelledby="story-title" className="mt-7 board:mt-5">
+        <SectionIntro
+          id="story-title"
+          eyebrow="Story & work"
+          title="Where I've served, and why"
+        />
+        <TabbedViews
+          label="Ministry background"
+          views={[
+            {
+              id: "about",
+              label: "About",
+              content: (
+                <div className="space-y-3">
+                  <Card>
+                    <div className={prose}>
+                      <H2>For King and Kingdom</H2>
+                      <p className="font-display italic text-fg">
+                        Resolved: to live in a way that consistently reflects King Jesus&rsquo; beauty
+                        and excellence in every part of life.
+                      </p>
+                      <p>
+                        I&rsquo;m Xerxes Duane Magdaluyo, a Filipino minister serving in Dubai, with a
+                        heart for faith, missions, and technology. I grew up in a church-school
+                        community in Las Piñas, came to a clear call to full-time ministry at 21, and
+                        had that call set on fire by a mission trip to Myanmar and a growing burden for
+                        people who have never heard the gospel.
+                      </p>
+                      <p>
+                        For more than seven years I&rsquo;ve worked mostly with the young: developing
+                        youth, training leaders, and helping students grow into people who can disciple
+                        others. Across camps, conferences, and campuses I&rsquo;ve trained around 2,000
+                        youths and students, and watched many of them begin to lead on their own.
+                      </p>
+                      <p>
+                        Along the way I kept finding myself where ministry meets technology. During the
+                        pandemic I served as a digital-ministry pastor in a local Christian and
+                        Missionary Alliance church, building an e-learning platform so discipleship
+                        could continue when gatherings could not. That season settled a conviction I
+                        still hold: the tools of our age are meant to serve the mission of God.
+                      </p>
+                      <H3>In Dubai today</H3>
+                      <p>
+                        From September 2025 to September 2026 I served an apprenticeship with{" "}
+                        <Ext href="https://fellowshipdubai.com/">Fellowship Dubai</Ext>, coordinating
+                        Alpha and discipleship across the church, coaching leaders to run Alpha
+                        themselves, and helping with the church&rsquo;s communications and digital
+                        outreach. With the apprenticeship complete, I now:
+                      </p>
+                      <ul className="list-disc space-y-1.5 pl-5">
+                        <li>
+                          Volunteer in Communications and Digital &amp; Online Ministry at Fellowship
+                          Dubai, building dashboards and custom web apps that help the church&rsquo;s
+                          ministries care for people well. Most recently: the S.H.A.P.E. Discovery and
+                          SERVE Dashboard for the SERVE Ministry.
+                        </li>
+                        <li>
+                          Co-lead Alpha Youth Lab, equipping teenagers and university students to run
+                          Alpha Youth for their own friends.
+                        </li>
+                        <li>
+                          Lead and facilitate Alpha courses, using the Alpha Film Series, in churches and
+                          communities across the UAE.
+                        </li>
+                        <li>
+                          Help lead{" "}
+                          <Ext href="https://www.faithtech.com/communities/dubai">FaithTech Dubai</Ext>, a
+                          community of Christians working at the intersection of faith and technology.
+                        </li>
+                      </ul>
+                    </div>
+                  </Card>
+                  <ul className="grid gap-2 sm:grid-cols-3">
+                    {FOCUS.map((f) => (
+                      <li key={f.title}>
+                        <Card className="h-full">
+                          <H3>{f.title}</H3>
+                          <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">{f.body}</p>
+                        </Card>
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-4 max-w-[72ch] text-[0.95rem] leading-relaxed text-fg-soft">
-                    Beyond ministry and technology, I love telling stories through film and media,
-                    and using creativity to carry the gospel further. My prayer is simple: that God
-                    would use ordinary faithfulness for extraordinary purposes, among the many
-                    nations He has gathered here in the Middle East.
-                  </p>
-                </Card>
-              </div>
-            ),
-          },
+                  <Card>
+                    <H2>Along the way</H2>
+                    <ul className="mt-3 space-y-3">
+                      {MILESTONES.map((m) => (
+                        <li key={m.title} className="text-[0.95rem] leading-relaxed text-fg-soft">
+                          <strong className="font-bold text-fg">{m.title}.</strong> {m.body}
+                        </li>
+                      ))}
+                    </ul>
+                    <p className="mt-4 max-w-[72ch] text-[0.95rem] leading-relaxed text-fg-soft">
+                      Beyond ministry and technology, I love telling stories through film and media,
+                      and using creativity to carry the gospel further. My prayer is simple: that God
+                      would use ordinary faithfulness for extraordinary purposes, among the many
+                      nations He has gathered here in the Middle East.
+                    </p>
+                  </Card>
+                </div>
+              ),
+            },
           {
             id: "calling",
             label: "Calling",
@@ -634,8 +793,7 @@ export default function Ministry() {
                     <p>
                       I speak and lead training on digital ministry, discipleship, and missions, for
                       churches, youth camps, and conferences across the Philippines, the Gulf, and
-                      beyond. Along the way I&rsquo;ve had the joy of training around 2,000 youths
-                      and students and equipping more than 5,000 leaders for digital outreach.
+                      beyond.
                     </p>
                     <p>
                       Beyond the stage, much of my work is hands-on training: coaching leaders and
@@ -655,7 +813,6 @@ export default function Ministry() {
                     ))}
                   </ul>
                 </Card>
-
                 <div className="grid gap-2 sm:grid-cols-2">
                   <Card>
                     <Figure photo={{ src: "talk-movement-day", alt: "Workshop participants at Movement Day Middle East", w: 1342, h: 1125 }} />
@@ -737,7 +894,7 @@ export default function Ministry() {
           },
           {
             id: "sermons-worship",
-            label: "Worship",
+            label: "Sermons & worship",
             content: (
               <div className="grid gap-3 board:grid-cols-2">
                 <Card>
@@ -888,12 +1045,15 @@ export default function Ministry() {
                       ambassador, I&rsquo;ve trained pastors, churches, and denominations to use it:
                       the software itself, and the careful, prayerful study behind it.
                     </p>
-                    <p className="flex flex-wrap gap-x-5 gap-y-1">
+                    <p>
                       <Ext href="https://discoverybible.com/">Explore The Discovery Bible</Ext>
-                      <Ext href={mail("The Discovery Bible intro or training")}>
-                        Ask me for an intro or training
-                      </Ext>
                     </p>
+                    <p className="pt-1 font-semibold text-fg">Want an intro or a training for your church?</p>
+                    <Reach
+                      subject="The Discovery Bible intro or training"
+                      whatsapp={WA.discovery}
+                      email="Ask by email"
+                    />
                   </div>
                   <ul className="mt-3 divide-y divide-line">
                     <li className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2 text-[0.9rem] text-fg-soft">
@@ -941,85 +1101,76 @@ export default function Ministry() {
               </div>
             ),
           },
-          {
-            id: "partner",
-            label: "Partner",
-            content: (
-              <div className="space-y-3">
-                <Card>
-                  <div className={prose}>
-                    <H2>Partner & pray</H2>
-                    <p>
-                      The best of ministry is never done alone. Whether you lead a church, a youth
-                      ministry, a campus, or an organization, I&rsquo;d love to serve alongside you,
-                      and to have you pray alongside me. This is an invitation into koinonia,
-                      partnership in the gospel, where we carry the mission together.
-                    </p>
-                    <H3>Pray with me</H3>
-                    <p>
-                      Prayer is not the lesser way to partner. It is full partnership, and I treasure
-                      it just as much as any other. Would you stand with me in prayer?
-                    </p>
-                    <ul className="list-disc space-y-1 pl-5">
-                      <li>Pray for the people I walk with as they meet Jesus</li>
-                      <li>Pray for leaders and students learning to disciple others</li>
-                      <li>Pray for wisdom, protection, and joy for me and my family</li>
-                    </ul>
-                    <p>
-                      <Ext href={mail("I will pray with you")}>I&rsquo;ll commit to pray</Ext>
-                    </p>
-                  </div>
-                </Card>
+          ]}
+        />
+      </section>
 
-                <ul className="grid gap-2 sm:grid-cols-2">
-                  {SERVE.map((s) => (
-                    <li key={s.title}>
-                      <Card className="h-full">
-                        <H3>{s.title}</H3>
-                        <p className="mt-1 text-[0.9rem] leading-snug text-fg-soft">{s.body}</p>
-                      </Card>
-                    </li>
-                  ))}
-                </ul>
-
-                <Card>
-                  <div className={prose}>
-                    <p>
-                      If any of these would serve your church or organization, I&rsquo;d be glad to
-                      talk, whether in person here in the UAE or online with churches and teams
-                      anywhere. <Ext href={mail("Serving together")}>Let&rsquo;s talk</Ext>
-                    </p>
-                    <p className="text-fg-faint">
-                      Over seven years of ministry, around 2,000 youths and students trained, 5,000+
-                      leaders equipped for digital outreach, and tools built for churches and
-                      denominations.
-                    </p>
-                    <H3>Support the wider work</H3>
-                    <p>
-                      Some partners also help sustain the ministry financially, which frees me to
-                      serve churches and leaders who could not otherwise bring me in. If you&rsquo;d
-                      like to give, monthly or one time, I would be grateful.
-                    </p>
-                    <p>
-                      <Ext href={mail("Partnering financially", SUPPORT_EMAIL)}>Partner financially</Ext>
-                    </p>
-                    <p className="text-fg-faint">
-                      A note to my kababayan, and to anyone supporting family back home: please feel
-                      no pressure to give. If your hands are full caring for those you love, your
-                      prayers are full partnership, and they mean the world to me.
-                    </p>
-                  </div>
-                </Card>
-
-                <p className="max-w-[60ch] rounded-card border border-line bg-panel p-4 font-display text-[1.05rem] italic leading-snug text-fg shadow-card">
-                  Thank you for sharing in this with me. However we partner, in prayer, in ministry,
-                  or in giving, you are a true partner in the gospel.
-                </p>
-              </div>
-            ),
-          },
-        ]}
-      />
+      {/* ---- partner and pray: its own section, so the story's closing
+              "pray and partner with me" link has somewhere to land ---- */}
+      <section id="partner" aria-labelledby="partner-title" className="mt-7 scroll-mt-24 board:mt-5">
+        <SectionIntro
+          id="partner-title"
+          eyebrow="Partner & pray"
+          title="The best of ministry is never done alone."
+          lede="Whether you lead a church, a youth ministry, a campus, or an organization, I'd love to serve alongside you, and to have you pray alongside me. This is an invitation into koinonia, partnership in the gospel, where we carry the mission together."
+        />
+        <div className="grid gap-2 lg:grid-cols-2">
+          <Card className="flex h-full flex-col">
+            <div className="flex items-center gap-3">
+              <IconTile>
+                <HandHeart size={20} strokeWidth={2.2} aria-hidden />
+              </IconTile>
+              <H3>Pray with me</H3>
+            </div>
+            <div className={`${prose} mt-3`}>
+              <p>
+                Prayer is not the lesser way to partner. It is full partnership, and I treasure it just
+                as much as any other. Would you stand with me in prayer?
+              </p>
+              <ul className="list-disc space-y-1 pl-5">
+                <li>Pray for the people I walk with as they meet Jesus</li>
+                <li>Pray for leaders and students learning to disciple others</li>
+                <li>Pray for wisdom, protection, and joy for me and my family</li>
+              </ul>
+            </div>
+            <div className="mt-auto pt-4">
+              <Reach subject="I will pray with you" whatsapp={WA.pray} email="I'll commit to pray" />
+            </div>
+          </Card>
+          <Card className="flex h-full flex-col">
+            <div className="flex items-center gap-3">
+              <IconTile>
+                <Sprout size={20} strokeWidth={2.2} aria-hidden />
+              </IconTile>
+              <H3>Support the wider work</H3>
+            </div>
+            <div className={`${prose} mt-3`}>
+              <p>
+                Some partners also help sustain the ministry financially, which frees me to serve
+                churches and leaders who could not otherwise bring me in. If you&rsquo;d like to give,
+                monthly or one time, I would be grateful.
+              </p>
+              <p className="text-fg-faint">
+                A note to my kababayan, and to anyone supporting family back home: please feel no
+                pressure to give. If your hands are full caring for those you love, your prayers are
+                full partnership, and they mean the world to me.
+              </p>
+            </div>
+            <div className="mt-auto pt-4">
+              <Reach
+                subject="Partnering financially"
+                to={SUPPORT_EMAIL}
+                whatsapp={WA.give}
+                email="Partner financially"
+              />
+            </div>
+          </Card>
+        </div>
+        <p className="mt-3 max-w-[60ch] rounded-card border border-line bg-panel p-4 font-display text-[1.05rem] italic leading-snug text-fg shadow-card">
+          Thank you for sharing in this with me. However we partner, in prayer, in ministry, or in
+          giving, you are a true partner in the gospel.
+        </p>
+      </section>
     </>
   );
 }

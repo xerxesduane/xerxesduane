@@ -22,17 +22,13 @@ import {
 } from "lucide-react";
 import { AI_LAB_TOOL_COUNT } from "./aiLab";
 import { NONPROFIT, PRICING, STARTER, aed, priceFor, priceLabel } from "./pricing";
+import { CONTACT } from "./contact";
 
 export { PRICING };
 
-export const CONTACT = {
-  whatsapp: "971543281995",
-  whatsappDisplay: "+971 54 328 1995",
-  email: "hi@xerxesduane.com",
-  location: "Dubai, UAE",
-  calendar: "https://zcal.co/xerxesduane/audit",
-  formspreeId: "xrednbek",
-};
+// CONTACT lives in its own dependency-free module so the edge endpoints can
+// import it without pulling this file's icon imports into their bundles.
+export { CONTACT };
 
 // The free-audit journey + what you actually receive — shared by the Contact
 // section and the Packages "Audit" card so the promise never drifts between them.

@@ -2,7 +2,7 @@ import { Suspense, lazy, useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { ChatGlyph } from "../ui/NavIcons";
-import { assistantCopy } from "../../data/assistant";
+import { assistantConfig, type AssistantVariant } from "../../data/assistant";
 
 // The chat only exists for visitors who open it, so it ships as its own chunk
 // rather than in the bundle every page loads. Suspense sits outside
@@ -21,8 +21,15 @@ const AssistantPanel = lazy(() => import("./AssistantPanel"));
  * The launcher stays mounted while the panel is open, faded out and untabbable
  * rather than unmounted, so closing can hand focus straight back to it.
  */
-export default function SiteAssistant({ locale = "en" }: { locale?: "en" | "ar" }) {
-  const copy = assistantCopy(locale);
+export default function SiteAssistant({
+  locale = "en",
+  variant = "site",
+}: {
+  locale?: "en" | "ar";
+  /** "ministry" on /ministry: its own assistant, grounded in that page only. */
+  variant?: AssistantVariant;
+}) {
+  const { copy } = assistantConfig(variant, locale);
   const [open, setOpen] = useState(false);
   const fabRef = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(false);
@@ -54,7 +61,12 @@ export default function SiteAssistant({ locale = "en" }: { locale?: "en" | "ar" 
       <Suspense fallback={null}>
         <AnimatePresence>
           {open && (
-            <AssistantPanel locale={locale} onClose={() => setOpen(false)} labelledBy={titleId} />
+            <AssistantPanel
+              locale={locale}
+              variant={variant}
+              onClose={() => setOpen(false)}
+              labelledBy={titleId}
+            />
           )}
         </AnimatePresence>
       </Suspense>

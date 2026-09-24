@@ -149,6 +149,18 @@ panel says so, WhatsApp and the audit link still working.
 Rename it in one place: `NAME_EN` / `NAME_AR` in `src/data/assistant.ts`, which
 holds every string the widget shows in both languages.
 
+### The ministry assistant
+
+The unlisted `/ministry` page gets its own assistant instead: the same widget
+(`variant="ministry"`, set in `App.tsx`), talking to `api/ministry-assistant.ts`,
+which is grounded in that one page and nothing else (`api/_ministryContext.ts`).
+The business assistant never reads `/ministry`, and this one never reads a
+business page. It speaks about the story, the ways to serve and how to pray or
+partner; it never promises anything on Xerxes's behalf, gives no giving details
+beyond the support inbox, and points business questions to the main site. Its
+strings are `MINISTRY_ASSISTANT` in `src/data/assistant.ts`. Same model key and
+rate limiter, so it needs no extra setup.
+
 ## Notes
 
 - The contact form posts to Formspree; the same details also compose a
