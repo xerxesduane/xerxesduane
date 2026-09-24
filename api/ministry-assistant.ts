@@ -130,5 +130,9 @@ export default async function handler(req: Request): Promise<Response> {
     },
   });
 
-  return streamReply(result.textStream, () => failure, "ministry-assistant");
+  // How much of the page reached the model: 0 means it answered blind, which
+  // is otherwise invisible from outside because the reply still streams.
+  return streamReply(result.textStream, () => failure, "ministry-assistant", {
+    "x-context-chars": String(page.length),
+  });
 }

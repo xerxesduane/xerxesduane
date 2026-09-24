@@ -49,6 +49,7 @@ export function streamReply(
   textStream: AsyncIterable<string>,
   failed: () => unknown,
   where: string,
+  extraHeaders: Record<string, string> = {},
 ): Response {
   const encoder = new TextEncoder();
   const stream = new ReadableStream<Uint8Array>({
@@ -74,6 +75,6 @@ export function streamReply(
   });
 
   return new Response(stream, {
-    headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
+    headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store", ...extraHeaders },
   });
 }

@@ -38,6 +38,37 @@ function pageContent(html: string): string {
   return /<main[\s\S]*?<\/main>/i.exec(html)?.[0] ?? html;
 }
 
+/** Same site, allowing for the apex/www split (the apex 308s to www). */
+function sameSite(a: URL, b: URL): boolean {
+  const bare = (u: URL) => u.hostname.replace(/^www\./, "");
+  return bare(a) === bare(b);
+}
+
+/**
+ * Fetch the page's HTML, following redirects by hand and only within this
+ * site. `redirect: "error"` is not something every edge runtime supports, and
+ * the request can arrive on the apex host, whose first answer is a 308.
+ */
+async function fetchPageHtml(start: URL, signal: AbortSignal): Promise<string | null> {
+  let url = start;
+  for (let hop = 0; hop < 3; hop++) {
+    const res = await fetch(url.toString(), {
+      signal,
+      redirect: "manual",
+      headers: { "user-agent": "XerxesDuaneMinistryAssistant/1.0" },
+    });
+    if (res.status >= 300 && res.status < 400) {
+      const location = res.headers.get("location");
+      const next = location ? isFetchableUrl(new URL(location, url).toString()) : null;
+      if (!next || !sameSite(next, start)) return null;
+      url = next;
+      continue;
+    }
+    return res.ok ? await res.text() : null;
+  }
+  return null;
+}
+
 export async function buildMinistryContext(origin: string): Promise<string> {
   if (cache && cache.origin === origin && Date.now() - cache.at < TTL_MS) return cache.text;
 
@@ -47,19 +78,21 @@ export async function buildMinistryContext(origin: string): Promise<string> {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), 7000);
   try {
-    // Our own page on our own deployment: no redirect is expected, so any
-    // redirect is refused rather than followed.
-    const res = await fetch(url.toString(), {
-      signal: ctrl.signal,
-      redirect: "error",
-      headers: { "user-agent": "XerxesDuaneMinistryAssistant/1.0" },
-    });
-    if (!res.ok) return "";
-    const text = htmlToText(pageContent(await res.text())).slice(0, BUDGET);
+    const html = await fetchPageHtml(url, ctrl.signal);
+    if (!html) {
+      console.warn("[ministry-assistant] /ministry did not load");
+      return "";
+    }
+    let text = htmlToText(pageContent(html));
+    // If the page's markup ever changes shape and the block above comes back
+    // empty, the whole document still beats answering from nothing.
+    if (text.length < 500) text = htmlToText(html);
+    text = text.slice(0, BUDGET);
     if (text) cache = { origin, text, at: Date.now() };
     return text;
-  } catch {
+  } catch (err) {
     // The endpoint answers without the page and says so, rather than failing.
+    console.warn("[ministry-assistant] /ministry fetch failed", err instanceof Error ? err.message : err);
     return "";
   } finally {
     clearTimeout(timer);
