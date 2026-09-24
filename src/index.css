@@ -84,7 +84,7 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     /* ---- ink: deep navy headings, muted blue-grey body ---- */
     --c-fg: 17 34 68;
     --c-fg-soft: 74 90 116;
-    --c-fg-faint: 94 109 135;
+    --c-fg-faint: 80 95 121;
     --c-fg-on-solid: 255 255 255;
 
     /* ---- hairlines ---- */
@@ -572,7 +572,7 @@ html[data-theme-vt="active"]::view-transition-new(root) {
     --c-canvas-sunk: 17 34 68;
     --c-fg: 17 34 68;
     --c-fg-soft: 74 90 116;
-    --c-fg-faint: 94 109 135;
+    --c-fg-faint: 80 95 121;
     --c-fg-on-solid: 255 255 255;
     --c-line: 216 221 228;
     --c-line-soft: 232 235 239;
