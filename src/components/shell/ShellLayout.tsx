@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import CanvasLines from "./CanvasLines";
+import MeshBackground from "./MeshBackground";
 import MobileNav from "./MobileNav";
 import ProfileSidebar from "./ProfileSidebar";
 
@@ -12,7 +13,8 @@ interface ShellLayoutProps {
 }
 
 /**
- * Page frame: decorative canvas lines, the profile rail (or the mobile bar),
+ * Page frame: the animated mesh gradient and canvas lines behind everything,
+ * the profile rail (or the mobile bar),
  * and the content column beside it.
  *
  * `min-w-0` on the content column is load-bearing — without it a wide child
@@ -22,6 +24,7 @@ interface ShellLayoutProps {
 export default function ShellLayout({ children, path, lang, locale = "en" }: ShellLayoutProps) {
   return (
     <>
+      <MeshBackground />
       <CanvasLines />
       <MobileNav path={path} lang={lang} locale={locale} />
       <div className="mx-auto w-full max-w-shell px-4 sm:px-6 lg:px-7 board:px-9">
