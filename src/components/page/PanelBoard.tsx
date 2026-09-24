@@ -36,7 +36,8 @@ interface PanelBoardProps {
  * VIEWPORT's threshold is deliberately low.
  */
 export const BOARD_WASH =
-  "radial-gradient(125% 135% at 100% 22%, rgb(var(--c-wash-strong) / 0.95) 0%, rgb(var(--c-wash) / 0.72) 30%, rgb(var(--c-canvas-sunk) / 0.42) 62%, rgb(var(--c-canvas-sunk) / 0.14) 100%)";
+  // Halved from the original alphas so the page's mesh gradient shows through.
+  "radial-gradient(125% 135% at 100% 22%, rgb(var(--c-wash-strong) / 0.45) 0%, rgb(var(--c-wash) / 0.34) 30%, rgb(var(--c-canvas-sunk) / 0.2) 62%, rgb(var(--c-canvas-sunk) / 0.06) 100%)";
 
 export default function PanelBoard({
   children,
