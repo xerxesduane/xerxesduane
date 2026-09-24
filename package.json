@@ -12,7 +12,8 @@
     "images": "node scripts/optimize-images.mjs",
     "logos": "node scripts/build-tool-logos.mjs",
     "check:pricing": "node scripts/check-pricing.mjs",
-    "check:seo": "node scripts/check-seo.mjs"
+    "check:seo": "node scripts/check-seo.mjs",
+    "og": "node scripts/generate-og.mjs"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^3.0.83",
@@ -43,6 +44,7 @@
     "eslint-plugin-react-refresh": "^0.5.2",
     "ffmpeg-static": "^5.3.0",
     "globals": "^17.6.0",
+    "playwright-core": "^1.56.1",
     "png-to-ico": "^3.0.1",
     "postcss": "^8.5.15",
     "sharp": "^0.34.5",

@@ -44,35 +44,22 @@ function serviceAlternates(slug: string): { hreflang: string; href: string }[] {
   ];
 }
 
-const DEFAULT_OG_IMAGE = `${SITE_ORIGIN}/brand/og-image.png`;
-const SERVICE_OG_IMAGES = new Set([
-  "odoo-erp-dubai",
-  "web-development-dubai",
-  "ai-automation-dubai",
-  "seo-dubai",
-  "answer-engine-optimization-dubai",
-  "generative-engine-optimization-dubai",
-  "custom-software-development-dubai",
-  "crm-development-dubai",
-  "mobile-app-development-dubai",
-  "ecommerce-development-dubai",
-  "landing-page-design-dubai",
-  "branding-graphic-design-dubai",
-  "video-editing-dubai",
-]);
-
-function serviceOgImage(slug: string): string {
-  return SERVICE_OG_IMAGES.has(slug)
-    ? `${SITE_ORIGIN}/brand/og/${slug}.png`
-    : DEFAULT_OG_IMAGE;
-}
+/**
+ * Share cards, one per route, rendered by scripts/generate-og.mjs into
+ * public/brand/og/. Every service page, insight and case study has its own;
+ * the Arabic pages have Arabic ones. A route without a card of its own (the
+ * legal pages, the 404, /ministry) shows the home card.
+ */
+const OG_DIR = `${SITE_ORIGIN}/brand/og`;
+const ogCard = (name: string) => `${OG_DIR}/${name}.jpg`;
+const DEFAULT_OG_IMAGE = ogCard("home");
 
 /**
  * Bump this when a share image changes. Facebook/WhatsApp/LinkedIn cache the
  * OG image by URL for weeks, so a versioned query string forces them to fetch
  * the current image instead of serving a stale (or wrong) cached one.
  */
-const OG_IMAGE_VERSION = "7";
+const OG_IMAGE_VERSION = "8";
 
 /** Absolute, cache-busted share-image URL for a page. */
 function ogImageUrl(image?: string): string {
@@ -222,7 +209,9 @@ const HOME_META: PageMeta = {
   description:
     "Websites, CRM, Odoo/ERP, WhatsApp, automation, ads, and AI connected into one practical operating system for small businesses.",
   canonical: `${SITE_ORIGIN}/`,
-  ogTitle: "Xerxes Duane - Independent Systems Consultant in Dubai",
+  // The search title keeps its keywords; the share title is the headline the
+  // page and its card lead with.
+  ogTitle: "Less admin. More business. | Xerxes Duane",
   alternates: [
     { hreflang: "en", href: `${SITE_ORIGIN}/` },
     { hreflang: "ar", href: `${SITE_ORIGIN}/ar` },
@@ -297,7 +286,7 @@ const AR_HOME_META: PageMeta = {
     "استوديو تقني متكامل في دبي للأعمال الصغيرة: مواقع وتطبيقات وأنظمة أودو ERP وأتمتة وذكاء اصطناعي وتحسين محركات البحث. احجز تدقيقًا مجانيًا لأنظمتك.",
   canonical: `${SITE_ORIGIN}/ar`,
   ogTitle: "Xerxes Duane | استوديو تقني للأعمال الصغيرة في دبي",
-  ogImage: `${SITE_ORIGIN}/brand/og/ar-home.png`,
+  ogImage: ogCard("ar-home"),
   locale: "ar_AR",
   alternates: HOME_ALTERNATES,
 };
@@ -306,6 +295,7 @@ const PRICING_META: PageMeta = {
   title: "Pricing - Xerxes Duane",
   ogTitle: "Pricing - Xerxes Duane",
   canonical: `${SITE_ORIGIN}/pricing`,
+  ogImage: ogCard("pricing"),
   description: `Published starting prices for websites, Odoo ERP, CRM, automation and AI in Dubai. Landing pages from ${aed(2500)}, Odoo from ${aed(12000)}. ${NONPROFIT.label} for charities.`,
   jsonLd: [
     offerCatalog(),
@@ -326,6 +316,7 @@ const STARTER_META: PageMeta = {
   title: brandedTitle(`${STARTER.name} - a complete website for ${aed(STARTER.price)}`),
   ogTitle: `${STARTER.name} - a complete website for ${aed(STARTER.price)}`,
   canonical: `${SITE_ORIGIN}/${STARTER.slug}`,
+  ogImage: ogCard("starter"),
   description: `A finished one-page website in Dubai for a fixed ${aed(STARTER.price)}. Mobile-first, WhatsApp contact, and yours outright. ${aed(STARTER.price * NONPROFIT.rate)} for churches and charities.`,
   jsonLd: [
     {
@@ -368,7 +359,7 @@ const ABOUT_META: PageMeta = {
     "Independent systems consultant in Dubai helping small businesses connect websites, CRM, Odoo/ERP, automation, ads, WhatsApp, and AI.",
   canonical: `${SITE_ORIGIN}/about`,
   ogTitle: "About - Xerxes Duane",
-  ogImage: `${SITE_ORIGIN}/brand/og/about.png`,
+  ogImage: ogCard("about"),
   jsonLd: [
     {
       "@context": "https://schema.org",
@@ -401,6 +392,7 @@ const PROJECTS_META: PageMeta = {
     "Client systems, websites, brand and video work, and the live AI tools, built for small businesses in Dubai, the UAE and beyond.",
   canonical: `${SITE_ORIGIN}/projects`,
   ogTitle: "Projects - Xerxes Duane",
+  ogImage: ogCard("projects"),
 };
 
 const CASE_STUDIES_META: PageMeta = {
@@ -409,7 +401,7 @@ const CASE_STUDIES_META: PageMeta = {
     "Real examples of websites, systems, automations, SEO, AI tools, and business workflows built to save time and increase leads.",
   canonical: `${SITE_ORIGIN}/case-studies`,
   ogTitle: "Work - Xerxes Duane",
-  ogImage: `${SITE_ORIGIN}/brand/og/case-studies.png`,
+  ogImage: ogCard("case-studies"),
   jsonLd: [
     breadcrumb([HOME_CRUMB, { name: "Case Studies", url: `${SITE_ORIGIN}/case-studies` }]),
   ],
@@ -421,7 +413,7 @@ const INSIGHTS_META: PageMeta = {
     "Xerxes Duane shares plain-English thinking on systems, Odoo, automation, and growth for small businesses in Dubai and beyond.",
   canonical: `${SITE_ORIGIN}/insights`,
   ogTitle: "Insights - Xerxes Duane",
-  ogImage: `${SITE_ORIGIN}/brand/og/insights.png`,
+  ogImage: ogCard("insights"),
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Insights", url: `${SITE_ORIGIN}/insights` }])],
 };
 
@@ -449,7 +441,7 @@ const PORTFOLIO_META: PageMeta = {
     "Xerxes Duane's portfolio of website and brand & graphic design work for businesses across the UAE and beyond. See the craft, then book a free systems audit.",
   canonical: `${SITE_ORIGIN}/portfolio`,
   ogTitle: "Portfolio - Xerxes Duane",
-  ogImage: `${SITE_ORIGIN}/brand/og/portfolio.png`,
+  ogImage: ogCard("portfolio"),
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Portfolio", url: `${SITE_ORIGIN}/portfolio` }])],
 };
 
@@ -470,7 +462,7 @@ const SHOWREEL_META: PageMeta = {
     "Xerxes Duane's video editing, color grading, and animation: events, documentaries, social reels, and brand work across the UAE and beyond.",
   canonical: `${SITE_ORIGIN}/showreel`,
   ogTitle: "Showreel - Xerxes Duane",
-  ogImage: `${SITE_ORIGIN}/brand/og/showreel.png`,
+  ogImage: ogCard("showreel"),
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "Showreel", url: `${SITE_ORIGIN}/showreel` }])],
 };
 
@@ -480,7 +472,7 @@ const AI_LAB_META: PageMeta = {
     "Try live AI tools built for real business workflows: WhatsApp automation, bilingual Arabic/English assistants, lead qualification, invoices and more.",
   canonical: `${SITE_ORIGIN}/ai-lab`,
   ogTitle: "AI Lab - Xerxes Duane",
-  ogImage: `${SITE_ORIGIN}/brand/og/demos.png`,
+  ogImage: ogCard("ai-lab"),
   jsonLd: [breadcrumb([HOME_CRUMB, { name: "AI Lab", url: `${SITE_ORIGIN}/ai-lab` }])],
 };
 
@@ -528,6 +520,7 @@ export function getPageMeta(path: string): PageMeta {
     return {
       title: brandedTitle(title),
       ogTitle: `${title} - Xerxes Duane`,
+      ogImage: ogCard(slug),
       canonical: `${SITE_ORIGIN}/${slug}`,
       description: slug === "services"
         ? "Explore website development, Odoo ERP, CRM, automation and AI services for businesses in Dubai, with scope and starting prices."
@@ -562,6 +555,7 @@ export function getPageMeta(path: string): PageMeta {
           `${study.category} for ${study.client}${sector ? `, ${article} ${sector.toLowerCase()} business` : ""}. ${study.summary}`,
         canonical,
         ogTitle: `${study.client} - ${study.category} case study`,
+        ogImage: ogCard(`case-${study.slug}`),
         jsonLd: [
           {
             "@context": "https://schema.org",
@@ -598,7 +592,7 @@ export function getPageMeta(path: string): PageMeta {
         description: ar.metaDescription,
         canonical: `${SITE_ORIGIN}/ar/${ar.slug}`,
         ogTitle: ar.metaTitle,
-        ogImage: serviceOgImage(ar.slug),
+        ogImage: ogCard(`ar-${ar.slug}`),
         locale: "ar_AR",
         alternates: serviceAlternates(ar.slug),
         // Matches what the Arabic page actually renders, in Arabic. The English
@@ -633,7 +627,7 @@ export function getPageMeta(path: string): PageMeta {
         description: post.description,
         canonical,
         ogTitle: post.title,
-        ogImage: `${SITE_ORIGIN}/brand/og/${post.slug}.png`,
+        ogImage: ogCard(post.slug),
         jsonLd: [
           {
             "@context": "https://schema.org",
@@ -645,7 +639,7 @@ export function getPageMeta(path: string): PageMeta {
             author: { "@type": "Person", name: post.author, "@id": `${SITE_ORIGIN}/#xerxes` },
             publisher: { "@id": `${SITE_ORIGIN}/#org` },
             mainEntityOfPage: canonical,
-            image: `${SITE_ORIGIN}/brand/og/${post.slug}.png`,
+            image: ogCard(post.slug),
           },
           breadcrumb([
             HOME_CRUMB,
@@ -675,7 +669,7 @@ export function getPageMeta(path: string): PageMeta {
     description: page.metaDescription,
     canonical,
     ogTitle: page.ogTitle,
-    ogImage: serviceOgImage(page.slug),
+    ogImage: ogCard(page.slug),
     alternates: serviceAlternates(page.slug),
     jsonLd: [
       {
@@ -746,12 +740,12 @@ export function buildHeadTags(path: string): string {
     `<meta property="og:description" content="${esc(description)}" />`,
     `<meta property="og:image" content="${esc(ogImage)}" />`,
     `<meta property="og:image:secure_url" content="${esc(ogImage)}" />`,
-    `<meta property="og:image:type" content="image/png" />`,
+    `<meta property="og:image:type" content="${ogImage.includes(".png") ? "image/png" : "image/jpeg"}" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
     `<meta property="og:image:alt" content="${esc(m.ogTitle)}" />`,
     `<meta name="twitter:title" content="${esc(m.ogTitle)}" />`,
-    `<meta name="twitter:description" content="${esc(m.description)}" />`,
+    `<meta name="twitter:description" content="${esc(description)}" />`,
     `<meta name="twitter:image" content="${esc(ogImage)}" />`,
     `<meta name="twitter:image:alt" content="${esc(m.ogTitle)}" />`,
   ];
