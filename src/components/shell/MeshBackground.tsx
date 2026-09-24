@@ -6,12 +6,12 @@ import { useReducedMotionPref } from "../../lib/usePrefs";
 /**
  * A slow, brand-coloured mesh gradient behind every page (Paper Shaders).
  *
- * The palettes are not decorative guesses. `fg-faint` on the plain canvas is
- * 4.71:1, barely over AA, so every colour in the light palette is at least as
- * light as the canvas (white, pale wash, pale peach). The gradient can only
- * raise contrast there, never lower it. Measured on rendered frames, fg-faint
- * stays at 4.9:1 or better in dark mode. Change a colour and re-measure before
- * shipping it.
+ * The palettes are not decorative guesses. The first version only used tints
+ * lighter than the canvas (fg-faint was 4.71:1 on it, no headroom) and was too
+ * faint to notice. fg-faint was darkened to 80 95 121 (5.8:1 on the canvas) to
+ * make room for real blue and peach. Every colour and blend keeps fg-faint,
+ * fg-soft and the accent eyebrow at 4.5:1 or better in both themes. Change a
+ * colour and re-measure on rendered frames before shipping it.
  *
  * Cost is kept off the critical path:
  * - Nothing renders on the server, so the prerendered HTML is untouched. The
@@ -48,8 +48,8 @@ class Contained extends Component<{ children: ReactNode }, { failed: boolean }> 
 }
 
 const PALETTES = {
-  light: ["#f5f3ec", "#ffffff", "#eef4fc", "#fdf2ea"],
-  dark: ["#0c1526", "#132139", "#1b2d4e", "#2c1f1b"],
+  light: ["#f5f3ec", "#ffffff", "#d9e6f8", "#fbdcc4", "#e4ecf9"],
+  dark: ["#0c1526", "#172f5a", "#3a2418", "#12223f"],
 } as const;
 
 /** About 1000×600. The gradient is a blur, so upscaling it is invisible. */
@@ -129,7 +129,7 @@ export default function MeshBackground() {
             colors={[...PALETTES[theme]]}
             distortion={0.8}
             swirl={0.12}
-            speed={reduced ? 0 : 0.18}
+            speed={reduced ? 0 : 0.35}
             frame={reduced ? 12_000 : 0}
             minPixelRatio={1}
             maxPixelCount={MAX_PIXELS}
