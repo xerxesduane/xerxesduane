@@ -12,8 +12,9 @@ import { afterPageSettles } from "../../lib/afterPageSettles";
  * accent glow trails the pointer.
  *
  * Contrast: the glow is the accent at 10% (light) and 12% (dark), the same
- * peach and ember the mesh gradient already uses, and the dots are 1–2px, so
- * the text contrast measured for the mesh still holds.
+ * peach and ember the mesh gradient already uses, and the dots are small
+ * (1.4–2.8px) and sparse, so the text contrast measured for the mesh still
+ * holds. Make the dots bolder freely; re-measure before touching the glow.
  *
  * Cost:
  * - Fine pointers only, and nothing at all under reduced motion: there is no
@@ -27,9 +28,9 @@ import { afterPageSettles } from "../../lib/afterPageSettles";
 
 const SPACING = 30;
 /** How far from the cursor the dots feel it, in px. */
-const REACH = 180;
+const REACH = 220;
 /** How far a dot right under the cursor is pushed, in px. */
-const PUSH = 18;
+const PUSH = 24;
 /** Spring pulling each dot to its target, and the velocity kept per frame. */
 const STIFFNESS = 0.08;
 const DAMPING = 0.8;
@@ -37,7 +38,11 @@ const DAMPING = 0.8;
 const RIPPLE_SPEED = 0.6; // px per ms
 const RIPPLE_WIDTH = 80;
 const RIPPLE_LIFE = 1500; // ms
-const RIPPLE_PUSH = 12;
+const RIPPLE_PUSH = 16;
+
+/** Dot radius at rest, and how much it grows at full heat, in px. */
+const DOT_RADIUS = 1.4;
+const DOT_GROWTH = 1.4;
 
 const GLOW_RADIUS = 380;
 const MAX_DPR = 2;
@@ -68,8 +73,8 @@ function readPalette(dark: boolean): Palette {
   return {
     dot: readRgb("--c-fg"),
     hot: readRgb("--c-accent"),
-    restAlpha: dark ? 0.1 : 0.12,
-    hotAlpha: dark ? 0.9 : 0.8,
+    restAlpha: dark ? 0.2 : 0.22,
+    hotAlpha: dark ? 1 : 0.95,
     glowAlpha: dark ? 0.12 : 0.1,
   };
 }
@@ -205,7 +210,7 @@ export default function CursorField() {
       const paths: Path2D[] = [];
       for (let l = 0; l <= LEVELS; l++) paths.push(new Path2D());
       const radii: number[] = [];
-      for (let l = 0; l <= LEVELS; l++) radii.push(1.1 + (l / LEVELS) * 1.1);
+      for (let l = 0; l <= LEVELS; l++) radii.push(DOT_RADIUS + (l / LEVELS) * DOT_GROWTH);
 
       const reach2 = REACH * REACH;
       let energy = 0;
