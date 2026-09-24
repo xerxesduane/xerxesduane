@@ -161,6 +161,20 @@ beyond the support inbox, and points business questions to the main site. Its
 strings are `MINISTRY_ASSISTANT` in `src/data/assistant.ts`. Same model key and
 rate limiter, so it needs no extra setup.
 
+## Share cards
+
+The image WhatsApp, Messenger, LinkedIn, X and Slack show for a shared link is
+a 1200×630 card per page in `public/brand/og/`, in the site's own type, palette
+and portrait, with an Arabic card for every Arabic page. The unlisted
+/ministry has its own card at `public/ministry/share.jpg`, under the same
+noindex header as the page. `npm run og` renders
+them all in Chromium (`npm run og -- home pricing` for just some); the copy for
+each card lives at the top of `scripts/generate-og.mjs`. After changing one,
+bump `OG_IMAGE_VERSION` in `src/lib/seo.ts`, because the platforms cache these
+by URL for weeks. `npm run build` fails if a page's card is missing, isn't
+1200×630, is labelled with the wrong type, or is over 300 KB (WhatsApp can drop
+larger previews).
+
 ## Notes
 
 - The contact form posts to Formspree; the same details also compose a

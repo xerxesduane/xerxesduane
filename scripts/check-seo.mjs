@@ -15,9 +15,13 @@
 //     the generated case-study descriptions ended one on "...and convers".
 //   - Four case studies shared one description, so Google had four pages it
 //     could not tell apart.
+//   - Share cards: every page's og:image must exist in the build, be the
+//     1200x630 a large preview needs, declare its real type, and stay under
+//     300 KB, above which WhatsApp can drop the preview altogether.
 //
 // Checked against dist/, not the source, because the source is not what ships.
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
+import sharp from "sharp";
 import { join, dirname, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -28,6 +32,9 @@ const dist = join(root, "dist");
 const TITLE_MAX = 60;
 /** Descriptions past this are truncated in the result, so they should not exist. */
 const DESCRIPTION_MAX = 160;
+/** Above roughly this, WhatsApp can show a link with no image at all. */
+const OG_IMAGE_MAX_BYTES = 300 * 1024;
+const SITE_ORIGIN = "https://www.xerxesduane.com";
 
 const fail = [];
 const check = (ok, message) => {
@@ -62,6 +69,8 @@ const titles = new Map();
 const unlisted = [];
 const htmlByRoute = new Map();
 const descriptions = new Map();
+/** Share images by dist path, checked once each after the page loop. */
+const ogImages = new Map();
 
 for (const file of pages) {
   const route = "/" + relative(dist, file).replace(/index\.html$/, "").replace(/\/$/, "");
@@ -78,6 +87,16 @@ for (const file of pages) {
   check(Boolean(titleMatch), `${route}: no <title>`);
   check(Boolean(descMatch), `${route}: no meta description`);
   check(Boolean(canonical), `${route}: no canonical link`);
+
+  const ogImage = html.match(/<meta property="og:image" content="(.*?)"/s)?.[1];
+  const ogType = html.match(/<meta property="og:image:type" content="(.*?)"/s)?.[1];
+  check(Boolean(html.match(/<meta property="og:title" content="(.+?)"/s)), `${route}: no og:title`);
+  check(Boolean(ogImage), `${route}: no og:image`);
+  if (ogImage) {
+    check(ogImage.startsWith(`${SITE_ORIGIN}/`), `${route}: og:image is not an absolute ${SITE_ORIGIN} URL`);
+    const file = join(dist, decode(ogImage).replace(SITE_ORIGIN, "").split("?")[0]);
+    if (!ogImages.has(file)) ogImages.set(file, { route, ogType });
+  }
   if (!titleMatch || !descMatch) continue;
 
   const title = decode(titleMatch[1]);
@@ -127,6 +146,20 @@ for (const file of pages) {
   }
 }
 
+for (const [file, { route, ogType }] of ogImages) {
+  const name = relative(dist, file);
+  if (!existsSync(file)) {
+    fail.push(`${route}: og:image ${name} is not in the build`);
+    continue;
+  }
+  const bytes = statSync(file).size;
+  check(bytes <= OG_IMAGE_MAX_BYTES, `${name}: ${(bytes / 1024).toFixed(0)} KB, over the 300 KB WhatsApp previews allow`);
+  const meta = await sharp(file).metadata();
+  check(meta.width === 1200 && meta.height === 630, `${name}: ${meta.width}x${meta.height}, expected 1200x630`);
+  const type = meta.format === "jpeg" ? "image/jpeg" : `image/${meta.format}`;
+  check(ogType === type, `${route}: og:image:type says ${ogType}, but ${name} is ${type}`);
+}
+
 // Unlisted pages only stay unlisted while nothing advertises them: not the
 // sitemap, and not a link from any other page a crawler can follow.
 const sitemap = readFileSync(join(dist, "sitemap.xml"), "utf8");
@@ -147,4 +180,6 @@ if (fail.length) {
   process.exit(1);
 }
 
-console.log(`check:seo — ${pages.length} routes OK (titles, descriptions, canonicals, heading outline).`);
+console.log(
+  `check:seo — ${pages.length} routes OK (titles, descriptions, canonicals, heading outline, ${ogImages.size} share images).`,
+);
