@@ -928,3 +928,22 @@ html[data-theme-vt="active"]::view-transition-new(root) {
 @media (prefers-reduced-motion: reduce) {
   .showcase-overlay .overlay-panel { animation: backdrop-enter 180ms ease-out; }
 }
+
+/*
+ * Frosted content cards: let the mesh gradient (MeshBackground) glow through.
+ * Translucency only, no backdrop-filter. The gradient behind is already a
+ * blur, so it reads as frosted glass, and a real backdrop blur over an
+ * animated canvas would re-blur every card on every frame.
+ * Floating surfaces (overlays, dialogs) stay opaque.
+ * Contrast: white at 0.74 over the darkest light-mode gradient colour is
+ * ~#f4f9fd, and dark panel over the brightest dark colour stays near
+ * #15243f, so card text keeps its AA margins.
+ */
+.bg-panel.shadow-card,
+.bg-panel.rounded-card {
+  --tw-bg-opacity: 0.74;
+}
+.overlay-panel .bg-panel,
+[role="dialog"] .bg-panel {
+  --tw-bg-opacity: 1;
+}
