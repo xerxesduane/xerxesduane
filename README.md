@@ -165,7 +165,9 @@ rate limiter, so it needs no extra setup.
 
 - The contact form posts to Formspree; the same details also compose a
   pre-filled WhatsApp message. The floating button in the corner is the
-  assistant now — WhatsApp moved inside it. Booking goes to zcal.
+  assistant now — WhatsApp moved inside it. On phones and tablets that button
+  is hidden and the bottom bar's "Ask" slot opens the same chat. Booking goes
+  to zcal.
 - Analytics (GA4 + Clarity) stay denied until the visitor accepts the cookie
   notice.
 - Motion respects `prefers-reduced-motion` everywhere: the tools strip stops,
