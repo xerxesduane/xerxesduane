@@ -157,5 +157,10 @@ holds every string the widget shows in both languages.
 - Analytics (GA4 + Clarity) stay denied until the visitor accepts the cookie
   notice.
 - Motion respects `prefers-reduced-motion` everywhere: the tools strip stops,
-  the project reel opens as a list, and the beams in the services diagram hold
-  still.
+  the project reel opens as a list, the beams in the services diagram hold
+  still, and the custom cursor and cursor-reactive dot field switch off.
+- On a mouse or trackpad, an animated cursor (`fx/Cursor.tsx`) trails the
+  pointer, and a dot field behind the page (`shell/CursorField.tsx`) bends and
+  warms around it and ripples on click. `data-cursor="view|play|open|drag"` on
+  an element swaps the ring for a labelled disc; `data-cursor="hidden"` gives
+  it the native cursor. Touch devices get neither.

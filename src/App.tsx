@@ -7,6 +7,7 @@ import ConsentBanner from "./components/ConsentBanner";
 import SmoothScroll from "./components/fx/SmoothScroll";
 import PageTransition from "./components/fx/PageTransition";
 import IntroSequence from "./components/fx/IntroSequence";
+import Cursor from "./components/fx/Cursor";
 
 // Route-level code splitting: each page ships as its own chunk, so a visitor
 // only downloads the JS for the route they're on. The streaming prerender
@@ -138,6 +139,7 @@ export default function App({ path = "/" }: { path?: string }) {
         />
         <SiteAssistant locale={isArabic ? "ar" : "en"} />
         <MobileTabBar path={path} locale={isArabic ? "ar" : "en"} />
+        <Cursor />
       </div>
       </MotionConfig>
     </LazyMotion>

@@ -2,6 +2,7 @@ import { Component, lazy, Suspense, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import { useTheme } from "../../lib/useTheme";
 import { useReducedMotionPref } from "../../lib/usePrefs";
+import { afterPageSettles } from "../../lib/afterPageSettles";
 
 /**
  * A slow, brand-coloured mesh gradient behind every page (Paper Shaders).
@@ -72,23 +73,6 @@ function canRender(): boolean {
   }
 }
 
-/** Run once the page has loaded, painted and gone quiet. */
-function afterPageSettles(run: () => void): () => void {
-  const w = window as Window & {
-    requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
-    cancelIdleCallback?: (id: number) => void;
-  };
-  let idle: number | undefined;
-  const timer = window.setTimeout(() => {
-    idle = w.requestIdleCallback ? w.requestIdleCallback(run, { timeout: 2000 }) : undefined;
-    if (idle === undefined) run();
-  }, START_DELAY_MS);
-  return () => {
-    window.clearTimeout(timer);
-    if (idle !== undefined) w.cancelIdleCallback?.(idle);
-  };
-}
-
 export default function MeshBackground() {
   const { theme } = useTheme();
   const reduced = useReducedMotionPref();
@@ -102,16 +86,7 @@ export default function MeshBackground() {
       // Let the canvas draw its first frame before fading it in.
       requestAnimationFrame(() => requestAnimationFrame(() => setShown(true)));
     };
-    if (document.readyState === "complete") return afterPageSettles(start);
-    let cancel = () => {};
-    const onLoad = () => {
-      cancel = afterPageSettles(start);
-    };
-    window.addEventListener("load", onLoad, { once: true });
-    return () => {
-      window.removeEventListener("load", onLoad);
-      cancel();
-    };
+    return afterPageSettles(start, START_DELAY_MS);
   }, []);
 
   if (!ready) return null;
