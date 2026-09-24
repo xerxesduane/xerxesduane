@@ -46,7 +46,11 @@ export default function TabbedViews({ views, label, className = "" }: TabbedView
   const sync = useCallback(() => {
     if (typeof window === "undefined") return;
     const hash = window.location.hash.slice(1);
-    setActive(ids.split(",").includes(hash) ? hash : first);
+    // A fragment that names a view opens it, and no fragment means the first.
+    // Any other fragment is an in-page anchor elsewhere on the page (e.g.
+    // /ministry#partner), and must not snap the reader back to the first view.
+    if (!hash) setActive(first);
+    else if (ids.split(",").includes(hash)) setActive(hash);
   }, [ids, first]);
 
   useEffect(() => {

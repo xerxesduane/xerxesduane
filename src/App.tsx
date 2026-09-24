@@ -137,7 +137,12 @@ export default function App({ path = "/" }: { path?: string }) {
           className="h-[calc(5rem+env(safe-area-inset-bottom))] lg:hidden"
           aria-hidden
         />
-        <SiteAssistant locale={isArabic ? "ar" : "en"} />
+        {/* /ministry gets its own assistant, grounded in that page alone; the
+            business one never appears there. */}
+        <SiteAssistant
+          locale={isArabic ? "ar" : "en"}
+          variant={slug === "ministry" ? "ministry" : "site"}
+        />
         <MobileTabBar path={path} locale={isArabic ? "ar" : "en"} />
         <Cursor />
       </div>
