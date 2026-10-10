@@ -19,6 +19,7 @@
 //   POST {action:"cc", emails}                  other Champions' emails for alerts and the summary (owner only)
 //   POST {action:"setLogin", username, name, password}   a Champion's sign-in for /ht (owner only)
 //   POST {action:"removeLogin", username}       remove it: that Champion is signed out at once (owner only)
+//   POST {action:"secretLinks", on}             switch the old secret panel links (/hp/team, /ht/champion) on or off (owner only)
 //
 // Three ways in: the owner signed in with the /letters login; a co-Champion
 // by their HACKP_CHAMPIONS secret in the x-hp-champion header (their panel is
@@ -62,6 +63,7 @@ import {
 } from "./_lib";
 import { sendDigest } from "./_digest";
 import { USERNAME, championFromCookie, makeLogin, type Login } from "./_auth";
+import { SECRET_LINKS_OFF } from "../hack-partners/_lib";
 import { safetyItems } from "./_briefs";
 import { sendReminders } from "./_remind";
 
@@ -74,7 +76,7 @@ async function who(req: Request, write: boolean): Promise<string | Response> {
   if (secret) {
     if (!(await underLimit("hackt-team", req, 60, 60))) return errorResponse("Too many tries. Wait a minute.", 429);
     const name = await championFor(secret);
-    if (!name) return errorResponse("This panel link isn't valid any more. Ask Xerxes for a new one.", 401);
+    if (!name) return errorResponse("This panel link doesn't work any more. Sign in with your username and password at ministry.xerxesduane.com/ht instead.", 401);
     if (write && !sameOrigin(req)) return errorResponse("Blocked: that request did not come from this page.", 403);
     return name;
   }
@@ -120,6 +122,7 @@ export default handle(async (req) => {
       ["GET", `${K}cc`],
       ["HGETALL", `${K}interest`],
       ["HGETALL", `${K}logins`],
+      ["GET", SECRET_LINKS_OFF],
     ]);
     const announced = extra[0] === "1";
     const show: Show = parse<Show>(extra[1]) ?? { order: [], ...SHOW_DEFAULT };
@@ -169,7 +172,8 @@ export default handle(async (req) => {
     const role = me === "Xerxes" ? "owner" : "champion";
     // Usernames and names only, for the owner: never a hash.
     const logins = role === "owner" ? pairs(extra[at + 3 * T + 6]).map(([, v]) => parse<Login>(v)).filter((l): l is Login => !!l).map((l) => ({ username: l.username, name: l.name, createdAt: l.createdAt })) : [];
-    return json({ people: rows, announced, checkins, summaries, show, links, safety, guests, scores, roster, feedback, cc, interest, logins, role, expiresAt: EXPIRES_AT, me }, 200, noStore);
+    const secretLinksOff = extra[at + 3 * T + 7] === "1";
+    return json({ people: rows, announced, checkins, summaries, show, links, safety, guests, scores, roster, feedback, cc, interest, logins, role, secretLinksOff, expiresAt: EXPIRES_AT, me }, 200, noStore);
   }
 
   if (req.method !== "POST") return errorResponse("Method not allowed.", 405);
@@ -236,6 +240,12 @@ export default handle(async (req) => {
       .slice(0, 200);
     await redis([["SET", `${K}roster`, JSON.stringify(list)]]);
     return json({ made: list.length }, 200, noStore);
+  }
+
+  if (action === "secretLinks") {
+    if (me !== "Xerxes") return errorResponse("Only Xerxes can change that.", 403);
+    await redis([b.on ? ["DEL", SECRET_LINKS_OFF] : ["SET", SECRET_LINKS_OFF, "1"]]);
+    return json({ ok: true }, 200, noStore);
   }
 
   if (action === "setLogin" || action === "removeLogin") {

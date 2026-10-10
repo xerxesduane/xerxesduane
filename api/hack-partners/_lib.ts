@@ -48,6 +48,10 @@ function champions(): Record<string, string> {
 /** The co-Champion a panel secret belongs to, by first name, or null. Compared in constant time. */
 export async function championFor(secret: string): Promise<string | null> {
   if (!/^[A-Za-z0-9_-]{24,64}$/.test(secret)) return null;
+  // The owner can switch every secret panel link off from /ht once the
+  // Champions sign in with a username and password instead.
+  const [off] = await redis([["GET", SECRET_LINKS_OFF]]);
+  if (off === "1") return null;
   for (const [k, name] of Object.entries(champions())) {
     if (await safeEqual(k, secret)) return name.split(/\s+/)[0];
   }
@@ -55,6 +59,9 @@ export async function championFor(secret: string): Promise<string | null> {
 }
 
 export const K = "hackp:v1:";
+
+/** Set to "1" (from the /ht panel) to switch off every co-Champion's secret panel link, on /hp and /ht alike. */
+export const SECRET_LINKS_OFF = "hackp:v1:secret-links-off";
 export const ORIGIN = "https://ministry.xerxesduane.com";
 
 /** Every link stops working after this: a week after the presentations. */

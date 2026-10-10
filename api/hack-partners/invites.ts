@@ -44,6 +44,7 @@ import {
   type Spend,
   type Update,
 } from "./_lib";
+import { championFromCookie } from "../hack-teams/_auth";
 
 export const config = { runtime: "edge" };
 
@@ -61,9 +62,15 @@ async function who(req: Request, write: boolean): Promise<Who | Response> {
     // A guessed secret gets nowhere fast.
     if (!(await underLimit("hackp-team", req, 60, 60))) return errorResponse("Too many tries. Wait a minute.", 429);
     const name = await championFor(secret);
-    if (!name) return errorResponse("This panel link isn't valid any more. Ask Xerxes for a new one.", 401);
+    if (!name) return errorResponse("This panel link doesn't work any more. Sign in with your username and password at ministry.xerxesduane.com/ht, then come back here.", 401);
     if (write && !sameOrigin(req)) return errorResponse("Blocked: that request did not come from this page.", 403);
     return { role: "champion", name };
+  }
+  // A Champion signed in at /ht with a username and password: the same cookie works here.
+  const signedIn = await championFromCookie(req);
+  if (signedIn) {
+    if (write && !sameOrigin(req)) return errorResponse("Blocked: that request did not come from this page.", 403);
+    return { role: "champion", name: signedIn };
   }
   const denied = await requireOwner(req, write);
   if (denied) return denied;

@@ -58,6 +58,8 @@ type List = {
   /** Champion sign-ins, for the owner only. */
   logins: { username: string; name: string; createdAt: number }[];
   role: "owner" | "champion";
+  /** The old secret panel links (/hp/team, /ht/champion) are switched off. */
+  secretLinksOff: boolean;
   expiresAt: number;
   me: string;
 };
@@ -1175,8 +1177,8 @@ function Logins({ list, busy, act }: { list: List; busy: boolean; act: Act }) {
     <div className="mt-8 rounded-2xl border border-white/15 p-4 text-white">
       <p className="font-display text-[1.05rem] font-bold">Champion sign-ins</p>
       <p className="mt-1 text-[0.8rem] text-white/60">
-        A username and password for another Champion, to sign in at ministry.xerxesduane.com/ht. They see and manage everyone, like you, but can't change sign-ins or who gets the
-        emails. Setting a new password for someone signs them out everywhere.
+        A username and password for another Champion, to sign in at ministry.xerxesduane.com/ht. The same sign-in opens the partner panel at /hp (their own partner links only).
+        On /ht they see and manage everyone, like you, but can't change sign-ins or who gets the emails. Setting a new password signs them out everywhere.
       </p>
       {list.logins.length > 0 && (
         <ul className="mt-3 space-y-1.5">
@@ -1231,6 +1233,25 @@ function Logins({ list, busy, act }: { list: List; busy: boolean; act: Act }) {
           </button>
         </div>
       </form>
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2.5 text-[0.85rem]">
+        <span>
+          Old panel links without a password (<span className="font-technical">/hp/team/…</span> and <span className="font-technical">/ht/champion/…</span>):{" "}
+          <strong style={{ color: list.secretLinksOff ? "#86efac" : Y }}>{list.secretLinksOff ? "switched off" : "still working"}</strong>
+        </span>
+        <button
+          type="button"
+          disabled={busy}
+          className={`${btn} border border-white/30`}
+          onClick={() =>
+            list.secretLinksOff
+              ? act({ action: "secretLinks", on: true }, "The old panel links work again.")
+              : window.confirm("Switch off the old panel links? Champions then sign in with their username and password, on /ht and /hp alike. Make sure each has one first.") &&
+                act({ action: "secretLinks", on: false }, "The old panel links are off. Champions sign in with their password now.")
+          }
+        >
+          {list.secretLinksOff ? "Turn them back on" : "Switch them off"}
+        </button>
+      </div>
       {shown && (
         <div className="mt-3 rounded-xl p-3 text-[0.85rem]" style={{ background: "#2a2a2a" }}>
           <p>
