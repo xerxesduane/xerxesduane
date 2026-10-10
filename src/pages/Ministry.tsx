@@ -704,6 +704,9 @@ const DIGITAL_WORK: { title: string; body: string; where: "ph" | "gulf"; href?: 
     title: "A mobilization app for Alpha leaders",
     where: "gulf",
     body: "A simple tool that helps leaders run Alpha themselves, not only facilitate it.",
+    // Same host: the app lives at ministry.xerxesduane.com/alpha-connect.
+    href: "/alpha-connect",
+    link: "Open Alpha Connect",
   },
   {
     title: "E-learning platforms for discipleship",
