@@ -12,6 +12,10 @@
 //   POST {action:"remind"}                      send the next check-in's reminders now
 //   POST {action:"addGuest", name, kind, teams} a security reviewer, mentor or judge link
 //   POST {action:"revokeGuest" | "resetGuest", code}
+//   POST {action:"paid", code, on}              the AED 30 fee received (or not)
+//   POST {action:"arrived", code, on}           at the door on 17 October
+//   POST {action:"roster", text}                the registration list, one per line: "Name, +971 50 …"
+//   POST {action:"digest"}                      email the Champions' summary now
 //
 // Two ways in, as on the partner panel: the owner signed in with the /letters
 // login, or a co-Champion by their HACKP_CHAMPIONS secret in the
@@ -49,7 +53,10 @@ import {
   type Safety,
   type Score,
   type TeamLink,
+  type Feedback,
+  type RosterEntry,
 } from "./_lib";
+import { sendDigest } from "./_digest";
 import { safetyItems } from "./_briefs";
 import { sendReminders } from "./_remind";
 
@@ -98,6 +105,8 @@ export default handle(async (req) => {
       ...CHALLENGE_NS.map((n) => ["GET", `${K}safety:${n}`]),
       ["HGETALL", `${K}guests`],
       ["HGETALL", `${K}scores`],
+      ["GET", `${K}roster`],
+      ["HGETALL", `${K}feedback`],
     ]);
     const announced = extra[0] === "1";
     const show: Show = parse<Show>(extra[1]) ?? { order: [], ...SHOW_DEFAULT };
@@ -139,7 +148,10 @@ export default handle(async (req) => {
     CHALLENGE_NS.forEach((n, i) => {
       checkins[n] = (Array.isArray(lists[i]) ? (lists[i] as unknown[]) : []).map((r) => parse<CheckIn>(r)).filter((x): x is CheckIn => !!x);
     });
-    return json({ people: rows, announced, checkins, summaries, show, links, safety, guests, scores, expiresAt: EXPIRES_AT, me }, 200, noStore);
+    const roster = parse<RosterEntry[]>(extra[at + 3 * T + 2]) ?? [];
+    // Feedback goes to the panel without names: it is meant to be honest.
+    const feedback = pairs(extra[at + 3 * T + 3]).map(([, v]) => parse<Feedback>(v)).filter((f): f is Feedback => !!f).sort((a, b) => b.at - a.at);
+    return json({ people: rows, announced, checkins, summaries, show, links, safety, guests, scores, roster, feedback, expiresAt: EXPIRES_AT, me }, 200, noStore);
   }
 
   if (req.method !== "POST") return errorResponse("Method not allowed.", 405);
@@ -194,6 +206,24 @@ export default handle(async (req) => {
     return json({ show }, 200, noStore);
   }
 
+  if (action === "roster") {
+    const list: RosterEntry[] = String(b.text ?? "")
+      .split(/\r?\n/)
+      .map((line) => {
+        const phone = (/\+?[\d][\d\s()-]{6,}\d/.exec(line)?.[0] ?? "").replace(/\D/g, "");
+        const name = line.replace(/\+?[\d][\d\s()-]{6,}\d/, "").replace(/[,;\t]+/g, " ").replace(/\s+/g, " ").trim().slice(0, 60);
+        return { name, phone: phone.length >= 8 ? phone : "" };
+      })
+      .filter((r) => r.name)
+      .slice(0, 200);
+    await redis([["SET", `${K}roster`, JSON.stringify(list)]]);
+    return json({ made: list.length }, 200, noStore);
+  }
+
+  if (action === "digest") {
+    return json(await sendDigest(true), 200, noStore);
+  }
+
   if (action === "remind") {
     const r = await sendReminders(true);
     return json(r, 200, noStore);
@@ -243,6 +273,16 @@ export default handle(async (req) => {
     await redis([["DEL", `${K}seen:${code}`]]);
     return json({ ok: true }, 200, noStore);
   }
+  if (action === "paid" || action === "arrived") {
+    if (action === "paid") {
+      if (b.on) person.paid = { at: Date.now(), by: me };
+      else delete person.paid;
+    } else if (b.on) person.arrived = Date.now();
+    else delete person.arrived;
+    await redis([["HSET", `${K}people`, code, JSON.stringify(person)]]);
+    return json({ ok: true }, 200, noStore);
+  }
+
   if (action === "email") {
     const email = String(b.email ?? "").trim().toLowerCase();
     if (email && !EMAIL.test(email)) return errorResponse("That email address doesn't look right.");

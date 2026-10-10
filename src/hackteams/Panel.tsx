@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { CHALLENGES, CHECK_IN_GOALS, JUDGING } from "../data/hack";
+import DinnerMode from "./Dinner";
 import Showcase from "./Showcase";
 import { greetName } from "../hackpartners/greet";
 import { DINNER, type Dinner, type Hours, type Skill } from "./shared";
@@ -26,6 +27,8 @@ type Row = {
   team?: number;
   role?: string;
   email?: string;
+  paid?: { at: number; by: string };
+  arrived?: number;
   link: string;
   devices: number;
   countries: string[];
@@ -46,6 +49,8 @@ type List = {
   safety: Record<number, { items: string[]; ticks: Record<string, { by: string; at: number }>; review: Review | null }>;
   guests: GuestRow[];
   scores: { judge: string; marks: Record<string, { s: number[]; note: string; at: number }> }[];
+  roster: { name: string; phone: string }[];
+  feedback: { rating: number; well: string; change: string; again: "yes" | "maybe" | "no"; at: number }[];
   expiresAt: number;
   me: string;
 };
@@ -96,6 +101,7 @@ export default function Panel({ champion }: { champion?: string }) {
   const [busy, setBusy] = useState(false);
   const [note, setNote] = useState("");
   const [filter, setFilter] = useState<"all" | "unanswered" | "unplaced">("all");
+  const [dinner, setDinner] = useState(false);
 
   const call = useCallback(
     async <T,>(method: "GET" | "POST", body?: unknown): Promise<{ ok: boolean; status: number; data: T & { error?: string } }> => {
@@ -133,6 +139,10 @@ export default function Panel({ champion }: { champion?: string }) {
     setBusy(true);
     setNote("");
     const r = await call<{ made?: number; placed?: number; sent?: number; skipped?: string; date?: string }>("POST", body);
+    if (r.ok && body.action === "digest") {
+      setBusy(false);
+      return setNote(r.data.skipped ? `Nothing sent: ${r.data.skipped}` : "The summary is in your inbox.");
+    }
     if (r.ok && body.action === "remind") {
       setBusy(false);
       return setNote(r.data.skipped ? `Nothing sent: ${r.data.skipped}` : `Sent ${r.data.sent} reminder${r.data.sent === 1 ? "" : "s"} for the ${r.data.date} check-in.`);
@@ -184,6 +194,16 @@ export default function Panel({ champion }: { champion?: string }) {
         weekly check-ins. Each link opens on up to two devices and stops working after{" "}
         {new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", timeZone: "Asia/Dubai" }).format(new Date(list.expiresAt))}.
       </p>
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <button type="button" className={btn} style={{ background: Y, color: INK }} onClick={() => setDinner(true)}>
+          Dinner night mode
+        </button>
+        <span className="text-[0.82rem] text-white/70">
+          Fees: <strong className="text-white">{people.filter((p) => p.paid).length}</strong> of {people.length} paid · AED{" "}
+          {(people.filter((p) => p.paid).length * 30).toLocaleString("en-US")} received
+        </span>
+      </div>
+      {dinner && <DinnerMode list={list} busy={busy} act={act} onClose={() => setDinner(false)} />}
       {!owner && (
         <p className="mt-2 rounded-xl border border-white/15 px-3 py-2 text-[0.8rem] text-white/60">
           🔒 This panel is just for you. Keep its address private: anyone who has it can manage every participant.
@@ -216,6 +236,7 @@ export default function Panel({ champion }: { champion?: string }) {
 
       {/* The open form: one link for everyone, answers land here */}
       {!list.announced && <ShareForm setNote={setNote} from={from} />}
+      <Roster list={list} busy={busy} act={act} from={from} />
 
       {/* Announce */}
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4" style={{ background: list.announced ? Y : "#2a2a2a", color: list.announced ? INK : "#fff" }}>
@@ -331,6 +352,9 @@ export default function Panel({ champion }: { champion?: string }) {
             >
               Send reminders now
             </button>
+            <button type="button" disabled={busy} className={`${btn} border border-white/30 text-white`} onClick={() => act({ action: "digest" }, "")}>
+              Email me the summary now
+            </button>
           </div>
           <p className="mt-1 text-[0.78rem] text-white/50">
             Every Wednesday at 6pm, each placed participant with an email gets their own link and whether their team has checked in. {people.filter((p) => p.team && !p.email).length} placed
@@ -381,6 +405,7 @@ export default function Panel({ champion }: { champion?: string }) {
       )}
 
       {list.announced && <SafetyOverview list={list} />}
+      {list.feedback.length > 0 && <FeedbackSummary list={list} setNote={setNote} />}
       <Guests list={list} owner={owner} busy={busy} from={from} act={act} setNote={setNote} />
       {list.announced && list.scores.length > 0 && <Results list={list} />}
 
@@ -499,6 +524,16 @@ function Person({
         <a href={`https://wa.me/?text=${encodeURIComponent(msg)}`} target="_blank" rel="noopener noreferrer" className={btn} style={{ background: "#1FA855", color: "#fff" }}>
           {list.announced ? "Send \"your team is ready\"" : "Send on WhatsApp"}
         </a>
+        <button
+          type="button"
+          disabled={busy}
+          className={btn}
+          style={r.paid ? { background: "#dcfce7", color: "#14532d" } : { background: "#fee2e2", color: "#7f1d1d" }}
+          onClick={() => act({ action: "paid", code: r.code, on: !r.paid }, r.paid ? `${r.name}'s fee unmarked.` : `${r.name}'s AED 30 marked received.`)}
+          title={r.paid ? "Tap to unmark" : "Tap when the AED 30 is received"}
+        >
+          {r.paid ? "✓ Fee paid" : "Fee not paid"}
+        </button>
         <button type="button" className={`${btn} border border-[#ccc]`} onClick={() => navigator.clipboard?.writeText(msg).then(() => setNote(`Message for ${r.name} copied.`))}>
           Copy message
         </button>
@@ -526,6 +561,131 @@ function Person({
 type Act = (body: Record<string, unknown>, done: string) => Promise<void>;
 
 const FORM_LINK = "https://ministry.xerxesduane.com/ht/join";
+
+/** Loose match between a registration name and a name on the panel: same words, any order, either way round. */
+const words = (s: string) => s.toLowerCase().replace(/[^a-z\u0600-\u06ff\s]/g, " ").split(/\s+/).filter((w) => w.length > 1);
+const sameName = (a: string, b: string) => {
+  const x = words(a);
+  const y = new Set(words(b));
+  return x.length > 0 && (x.every((w) => y.has(w)) || [...y].every((w) => x.includes(w)));
+};
+
+/**
+ * Everyone who registered, pasted in once from the registration sheet, and
+ * who among them hasn't chosen their challenges yet, with a gentle nudge each.
+ */
+function Roster({ list, busy, act, from }: { list: List; busy: boolean; act: Act; from: string }) {
+  const [open, setOpen] = useState(list.roster.length === 0);
+  const [text, setText] = useState("");
+  const missing = list.roster.filter((r) => !list.people.some((p) => p.prefs && sameName(r.name, p.name)));
+  const nudge = (name: string) =>
+    [
+      `Hi ${greetName(name)}! 😊 Gentle reminder to choose your top two challenges so we can form balanced teams before Saturday's dinner. It takes two minutes:`,
+      FORM_LINK,
+      "",
+      "Please answer by Wednesday 14 October. Thank you!",
+      from,
+    ].join("\n");
+  return (
+    <div className="mt-4 rounded-2xl border border-white/15 p-4 text-white">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <p className="font-display text-[1.05rem] font-bold">Who registered</p>
+        {list.roster.length > 0 && (
+          <span className="text-[0.82rem] text-white/70">
+            {list.roster.length - missing.length} of {list.roster.length} have chosen
+          </span>
+        )}
+      </div>
+      {list.roster.length > 0 && missing.length > 0 && !list.announced && (
+        <ul className="mt-2 space-y-1.5">
+          {missing.map((r) => (
+            <li key={r.name} className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2 text-[0.88rem]">
+              <span>{r.name}</span>
+              <a href={`https://wa.me/${r.phone}?text=${encodeURIComponent(nudge(r.name))}`} target="_blank" rel="noopener noreferrer" className={btn} style={{ background: "#1FA855", color: "#fff" }}>
+                Send a gentle nudge
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+      {list.roster.length > 0 && missing.length === 0 && <p className="mt-2 text-[0.85rem]" style={{ color: Y }}>Everyone who registered has chosen. 🎉</p>}
+      <button type="button" className="mt-2 text-[0.8rem] text-white/60 underline" onClick={() => setOpen(!open)}>
+        {list.roster.length ? "Paste the list again" : "Paste the registration list"}
+      </button>
+      {open && (
+        <form
+          className="mt-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            act({ action: "roster", text }, "{n} people on the registration list.").then(() => {
+              setText("");
+              setOpen(false);
+            });
+          }}
+        >
+          <textarea
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            rows={4}
+            placeholder={"One per line, with a WhatsApp number if you have it:\nMaria Santos, +971 50 123 4567\nJohn Mathew"}
+            className="w-full rounded-2xl border border-white/20 bg-white/10 px-4 py-2 text-white placeholder:text-white/40"
+          />
+          <p className="mt-1 text-[0.75rem] text-white/50">Copy the name and phone columns from the registration sheet. Names are matched loosely, in any order.</p>
+          <button type="submit" disabled={busy || !text.trim()} className={`${btn} mt-2`} style={{ background: Y, color: INK }}>
+            Save the list
+          </button>
+        </form>
+      )}
+    </div>
+  );
+}
+
+/** Feedback after 21 November, without names, and a wrap-up ready to send on. */
+function FeedbackSummary({ list, setNote }: { list: List; setNote: (s: string) => void }) {
+  const f = list.feedback;
+  const avg = f.reduce((s, x) => s + x.rating, 0) / f.length;
+  const again = { yes: 0, maybe: 0, no: 0 };
+  for (const x of f) again[x.again]++;
+  const teams = CHALLENGES.filter((c) => list.people.some((p) => p.team === c.n));
+  const passed = teams.filter((c) => list.safety[c.n]?.review?.status === "passed").length;
+  const wrap = [
+    "#HACK2026 Dubai: wrap-up",
+    "",
+    `${list.people.filter((p) => p.team).length} participants in ${teams.length} teams, 17 October to 21 November 2026.`,
+    `Challenges taken on: ${teams.map((c) => c.title).join(", ")}.`,
+    `Safety check passed: ${passed} of ${teams.length} teams.`,
+    `Feedback: ${f.length} responses, ${avg.toFixed(1)} out of 5 on average. Would join again: ${again.yes} yes, ${again.maybe} maybe, ${again.no} no.`,
+    "",
+    "What went well, in their words:",
+    ...f.filter((x) => x.well).slice(0, 5).map((x) => `- "${x.well}"`),
+    "",
+    "What to change:",
+    ...f.filter((x) => x.change).slice(0, 5).map((x) => `- "${x.change}"`),
+  ].join("\n");
+  return (
+    <div className="mt-8 rounded-2xl bg-white p-4 text-[#131313]">
+      <div className="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 className="font-display text-[1.1rem] font-bold">Feedback</h2>
+        <p className="text-[0.85rem]">
+          <strong>{avg.toFixed(1)}</strong> / 5 from {f.length} · again: {again.yes} yes, {again.maybe} maybe, {again.no} no
+        </p>
+      </div>
+      <ul className="mt-3 space-y-2 text-[0.85rem]">
+        {f.map((x) => (
+          <li key={x.at} className="rounded-xl px-3 py-2" style={{ background: "#f6f3ee" }}>
+            <strong>{x.rating}/5</strong>
+            {x.well && <span className="block">Went well: {x.well}</span>}
+            {x.change && <span className="block">Change: {x.change}</span>}
+          </li>
+        ))}
+      </ul>
+      <button type="button" className={`${btn} mt-3 border border-[#ccc]`} onClick={() => navigator.clipboard?.writeText(wrap).then(() => setNote("Wrap-up copied: ready for Indigitous or planning #HACK2027."))}>
+        Copy the wrap-up
+      </button>
+      <p className="mt-1 text-[0.75rem] text-[#6a6a6a]">No names, no places, and nothing about who the work is for: safe to send to Indigitous.</p>
+    </div>
+  );
+}
 
 /**
  * The one link for the group chat. Whoever fills it in appears in the list
