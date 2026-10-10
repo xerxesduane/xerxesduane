@@ -12,7 +12,7 @@ import type { PanelList } from "./Panel";
  *   - Tonight: the evening's running order, with what's on now.
  */
 
-type Act = (body: Record<string, unknown>, done: string) => Promise<void>;
+type Act = (body: Record<string, unknown>, done: string) => Promise<boolean | void>;
 const INK = "#131313";
 const Y = "#EFE974";
 const O = "#EF4E25";
