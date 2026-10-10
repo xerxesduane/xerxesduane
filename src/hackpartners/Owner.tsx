@@ -184,6 +184,13 @@ export default function Owner({ team }: { team?: string }) {
           </a>{" "}
           with your owner login, then come back here.
         </p>
+        <p className="mt-4 text-white/75">
+          Champions: sign in with your username and password at{" "}
+          <a href="/ht" className="underline" style={{ color: Y }}>
+            ministry.xerxesduane.com/ht
+          </a>
+          , then come back here.
+        </p>
         <p className="mt-6 text-[0.85rem] text-white/50">If you were sent a personal link, open that link instead. This address shows nothing on its own.</p>
       </Shell>
     );
