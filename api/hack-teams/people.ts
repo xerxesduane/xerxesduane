@@ -16,6 +16,7 @@
 //   POST {action:"arrived", code, on}           at the door on 17 October
 //   POST {action:"roster", text}                the registration list, one per line: "Name, +971 50 …"
 //   POST {action:"digest"}                      email the Champions' summary now
+//   POST {action:"cc", emails}                  other Champions' emails for alerts and the summary (owner only)
 //
 // Two ways in, as on the partner panel: the owner signed in with the /letters
 // login, or a co-Champion by their HACKP_CHAMPIONS secret in the
@@ -107,6 +108,8 @@ export default handle(async (req) => {
       ["HGETALL", `${K}scores`],
       ["GET", `${K}roster`],
       ["HGETALL", `${K}feedback`],
+      ["GET", `${K}cc`],
+      ["HGETALL", `${K}interest`],
     ]);
     const announced = extra[0] === "1";
     const show: Show = parse<Show>(extra[1]) ?? { order: [], ...SHOW_DEFAULT };
@@ -151,7 +154,9 @@ export default handle(async (req) => {
     const roster = parse<RosterEntry[]>(extra[at + 3 * T + 2]) ?? [];
     // Feedback goes to the panel without names: it is meant to be honest.
     const feedback = pairs(extra[at + 3 * T + 3]).map(([, v]) => parse<Feedback>(v)).filter((f): f is Feedback => !!f).sort((a, b) => b.at - a.at);
-    return json({ people: rows, announced, checkins, summaries, show, links, safety, guests, scores, roster, feedback, expiresAt: EXPIRES_AT, me }, 200, noStore);
+    const cc = parse<string[]>(extra[at + 3 * T + 4]) ?? [];
+    const interest = pairs(extra[at + 3 * T + 5]).map(([code]) => code);
+    return json({ people: rows, announced, checkins, summaries, show, links, safety, guests, scores, roster, feedback, cc, interest, expiresAt: EXPIRES_AT, me }, 200, noStore);
   }
 
   if (req.method !== "POST") return errorResponse("Method not allowed.", 405);
@@ -218,6 +223,18 @@ export default handle(async (req) => {
       .slice(0, 200);
     await redis([["SET", `${K}roster`, JSON.stringify(list)]]);
     return json({ made: list.length }, 200, noStore);
+  }
+
+  if (action === "cc") {
+    if (me !== "Xerxes") return errorResponse("Only Xerxes can change who gets the emails.", 403);
+    const emails = String(b.emails ?? "")
+      .split(/[\s,;]+/)
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+    const bad = emails.find((e) => !EMAIL.test(e));
+    if (bad) return errorResponse(`"${bad}" doesn't look like an email address.`);
+    await redis([["SET", `${K}cc`, JSON.stringify([...new Set(emails)].slice(0, 5))]]);
+    return json({ ok: true }, 200, noStore);
   }
 
   if (action === "digest") {

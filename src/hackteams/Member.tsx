@@ -59,6 +59,7 @@ type Payload = {
     links: TeamLink[];
     safety: SafetyView;
     feedback: { rating: number; well: string; change: string; again: "yes" | "maybe" | "no"; at: number } | null;
+    next: boolean;
   };
 };
 
@@ -413,7 +414,7 @@ function TeamView({
       </Card>
 
       <ThankYouCard name={data.name} challenge={c?.title ?? ""} role={team.role} preview={data.owner} />
-      <FeedbackCard saved={team.feedback} preview={data.owner} post={post} />
+      <FeedbackCard saved={team.feedback} interested={team.next} preview={data.owner} post={post} />
       <Links links={team.links} owner={data.owner} post={post} />
       {b && <BriefView b={b} />}
       <Dates n={team.n} />

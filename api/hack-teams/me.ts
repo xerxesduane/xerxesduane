@@ -19,8 +19,7 @@ import {
   readPrefs,
   K,
   MAX_DEVICES,
-  PANEL,
-  alertOwner,
+  alertOwner2 as alertOwner,
   clean,
   countryName,
   deviceHash,
@@ -73,9 +72,7 @@ async function admit(req: Request, c: string, d: string): Promise<{ person: Pers
         `teams:locked:${c}`,
         12,
         `${person.name}'s #HACK team link was tried on another device`,
-        `<p>Someone tried to open <strong>${esc(person.name)}</strong>'s team page on a third device${country ? ` in ${esc(countryName(country))}` : ""}. It didn't open.</p><p>If it was them on a new phone or laptop, let the device in from /ht. If it wasn't, revoke their link.</p>`,
-        PANEL,
-      );
+        `<p>Someone tried to open <strong>${esc(person.name)}</strong>'s team page on a third device${country ? ` in ${esc(countryName(country))}` : ""}. It didn't open.</p><p>If it was them on a new phone or laptop, let the device in from /ht. If it wasn't, revoke their link.</p>`);
     }
     return reply({ error: LOCKED, locked: true }, 403);
   }
@@ -103,13 +100,14 @@ async function view(person: Person, owner: boolean) {
   if (!announced || !person.team) return { ...base, team: null };
 
   const n = person.team;
-  const [all, rawCheckins, rawSummary, rawLinks, rawSafety, rawFeedback] = await redis([
+  const [all, rawCheckins, rawSummary, rawLinks, rawSafety, rawFeedback, interested] = await redis([
     ["HGETALL", `${K}people`],
     ["LRANGE", `${K}checkins:${n}`, 0, 49],
     ["GET", `${K}summary:${n}`],
     ["GET", `${K}links:${n}`],
     ["GET", `${K}safety:${n}`],
     ["HGET", `${K}feedback`, person.code],
+    ["HEXISTS", `${K}interest`, person.code],
   ]);
   const flat = Array.isArray(all) ? (all as string[]) : [];
   const members: { name: string; role: string; you: boolean }[] = [];
@@ -132,6 +130,7 @@ async function view(person: Person, owner: boolean) {
       links: parse<TeamLink[]>(rawLinks) ?? [],
       safety: { items: safetyItems(n), ticks: safety.ticks, review: safety.review ?? null },
       feedback: parse<Feedback>(rawFeedback),
+      next: Number(interested) === 1,
     },
   };
 }
@@ -190,9 +189,7 @@ export default handle(async (req) => {
         `teams:help:${person.team}`,
         1,
         `A #HACK team asked for help (challenge ${String(person.team).padStart(2, "0")})`,
-        `<p><strong>${esc(entry.by)}</strong> checked in for challenge ${String(person.team).padStart(2, "0")} and asked for help:</p><blockquote style="border-left:3px solid #EF4E25;margin:0;padding:4px 12px">${esc(help)}</blockquote>`,
-        PANEL,
-      );
+        `<p><strong>${esc(entry.by)}</strong> checked in for challenge ${String(person.team).padStart(2, "0")} and asked for help:</p><blockquote style="border-left:3px solid #EF4E25;margin:0;padding:4px 12px">${esc(help)}</blockquote>`);
     }
     return reply(await view(person, false));
   }
@@ -238,7 +235,11 @@ export default handle(async (req) => {
     const again = b.again === "yes" || b.again === "maybe" || b.again === "no" ? b.again : null;
     if (!again) return reply({ error: "Say whether you'd join again." }, 400);
     const fb: Feedback = { rating, well: clean(b.well, 600), change: clean(b.change, 600), again, at: Date.now() };
-    await redis([["HSET", `${K}feedback`, person.code, JSON.stringify(fb)]]);
+    await redis([
+      ["HSET", `${K}feedback`, person.code, JSON.stringify(fb)],
+      // Kept apart from the feedback, which the panel shows without names.
+      b.next ? ["HSET", `${K}interest`, person.code, String(Date.now())] : ["HDEL", `${K}interest`, person.code],
+    ]);
     return reply(await view(person, false));
   }
 

@@ -1,12 +1,13 @@
 // The Champions' Thursday summary: one email on the morning of each weekly
 // check-in, so the call starts knowing who to ask about what. Every placed
 // team's latest check-in, who asked for help, who has gone quiet, and where
-// its safety check stands. Sent to the owner (forward it to Abel); the cron
+// its safety check stands. Sent to the owner and the Champions on the panel's
+// email list; the cron
 // (digest.ts) sends it once per check-in date, the panel's button any time.
 import { CHALLENGES, CHECK_IN_GOALS } from "../../src/data/hack";
 import { OWNER_EMAIL } from "../work/_lib";
 import { safetyItems } from "./_briefs";
-import { CHALLENGE_NS, K, PANEL, esc, parse, redis, type CheckIn, type Person, type Safety } from "./_lib";
+import { CHALLENGE_NS, K, PANEL, ccList, esc, parse, redis, type CheckIn, type Person, type Safety } from "./_lib";
 
 const dubaiDate = (t: number) => new Date(t + 4 * 60 * 60 * 1000).toISOString().slice(0, 10);
 
@@ -68,7 +69,7 @@ ${r.help.map((h) => `<p style="margin:4px 0;background:#fde4dc;color:#7a2410;pad
 ${goal ? `<p><strong>Tonight's goal:</strong> ${esc(goal)}.</p>` : ""}
 <p><strong>${helping.length ? `${helping.length} ${helping.length === 1 ? "team asked" : "teams asked"} for help` : "Nobody asked for help this week"}</strong>${quiet.length ? `, and <strong>${quiet.length} ${quiet.length === 1 ? "team has" : "teams have"} gone quiet</strong>: ${esc(quiet.join(", "))}` : ", and every team has checked in"}.</p>
 ${rows.map(block).join("")}
-<p style="color:#8a7f75;font-size:13px">Forward this to Abel. Everything is also on ${PANEL}.</p>
+<p style="color:#8a7f75;font-size:13px">Everything is also on ${PANEL}.</p>
 </div>`;
 
   const fromAddress = /<([^>]+)>/.exec(process.env.LETTERS_FROM ?? "")?.[1] ?? "letters@xerxesduane.com";
@@ -76,7 +77,7 @@ ${rows.map(block).join("")}
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { authorization: `Bearer ${api}`, "content-type": "application/json" },
-      body: JSON.stringify({ from: `#HACK teams <${fromAddress}>`, to: [OWNER_EMAIL], subject: `#HACK teams before the check-in, ${day}`, html }),
+      body: JSON.stringify({ from: `#HACK teams <${fromAddress}>`, to: [OWNER_EMAIL, ...(await ccList()).filter((e) => e !== OWNER_EMAIL)], subject: `#HACK teams before the check-in, ${day}`, html }),
     });
     return res.ok ? { sent: 1, skipped: "", date: today } : { sent: 0, skipped: "The email service refused it." };
   } catch {
