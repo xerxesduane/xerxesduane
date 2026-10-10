@@ -197,7 +197,20 @@ const chipOff = { background: "#fff", borderColor: "#d9d4c8", color: INK };
 /* Before the teams: the challenge picker                               */
 /* ------------------------------------------------------------------ */
 
-function Picker({ prefs, owner, post }: { prefs: Prefs | null; owner: boolean; post: (b: Record<string, unknown>) => Promise<string | null> }) {
+export function Picker({
+  prefs,
+  owner,
+  post,
+  top,
+  saveLabel,
+}: {
+  prefs: Prefs | null;
+  owner: boolean;
+  post: (b: Record<string, unknown>) => Promise<string | null>;
+  /** Extra fields under the intro: the open form asks for a name and email here. */
+  top?: ReactNode;
+  saveLabel?: string;
+}) {
   const [first, setFirst] = useState<number | null>(prefs?.first ?? null);
   const [second, setSecond] = useState<number | null>(prefs?.second ?? null);
   const [skills, setSkills] = useState<Skill[]>(prefs?.skills ?? []);
@@ -238,6 +251,7 @@ function Picker({ prefs, owner, post }: { prefs: Prefs | null; owner: boolean; p
           <strong>Please answer by {ANSWER_BY}.</strong>
         </p>
       </Card>
+      {top}
 
       {TRACKS.map((t) => (
         <Card key={t.id}>
@@ -340,7 +354,7 @@ function Picker({ prefs, owner, post }: { prefs: Prefs | null; owner: boolean; p
           className="mt-5 w-full rounded-full px-5 py-3 font-display text-[1rem] font-extrabold transition hover:-translate-y-0.5 disabled:opacity-50"
           style={{ background: Y, color: INK }}
         >
-          {busy ? "Saving…" : prefs ? "Save my changes" : "Save my choices"}
+          {busy ? "Saving…" : (saveLabel ?? (prefs ? "Save my changes" : "Save my choices"))}
         </button>
         {msg && (
           <p className="mt-3 text-center text-[0.9rem] font-semibold text-[#333]" aria-live="polite">

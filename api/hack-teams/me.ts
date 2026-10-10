@@ -16,18 +16,16 @@ import {
   CODE,
   DEVICE_ID,
   EXPIRES_AT,
-  DINNER,
+  readPrefs,
   K,
   MAX_DEVICES,
   PANEL,
-  SKILLS,
   alertOwner,
   clean,
   countryName,
   deviceHash,
   esc,
   handle,
-  isChallenge,
   isOwner,
   parse,
   redis,
@@ -36,9 +34,7 @@ import {
   underLimit,
   type CheckIn,
   type Person,
-  type Prefs,
   type Seen,
-  type Skill,
   type Summary,
   type Safety,
   type TeamLink,
@@ -167,16 +163,8 @@ export default handle(async (req) => {
 
   if (b.action === "prefs") {
     if (announced) return reply({ error: "The teams are announced, so choices are closed. Message Xerxes or Abel to change teams." }, 409);
-    const first = Number(b.first);
-    const second = b.second == null || b.second === "" ? null : Number(b.second);
-    if (!isChallenge(first)) return reply({ error: "Pick your first choice." }, 400);
-    if (second === null || !isChallenge(second) || second === first) return reply({ error: "Pick a second choice, different from your first." }, 400);
-    const skills = (Array.isArray(b.skills) ? b.skills : []).filter((s): s is Skill => (SKILLS as readonly string[]).includes(String(s)));
-    const other = clean(b.other, 120);
-    if (!skills.length && !other) return reply({ error: "Tick at least one thing you bring." }, 400);
-    const dinner = DINNER.find((x) => x.value === b.dinner)?.value;
-    if (!dinner) return reply({ error: "Say whether you can come to the dinner." }, 400);
-    const prefs: Prefs = { first, second, skills: [...new Set(skills)], other, learn: clean(b.learn, 300), dinner, note: clean(b.note, 400), at: Date.now() };
+    const prefs = readPrefs(b);
+    if (typeof prefs === "string") return reply({ error: prefs }, 400);
     person.prefs = prefs;
     await redis([["HSET", `${K}people`, person.code, JSON.stringify(person)]]);
     return reply(await view(person, false));
