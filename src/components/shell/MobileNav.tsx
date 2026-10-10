@@ -4,7 +4,7 @@ import SocialLinks from "./SocialLinks";
 import { AR_CHROME } from "../../data/servicePagesAr";
 import ThemeToggle from "../ui/ThemeToggle";
 import VerifiedTick from "./VerifiedTick";
-import { SHELL_IDENTITY, SHELL_NAV, isNavActive, navHref, navLabel } from "../../data/shell";
+import { SHELL_IDENTITY, isNavActive, navFor, navLabel, navTarget } from "../../data/shell";
 import { useVisitCount } from "../../lib/useVisitCount";
 import { siteHref } from "../../lib/host";
 
@@ -98,13 +98,13 @@ export default function MobileNav({
 
         <div id={panelId} hidden={!open} className="border-t border-line px-4 pb-4 pt-3">
           <nav aria-label="Primary" className="flex flex-col gap-1">
-            {SHELL_NAV.map((item) => {
+            {navFor(path).map((item) => {
               const active = isNavActive(item, path);
               const Icon = item.icon;
               return (
                 <a
                   key={item.href}
-                  href={siteHref(navHref(item, locale))}
+                  href={navTarget(item, locale)}
                   aria-current={active ? "page" : undefined}
                   onClick={() => setOpen(false)}
                   className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-[0.95rem] font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas ${
