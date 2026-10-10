@@ -214,6 +214,9 @@ export default function Panel({ champion }: { champion?: string }) {
         </button>
       </form>
 
+      {/* The open form: one link for everyone, answers land here */}
+      {!list.announced && <ShareForm setNote={setNote} from={from} />}
+
       {/* Announce */}
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl p-4" style={{ background: list.announced ? Y : "#2a2a2a", color: list.announced ? INK : "#fff" }}>
         <div>
@@ -419,7 +422,11 @@ function Person({
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <p className="font-display text-[1.05rem] font-bold">
           {r.name}
-          {r.by !== "Xerxes" && <span className="ml-2 text-[0.75rem] font-semibold text-[#9A3412]">added by {r.by}</span>}
+          {r.by === "form" ? (
+            <span className="ml-2 text-[0.75rem] font-semibold text-[#15803d]">via the form</span>
+          ) : (
+            r.by !== "Xerxes" && <span className="ml-2 text-[0.75rem] font-semibold text-[#9A3412]">added by {r.by}</span>
+          )}
         </p>
         <p className="text-[0.78rem] text-[#6a6a6a]">
           {r.openedAt ? `Opened ${when(r.openedAt)}` : "Not opened yet"} · {r.devices} of 2 devices
@@ -517,6 +524,47 @@ function Person({
 }
 
 type Act = (body: Record<string, unknown>, done: string) => Promise<void>;
+
+const FORM_LINK = "https://ministry.xerxesduane.com/ht/join";
+
+/**
+ * The one link for the group chat. Whoever fills it in appears in the list
+ * below straight away ("via the form"), with their own private link made,
+ * so nobody needs a link from you first. It closes once teams are announced.
+ */
+function ShareForm({ setNote, from }: { setNote: (s: string) => void; from: string }) {
+  const group = [
+    "Hi everyone! 😊 Please choose your top two challenges and tell us what you bring, so we can form balanced teams before the dinner on Saturday:",
+    FORM_LINK,
+    "",
+    "It takes two minutes. Please answer by Wednesday 14 October. You'll get your own private team page at the end, so keep that link to yourself.",
+    "",
+    `Thank you! ${from}`,
+  ].join("\n");
+  return (
+    <div className="mt-4 rounded-2xl border border-white/15 p-4 text-white">
+      <p className="font-display text-[1.05rem] font-bold">The challenge form</p>
+      <p className="mt-1 text-[0.82rem] text-white/65">
+        Share this one link with everyone. Each answer appears below as soon as it's sent, marked "via the form", with its own private team link made. It closes when you announce
+        the teams.
+      </p>
+      <p className="mt-2 break-all font-technical text-[0.85rem]" style={{ color: Y }}>
+        {FORM_LINK}
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <a href={`https://wa.me/?text=${encodeURIComponent(group)}`} target="_blank" rel="noopener noreferrer" className={btn} style={{ background: "#1FA855", color: "#fff" }}>
+          Send to the group on WhatsApp
+        </a>
+        <button type="button" className={`${btn} border border-white/30`} onClick={() => navigator.clipboard?.writeText(FORM_LINK).then(() => setNote("Form link copied."))}>
+          Copy the link
+        </button>
+        <a href={FORM_LINK} target="_blank" rel="noopener noreferrer" className={`${btn} border border-white/30`}>
+          Open the form
+        </a>
+      </div>
+    </div>
+  );
+}
 
 /**
  * Has this team checked in since the last weekly call (or since the dinner,

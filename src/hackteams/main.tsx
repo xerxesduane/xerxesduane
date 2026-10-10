@@ -14,15 +14,20 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "../index.css";
 import Guest from "./Guest";
+import Join from "./Join";
 import Member from "./Member";
 import Panel from "./Panel";
 
 const path = window.location.pathname;
+// The open challenge form, shared with everyone who registered.
+const join = /^\/ht\/join\/?$/.test(path);
 const champion = /^\/ht\/champion\/([^/]+)\/?$/.exec(path)?.[1];
 const guest = /^\/ht\/g\/([^/]+)\/?$/.exec(path)?.[1];
-const code = champion || guest ? undefined : /^\/ht\/([^/]+)\/?$/.exec(path)?.[1];
-if (!code && !guest) document.title = "Team pages";
+const code = join || champion || guest ? undefined : /^\/ht\/([^/]+)\/?$/.exec(path)?.[1];
+document.title = join ? "Choose your challenge" : !code && !guest ? "Team pages" : document.title;
 
 createRoot(document.getElementById("teams-root")!).render(
-  <StrictMode>{guest ? <Guest code={guest} /> : code ? <Member code={code} /> : <Panel champion={champion} />}</StrictMode>,
+  <StrictMode>
+    {join ? <Join /> : guest ? <Guest code={guest} /> : code ? <Member code={code} /> : <Panel champion={champion} />}
+  </StrictMode>,
 );

@@ -63,6 +63,7 @@ export const isChallenge = (n: unknown): n is number => typeof n === "number" &&
 
 export { DINNER, SKILLS, type Dinner, type Hours, type Skill } from "../../src/hackteams/shared";
 import type { Dinner, Hours, Skill } from "../../src/hackteams/shared";
+import { DINNER as DINNER_LIST, SKILLS as SKILL_LIST } from "../../src/hackteams/shared";
 
 export type Prefs = {
   first: number;
@@ -86,7 +87,7 @@ export type Person = {
   name: string;
   createdAt: number;
   openedAt: number | null;
-  /** Which Champion made the link, by first name. */
+  /** Which Champion made the link, by first name, or "form" when they filled in the open form themselves. */
   by: string;
   prefs?: Prefs;
   /** The challenge whose team they are in, once a Champion has placed them. */
@@ -173,6 +174,24 @@ export type Show = { order: number[]; present: number; qa: number; start: string
 
 /** As the public program has it: presentations from 6:40, five minutes and two for questions. */
 export const SHOW_DEFAULT: Omit<Show, "order"> = { present: 5, qa: 2, start: "18:40" };
+
+/**
+ * A participant's challenge answers from a form post, checked: the same rules
+ * for their private page (me.ts) and the open form (join.ts). Returns the
+ * answers, or the message to show instead.
+ */
+export function readPrefs(b: Record<string, unknown>): Prefs | string {
+  const first = Number(b.first);
+  const second = b.second == null || b.second === "" ? null : Number(b.second);
+  if (!isChallenge(first)) return "Pick your first choice.";
+  if (second === null || !isChallenge(second) || second === first) return "Pick a second choice, different from your first.";
+  const skills = (Array.isArray(b.skills) ? b.skills : []).filter((s): s is Skill => (SKILL_LIST as readonly string[]).includes(String(s)));
+  const other = clean(b.other, 120);
+  if (!skills.length && !other) return "Tick at least one thing you bring.";
+  const dinner = DINNER_LIST.find((x) => x.value === b.dinner)?.value;
+  if (!dinner) return "Say whether you can come to the dinner.";
+  return { first, second, skills: [...new Set(skills)], other, learn: clean(b.learn, 300), dinner, note: clean(b.note, 400), at: Date.now() };
+}
 
 /** Plain text from a form field: one line or a few, trimmed and capped. */
 export function clean(v: unknown, max: number): string {
