@@ -16,7 +16,7 @@ import {
   CODE,
   DEVICE_ID,
   EXPIRES_AT,
-  HOURS,
+  DINNER,
   K,
   MAX_DEVICES,
   PANEL,
@@ -35,7 +35,6 @@ import {
   sameOrigin,
   underLimit,
   type CheckIn,
-  type Hours,
   type Person,
   type Prefs,
   type Seen,
@@ -171,12 +170,13 @@ export default handle(async (req) => {
     const first = Number(b.first);
     const second = b.second == null || b.second === "" ? null : Number(b.second);
     if (!isChallenge(first)) return reply({ error: "Pick your first choice." }, 400);
-    if (second !== null && (!isChallenge(second) || second === first)) return reply({ error: "Pick a different second choice, or none." }, 400);
+    if (second === null || !isChallenge(second) || second === first) return reply({ error: "Pick a second choice, different from your first." }, 400);
     const skills = (Array.isArray(b.skills) ? b.skills : []).filter((s): s is Skill => (SKILLS as readonly string[]).includes(String(s)));
-    const hours = String(b.hours ?? "") as Hours;
-    if (!HOURS.includes(hours)) return reply({ error: "Say how many hours a week you can give." }, 400);
-    const dinner = b.dinner === "no" ? "no" : "yes";
-    const prefs: Prefs = { first, second, skills: [...new Set(skills)], hours, dinner, note: clean(b.note, 400), at: Date.now() };
+    const other = clean(b.other, 120);
+    if (!skills.length && !other) return reply({ error: "Tick at least one thing you bring." }, 400);
+    const dinner = DINNER.find((x) => x.value === b.dinner)?.value;
+    if (!dinner) return reply({ error: "Say whether you can come to the dinner." }, 400);
+    const prefs: Prefs = { first, second, skills: [...new Set(skills)], other, learn: clean(b.learn, 300), dinner, note: clean(b.note, 400), at: Date.now() };
     person.prefs = prefs;
     await redis([["HSET", `${K}people`, person.code, JSON.stringify(person)]]);
     return reply(await view(person, false));

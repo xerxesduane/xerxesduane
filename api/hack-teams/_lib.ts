@@ -61,17 +61,21 @@ export const DEVICE_ID = /^[A-Za-z0-9_-]{16,64}$/;
 export const CHALLENGE_NS = CHALLENGES.map((c) => c.n);
 export const isChallenge = (n: unknown): n is number => typeof n === "number" && CHALLENGE_NS.includes(n);
 
-export { HOURS, SKILLS, type Hours, type Skill } from "../../src/hackteams/shared";
-import type { Hours, Skill } from "../../src/hackteams/shared";
+export { DINNER, SKILLS, type Dinner, type Hours, type Skill } from "../../src/hackteams/shared";
+import type { Dinner, Hours, Skill } from "../../src/hackteams/shared";
 
 export type Prefs = {
   first: number;
   second: number | null;
   skills: Skill[];
-  /** Hours a week they can give between 17 October and 21 November. */
-  hours: Hours;
-  /** Will they be at the team dinner on 17 October? */
-  dinner: "yes" | "no";
+  /** Anything they bring that isn't on the list. */
+  other: string;
+  /** What they'd like to learn. */
+  learn: string;
+  /** Only on answers saved before the picker matched the Google Form. */
+  hours?: Hours;
+  /** Can they come to the team dinner on 17 October? */
+  dinner: Dinner;
   note: string;
   at: number;
 };

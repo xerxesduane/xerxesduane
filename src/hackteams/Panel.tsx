@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { CHALLENGES, CHECK_IN_GOALS, JUDGING } from "../data/hack";
 import Showcase from "./Showcase";
 import { greetName } from "../hackpartners/greet";
-import type { Hours, Skill } from "./shared";
+import { DINNER, type Dinner, type Hours, type Skill } from "./shared";
 import { suggestTeams } from "./suggest";
 
 /**
@@ -15,7 +15,7 @@ import { suggestTeams } from "./suggest";
  * Everyone sees everyone here: forming teams is shared work.
  */
 
-type Prefs = { first: number; second: number | null; skills: Skill[]; hours: Hours; dinner: "yes" | "no"; note: string; at: number };
+type Prefs = { first: number; second: number | null; skills: Skill[]; other?: string; learn?: string; hours?: Hours; dinner: Dinner; note: string; at: number };
 type Row = {
   code: string;
   name: string;
@@ -438,9 +438,11 @@ function Person({
             )}
           </p>
           <p className="mt-0.5 text-[#555]">
-            {p.skills.length ? p.skills.join(", ") : "No skills ticked"} · {p.hours} hrs/week ·{" "}
-            <span style={p.dinner === "no" ? { color: "#b91c1c", fontWeight: 700 } : undefined}>{p.dinner === "yes" ? "at the dinner" : "can't make the dinner"}</span>
+            {[...p.skills, ...(p.other ? [p.other] : [])].join(", ") || "Nothing ticked"}
+            {p.hours ? ` · ${p.hours} hrs/week` : ""} · Dinner:{" "}
+            <span style={p.dinner !== "yes" ? { color: "#b91c1c", fontWeight: 700 } : undefined}>{DINNER.find((d) => d.value === p.dinner)?.label ?? p.dinner}</span>
           </p>
+          {p.learn && <p className="mt-0.5 text-[#555]">Wants to learn: {p.learn}</p>}
           {p.note && <p className="mt-0.5 italic text-[#555]">"{p.note}"</p>}
         </div>
       ) : (
