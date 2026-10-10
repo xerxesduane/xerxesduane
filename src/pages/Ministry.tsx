@@ -699,6 +699,8 @@ const DIGITAL_WORK: { title: string; body: string; where: "ph" | "gulf"; href?: 
     title: "A digital front door for Alpha",
     where: "gulf",
     body: "A warm, seeker-friendly invitation page that helps people take a first step toward an Alpha course.",
+    href: "https://fellowshipdubai.com/alpha-prototype/",
+    link: "See the page",
   },
   {
     title: "A mobilization app for Alpha leaders",
