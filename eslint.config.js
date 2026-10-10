@@ -29,4 +29,14 @@ export default defineConfig([
       'react-refresh/only-export-components': 'off',
     },
   },
+  {
+    // Alpha Connect's pages were ported as written for a file-based router:
+    // each module exports its Route beside the component, and the hooks read
+    // localStorage in an effect so the first render matches the server's.
+    files: ['src/alpha/**/*.{ts,tsx}'],
+    rules: {
+      'react-refresh/only-export-components': 'off',
+      'react-hooks/set-state-in-effect': 'off',
+    },
+  },
 ])
