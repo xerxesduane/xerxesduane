@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { CHALLENGES, CHAMPION_CONTACTS, CHECK_IN_GOALS, EVENTS, GROUND_RULES, JUDGING, TRACKS } from "../data/hack";
-import { HOURS, SKILLS, type Hours, type Skill } from "./shared";
+import { ANSWER_BY, DINNER, SKILLS, type Dinner, type Skill } from "./shared";
 import ThankYouCard from "./ThankYouCard";
 import { deviceId, watermark } from "./device";
 
@@ -16,7 +16,7 @@ import { deviceId, watermark } from "./device";
  * device the link has let in. Nothing is stored here but a random device id.
  */
 
-type Prefs = { first: number; second: number | null; skills: Skill[]; hours: Hours; dinner: "yes" | "no"; note: string; at: number };
+type Prefs = { first: number; second: number | null; skills: Skill[]; other?: string; learn?: string; dinner: Dinner; note: string; at: number };
 type CheckIn = { by: string; did: string; next: string; help: string; at: number };
 type Summary = { built: string; helps: string; works: string; next: string; public: string; by: string; at: number };
 type TeamLink = { id: string; label: string; url: string; by: string; at: number };
@@ -201,8 +201,9 @@ function Picker({ prefs, owner, post }: { prefs: Prefs | null; owner: boolean; p
   const [first, setFirst] = useState<number | null>(prefs?.first ?? null);
   const [second, setSecond] = useState<number | null>(prefs?.second ?? null);
   const [skills, setSkills] = useState<Skill[]>(prefs?.skills ?? []);
-  const [hours, setHours] = useState<Hours | null>(prefs?.hours ?? null);
-  const [dinner, setDinner] = useState<"yes" | "no">(prefs?.dinner ?? "yes");
+  const [other, setOther] = useState(prefs?.other ?? "");
+  const [learn, setLearn] = useState(prefs?.learn ?? "");
+  const [dinner, setDinner] = useState<Dinner | null>(prefs?.dinner ?? null);
   const [note, setNote] = useState(prefs?.note ?? "");
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState(prefs ? `Saved ${when(prefs.at)}. You can change it until the teams are announced.` : "");
@@ -213,15 +214,17 @@ function Picker({ prefs, owner, post }: { prefs: Prefs | null; owner: boolean; p
       setFirst(n);
     } else {
       if (first === n) setFirst(second);
-      setSecond(second === n ? null : n);
+      setSecond(n);
     }
   };
 
   const save = async () => {
     if (!first) return setMsg("Pick your first choice.");
-    if (!hours) return setMsg("Say how many hours a week you can give.");
+    if (!second) return setMsg("Pick your second choice too.");
+    if (!skills.length && !other.trim()) return setMsg("Tick at least one thing you bring.");
+    if (!dinner) return setMsg("Say whether you can come to the dinner.");
     setBusy(true);
-    const err = await post({ action: "prefs", first, second, skills, hours, dinner, note });
+    const err = await post({ action: "prefs", first, second, skills, other, learn, dinner, note });
     setBusy(false);
     setMsg(err ?? "Saved. Thank you! You can change it until the teams are announced.");
   };
@@ -231,7 +234,8 @@ function Picker({ prefs, owner, post }: { prefs: Prefs | null; owner: boolean; p
       <Card>
         <p className="text-[0.95rem] leading-relaxed text-[#333]">
           Teams form at the dinner on <strong>Saturday 17 October</strong>. Pick the two challenges you'd most like to work on, and tell us what you bring. Xerxes and
-          Abel use this to suggest teams before the evening. It takes two minutes, and you can change it until the teams are announced.
+          Abel use this to form balanced teams before the evening. It takes two minutes, and you can change it until the teams are announced.{" "}
+          <strong>Please answer by {ANSWER_BY}.</strong>
         </p>
       </Card>
 
@@ -274,7 +278,7 @@ function Picker({ prefs, owner, post }: { prefs: Prefs | null; owner: boolean; p
 
       <Card>
         <h2 className="font-display text-[1.15rem] font-bold">What do you bring?</h2>
-        <p className="mt-1 text-[0.85rem] text-[#6a6a6a]">Tick everything that fits, including what you'd like to learn.</p>
+        <p className="mt-1 text-[0.85rem] text-[#6a6a6a]">Tick everything you're comfortable doing. You don't need to be a coder.</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {SKILLS.map((s) => {
             const on = skills.includes(s);
@@ -286,29 +290,40 @@ function Picker({ prefs, owner, post }: { prefs: Prefs | null; owner: boolean; p
           })}
         </div>
 
-        <h2 className="mt-6 font-display text-[1.15rem] font-bold">Hours a week you can give</h2>
-        <p className="mt-1 text-[0.85rem] text-[#6a6a6a]">Between 17 October and 21 November. Honest beats hopeful.</p>
+        <label className="mt-3 block text-[0.9rem] font-semibold">
+          Other
+          <input
+            value={other}
+            onChange={(e) => setOther(e.target.value)}
+            maxLength={120}
+            placeholder="Anything not on the list"
+            className="mt-1 w-full rounded-full border-2 border-[#d9d4c8] px-4 py-2 text-[0.95rem] font-normal focus:border-[#131313] focus:outline-none"
+          />
+        </label>
+
+        <label className="mt-6 block">
+          <span className="font-display text-[1.15rem] font-bold">What would you like to learn?</span>
+          <span className="mt-1 block text-[0.85rem] text-[#6a6a6a]">Optional. A tool, a skill, anything.</span>
+          <input
+            value={learn}
+            onChange={(e) => setLearn(e.target.value)}
+            maxLength={300}
+            className="mt-2 w-full rounded-full border-2 border-[#d9d4c8] px-4 py-2.5 text-[0.95rem] focus:border-[#131313] focus:outline-none"
+          />
+        </label>
+
+        <h2 className="mt-6 font-display text-[1.15rem] font-bold">Can you come to the team dinner on Saturday 17 October?</h2>
         <div className="mt-3 flex flex-wrap gap-2">
-          {HOURS.map((h) => (
-            <button key={h} type="button" className={chip} style={hours === h ? chipOn : chipOff} aria-pressed={hours === h} onClick={() => setHours(h)}>
-              {h}
+          {DINNER.map((d) => (
+            <button key={d.value} type="button" className={chip} style={dinner === d.value ? chipOn : chipOff} aria-pressed={dinner === d.value} onClick={() => setDinner(d.value)}>
+              {d.label}
             </button>
           ))}
         </div>
 
-        <h2 className="mt-6 font-display text-[1.15rem] font-bold">Will you be at the dinner on 17 October?</h2>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <button type="button" className={chip} style={dinner === "yes" ? chipOn : chipOff} aria-pressed={dinner === "yes"} onClick={() => setDinner("yes")}>
-            Yes, I'll be there
-          </button>
-          <button type="button" className={chip} style={dinner === "no" ? chipOn : chipOff} aria-pressed={dinner === "no"} onClick={() => setDinner("no")}>
-            I can't make it
-          </button>
-        </div>
-
         <label className="mt-6 block">
-          <span className="font-display text-[1.15rem] font-bold">Anything we should know?</span>
-          <span className="mt-1 block text-[0.85rem] text-[#6a6a6a]">Optional. Someone you'd like to team with, an idea, or a time you can't do.</span>
+          <span className="font-display text-[1.15rem] font-bold">Anything else we should know?</span>
+          <span className="mt-1 block text-[0.85rem] text-[#6a6a6a]">Optional. For example, someone you'd like to team up with.</span>
           <textarea
             value={note}
             onChange={(e) => setNote(e.target.value)}
