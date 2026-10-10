@@ -1,0 +1,42 @@
+@config "../../tailwind.alpha.config.js";
+
+/* The site's own variable copy of the app's typeface. */
+@font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 200 800; font-display: swap; src: url('/fonts/plus-jakarta-sans-var.woff2') format('woff2'); }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Alpha at Fellowship palette, as R G B triplets so opacity modifiers work. */
+:root {
+  --background: 252 249 243;          /* #FAF8F5 warm off-white */
+  --foreground: 23 23 23;             /* #1A1A1A ink */
+  --card: 255 255 255;
+  --primary: 221 0 19;                /* #E4002B Alpha red */
+  --primary-foreground: 254 251 248;
+  --secondary: 242 238 231;
+  --muted-foreground: 110 116 123;    /* #6B7280 slate */
+  --accent: 248 241 227;
+  --destructive-foreground: 252 252 252;
+  --border: 232 228 221;
+  --amber: 218 153 44;                /* #D69E2E warm amber */
+  --fellowship-blue: 14 54 163;       /* #1B3FAA Fellowship deep royal blue */
+}
+
+@layer base {
+  * { border-color: rgb(var(--border)); }
+  html, body { -webkit-tap-highlight-color: transparent; }
+  body {
+    background-color: rgb(var(--background));
+    color: rgb(var(--foreground));
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px;
+    overscroll-behavior-y: none;
+  }
+  button { touch-action: manipulation; }
+  input::placeholder, textarea::placeholder { color: color-mix(in oklab, currentColor 50%, transparent); }
+}
+
+/* Hide scrollbars on horizontal chip rows */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }

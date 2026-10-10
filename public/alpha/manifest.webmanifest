@@ -1,0 +1,22 @@
+{
+  "name": "Alpha at Fellowship",
+  "short_name": "Alpha",
+  "description": "Invite friends to Alpha and host the Alpha Film Series. A Fellowship Dubai initiative in partnership with Alpha.",
+  "id": "/alpha-connect",
+  "start_url": "/alpha-connect",
+  "scope": "/alpha-connect",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#E4002B",
+  "background_color": "#FAF8F5",
+  "icons": [
+    { "src": "/alpha/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/alpha/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Share Kit", "url": "/alpha-connect/share-kit", "description": "Open ready-made graphics to share" },
+    { "name": "Scripts", "url": "/alpha-connect/scripts", "description": "Conversation starters for inviting friends" },
+    { "name": "My Invites", "url": "/alpha-connect/invites", "description": "Your personal prayer and invite list" },
+    { "name": "Run Alpha", "url": "/alpha-connect/run-alpha", "description": "Host the Alpha Film Series" }
+  ]
+}

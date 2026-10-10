@@ -23,7 +23,7 @@ import { APEX_HOST, MINISTRY_HOST, MINISTRY_ORIGIN, SITE_HOST, WORK_HOST, WORK_O
  * every other route, on either host — is untouched and never reaches here.
  */
 export const config = {
-  matcher: ["/", "/ministry", "/hack", "/robots.txt", "/work", "/r/:path*", "/gcn", "/letters", "/l/:path*", "/pray/:path*", "/hp", "/hp/:path*", "/partners", "/join", "/join/:path*", "/ht", "/ht/:path*", "/teams"],
+  matcher: ["/", "/ministry", "/hack", "/robots.txt", "/work", "/r/:path*", "/gcn", "/letters", "/l/:path*", "/pray/:path*", "/hp", "/hp/:path*", "/partners", "/join", "/join/:path*", "/ht", "/ht/:path*", "/teams", "/alpha-connect/:path*"],
   // The edge runtime is deprecated for middleware; the build warns on it.
   // Nothing here needs an edge-only API — it reads a header and returns.
   runtime: "nodejs",
@@ -66,6 +66,9 @@ export default function middleware(request: Request): Response {
     // Private briefing: /join is the owner's panel, /join/<code> one person's
     // page. Both are join.html, which holds no content (see api/join/_lib.ts).
     if (url.pathname.startsWith("/join/")) return rewrite(new URL("/join", url));
+    // Alpha Connect: /alpha-connect is alpha-connect.html, served from the
+    // filesystem; every screen below it is the same page, which reads the path.
+    if (url.pathname.startsWith("/alpha-connect/")) return rewrite(new URL("/alpha-connect", url));
   }
 
   // work.xerxesduane.com is the hours log: work.html at the root and at each
@@ -96,6 +99,13 @@ export default function middleware(request: Request): Response {
     if (url.pathname === "/teams") return Response.redirect(`${MINISTRY_ORIGIN}/ht`, 308);
     // And the private briefing.
     if (host !== MINISTRY_HOST && (url.pathname === "/join" || url.pathname.startsWith("/join/"))) return Response.redirect(`${MINISTRY_ORIGIN}${url.pathname}`, 308);
+    // And Alpha Connect.
+    if (host !== MINISTRY_HOST && (url.pathname === "/alpha-connect" || url.pathname.startsWith("/alpha-connect/"))) {
+      return Response.redirect(`${MINISTRY_ORIGIN}${url.pathname}${url.search}`, 308);
+    }
+  } else if (url.pathname.startsWith("/alpha-connect/")) {
+    // Previews and localhost: Alpha Connect's screens, so they can be tried before release.
+    return rewrite(new URL("/alpha-connect", url));
   } else if (url.pathname.startsWith("/join/")) {
     // Previews and localhost: the briefing page, so it can be tried before release.
     return rewrite(new URL("/join", url));

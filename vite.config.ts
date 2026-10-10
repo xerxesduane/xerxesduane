@@ -44,9 +44,26 @@ function pdfjsData(): Plugin {
   }
 }
 
+/**
+ * Alpha Connect's screens on the dev and preview servers: every path under
+ * /alpha-connect is alpha-connect.html, as middleware.ts arranges in production.
+ */
+function alphaConnect(): Plugin {
+  const rewrite = (req: { url?: string }, _res: unknown, next: () => void) => {
+    const [path, query] = (req.url ?? '').split('?')
+    if (path === '/alpha-connect' || path.startsWith('/alpha-connect/')) req.url = `/alpha-connect.html${query ? `?${query}` : ''}`
+    next()
+  }
+  return {
+    name: 'alpha-connect',
+    configureServer: (server) => { server.middlewares.use(rewrite) },
+    configurePreviewServer: (server) => { server.middlewares.use(rewrite) },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig(({ isSsrBuild }) => {
-  const config: UserConfig = { plugins: isSsrBuild ? [react()] : [react(), pdfjsData()] }
+  const config: UserConfig = { plugins: isSsrBuild ? [react()] : [react(), pdfjsData(), alphaConnect()] }
 
   // Split heavy, rarely-changing vendor code into its own cached chunk.
   // Because the site navigates between routes with full page loads, this lets
@@ -60,7 +77,8 @@ export default defineConfig(({ isSsrBuild }) => {
         // never prerendered, so it only exists in the client build.
         // letters.html is the partner letters on ministry.xerxesduane.com, the same way.
         // join.html is the private briefing there (/join, /join/<code>).
-        input: { main: 'index.html', work: 'work.html', letters: 'letters.html', partners: 'partners.html', join: 'join.html', teams: 'teams.html' },
+        // alpha-connect.html is the Alpha at Fellowship app there (/alpha-connect/*).
+        input: { main: 'index.html', work: 'work.html', letters: 'letters.html', partners: 'partners.html', join: 'join.html', teams: 'teams.html', alpha: 'alpha-connect.html' },
         output: {
           manualChunks(id) {
             if (id.includes('node_modules')) {
