@@ -27,6 +27,9 @@
 //   gseen:<code>       Seen JSON for a guest link
 //   scores             hash, judge code -> { [n]: Score } JSON
 //   reminded:<date>    set once the check-in reminders for that date have gone out
+//   roster             RosterEntry[] JSON: everyone who registered, pasted in by a Champion
+//   feedback           hash, code -> Feedback JSON, from 21 November
+//   digested:<date>    set once the Champions' Thursday summary for that date has gone out
 //
 // Guests open /ht/g/<code>. A security reviewer sees every team's checklist
 // and marks it passed or needing fixes; a mentor sees only the teams they were
@@ -96,7 +99,17 @@ export type Person = {
   role?: string;
   /** For the Wednesday check-in reminder only. Never shown on any page but the panel. */
   email?: string;
+  /** The AED 30 registration fee, marked received by a Champion. */
+  paid?: { at: number; by: string };
+  /** Marked at the door on the night of the team dinner. */
+  arrived?: number;
 };
+
+/** One line of the registration list: who signed up, and a WhatsApp number if the sheet has one. */
+export type RosterEntry = { name: string; phone: string };
+
+/** What a participant tells the Champions after 21 November. */
+export type Feedback = { rating: number; well: string; change: string; again: "yes" | "maybe" | "no"; at: number };
 
 export type TeamLink = { id: string; label: string; url: string; by: string; at: number };
 
