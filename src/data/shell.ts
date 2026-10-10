@@ -1,6 +1,7 @@
-import { Bot, Tag, User } from "lucide-react";
+import { Bot, Send, Tag, User } from "lucide-react";
 import type { ComponentType } from "react";
 import { ChatGlyph, FolderGlyph, HomeGlyph, LayersGlyph } from "../components/ui/NavIcons";
+import { siteHref } from "../lib/host";
 import { CONTACT } from "./content";
 import { SERVICE_PAGES } from "./servicePages";
 
@@ -34,6 +35,11 @@ export interface ShellNavItem {
   icon: NavGlyph;
   /** Extra paths that should light this item up (e.g. detail routes). */
   matches?: string[];
+  /**
+   * A page on the host the visitor is already on, so its href is used as-is
+   * rather than sent to the business site by siteHref (see navTarget).
+   */
+  sameHost?: boolean;
 }
 
 /** The label and href for `item` in the current language. */
@@ -44,6 +50,12 @@ export function navLabel(item: ShellNavItem, locale: "en" | "ar", short = false)
 
 export function navHref(item: ShellNavItem, locale: "en" | "ar"): string {
   return locale === "ar" ? (item.hrefAr ?? item.href) : item.href;
+}
+
+/** Where an item links, as rendered on whichever host we are on. */
+export function navTarget(item: ShellNavItem, locale: "en" | "ar"): string {
+  const href = navHref(item, locale);
+  return item.sameHost ? href : siteHref(href);
 }
 
 export const SHELL_NAV: ShellNavItem[] = [
@@ -82,6 +94,21 @@ export const SHELL_NAV: ShellNavItem[] = [
     icon: ChatGlyph,
   },
 ];
+
+/**
+ * Extra destinations shown in the nav on the ministry page only, after the
+ * site's own. They live on the ministry host beside it (middleware.ts), so
+ * they never appear on the business site's pages.
+ */
+export const MINISTRY_NAV: ShellNavItem[] = [
+  { label: "Alpha Connect", labelAr: "Alpha Connect", href: "/alpha-connect", icon: Send, sameHost: true },
+];
+
+/** The nav for the page at `path`. */
+export function navFor(path: string): ShellNavItem[] {
+  const clean = path.split("#")[0].replace(/\/+$/, "") || "/";
+  return clean === "/ministry" ? [...SHELL_NAV, ...MINISTRY_NAV] : SHELL_NAV;
+}
 
 /**
  * The links in the phone's bottom bar, in bar order. The bar's fifth slot is

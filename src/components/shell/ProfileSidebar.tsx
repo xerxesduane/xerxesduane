@@ -4,7 +4,7 @@ import SocialLinks from "./SocialLinks";
 import VerifiedTick from "./VerifiedTick";
 import ThemeToggle from "../ui/ThemeToggle";
 import { LogoMark } from "../ui/Wordmark";
-import { SHELL_IDENTITY, SHELL_NAV, isNavActive, navHref, navLabel } from "../../data/shell";
+import { SHELL_IDENTITY, isNavActive, navFor, navLabel, navTarget } from "../../data/shell";
 import { fadeUp, stagger } from "../../lib/motion";
 import { siteHref } from "../../lib/host";
 import { useVisitCount } from "../../lib/useVisitCount";
@@ -20,7 +20,7 @@ interface ProfileSidebarProps {
 /**
  * The persistent profile rail: portrait, identity, socials, then the primary
  * navigation. Desktop only — MobileNav covers narrow viewports, and both read
- * SHELL_NAV so they can't drift.
+ * navFor (data/shell.ts) so they can't drift.
  *
  * Sizing is deliberately budgeted so the whole rail — including the last nav
  * item — fits inside a 720px-tall viewport without a nested scrollbar. It used
@@ -101,13 +101,13 @@ export default function ProfileSidebar({ path, lang, locale = "en" }: ProfileSid
 
         {/* Primary navigation */}
         <m.nav variants={fadeUp} aria-label="Primary" className="flex flex-col gap-0.5">
-          {SHELL_NAV.map((item) => {
+          {navFor(path).map((item) => {
             const active = isNavActive(item, path);
             const Icon = item.icon;
             return (
               <a
                 key={item.href}
-                href={siteHref(navHref(item, locale))}
+                href={navTarget(item, locale)}
                 aria-current={active ? "page" : undefined}
                 className={`group relative flex items-center gap-3 rounded-2xl px-4 py-2.5 text-[0.95rem] font-semibold transition duration-300 ease-smooth board:py-1.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas ${
                   active
