@@ -20,10 +20,13 @@ const AGAIN = [
 
 export default function FeedbackCard({
   saved,
+  interested,
   preview,
   post,
 }: {
   saved: Feedback | null;
+  /** Already asked to hear about #HACK2027. */
+  interested: boolean;
   preview: boolean;
   post: (b: Record<string, unknown>) => Promise<string | null>;
 }) {
@@ -32,6 +35,7 @@ export default function FeedbackCard({
   const [well, setWell] = useState(saved?.well ?? "");
   const [change, setChange] = useState(saved?.change ?? "");
   const [again, setAgain] = useState<Feedback["again"] | null>(saved?.again ?? null);
+  const [next, setNext] = useState(interested);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState(saved ? "Thank you, we have your feedback. You can change it any time." : "");
   if (!preview && now < OPEN_FROM) return null;
@@ -41,7 +45,7 @@ export default function FeedbackCard({
     if (!rating) return setMsg("Give the program a score from 1 to 5.");
     if (!again) return setMsg("Say whether you'd join again.");
     setBusy(true);
-    const err = await post({ action: "feedback", rating, well, change, again });
+    const err = await post({ action: "feedback", rating, well, change, again, next });
     setBusy(false);
     setMsg(err ?? "Thank you! It goes to Xerxes and Abel without your name.");
   };
@@ -92,6 +96,12 @@ export default function FeedbackCard({
           </button>
         ))}
       </div>
+      <label className="mt-4 flex cursor-pointer items-start gap-3 rounded-2xl px-3 py-2.5" style={{ background: "#f6f3ee" }}>
+        <input type="checkbox" checked={next} onChange={(e) => setNext(e.target.checked)} className="mt-1 h-4 w-4 accent-[#131313]" />
+        <span className="text-[0.9rem]">
+          <strong>Keep me posted about #HACK2027.</strong> This one goes to Xerxes and Abel with your name, so they can tell you when it opens.
+        </span>
+      </label>
       <button
         type="button"
         onClick={send}

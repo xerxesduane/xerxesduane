@@ -175,7 +175,7 @@ function esc(s: string) {
  * (api/hack-teams) use it too, with their own footer. Best effort: a page
  * view never fails because an alert could not be sent.
  */
-export async function alertOwner(key: string, hours: number, subject: string, html: string, footer = "ministry.xerxesduane.com/hp") {
+export async function alertOwner(key: string, hours: number, subject: string, html: string, footer = "ministry.xerxesduane.com/hp", cc: string[] = []) {
   const api = process.env.RESEND_API_KEY;
   if (!api) return;
   try {
@@ -187,7 +187,7 @@ export async function alertOwner(key: string, hours: number, subject: string, ht
       headers: { authorization: `Bearer ${api}`, "content-type": "application/json" },
       body: JSON.stringify({
         from,
-        to: [OWNER_EMAIL],
+        to: [OWNER_EMAIL, ...cc.filter((e) => e !== OWNER_EMAIL)],
         subject,
         html: `<div style="font-family:Arial,sans-serif;font-size:15px;line-height:1.5;color:#1a1a1a">${html}<p style="color:#8a7f75;font-size:13px;">${footer}</p></div>`,
       }),

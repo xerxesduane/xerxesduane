@@ -17,8 +17,7 @@ import {
   EMAIL,
   K,
   ORIGIN,
-  PANEL,
-  alertOwner,
+  alertOwner2 as alertOwner,
   clean,
   esc,
   handle,
@@ -116,8 +115,6 @@ export default handle(async (req) => {
     `teams:join:${person.code}`,
     24,
     `${person.name} chose their #HACK challenges`,
-    `<p><strong>${esc(person.name)}</strong> filled in the challenge form. Their answers are in your panel.</p>`,
-    PANEL,
-  );
+    `<p><strong>${esc(person.name)}</strong> filled in the challenge form. Their answers are in your panel.</p>`);
   return reply({ ok: true, name: greetName(person.name), link: `${ORIGIN}/ht/${person.code}`, emailed: !!person.email });
 });

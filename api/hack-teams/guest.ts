@@ -17,8 +17,7 @@ import {
   EXPIRES_AT,
   K,
   MAX_DEVICES,
-  PANEL,
-  alertOwner,
+  alertOwner2 as alertOwner,
   clean,
   esc,
   handle,
@@ -53,7 +52,7 @@ async function admit(req: Request, c: string, d: string): Promise<{ guest: Guest
   const door = await letDeviceIn(req, `${K}gseen:${c}`, d, MAX_DEVICES);
   if (!door.ok) {
     if (req.method === "GET") {
-      await alertOwner(`teams:glocked:${c}`, 12, `${guest.name}'s #HACK ${guest.kind} link was tried on another device`, `<p><strong>${esc(guest.name)}</strong>'s ${guest.kind} link was tried on a third device. It didn't open. Let the device in or revoke the link from /ht.</p>`, PANEL);
+      await alertOwner(`teams:glocked:${c}`, 12, `${guest.name}'s #HACK ${guest.kind} link was tried on another device`, `<p><strong>${esc(guest.name)}</strong>'s ${guest.kind} link was tried on a third device. It didn't open. Let the device in or revoke the link from /ht.</p>`);
     }
     return reply({ error: LOCKED, locked: true }, 403);
   }

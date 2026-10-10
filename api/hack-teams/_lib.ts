@@ -30,6 +30,8 @@
 //   roster             RosterEntry[] JSON: everyone who registered, pasted in by a Champion
 //   feedback           hash, code -> Feedback JSON, from 21 November
 //   digested:<date>    set once the Champions' Thursday summary for that date has gone out
+//   cc                 string[] JSON: other Champions' emails, copied on alerts and the summary
+//   interest           hash, code -> time: participants who want to hear about #HACK2027
 //
 // Guests open /ht/g/<code>. A security reviewer sees every team's checklist
 // and marks it passed or needing fixes; a mentor sees only the teams they were
@@ -41,8 +43,8 @@
 // /ht/champion/<secret>. Unlike partner links, every Champion sees every
 // participant: forming teams is shared work.
 export { errorResponse, handle, isOwner, json, randomToken, readJson, redis, requireOwner, sameOrigin, underLimit } from "../work/_lib";
-export { alertOwner, championFor, countryName, deviceHash, esc, parse, type Seen } from "../hack-partners/_lib";
-import { deviceHash, parse, type Seen } from "../hack-partners/_lib";
+export { championFor, countryName, deviceHash, esc, parse, type Seen } from "../hack-partners/_lib";
+import { alertOwner, deviceHash, parse, type Seen } from "../hack-partners/_lib";
 import { redis } from "../work/_lib";
 import { CHALLENGES } from "../../src/data/hack";
 
@@ -136,6 +138,17 @@ export type Guest = {
 export type Score = { s: number[]; note: string; at: number };
 
 export const EMAIL = /^[^\s@<>]{1,64}@[^\s@<>]{1,190}\.[A-Za-z]{2,24}$/;
+
+/** The other Champions' emails, which get the same alerts and summary as the owner. */
+export async function ccList(): Promise<string[]> {
+  const [raw] = await redis([["GET", `${K}cc`]]);
+  return parse<string[]>(raw) ?? [];
+}
+
+/** An alert to the owner and every Champion on the email list, at most once per key per `hours`. */
+export async function alertOwner2(key: string, hours: number, subject: string, html: string) {
+  await alertOwner(key, hours, subject, html, PANEL, await ccList());
+}
 
 /** A pinned link must be an ordinary web address. */
 export function webUrl(v: unknown): string | null {

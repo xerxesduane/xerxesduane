@@ -51,6 +51,10 @@ type List = {
   scores: { judge: string; marks: Record<string, { s: number[]; note: string; at: number }> }[];
   roster: { name: string; phone: string }[];
   feedback: { rating: number; well: string; change: string; again: "yes" | "maybe" | "no"; at: number }[];
+  /** Other Champions' emails, copied on alerts and the Thursday summary. */
+  cc: string[];
+  /** Codes of participants who asked to hear about #HACK2027. */
+  interest: string[];
   expiresAt: number;
   me: string;
 };
@@ -198,6 +202,7 @@ export default function Panel({ champion }: { champion?: string }) {
         <button type="button" className={btn} style={{ background: Y, color: INK }} onClick={() => setDinner(true)}>
           Dinner night mode
         </button>
+        <Download list={list} />
         <span className="text-[0.82rem] text-white/70">
           Fees: <strong className="text-white">{people.filter((p) => p.paid).length}</strong> of {people.length} paid · AED{" "}
           {(people.filter((p) => p.paid).length * 30).toLocaleString("en-US")} received
@@ -406,6 +411,8 @@ export default function Panel({ champion }: { champion?: string }) {
 
       {list.announced && <SafetyOverview list={list} />}
       {list.feedback.length > 0 && <FeedbackSummary list={list} setNote={setNote} />}
+      {list.interest.length > 0 && <Interest list={list} setNote={setNote} />}
+      {owner && <Emails list={list} busy={busy} act={act} />}
       <Guests list={list} owner={owner} busy={busy} from={from} act={act} setNote={setNote} />
       {list.announced && list.scores.length > 0 && <Results list={list} />}
 
@@ -505,7 +512,7 @@ function Person({
           placeholder={r.team ? "Role, e.g. Developer" : "Place them first"}
           disabled={!r.team || busy}
           maxLength={40}
-          className="min-w-0 flex-1 rounded-full border border-[#ccc] px-3 py-1.5 text-[0.82rem]"
+          className="min-w-[9rem] flex-1 rounded-full border border-[#ccc] px-3 py-1.5 text-[0.82rem]"
           aria-label={`Role for ${r.name}`}
         />
         <input
@@ -515,7 +522,7 @@ function Person({
           placeholder="Email for reminders"
           type="email"
           disabled={busy}
-          className="min-w-0 flex-1 rounded-full border border-[#ccc] px-3 py-1.5 text-[0.82rem]"
+          className="min-w-[12rem] flex-1 rounded-full border border-[#ccc] px-3 py-1.5 text-[0.82rem]"
           aria-label={`Email for ${r.name}`}
         />
       </div>
@@ -561,6 +568,130 @@ function Person({
 type Act = (body: Record<string, unknown>, done: string) => Promise<void>;
 
 const FORM_LINK = "https://ministry.xerxesduane.com/ht/join";
+
+/** One spreadsheet cell: quoted when it has to be, and never read as a formula. */
+const cell = (v: unknown) => {
+  let s = v == null ? "" : String(v);
+  if (/^[=+\-@]/.test(s)) s = `'${s}`;
+  return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+};
+const csv = (rows: unknown[][]) => rows.map((r) => r.map(cell).join(",")).join("\r\n");
+const stamp = (t?: number | null) => (t ? new Date(t).toISOString().replace("T", " ").slice(0, 16) : "");
+const save = (name: string, text: string) => {
+  // A BOM, so Excel reads names in Arabic and accents correctly.
+  const url = URL.createObjectURL(new Blob(["\ufeff" + text], { type: "text/csv;charset=utf-8" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 2000);
+};
+
+/**
+ * A backup to keep offline: everyone and their answers, the check-ins, and
+ * the judges' scores, as spreadsheets. Private links are included, so keep
+ * the files as private as the panel.
+ */
+function Download({ list }: { list: List }) {
+  const day = new Date().toISOString().slice(0, 10);
+  const people = () =>
+    save(
+      `hack2026-people-${day}.csv`,
+      csv([
+        ["Name", "Email", "Added by", "Opened", "First choice", "Second choice", "Brings", "Other", "Wants to learn", "Dinner", "Note", "Fee paid", "Arrived 17 Oct", "Team", "Role", "Private link"],
+        ...list.people.map((p) => [
+          p.name,
+          p.email,
+          p.by === "form" ? "the form" : p.by,
+          stamp(p.openedAt),
+          p.prefs ? `${two(p.prefs.first)} ${title(p.prefs.first)}` : "",
+          p.prefs?.second ? `${two(p.prefs.second)} ${title(p.prefs.second)}` : "",
+          p.prefs?.skills.join("; "),
+          p.prefs?.other,
+          p.prefs?.learn,
+          p.prefs ? (DINNER.find((d) => d.value === p.prefs!.dinner)?.label ?? p.prefs.dinner) : "",
+          p.prefs?.note,
+          p.paid ? "yes" : "",
+          p.arrived ? "yes" : "",
+          p.team ? `${two(p.team)} ${title(p.team)}` : "",
+          p.role,
+          p.link,
+        ]),
+      ]),
+    );
+  const work = () =>
+    save(
+      `hack2026-checkins-and-scores-${day}.csv`,
+      csv([
+        ["Kind", "Team", "Who", "When", "Done / scores", "Next / comment", "Help asked"],
+        ...CHALLENGES.flatMap((c) => (list.checkins[c.n] ?? []).map((k) => ["Check-in", c.title, k.by, stamp(k.at), k.did, k.next, k.help])),
+        ...list.scores.flatMap((j) =>
+          Object.entries(j.marks).map(([n, m]) => ["Score", title(Number(n)), j.judge, stamp(m.at), m.s.join(" / "), m.note, ""]),
+        ),
+        ...CHALLENGES.filter((c) => list.safety[c.n]?.review).map((c) => {
+          const r = list.safety[c.n].review!;
+          return ["Safety review", c.title, r.by, stamp(r.at), r.status === "passed" ? "passed" : "needs fixes", r.note, ""];
+        }),
+      ]),
+    );
+  return (
+    <>
+      <button type="button" className={`${btn} border border-white/30 text-white`} onClick={people} title="Everyone, their answers, teams, fees and private links">
+        Download people (CSV)
+      </button>
+      <button type="button" className={`${btn} border border-white/30 text-white`} onClick={work} title="Check-ins, judges' scores and safety reviews">
+        Download check-ins and scores (CSV)
+      </button>
+    </>
+  );
+}
+
+/** Who else gets the alerts and the Thursday summary: Abel, and anyone the owner adds. */
+function Emails({ list, busy, act }: { list: List; busy: boolean; act: Act }) {
+  const [text, setText] = useState(list.cc.join(", "));
+  return (
+    <div className="mt-8 rounded-2xl border border-white/15 p-4 text-white">
+      <p className="font-display text-[1.05rem] font-bold">Who else gets the emails</p>
+      <p className="mt-1 text-[0.8rem] text-white/60">
+        Copied on the Thursday summary and every alert (help requests, new form answers, a link tried on a third device). You always get them.
+      </p>
+      <form
+        className="mt-2 flex flex-wrap gap-2"
+        onSubmit={(e) => {
+          e.preventDefault();
+          act({ action: "cc", emails: text }, "Saved. They'll get the next summary and alerts.");
+        }}
+      >
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Abel's email, e.g. abel@example.com"
+          className="min-w-0 flex-1 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white placeholder:text-white/40"
+        />
+        <button type="submit" disabled={busy} className={btn} style={{ background: Y, color: INK }}>
+          Save
+        </button>
+      </form>
+    </div>
+  );
+}
+
+/** Participants who asked to hear about #HACK2027, with their emails to copy. */
+function Interest({ list, setNote }: { list: List; setNote: (s: string) => void }) {
+  const people = list.people.filter((p) => list.interest.includes(p.code));
+  const emails = people.map((p) => p.email).filter(Boolean).join(", ");
+  return (
+    <div className="mt-8 rounded-2xl bg-white p-4 text-[#131313]">
+      <h2 className="font-display text-[1.1rem] font-bold">#HACK2027: keep me posted ({people.length})</h2>
+      <p className="mt-1 text-[0.85rem]">{people.map((p) => p.name).join(", ")}</p>
+      {emails && (
+        <button type="button" className={`${btn} mt-2 border border-[#ccc]`} onClick={() => navigator.clipboard?.writeText(emails).then(() => setNote("Emails copied."))}>
+          Copy their emails
+        </button>
+      )}
+    </div>
+  );
+}
 
 /** Loose match between a registration name and a name on the panel: same words, any order, either way round. */
 const words = (s: string) => s.toLowerCase().replace(/[^a-z\u0600-\u06ff\s]/g, " ").split(/\s+/).filter((w) => w.length > 1);
