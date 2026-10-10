@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { CHALLENGES, CHAMPION_CONTACTS, CHECK_IN_GOALS, EVENTS, GROUND_RULES, JUDGING, TRACKS } from "../data/hack";
 import { ANSWER_BY, DINNER, SKILLS, type Dinner, type Skill } from "./shared";
+import FeedbackCard from "./FeedbackCard";
 import ThankYouCard from "./ThankYouCard";
 import { deviceId, watermark } from "./device";
 
@@ -57,6 +58,7 @@ type Payload = {
     summary: Summary | null;
     links: TeamLink[];
     safety: SafetyView;
+    feedback: { rating: number; well: string; change: string; again: "yes" | "maybe" | "no"; at: number } | null;
   };
 };
 
@@ -411,6 +413,7 @@ function TeamView({
       </Card>
 
       <ThankYouCard name={data.name} challenge={c?.title ?? ""} role={team.role} preview={data.owner} />
+      <FeedbackCard saved={team.feedback} preview={data.owner} post={post} />
       <Links links={team.links} owner={data.owner} post={post} />
       {b && <BriefView b={b} />}
       <Dates n={team.n} />

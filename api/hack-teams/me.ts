@@ -36,6 +36,7 @@ import {
   type Person,
   type Seen,
   type Summary,
+  type Feedback,
   type Safety,
   type TeamLink,
   randomToken,
@@ -102,12 +103,13 @@ async function view(person: Person, owner: boolean) {
   if (!announced || !person.team) return { ...base, team: null };
 
   const n = person.team;
-  const [all, rawCheckins, rawSummary, rawLinks, rawSafety] = await redis([
+  const [all, rawCheckins, rawSummary, rawLinks, rawSafety, rawFeedback] = await redis([
     ["HGETALL", `${K}people`],
     ["LRANGE", `${K}checkins:${n}`, 0, 49],
     ["GET", `${K}summary:${n}`],
     ["GET", `${K}links:${n}`],
     ["GET", `${K}safety:${n}`],
+    ["HGET", `${K}feedback`, person.code],
   ]);
   const flat = Array.isArray(all) ? (all as string[]) : [];
   const members: { name: string; role: string; you: boolean }[] = [];
@@ -129,6 +131,7 @@ async function view(person: Person, owner: boolean) {
       summary: parse<Summary>(rawSummary),
       links: parse<TeamLink[]>(rawLinks) ?? [],
       safety: { items: safetyItems(n), ticks: safety.ticks, review: safety.review ?? null },
+      feedback: parse<Feedback>(rawFeedback),
     },
   };
 }
@@ -225,6 +228,17 @@ export default handle(async (req) => {
     if (b.on) safety.ticks[String(i)] = { by: greetName(person.name), at: Date.now() };
     else delete safety.ticks[String(i)];
     await redis([["SET", `${K}safety:${team}`, JSON.stringify(safety)]]);
+    return reply(await view(person, false));
+  }
+
+  if (b.action === "feedback") {
+    if (!person.team) return reply({ error: "Feedback opens once you're in a team." }, 409);
+    const rating = Math.round(Number(b.rating));
+    if (!(rating >= 1 && rating <= 5)) return reply({ error: "Give the program a score from 1 to 5." }, 400);
+    const again = b.again === "yes" || b.again === "maybe" || b.again === "no" ? b.again : null;
+    if (!again) return reply({ error: "Say whether you'd join again." }, 400);
+    const fb: Feedback = { rating, well: clean(b.well, 600), change: clean(b.change, 600), again, at: Date.now() };
+    await redis([["HSET", `${K}feedback`, person.code, JSON.stringify(fb)]]);
     return reply(await view(person, false));
   }
 

@@ -334,7 +334,11 @@ export const GET_READY = {
       text: "Create a free GitHub account with your personal email, not a work one.",
       link: { href: "https://github.com/signup", label: "github.com/signup" },
     },
-    { id: "poll", text: "Vote for your top two challenges in the poll sent after the kickoff." },
+    {
+      id: "poll",
+      text: "Choose your top two challenges on the challenge form by Wednesday 14 October.",
+      link: { href: "https://ministry.xerxesduane.com/ht/join", label: "Open the challenge form" },
+    },
     { id: "address", text: "Save the address when it arrives privately, and keep it to yourself." },
     { id: "cant", text: "Can't make it? Message Xerxes or Abel so we can place you in a team." },
   ],
@@ -357,7 +361,7 @@ export const GET_READY = {
 export const STEPS = [
   { title: "Register", body: `Fill in the form and pay the ${REGISTRATION.fee} by ${REGISTRATION.closesLabel}.` },
   { title: "Set up GitHub", body: "Create a free GitHub account before 17 October, using your personal email, not a work one." },
-  { title: "Pick your top two", body: "Read the seven challenges and think about your top two. You choose in a poll after the kickoff." },
+  { title: "Pick your top two", body: "Read the seven challenges, then choose your top two on the challenge form (ministry.xerxesduane.com/ht/join) by Wednesday 14 October." },
   { title: "Can't make 17 October?", body: "Message Xerxes or Abel. We'll place you in a team and catch you up." },
 ];
 
