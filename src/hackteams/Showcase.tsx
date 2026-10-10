@@ -12,7 +12,7 @@ import type { PanelList } from "./Panel";
  *     plus the one line each team marked as safe to share.
  */
 
-type Act = (body: Record<string, unknown>, done: string) => Promise<void>;
+type Act = (body: Record<string, unknown>, done: string) => Promise<boolean | void>;
 
 const INK = "#131313";
 const Y = "#EFE974";

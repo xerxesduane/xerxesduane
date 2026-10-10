@@ -55,6 +55,9 @@ type List = {
   cc: string[];
   /** Codes of participants who asked to hear about #HACK2027. */
   interest: string[];
+  /** Champion sign-ins, for the owner only. */
+  logins: { username: string; name: string; createdAt: number }[];
+  role: "owner" | "champion";
   expiresAt: number;
   me: string;
 };
@@ -152,9 +155,13 @@ export default function Panel({ champion }: { champion?: string }) {
       return setNote(r.data.skipped ? `Nothing sent: ${r.data.skipped}` : `Sent ${r.data.sent} reminder${r.data.sent === 1 ? "" : "s"} for the ${r.data.date} check-in.`);
     }
     setBusy(false);
-    if (!r.ok) return setNote(r.data.error ?? "That didn't work. Try again.");
+    if (!r.ok) {
+      setNote(r.data.error ?? "That didn't work. Try again.");
+      return false;
+    }
     setNote(done.replace("{n}", String(r.data.made ?? r.data.placed ?? "")));
     await load();
+    return true;
   };
 
   if (state === "loading") return <Shell><p className="text-white/70">Loading…</p></Shell>;
@@ -164,19 +171,21 @@ export default function Panel({ champion }: { champion?: string }) {
     return (
       <Shell>
         <h1 className="font-display text-[1.4rem] font-bold text-white">Team pages</h1>
-        <p className="mt-2 text-white/75">
-          Sign in on{" "}
+        <ChampionSignIn onDone={() => load()} />
+        <p className="mt-6 text-[0.85rem] text-white/60">
+          Xerxes: sign in on{" "}
           <a href="/letters" className="underline" style={{ color: Y }}>
             the letters desk
           </a>{" "}
           with your owner login, then come back here.
         </p>
-        <p className="mt-6 text-[0.85rem] text-white/50">If you were sent a personal link, open that link instead. This address shows nothing on its own.</p>
+        <p className="mt-3 text-[0.85rem] text-white/50">If you were sent a personal link, open that link instead. This address shows nothing on its own.</p>
       </Shell>
     );
   if (!list) return null;
 
-  const owner = !champion;
+  const owner = list.role === "owner";
+  const signedIn = list.role === "champion" && !champion;
   const from = list.me;
   const people = list.people;
   const answered = people.filter((p) => p.prefs);
@@ -209,9 +218,21 @@ export default function Panel({ champion }: { champion?: string }) {
         </span>
       </div>
       {dinner && <DinnerMode list={list} busy={busy} act={act} onClose={() => setDinner(false)} />}
-      {!owner && (
+      {!owner && !signedIn && (
         <p className="mt-2 rounded-xl border border-white/15 px-3 py-2 text-[0.8rem] text-white/60">
           🔒 This panel is just for you. Keep its address private: anyone who has it can manage every participant.
+        </p>
+      )}
+      {signedIn && (
+        <p className="mt-2 flex flex-wrap items-center gap-2 text-[0.8rem] text-white/60">
+          Signed in as {from}.
+          <button
+            type="button"
+            className="underline"
+            onClick={() => fetch("/api/hack-teams/login", { method: "DELETE", credentials: "same-origin" }).then(() => window.location.reload())}
+          >
+            Sign out
+          </button>
         </p>
       )}
 
@@ -413,6 +434,7 @@ export default function Panel({ champion }: { champion?: string }) {
       {list.feedback.length > 0 && <FeedbackSummary list={list} setNote={setNote} />}
       {list.interest.length > 0 && <Interest list={list} setNote={setNote} />}
       {owner && <Emails list={list} busy={busy} act={act} />}
+      {owner && <Logins list={list} busy={busy} act={act} />}
       <Guests list={list} owner={owner} busy={busy} from={from} act={act} setNote={setNote} />
       {list.announced && list.scores.length > 0 && <Results list={list} />}
 
@@ -442,7 +464,7 @@ function Person({
   owner: boolean;
   busy: boolean;
   from: string;
-  act: (body: Record<string, unknown>, done: string) => Promise<void>;
+  act: (body: Record<string, unknown>, done: string) => Promise<boolean | void>;
   setNote: (s: string) => void;
 }) {
   const [role, setRole] = useState(r.role ?? "");
@@ -565,7 +587,7 @@ function Person({
   );
 }
 
-type Act = (body: Record<string, unknown>, done: string) => Promise<void>;
+type Act = (body: Record<string, unknown>, done: string) => Promise<boolean | void>;
 
 const FORM_LINK = "https://ministry.xerxesduane.com/ht/join";
 
@@ -1076,6 +1098,157 @@ function Results({ list }: { list: List }) {
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+/** The Champions' sign-in box on /ht. */
+function ChampionSignIn({ onDone }: { onDone: () => void }) {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const field = "mt-1 w-full rounded-full border border-white/20 bg-white/10 px-4 py-2.5 text-white placeholder:text-white/40 focus:outline-none focus:ring-2";
+  return (
+    <form
+      className="mt-4 rounded-2xl border border-white/15 p-4"
+      onSubmit={async (e) => {
+        e.preventDefault();
+        setBusy(true);
+        setErr("");
+        const res = await fetch("/api/hack-teams/login", {
+          method: "POST",
+          credentials: "same-origin",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        }).catch(() => null);
+        setBusy(false);
+        if (!res) return setErr("Couldn't reach the site. Check your connection.");
+        const out = (await res.json().catch(() => ({}))) as { error?: string };
+        if (!res.ok) return setErr(out.error ?? "That didn't work.");
+        setPassword("");
+        onDone();
+      }}
+    >
+      <p className="font-display text-[1.05rem] font-bold text-white">Champion sign-in</p>
+      <label className="mt-3 block text-[0.85rem] font-semibold text-white">
+        Username
+        <input value={username} onChange={(e) => setUsername(e.target.value)} autoComplete="username" autoCapitalize="none" spellCheck={false} className={field} />
+      </label>
+      <label className="mt-3 block text-[0.85rem] font-semibold text-white">
+        Password
+        <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" autoComplete="current-password" className={field} />
+      </label>
+      <button type="submit" disabled={busy || !username.trim() || !password} className={`${btn} mt-4`} style={{ background: Y, color: INK }}>
+        {busy ? "Signing in…" : "Sign in"}
+      </button>
+      {err && (
+        <p className="mt-2 text-[0.85rem] font-semibold text-red-300" aria-live="polite">
+          {err}
+        </p>
+      )}
+    </form>
+  );
+}
+
+/** A strong password, made in this browser: 18 characters from an unambiguous alphabet. */
+function strongPassword(): string {
+  const abc = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
+  const out: string[] = [];
+  const bytes = crypto.getRandomValues(new Uint32Array(18));
+  for (const b of bytes) out.push(abc[b % abc.length]);
+  return `${out.slice(0, 6).join("")}-${out.slice(6, 12).join("")}-${out.slice(12).join("")}`;
+}
+
+/**
+ * The owner's list of Champion sign-ins. The password is set here and shown
+ * once to copy; it is never shown again or stored readable. Removing a login
+ * signs that Champion out at once.
+ */
+function Logins({ list, busy, act }: { list: List; busy: boolean; act: Act }) {
+  const [username, setUsername] = useState("abel");
+  const [name, setName] = useState("Abel");
+  const [password, setPassword] = useState("");
+  const [shown, setShown] = useState("");
+  const field = "min-w-0 flex-1 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-white placeholder:text-white/40";
+  return (
+    <div className="mt-8 rounded-2xl border border-white/15 p-4 text-white">
+      <p className="font-display text-[1.05rem] font-bold">Champion sign-ins</p>
+      <p className="mt-1 text-[0.8rem] text-white/60">
+        A username and password for another Champion, to sign in at ministry.xerxesduane.com/ht. They see and manage everyone, like you, but can't change sign-ins or who gets the
+        emails. Setting a new password for someone signs them out everywhere.
+      </p>
+      {list.logins.length > 0 && (
+        <ul className="mt-3 space-y-1.5">
+          {list.logins.map((l) => (
+            <li key={l.username} className="flex flex-wrap items-center justify-between gap-2 rounded-xl bg-white/5 px-3 py-2 text-[0.88rem]">
+              <span>
+                <strong>{l.username}</strong> · {l.name} · since {when(l.createdAt)}
+              </span>
+              <button
+                type="button"
+                disabled={busy}
+                className="text-[0.8rem] text-red-300 underline"
+                onClick={() => window.confirm(`Remove ${l.name}'s sign-in? They're signed out at once.`) && act({ action: "removeLogin", username: l.username }, `${l.name}'s sign-in removed.`)}
+              >
+                Remove
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+      <form
+        className="mt-3 space-y-2"
+        onSubmit={(e) => {
+          e.preventDefault();
+          const pw = password;
+          act({ action: "setLogin", username, name, password: pw }, `Sign-in saved for ${name}. Copy the password now: it won't be shown again.`).then((ok) => {
+            if (ok === false) return;
+            setShown(pw);
+            setPassword("");
+          });
+        }}
+      >
+        <div className="flex flex-wrap gap-2">
+          <input value={username} onChange={(e) => setUsername(e.target.value.toLowerCase())} placeholder="Username, e.g. abel" autoCapitalize="none" spellCheck={false} className={field} aria-label="Username" />
+          <input value={name} onChange={(e) => setName(e.target.value)} placeholder="First name, e.g. Abel" className={field} aria-label="First name" />
+        </div>
+        <div className="flex flex-wrap gap-2">
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password, at least 12 characters"
+            autoComplete="new-password"
+            spellCheck={false}
+            className={`${field} font-technical`}
+            aria-label="Password"
+          />
+          <button type="button" className={`${btn} border border-white/30`} onClick={() => setPassword(strongPassword())}>
+            Generate
+          </button>
+          <button type="submit" disabled={busy || !username.trim() || !name.trim() || password.length < 12} className={btn} style={{ background: Y, color: INK }}>
+            Save sign-in
+          </button>
+        </div>
+      </form>
+      {shown && (
+        <div className="mt-3 rounded-xl p-3 text-[0.85rem]" style={{ background: "#2a2a2a" }}>
+          <p>
+            Give {name} these, ideally in person or by voice note, not in a group chat:
+          </p>
+          <p className="mt-1 font-technical">
+            Username: <strong>{username}</strong> · Password: <strong>{shown}</strong>
+          </p>
+          <div className="mt-2 flex gap-2">
+            <button type="button" className={`${btn} border border-white/30`} onClick={() => navigator.clipboard?.writeText(`ministry.xerxesduane.com/ht\nUsername: ${username}\nPassword: ${shown}`)}>
+              Copy
+            </button>
+            <button type="button" className={`${btn} border border-white/30`} onClick={() => setShown("")}>
+              Done, hide it
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

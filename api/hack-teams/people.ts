@@ -17,10 +17,13 @@
 //   POST {action:"roster", text}                the registration list, one per line: "Name, +971 50 …"
 //   POST {action:"digest"}                      email the Champions' summary now
 //   POST {action:"cc", emails}                  other Champions' emails for alerts and the summary (owner only)
+//   POST {action:"setLogin", username, name, password}   a Champion's sign-in for /ht (owner only)
+//   POST {action:"removeLogin", username}       remove it: that Champion is signed out at once (owner only)
 //
-// Two ways in, as on the partner panel: the owner signed in with the /letters
-// login, or a co-Champion by their HACKP_CHAMPIONS secret in the
-// x-hp-champion header (their panel is /ht/champion/<secret>). Both see and
+// Three ways in: the owner signed in with the /letters login; a co-Champion
+// by their HACKP_CHAMPIONS secret in the x-hp-champion header (their panel is
+// /ht/champion/<secret>); or a co-Champion signed in at /ht with the
+// username and password the owner set for them (_auth.ts). Both see and
 // manage everyone. Writes must come from the page itself either way.
 import {
   CHALLENGE_NS,
@@ -58,6 +61,7 @@ import {
   type RosterEntry,
 } from "./_lib";
 import { sendDigest } from "./_digest";
+import { USERNAME, championFromCookie, makeLogin, type Login } from "./_auth";
 import { safetyItems } from "./_briefs";
 import { sendReminders } from "./_remind";
 
@@ -73,6 +77,11 @@ async function who(req: Request, write: boolean): Promise<string | Response> {
     if (!name) return errorResponse("This panel link isn't valid any more. Ask Xerxes for a new one.", 401);
     if (write && !sameOrigin(req)) return errorResponse("Blocked: that request did not come from this page.", 403);
     return name;
+  }
+  const signedIn = await championFromCookie(req);
+  if (signedIn) {
+    if (write && !sameOrigin(req)) return errorResponse("Blocked: that request did not come from this page.", 403);
+    return signedIn;
   }
   const denied = await requireOwner(req, write);
   if (denied) return denied;
@@ -110,6 +119,7 @@ export default handle(async (req) => {
       ["HGETALL", `${K}feedback`],
       ["GET", `${K}cc`],
       ["HGETALL", `${K}interest`],
+      ["HGETALL", `${K}logins`],
     ]);
     const announced = extra[0] === "1";
     const show: Show = parse<Show>(extra[1]) ?? { order: [], ...SHOW_DEFAULT };
@@ -156,7 +166,10 @@ export default handle(async (req) => {
     const feedback = pairs(extra[at + 3 * T + 3]).map(([, v]) => parse<Feedback>(v)).filter((f): f is Feedback => !!f).sort((a, b) => b.at - a.at);
     const cc = parse<string[]>(extra[at + 3 * T + 4]) ?? [];
     const interest = pairs(extra[at + 3 * T + 5]).map(([code]) => code);
-    return json({ people: rows, announced, checkins, summaries, show, links, safety, guests, scores, roster, feedback, cc, interest, expiresAt: EXPIRES_AT, me }, 200, noStore);
+    const role = me === "Xerxes" ? "owner" : "champion";
+    // Usernames and names only, for the owner: never a hash.
+    const logins = role === "owner" ? pairs(extra[at + 3 * T + 6]).map(([, v]) => parse<Login>(v)).filter((l): l is Login => !!l).map((l) => ({ username: l.username, name: l.name, createdAt: l.createdAt })) : [];
+    return json({ people: rows, announced, checkins, summaries, show, links, safety, guests, scores, roster, feedback, cc, interest, logins, role, expiresAt: EXPIRES_AT, me }, 200, noStore);
   }
 
   if (req.method !== "POST") return errorResponse("Method not allowed.", 405);
@@ -223,6 +236,23 @@ export default handle(async (req) => {
       .slice(0, 200);
     await redis([["SET", `${K}roster`, JSON.stringify(list)]]);
     return json({ made: list.length }, 200, noStore);
+  }
+
+  if (action === "setLogin" || action === "removeLogin") {
+    if (me !== "Xerxes") return errorResponse("Only Xerxes can manage sign-ins.", 403);
+    const username = String(b.username ?? "").trim().toLowerCase();
+    if (!USERNAME.test(username)) return errorResponse("Usernames are 2 to 32 lowercase letters or numbers, e.g. abel.");
+    if (action === "removeLogin") {
+      await redis([["HDEL", `${K}logins`, username]]);
+      return json({ ok: true }, 200, noStore);
+    }
+    const name = clean(b.name, 30).split(/\s+/)[0] ?? "";
+    // "Xerxes" is the owner: a Champion login can never take that name.
+    if (!name || name.toLowerCase() === "xerxes") return errorResponse("Give the Champion's first name, e.g. Abel.");
+    const password = String(b.password ?? "");
+    if (password.length < 12 || password.length > 200) return errorResponse("Use a password of at least 12 characters. The Generate button makes a strong one.");
+    await redis([["HSET", `${K}logins`, username, JSON.stringify(await makeLogin(username, name, password))]]);
+    return json({ ok: true }, 200, noStore);
   }
 
   if (action === "cc") {
